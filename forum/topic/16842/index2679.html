@@ -1,0 +1,444 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [РЕШЕНО] mount -o loop использование внешнего файлового ресурса  с сохранением прав на файлы
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[РЕШЕНО] mount -o loop использование внешнего файлового ресурса  с сохранением прав на файлы</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[РЕШЕНО] mount -o loop использование внешнего файлового ресурса  с сохранением прав на файлы</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-178138"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/wau/">
+                <span class="post-username">wau</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/178138/">#</a>
+            5 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/wau/topics/">
+                    132
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/wau/posts/">
+                    960
+                </a>
+            </div>
+            <div>
+                Участник с: 11 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Существует такая проблематика - есть удаленный фтп, поддерживающий ftp, sftp, davfs. Их монтирование в локальный директорий, в зависимости от того, какая файловая система развернута на удаленном фтп, может калечить установленные права на файлы. Существует вариант создания на этом удаленном фтп файла образа диска и его монтирования через mount -o loop. Такова теория.<br /><br />Область применения? - когда надо обспечить полноценную работу с файлами на сервере, используя примонтированные удаленные и ущербные файловые источники типа ФТП.<br /><br />Общий поход -<br />1. фтп хранилищие монтируем в локальный директорий. У нас будет выбор - более быстрая работа с файлами при более высокой загрузке процессора против медленной работы с меньшими потребностями процессора, расклад примерно как см. спойлер в п. 2<br /><br />Выбранный способ монтирования прописываем в fstab, соотв. монтируем удаленную файловую систему в /место/где/.<br />2. создаем файл, который потом будет использован как диск<br /><br /><pre><code>dd if=/dev/zero of=/место/где/будет.файл bs=5120 count=1000000
+
+эта команда неэффективна, используется только для оценки скорости работы того или иного способа монтирования. Правильная и быстрая команда
+[code]
+truncate -s 80G /место/где/будет.файл</code></pre>davfs 11.518 s, 445 MB/s<br />ftp 49.671 s, 103 MB/s<br />Результаты могут ввести в заблуждение. Да, прямое копирование медленнее, в 4-5 раз. Однако с операциями монтирования\размонтирования, форматирования все ровно наоборот и даже хуже. В итоге эксплуатирую как ftp<br /><br />форматируем нужную файловую систему, например ext3 -<br /><pre><code>mkfs.ext3 /место/где/будет.файл
+
+если хотим это все &quot;как блочное устройство&quot;, то -
+
+losetup /dev/loop0 /место/где/будет.файл
+mkfs.ext3 /dev/loop0
+</code></pre><br />для желающих можно сэкономить 5% резервных блоков -<br /><pre><code>tune2fs -m 0 /место/где/будет.файл</code></pre><br />Процесс форматирования 80гб в случае davfs может быть довольно продолжительным, десятки минут против единиц секунд при ftp (не забыть сказать &quot;y&quot; на предупреждение, что мы пытаемся отформатировать не блочное устройство. Кстати, можно все это &quot;собрать&quot; и как блочное устройство)<br /><br />3. прописываем в fstab автомонтирование созданного раздела (вариант &quot;не как блочное устройство&quot;)<br /><pre><code>/место/где/будет.файл /куда/смонтировать/это/дело  ext3  defaults 0 0</code></pre><br />4. монтируем это дело<br />mount /место/где/будет.файл<br /><br />Вцелом все. Теперь можно насладиться разницей в результате команд chown -R user:user  к файлам /куда/смонтировать/это/дело и к /место/где/
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-178161"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kurych/">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/178161/">#</a>
+            5 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kurych/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kurych/posts/">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>wau</em><br>Существует такая проблематика - есть удаленный фтп, поддерживающий ftp, sftp, davfs. Их монтирование в локальный директорий, в зависимости от того, какая файловая система развернута на удаленном фтп, может калечить установленные права на файлы.</blockquote>Если вы для себя уже нашли приемлемое решение, то так вам и надо, и спорить здесь, в общем-то, не о чем. Я просто &quot;подумаю вслух&quot;:<br />Если вы нашли в использовании удаленной ФС проблемы, то либо у вас какая-то слишком специфическая задача, либо вы это дело неправильно используете. Потому что сетевые ФС используются многие десятки лет во всем мире. И если бы действительно были какие-то непреодолимые проблемы с правами в подобных ФС, то за десятки лет их уж точно решили бы на уровне используемого протокола.<br />Поэтому склоняюсь к тому, что у вас просто слишком специфические условия.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-178184"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/wau/">
+                <span class="post-username">wau</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/178184/">#</a>
+            5 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/wau/topics/">
+                    132
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/wau/posts/">
+                    960
+                </a>
+            </div>
+            <div>
+                Участник с: 11 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ничего специфического - сведений о файловой системе на удаленном хранилище нет вообще никакой, например, там ntfs. Речь не идет о непреодолимой проблеме, речь идет о получении нужного результата (нормальная линукс-файловая система) невзирая на имеющиеся неконтролируемые ограничения внешнего сервиса.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/16842/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747bb7407b8a9db6',m:'beznY6_UN7xw5ff_OgN22GEF1Ud6t2raN9XxkWa6e5A-1662682384-0-Af5TAFRRQGy+LlVwEnXcUq6NpGYOW3IzaYzU+/Lz26utK8jW6YHLd5HjL3igdpli7jTKo5vI1ej0htPpG++UgEe04wMVANrr7R4Shn4BkIpmam2PAHjm9sUg3/Qgl15POyPbBXFTlmo7NbeJnSR3MRo=',s:[0xf777637942,0xaff54cfb74],u:'/cdn-cgi/challenge-platform/h/g'};var _cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/cb/invisible.js?cb=747bb7407b8a9db6',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

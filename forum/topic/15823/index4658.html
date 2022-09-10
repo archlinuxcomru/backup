@@ -1,0 +1,1103 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Отключение выхода монитора на уровне ядра при старте системы
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Отключение выхода монитора на уровне ядра при старте системы</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Отключение выхода монитора на уровне ядра при старте системы</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165390"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165390/">#</a>
+            6 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br>со стороны GRUB2</blockquote><u>Offtop — в части Grub2 …..</u><br />Прихожу на днях домой, смотрю, а мой внучек жмет какую то кнопку и считает вслух ......<br />Выяснил — проверял уязвимость пароля Grub на моем ноутбуке — оказывается, где-то в декабре обнаружили уязвимость, позволяющую получить доступ к консоли Grub2 в обход пароля…. при последовательном нажатии Backspace 28 раз …. проверил, исправили, сейчас при этом выкидывает на перезагрузку .......<br /><strong>Natrio</strong>, как сопровождающему в Wiki Grub 2 , нужно знакомить обычных юзеров <strong>…. шутка. ...</strong>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165394"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Aivar/">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165394/">#</a>
+            6 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Aivar/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Aivar/posts/">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>о параметре video= даже и не знал</blockquote>Сегодня почитывал про нуво и упс: <a href="https://wiki.archlinux.org/index.php/Nouveau#Phantom_Output_Issue">https://wiki.archlinux.org/index.php/Nouveau#Phantom_Output_Issue</a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165395"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165395/">#</a>
+            6 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Aivar</strong>, вывод - практически можно найти ну почти все ............. было бы желание ......
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165410"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165410/">#</a>
+            6 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>akorop</em><br>Осталось уточить одну &quot;мелочь&quot; - как эти вторые имена узнать.</blockquote>Я же показал, вот так:<br /><blockquote><em>Natrio</em><br>xrandr показывает встроенный экран как eDP1, а выход как VGA1, но модуль kms/drm ядра именует их иначе (с минусом):<br /><pre><code>$ ls -1 /sys/class/drm/<br />card0<br />card0-DP-1<br />card0-eDP-1<br />card0-HDMI-A-1<br />card0-VGA-1<br />controlD64<br />renderD128</code></pre>Соответственно, в моём случае работают такие параметры:<br /><pre><code>video=eDP-1:d video=VGA-1:e</code></pre></blockquote>Смотрим действующие выходы в xrandr, потом смотрим, что им соответствует в <strong>/sys/class/drm/card0-*</strong> , вот это самое * и будет то, что нам нужно.<br />Так понятнее?<br /><pre><code>$ ls -1 /sys/class/drm | sed -n &#39;s/card0-//p&#39;
+DP-1
+eDP-1
+HDMI-A-1
+VGA-1</code></pre><br /><em>P.S.</em><br />Для <strong>danil</strong>, мой ответ: <a href="https://archlinux.org.ru/forum/post/165377/">http://archlinux.org.ru/forum/post/165377/</a><br />Остальным: флудеры :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165428"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165428/">#</a>
+            6 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Natrio</strong>, поясни - а есть смысл дополнительно указывать еще и типа такого, как советуют в  /Documentation/fb/modedb.txt ...<br /><pre><code>You can additionally specify which output the options matches to. To force the VGA output to be enabled and drive a specific mode say:
+video=VGA-1:<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="94a5a6aca4eca5a4a6a0d4a2a4f9f1">[email&#160;protected]</a></code></pre>Или это равносильно <strong>video=VGA-1:e</strong> ......??? .... почему то подумал, что это не совсем одно и тоже....<br /><em>PS...... не совсем доходит до меня смысл перевода....... потому и спрашиваю.....</em>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165449"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165449/">#</a>
+            6 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>а есть смысл дополнительно указывать еще и <pre><code>video=VGA-1:<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b081828880c881808284f08680ddd5">[email&#160;protected]</a></code></pre></blockquote><strong>Только</strong> если во фреймбуфер-консоли (до иксов) требуется<br />1) принудительно задать монитору режим, отличный от родного, либо<br />2) если родной режим не определяется автоматически, либо<br />3) если нужно изменить число бит на пиксель или<br />4) частоту развёртки, что может быть актуально для старых кинескопных мониторов.<br /><br />Насколько я понимаю, в данном случае требуется лишь включить внешний монитор и выключить встроенный, а значит нет никаких причин усложнять себе жизнь лишними фиксированными настройками.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165451"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165451/">#</a>
+            6 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Natrio</strong>, все понятно..... спасибо...
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165452"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165452/">#</a>
+            6 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>danil</em><br>Проблема в том, что если не запущен Xserver, то изображение на оба монитора дублируется, а разрешение внешнего монитора на порядок выше и системой используется лишь его часть, т.е. картинка выводится на меньшей части экрана, соответствующей разрешению монитора ноутбука.</blockquote><br /><strong>Natrio</strong>, а можно ли сделать так что бы на одном мониторе была одна консолька, а на другом другая или иксы? ну и естественно корректные разрешения мониторов в вариатах с одной и несколькими видюхами.
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165457"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165457/">#</a>
+            6 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br>можно ли сделать так что бы на одном мониторе была одна консолька, а на другом другая или иксы? ну и естественно корректные разрешения мониторов в вариатах с одной и несколькими видюхами.</blockquote>По-умолчанию мониторы и так получают каждый своё родное разрешение.<br /><br />Проблема в другом – консоль <em>(та, что без иксов)</em> <strong>всегда</strong> дублируется на все <strong>включённые</strong> мониторы <em>(по крайней мере, одного видеоадаптера)</em>, и <strong>всегда</strong> подгоняется под размер <strong>меньшего</strong> монитора, а на втором занимает <strong>не весь</strong> экран <em>(не весь проём фреймбуфера)</em>.<br /><br />После запуска иксов оба монитора, подключённых к одному видеоадаптеру, в любом случае захватываются одним экземпляром иксов, и до завершения X-сервера никакой консоли уже не показывают. Если же один из них отключён параметром ядра, он останется отключённым и в иксах, потому что и иксы, и консоль, работают через один и тот же drm/kms модуль ядра.<br /><br />Поскольку у <strong>danil</strong> встроенный экран ноута всё равно не работает, выключить его – самое простое и беспроблеммное решение.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165459"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165459/">#</a>
+            6 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br>Проблема в другом – консоль (та, что без иксов) всегда дублируется на все включённые мониторы (по крайней мере, одного видеоадаптера), и всегда подгоняется под размер меньшего монитора, а на втором занимает не весь экран (не весь проём фреймбуфера).</blockquote>благодарю.<br />вывод: без иксов раздельная работа с несколькими мониторами не реальна.
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/15823/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747c116758d0005f',m:'4cTcH_TdQyRulcRVJir9te9JPtoQx0d2CvhSeNRLuv8-1662686076-0-Aa7jLs3TeYf8dLPBPRq1RDeTYh5idNHZ4Q6l70kVWOa6XR3ywc3N0PkAr6TwvjdBfd/Ykz+U+BemdhUmKZJio3zkg/JIw6W9/PJnNB6DuOZne9eHJcBPPHFiUTWboKMGbAghMNRW6qcht9oQO1oCnoI=',s:[0x75f1a8b685,0xffb58bc0ab],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

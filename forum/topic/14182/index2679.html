@@ -1,0 +1,1051 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Arch на внешнем диске (как избежать перезагрузки после обрыва)
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Arch на внешнем диске (как избежать перезагрузки после обрыва)</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Arch на внешнем диске (как избежать перезагрузки после обрыва)</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144198"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Opossum/">
+                <span class="post-username">Opossum</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144198/">#</a>
+            7 лет, 10 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Opossum/topics/">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Opossum/posts/">
+                    20
+                </a>
+            </div>
+            <div>
+                Участник с: 29 мая 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Сам не верю, что решение есть. но всё таки:<br />Есть Arch на внешнем hdd, но косяк то ли с хардом, то ли с портом ноута - если неосторожно зацепить шнур, видимо, случается кратковременный обрыв. В Win 7 (на жёстком диске ноута) это выглядит как &quot;Внешнее устройство может работать быстрее, подцепите к USB 2.0&quot;, в Arch&#39;e это Kernel Panic и рестарт компа кнопкой.<br /><br />1) Не по теме: поднятие напряжения на порте ничего не решит, верно? Я хард просто как то ронял на паркет.<br />2) Существует скрипт, который заново пытается &quot;поднять&quot; систему после такого краха?<br /><br />В journalctl вроде ничего интересного, записывать то лог после обрыва.некуда.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144204"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144204/">#</a>
+            7 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Переход в режим USB-1 – стандартная реакция USB-портов на плохой контакт, о чём вам и сообщает форточка <em>(ядро Linux тоже сообщает об этом, но в логах)</em>.<br /><br />Плоские контакты USB-разъёмов <em>(это же относится к разъёмам SATA)</em>, даже будучи позолоченными, очень ненадёжны из-за своей крайне неудачной конструкции.<br />Прижим контактов изначально слабый, поэтому любая грязь или дальнейшее ослабление прижима могут приводить к разрыву.<br />Истирание золотого напыления приводит к окислению, что ещё хуже, чем грязь.<br /><br />Поэтому для начала постарайтесь прочистить контакты разъёмов и проверьте <em>(если надо – поменяйте)</em> кабель, попробуйте менее изношенные USB-порты компьютера.<br />Если замена кабеля и порта не помогает – можно попробовать вскрыть внешний <em>(<strong>не внутренний!</strong>)</em> корпус винчестера и поискать обрыв с обратной стороны разъёма.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144226"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Kycok/">
+                <span class="post-username">Kycok</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144226/">#</a>
+            7 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/b7/3e/b73e340446ad65d73a75ebec48fc70c8.png" alt="Kycok avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Kycok/topics/">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Kycok/posts/">
+                    1585
+                </a>
+            </div>
+            <div>
+                Участник с: 09 января 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я бы просто поставил Арч на внутренний диск
+            
+                
+                    <div class="post-signature">
+                        <a href="https://github.com/Kycko">GitHub</a>, <a href="https://wiki.archlinux.org/index.php/User:Kycok">ArchWiki</a>, <a href="https://aur.archlinux.org/account/Kycok">AUR</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144235"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144235/">#</a>
+            7 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Kycok</em><br>Я бы просто поставил Арч на внутренний диск</blockquote>Если я правильно понял, речь идёт о переносной системе.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144240"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Opossum/">
+                <span class="post-username">Opossum</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144240/">#</a>
+            7 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Opossum/topics/">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Opossum/posts/">
+                    20
+                </a>
+            </div>
+            <div>
+                Участник с: 29 мая 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br>Переход в режим USB-1 – стандартная реакция USB-портов на плохой контакт, о чём вам и сообщает форточка <em>(ядро Linux тоже сообщает об этом, но в логах)</em>.<br /><br />Плоские контакты USB-разъёмов <em>(это же относится к разъёмам SATA)</em>, даже будучи позолоченными, очень ненадёжны из-за своей крайне неудачной конструкции.<br />Прижим контактов изначально слабый, поэтому любая грязь или дальнейшее ослабление прижима могут приводить к разрыву.<br />Истирание золотого напыления приводит к окислению, что ещё хуже, чем грязь.<br /><br />Поэтому для начала постарайтесь прочистить контакты разъёмов и проверьте <em>(если надо – поменяйте)</em> кабель, попробуйте менее изношенные USB-порты компьютера.<br />Если замена кабеля и порта не помогает – можно попробовать вскрыть внешний <em>(<strong>не внутренний!</strong>)</em> корпус винчестера и поискать обрыв с обратной стороны разъёма.</blockquote>Ага, спасибо, звучит обнадёживающе. Нет способа решить это программно? И симптомы после падения со стола на паркет другие?<br /><blockquote><em>Kycok</em><br>Я бы просто поставил Арч на внутренний диск</blockquote>Нет, пока не вариант, может уже на следующий ноут.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144247"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144247/">#</a>
+            7 лет, 10 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Opossum</em><br>Нет способа решить это программно?</blockquote>Аппаратную неисправность очень трудно &quot;решить&quot; программно.<br /><br /><blockquote><em>Opossum</em><br>симптомы после падения со стола на паркет</blockquote>Винчестер &quot;боится&quot; ударов, но прежде всего тех, что получены <strong>во включённом состоянии</strong>. Когда микроскопическая головка &quot;летит&quot; над поверхностью диска со скоростью автомобиля на трассе, от катастрофы её отделяет тончайшая плёнка воздушной подушки. Именно поэтому достаточно сильный толчок для работающего диска кончается &quot;запилом&quot;, что означает гроб для головки и дорожек под ней.<br /><br />В выключенном винчестере головки покоятся в специальной &quot;парковочной зоне&quot; ближе к оси, и даже в случае неожиданного отключения питания пружина успевает <em>(с характерным щелчком)</em> водворить туда головки гораздо раньше, чем остановится шпиндель и пропадёт воздушная подушка.<br /><br />Так что я не думаю, что с вашим девайсом случилось что-то подобное.<br />Судя по вашему описанию – дело в контактах.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144252"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Opossum/">
+                <span class="post-username">Opossum</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144252/">#</a>
+            7 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Opossum/topics/">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Opossum/posts/">
+                    20
+                </a>
+            </div>
+            <div>
+                Участник с: 29 мая 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br>Аппаратную неисправность очень трудно &quot;решить&quot; программно.</blockquote>Я имею в виду, нельзя попросить ядро &quot;подняться&quot;, когда контакт с хардом восстановится?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144257"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144257/">#</a>
+            7 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Opossum</em><br>нельзя попросить ядро &quot;подняться&quot;, когда контакт с хардом восстановится?</blockquote>Так оно и не падает, скорей всего.<br />Просто не может выполнить запросы кучи программ на чтение или запись на диск.<br />Кроме того, после такого обрыва, как правило, если устройство и подключается, то уже под новым именем, потому что старое осталось занято &quot;зависшим&quot;, с которым потеряна связь.<br /><br />В общем, чинить надо то, что сломалось, костыли тут если возможны, то весьма нетривиальны.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144258"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144258/">#</a>
+            7 лет, 10 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Также частенько использую внешний диск, но при покупке специально приобрел с внешним питанием, так как встретилась заметка, что для некоторых ноутбуков могут быть проблемы с питанием от USB портов.<br />В связи с этим вопрос — не пробовал протестить работу внешнего диска от настольного компьютера.  Может просто не хватает мощи.<br />PS...я имел ввиду обычный HDD, который вставляется в док-станцию.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144259"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Vadim/">
+                <span class="post-username">Vadim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144259/">#</a>
+            7 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/72/22/7222132327ed41066e6514a2df7291c9.png" alt="Vadim avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Vadim/topics/">
+                    280
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Vadim/posts/">
+                    1912
+                </a>
+            </div>
+            <div>
+                Участник с: 20 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня раньше всё время были проблемы с USB HDD пока не подал ему внешнее питание,себе взял  <a href="http://novomoskovsk.dnp.olx.ua/obyavlenie/zaryadnoe-ustroystvo-sony-psp-384-ID9GTmJ.html">sony psp384 5v 1.5a </a> ,припаял на шнур разъёмчик USB и купил USB кабель с дополнительным питанием <a href="http://www.devstan.com/wp-content/uploads/2011/08/IMG_2631.jpg">что-то вроде этого</a>,после этого все проблемы сразу исчезли.
+            
+                
+                    <div class="post-signature">
+                        Linux Forever!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/14182/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747c665f3f199d67',m:'RhJgEhY4Y.PAgICDu6VEXcCTBhbBHzYzvFPhGCAuF0M-1662689557-0-Aenn56+nK8Qx1M1cCstNGwFXm4YH90PJz124J8phdRJ0VfbEiTvP5B+JYpiCLB/VFQdQpBRWzXzEYnrE9cVvnmOXRB8qmOH7GF6/4DsNmMs1vw8F/a958pcuk4MbXPtLkvhx5Q3wENcYseOW0ALt2E8=',s:[0xeba96dceea,0x2c4f196124],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

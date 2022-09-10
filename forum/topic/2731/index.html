@@ -1,0 +1,674 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/2731/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 09:26:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Настройка сети в Virtualbox (упрощенная)
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/13/index.html">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Настройка сети в Virtualbox (упрощенная)</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Настройка сети в Virtualbox (упрощенная)</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-28157"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/corner/index.html">
+                <span class="post-username">corner</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/28157/index.html">#</a>
+            10 лет, 7 месяцев назад
+            
+                (отредактировано
+                
+                    10 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/corner/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/corner/posts/index.html">
+                    773
+                </a>
+            </div>
+            <div>
+                Участник с: 21 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Обычно настройка сетевых интерфейсов для новичков представляет некоторые трудности. Существующие методы настройки подразумевают использование bridge-utils и iptables.<br/>Но можно настроить сеть и без этих утилит.<br/>Материал честно подмотрен на <a href="https://virtualbox.org/">virtualbox.org</a>. Приступим.<br/><br/>1. Настройка модулей в хост-системе.<br/>В первую очередь установим необходимые модули для работы с Virtualbox в нашей системе:<br/><div class="code"><pre># modprobe -v vboxdrv
+# modprobe -v vboxnetflt
+# modprobe -v vboxnetadp</pre></div>Если все прошло успешно, добавим эти модули в Modules файла /etc/rc.conf :<br/><span style="color:#400080">MODULES=(vboxdrv vboxnetflt vboxnetadp) </span><br/>2. Запускаем Virtualbox, устанавливаем гостевую систему (в нашем случае Debian Squeeze), и приступаем к настройке выхода в интернет.<br/>Для этого просто активируем NAT в Virtualbox.<br/><a href="http://itmages.ru/image/view/400953/97a0b202"><img src="http://storage8.static.itmages.ru/i/12/0125/s_1327498859_3545963_97a0b202dd.png"></img></a><br/>В настройках гостевой системы настраиваем соответствующий      сетевой интерфейс на получение адрема посредством DHCP.<br/>/etc/network/interfaces:<br/><span style="color:#0000bf">allow-hotplug eth0<br/>iface eth0 inet dhcp</span><br/>Но это мы проделаем позже, когда сделаем запуск гостевой машины.<br/><br/>3. Настройка локальной сети в гостевой системе.<br/>Теперь приступим к настройке локальной сети между хост и гостевой системами.<br/>В Virtualbox главном меню выбираем File=&gt;Preferences=&gt;Network и добавляем новый хост -<br/><a href="http://itmages.ru/image/view/400964/4387d687"><img src="http://storage1.static.itmages.ru/i/12/0125/s_1327499235_4412330_4387d68779.png"></img></a><br/>После этого заходим в настройки хоста и настраиваем его параметры. Сначала отключаем назначение адреса по DHCP (снимаем  галочку, позже поймем, почему)<br/><a href="http://itmages.ru/image/view/400966/ac4486fb"><img src="http://storage3.static.itmages.ru/i/12/0125/s_1327499287_8112524_ac4486fb2c.png"></img></a><br/>Настраиваем статический адрес (я выбрал сеть 172.16.0.0, потому что у моего провайдера «светятся» в сети адреса класса 192.168.0.0/16)<br/><a href="http://itmages.ru/image/view/400968/13816249"><img src="http://storage5.static.itmages.ru/i/12/0125/s_1327499344_9941335_1381624974.png"></img></a><br/>На всякий случай конвертируем IPv4 адрес в IPv6 — это не представляет трудностей, в www полно конверторов online.<br/>После этого заходим в настройки сетевых интерфейсов гостевой машины и добавляем еще один интерфейс в режиме Host<br/><a href="http://itmages.ru/image/view/400970/f9612857"><img src="http://storage7.static.itmages.ru/i/12/0125/s_1327499442_5026641_f9612857a6.png"></img></a><br/>Заметим для себя, что мы решили присвоить своей гостевой машине локальный адрес 172.16.0.16.<br/><br/>Теперь в хост-системе редактируем файл /etc/hosts, добавив в него наш новый хост с алиасом, например<br/><br/><span style="color:#0000bf">172.16.0.16		<a href="http://test.virtualdebian6.org/">test.virtualdebian6.org</a>	virtudeba6</span><br/>Вот поэтому нам и нужен статический адрес.<br/>Настала пора запустить гостевую систему  и провести соответствующие настройки.<br/>После запуска системы проверяем полученные интерфейсы<br/>#<span style="color:#0000bf">dmesg |grep -i eth</span><br/>Выяснив номера интерфейсов, правим /etc/network/interfaces<br/><a href="http://itmages.ru/image/view/400971/a34f67f6"><img src="http://storage8.static.itmages.ru/i/12/0125/s_1327499520_6635200_a34f67f62e.png"></img></a><br/>И смело перезапускаем сеть на гостевой машине -<br/>#invoke-rc.d networking restart<br/><br/>Если интерфейсы не подымутся (бывало и такое, не знаю, почему) — перезапускаем гостевую машину.<br/><br/>После перезапуска проверяем в гостевой интерфейсы  - <br/><a href="http://itmages.ru/image/view/400973/92d653a1"><img src="http://storage1.static.itmages.ru/i/12/0125/s_1327499599_1574757_92d653a10a.png"></img></a><br/>И выход в интернет<br/><a href="http://itmages.ru/image/view/400974/89a51003"><img src="http://storage2.static.itmages.ru/i/12/0125/s_1327499645_3031127_89a510034a.png"></img></a><br/>Теперь посмотрим на нашу гостевую систему из хост-системы:<br/>интерфейсы :<br/>нас интересует наличие такой записи при запуске <br/>$ ip a<br/><span style="color:#0000bf">vboxnet0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UNKNOWN qlen 1000 <br/>    link/ether 0a:00:27:00:00:00 brd ff:ff:ff:ff:ff:ff <br/>    inet 172.16.0.1/12 brd 172.31.255.255 scope global vboxnet0 <br/>    inet6 fe80::ac10:1/64 scope link <br/>       valid_lft forever preferred_lft forever <br/>    inet6 fe80::800:27ff:fe00:0/64 scope link <br/>       valid_lft forever preferred_lft forever</span><br/>Пингуем гостевую машину по имени (см. /etc/hosts) — результат:<br/><span style="color:#0000bf">PING <a href="http://test.virtualdebian6.org/">test.virtualdebian6.org</a> (172.16.0.16) 56(84) bytes of data. <br/>64 bytes from <a href="http://test.virtualdebian6.org/">test.virtualdebian6.org</a> (172.16.0.16): icmp_req=1 ttl=64 time=0.597 ms <br/>64 bytes from <a href="http://test.virtualdebian6.org/">test.virtualdebian6.org</a> (172.16.0.16): icmp_req=2 ttl=64 time=0.525 ms <br/>64 bytes from <a href="http://test.virtualdebian6.org/">test.virtualdebian6.org</a> (172.16.0.16): icmp_req=3 ttl=64 time=0.529 ms <br/>64 bytes from <a href="http://test.virtualdebian6.org/">test.virtualdebian6.org</a> (172.16.0.16): icmp_req=4 ttl=64 time=0.541 ms <br/>64 bytes from <a href="http://test.virtualdebian6.org/">test.virtualdebian6.org</a> (172.16.0.16): icmp_req=5 ttl=64 time=0.523 ms <br/><br/>&mdash; <a href="http://test.virtualdebian6.org/">test.virtualdebian6.org</a> ping statistics &mdash; <br/>5 packets transmitted, 5 received, 0% packet loss, time 4000ms <br/>rtt min/avg/max/mdev = 0.523/0.543/0.597/0.027 ms</span><br/>Что и требовалось получить. Для более полной картины посмотрим на гостевую при помощи Zenmap :<br/><a href="http://itmages.ru/image/view/400976/9a8133e3"><img src="http://storage4.static.itmages.ru/i/12/0125/s_1327499832_7460410_9a8133e356.png"></img></a><br/><a href="http://itmages.ru/image/view/400978/1318bb94"><img src="http://storage6.static.itmages.ru/i/12/0125/s_1327499871_1103800_1318bb940f.png"></img></a><br/>И пробуем обратиться к гостевой, как к обычному серверу в сети :<br/><a href="http://itmages.ru/image/view/400979/079fb00d"><img src="http://storage7.static.itmages.ru/i/12/0125/s_1327499927_5080082_079fb00da1.png"></img></a><br/>Теперь наша гостевая машина имеет полный доступ в интернет, адрес в «локальной» сети, и мы можем работать с ней без проброса портов и дополнительных настроек iptables.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-28158"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sleepycat/index.html">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/28158/index.html">#</a>
+            10 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sleepycat/topics/index.html">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sleepycat/posts/index.html">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            вопрос , а зачес 1 айпишник выдавать? Может там создается не интерфейс а сеть? просто логики не понял, дважды создавать интерфейс, а потом еще и в гостевой он сам прописывается. Боксом не пользовался , только вимарь юзал&#8230;.
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-28159"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/corner/index.html">
+                <span class="post-username">corner</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/28159/index.html">#</a>
+            10 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/corner/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/corner/posts/index.html">
+                    773
+                </a>
+            </div>
+            <div>
+                Участник с: 21 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>ipcalc 172.16.0.0/12<br/>Address:   172.16.0.0           10101100.0001 0000.00000000.00000000<br/>Netmask:   255.240.0.0 = 12     11111111.1111 0000.00000000.00000000<br/>Wildcard:  0.15.255.255         00000000.0000 1111.11111111.11111111<br/>=&gt;<br/>Network:   172.16.0.0/12        10101100.0001 0000.00000000.00000000<br/>HostMin:   172.16.0.1           10101100.0001 0000.00000000.00000001<br/>HostMax:   172.31.255.254       10101100.0001 1111.11111111.11111110<br/>Broadcast: 172.31.255.255       10101100.0001 1111.11111111.11111111<br/>Hosts/Net: 1048574               Class B, Private Internet</blockquote>Столько хватит? Для данного случая. Хост 172.16.0.1 создается один для всех виртуальных машин.<br/>Опять же - это простой способ быстрой настройки, когда нужно, например, быстро посмотреть поведение сервера. А для упражнений с веб-программированием и т.п., вообще, наверное, удобное решение. <br/>Ну и, конечно, ключевое слово - упрощенная настройка. Во всяком случае, все, что удалось найти на wiki и форумах - стоит метка - deprecated. Не спорю, с iptables покрасивее будет, но некогда&#8230;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-28160"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sleepycat/index.html">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/28160/index.html">#</a>
+            10 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sleepycat/topics/index.html">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sleepycat/posts/index.html">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Да нет,все верно, это лучше чем возится с фаером на сервере. Я просто только щас понял то хост 172.16.0.1 это чтото вроде виртуального Хаба в Вимаре&#8230;спс. за пояснение.
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-28161"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Volldemar/index.html">
+                <span class="post-username">Volldemar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/28161/index.html">#</a>
+            10 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Volldemar/topics/index.html">
+                    96
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Volldemar/posts/index.html">
+                    557
+                </a>
+            </div>
+            <div>
+                Участник с: 19 октября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Спасибо за разъяснения, помогло описание настройки. У меня хост система - арч, гостевая выньХП. На арче три интерфейса:<br/>eth0 - локальная сеть провайдера<br/>eth1 - внутренняя локальная сеть<br/>ppp0 - ВПН к провайдеру, собственно инет :) и внешний статичный апи<br/><br/>Вопрос, как пробросить этот внешний апи, вместе в апишником :), на гостевую выньХП?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-98955"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/corner/index.html">
+                <span class="post-username">corner</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/98955/index.html">#</a>
+            9 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/corner/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/corner/posts/index.html">
+                    773
+                </a>
+            </div>
+            <div>
+                Участник с: 21 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Дополнение:<br/><br/>Раньше, до вступления в силу systemd, интерфейс vboxnet в хост-системе подымался автоматически.<br/>Теперь это не происходит.<br/>Следующие команды подымают vboxnet (соглвсно вышеуказанного примера) :<br/><div class="code"><pre># ip address add 172.16.0.1/24 scope host dev vboxnet0
+# ip link set vboxnet0 up
+# ip route add 172.16.0.0 dev vboxnet0</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexfe8b.html?next=/forum/topic/2731/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'745f7c6aea9b15f6',m:'uqlWmqWhHUfP2aNz3K2XfIfTS4Kxafz1T26i4nE8otY-1662386373-0-ATrrxYItKa8GvSxV7jVVxdcfkTCthCEbmm9U4XHAHo7v5/EvaqWEEE3h7HpvbLxFWd4lQq72ie5H+F4QsLtnlVXWXK5YzhL4f9AuDuKGJFEithEQIn8dHkWg/1Hu8jCzTin1Kt3RSXuY74hwUem9jw4=',s:[0xfa5139a1a8,0x79d4c1d923],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible5615.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/2731/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 09:26:15 GMT -->
+</html>

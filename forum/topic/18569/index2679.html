@@ -1,0 +1,1106 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18569/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:16:03 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Циклические зависимости пакетов (pacman, pactree)
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/3/index.html">Пакетная система</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/8/index.html">Сборка пакетов</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Циклические зависимости пакетов (pacman, pactree)</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Циклические зависимости пакетов (pacman, pactree)</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-205639"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vinc/index.html">
+                <span class="post-username">vinc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/205639/index.html">#</a>
+            4 года, 2 месяца назад
+            
+                (отредактировано
+                
+                    4 года, 2 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vinc/topics/index.html">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vinc/posts/index.html">
+                    180
+                </a>
+            </div>
+            <div>
+                Участник с: 13 июня 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Собственно не проблема, просто вопрос для повышения грамотности.<br />Заметил кольцевую ссылку в дереве пакетов, т.е пакет через цепочку других пакетов замыкается сам на себя.<br /><pre><code>$ pactree -r phonon-qt5-vlc
+phonon-qt5-vlc
+└─phonon-qt5
+  └─phonon-qt5-vlc
+</code></pre>Чтобы разобраться, посмотрел подробности:<br /><pre><code>$ pacman -Qi phonon-qt5 | egrep &#39;Name|Provides|Depends|Required&#39;
+Name            : phonon-qt5
+Provides        : None
+Depends On      : libpulse  qt5-base  phonon-qt5-backend
+Required By     : phonon-qt5-vlc
+</code></pre>Т.е. phonon-qt5 требуется для phonon-qt5-vlc, и при этом он зависит от phonon-qt5-backend.<br />НО пакета phonon-qt5-backend в системе нет<br /><pre><code>$ pacman -Qq phonon-qt5-backend
+phonon-qt5-vlc</code></pre>Провайдером для него выступает phonon-qt5-vlc:<br /><pre><code>$ pacman -Qi phonon-qt5-vlc | egrep &#39;Name|Provides|Depends|Required&#39;
+Name            : phonon-qt5-vlc
+Provides        : phonon-qt5-backend
+Depends On      : vlc  phonon-qt5
+Required By     : phonon-qt5</code></pre>Собственно, что получается?<br />Один и тот же пакет выступает и как клиент и как сервер для одного и того же пакета?<br />Т.е. phonon-qt5-vlc шлет запрос в phonon-qt5, а тот вполне может перенаправить запрос якобы в phonon-qt5-backend, а на деле в тот же phonon-qt5-vlc.<br />Это нормальная ситуация?<br />А как пакетный менеджер ведет себя при каскадных операциях?<br /><br />У себя обнаружил шесть таких замыканий.<br />Например, посмотрите вот эти пары, если установлены пакеты:<br />mesa - libglvnd<br /><pre><code>$ pactree -d2 libglvnd</code></pre>freetype2 &lt;-&gt; harfbuzz<br /><pre><code>$ pactree -d2 harfbuzz</code></pre>usbmuxd &lt;-&gt; libimobiledevice<br /><pre><code>$ pactree -rd2 usbmuxd</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-205640"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/205640/index.html">#</a>
+            4 года, 2 месяца назад
+            
+                (отредактировано
+                
+                    4 года, 2 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Нет никакой <strike>циклической</strike> кольцевой зависимости. Начнем с уровня 1 на примере usbmuxd<br /><strong>pactree -d1 usbmuxd</strong><br />usbmuxd<br />└─<strong>libimobiledevice</strong><br />Видим всего одна зависимость от пакета <strong>libimobiledevice</strong>. Смотрим зависимость этого пакета<br /><strong>pacman -Qi libimobiledevice | grep Зависит</strong><br />Зависит от  : libusbmuxd  <strong>usbmuxd</strong>  gnutls<br />И это же показывает pactree -d2 usbmuxd (в этом выводе будет раскрыта зависимость libimobiledevice, точнее всех пакетов 1-го уровня и т.д.)<br /><strong>pactree -d2 usbmuxd</strong><br />usbmuxd<br />└─libimobiledevice<br />  ├─libusbmuxd<br />  ├─usbmuxd<br />  └─gnutls<br />usbmuxd даже находится на другом уровне, точнее относится к libimobiledevice.<br />Если понимать <strike>циклическую</strike> кольцевую зависимость дословно, то usbmuxd находился бы на 1-ом уровне (был бы в выводе pactree -d1 usbmuxd)<br /><br /><strong>EDIT 1</strong> - если посмотреть причину установки usbmuxd в выводе  pacman -Qi usbmuxd, то увидим - &quot;Установлен как зависимость другого пакета&quot;
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-205641"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vinc/index.html">
+                <span class="post-username">vinc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/205641/index.html">#</a>
+            4 года, 2 месяца назад
+            
+                (отредактировано
+                
+                    4 года, 2 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vinc/topics/index.html">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vinc/posts/index.html">
+                    180
+                </a>
+            </div>
+            <div>
+                Участник с: 13 июня 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Нет никакой циклической зависимости.</blockquote>Вы прямо посте приводите пример циклической зависимости и утверждаете, что ее нет;))<br /><pre><code>$ pactree -d2 usbmuxd
+usbmuxd
+└─libimobiledevice
+  ├─libusbmuxd
+  ├─usbmuxd
+  └─gnutls</code></pre>Из <strong>usbmuxd</strong> мы идем в <strong>libimobiledevice</strong> и потом опять в <strong>usbmuxd</strong>.<br />Мы выходим из одного пакета, идем по зависимостям и попадаем в тот же пакет. Это и есть то, что теории графов называют циклом. Причем здесь количество уровней между ними?<br />И мне вот интересно, как пакетный менеджер разруливает эту ситуацию (а он ее, безусловно, разруливает).<br /><strong>Update</strong>. Термины: кольцо или цикл, или петля не важны, главное суть. Поправил заголовок.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-205642"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/205642/index.html">#</a>
+            4 года, 2 месяца назад
+            
+                (отредактировано
+                
+                    4 года, 2 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Так запрограммирован pactree - показывает пакеты, которые зависят от данного пакета. Важен уровень 1, а дальше pactree расписывает зависимости пакетов находящихся на 1-ом уровне и так далее. А вот если указать <strong>pactree пакет</strong>, но этот пакет установлен как зависмость другого пакета (а не явно), то само собой в одном из уровней этот пакет и всплывет. Вроде все понятно, либо я плохо объясняю
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-205643"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/205643/index.html">#</a>
+            4 года, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня есть свой скрипт, который отличается от pactree - он учитывает только явно установленные пакеты. Привожу его вывод<br />~/pct.sh<br />Всего пакетов в pkglist: 242<br /><strong>Какой пакет ищем?</strong> (<u>какие пакеты явно зависят от данного</u>):  <strong>usbmuxd</strong><br /><strong>gvfs-afc</strong><br />Обработано пакетов: 242<br />Выявлено искомых пакетов: <strong>1</strong><br /><br />Проверяем - <strong>pacman -Qi gvfs-afc</strong><br />Зависит от           : gvfs=1.36.2  libimobiledevice  <strong>usbmuxd</strong><br />Причина установки    : <strong>Явно установлен</strong>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-205644"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sirocco/index.html">
+                <span class="post-username">sirocco</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/205644/index.html">#</a>
+            4 года, 2 месяца назад
+            
+                (отредактировано
+                
+                    4 года, 2 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sirocco/topics/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sirocco/posts/index.html">
+                    2501
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <a href="https://www.linux.org.ru/forum/general/13011764?cid=13012329">определение циклических зависимостей</a><br /><br /><pre><code>#!/bin/sh
+pacman -Qdq | while read pkg; do
+	pactree -lr $pkg | sed -n &quot;1d;/^${pkg}$/p&quot;
+done</code></pre><br /><pre><code>$ sudo pacman -R egl-wayland
+проверка зависимостей...
+ошибка: не удалось подготовить транзакцию (не удалось удовлетворить зависимости)
+:: nvidia-utils: удаление egl-wayland ломает зависимость &#39;egl-wayland&#39;
+</code></pre><pre><code>
+$ sudo pacman -Rc egl-wayland
+проверка зависимостей...
+:: vulkan-icd-loader опционально требует vulkan-driver: packaged vulkan driver
+предупреждение: обнаружена циклическая зависимость:
+предупреждение: nvidia-utils будет удалён после его зависимости egl-wayland
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-205645"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vinc/index.html">
+                <span class="post-username">vinc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/205645/index.html">#</a>
+            4 года, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vinc/topics/index.html">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vinc/posts/index.html">
+                    180
+                </a>
+            </div>
+            <div>
+                Участник с: 13 июня 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Хорошо бы какую-нибудь статейку ближе к первоисточнику найти.<br />В самих циклических зависимостях проблемы особой нет, просто тем, кто пишет скрипты по дереву зависимостей, нужно учитывать, что они могут быть. Но вот зачем в реальности это нужно, как-то я не понимаю.<br />Допустим, пишу я какую-то библиотеку вызываю функции из другой библиотеки (которая теперь будет у меня в зависимостях), и при этом я должен быть готов к тому, что из этой же библиотеки ко мне прилетят запросы на мои функции?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-205646"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vinc/index.html">
+                <span class="post-username">vinc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/205646/index.html">#</a>
+            4 года, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vinc/topics/index.html">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vinc/posts/index.html">
+                    180
+                </a>
+            </div>
+            <div>
+                Участник с: 13 июня 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sirocco</em><br><pre><code>$ sudo pacman -R egl-wayland
+проверка зависимостей...
+ошибка: не удалось подготовить транзакцию (не удалось удовлетворить зависимости)
+:: nvidia-utils: удаление egl-wayland ломает зависимость &#39;egl-wayland&#39;</code></pre></blockquote>Да, вот про это я и говорил, когда упоминал каскадные операции пакетного менеджера.<br />Вот в таких случаях циклические зависимости и должны проявляться (хотя лично я с проблемами не сталкивался).
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-205649"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/205649/index.html">#</a>
+            4 года, 2 месяца назад
+            
+                (отредактировано
+                
+                    4 года, 2 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Имхо я считаю - что разработчик заложил, то и получили. А он в pactree заложил полную раскладку зависимостей пакетов по уровням - на уровне <strong>n+1</strong> указываются зависимости всех пакетов, приведенных на уровне <strong>n</strong>.<br />И разумеется будут случаи с неявно установленными пакетами, которые имеют в зависимостях (напрямую или через другие зависимые пакеты) требуемый (искомый) пакет, который и выскочит на каком-нибудь уровне. По идее, конечно, можно такие пакеты вычислить и учитывать их при последующей обработке, чтобы исключить проблемы.<br />Но так ли это важно и нужно? Не знаю. Каждый разработчик решает по своему.<br /><strong>UPD</strong> - лично я ни разу не попадал в такую ситуацию. А если и возникнет такая ситуация, то разобраться с ней, думаю, не проблема.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-205670"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vinc/index.html">
+                <span class="post-username">vinc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/205670/index.html">#</a>
+            4 года, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vinc/topics/index.html">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vinc/posts/index.html">
+                    180
+                </a>
+            </div>
+            <div>
+                Участник с: 13 июня 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Как я понимаю, именно для того, чтобы разрубить циклическую зависимость, и используется опция &#39;<strong>c</strong>&#39; в операции удаления: <strong>pacman -Rc &lt;пакет&gt;</strong>.<br />Если в обычной ситуации хватает рекурсивного удаления с сохранением нужных зависимостей <strong>pacman -Rs</strong>, то циклическая зависимость не позволит это сделать. И тогда - только грубое снесение всего поддерева зависимостей для заданного пакета.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexff5d.html?next=/forum/topic/18569/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18569/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:16:03 GMT -->
+</html>

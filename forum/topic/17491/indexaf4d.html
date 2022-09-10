@@ -1,0 +1,1233 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17491/?page=5 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:37:23 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Установка Arch Linux на файловую систему ZFS [upd - октябрь 2017]
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/8/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/25/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Установка Arch Linux на файловую систему ZFS [upd - октябрь 2017]</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Установка Arch Linux на файловую систему ZFS [upd - октябрь 2017]</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="indexfdb0.html?page=4" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="indexaf4d.html?page=5">5 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexc575.html?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index235c.html?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdfa.html?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index0b08.html?page=9">9</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index1448.html?page=10">10</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index1c8b.html?page=11">11</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="indexc575.html?page=6" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189892"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189892/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Я правильно понимаю, что в zfs-linux все необходимое имеется?</blockquote>не знаю, я буду юзать <strong>zfs-dkms</strong>, а у него зависимости spl-dkms  zfs-utils  dkms
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189893"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189893/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br>у меня все собралось и установилось</blockquote>Ну отлично, я подожду маленько, просто интересно когда мой репозиторий проснется)))<br /><blockquote><em>nafanja</em><br>правда при mkinitcpio -P проявилась ошибка<br />  -&gt; Running build hook: [zfs]<br />==&gt; ERROR: module not found: `zlib_deflate&#39;</blockquote>Эта ошибка всегда есть, я уж забыл где читал, но написано что все норм., со временем пофиксят, а пока не обращать внимания<br /><blockquote><em>vasek</em><br>У меня глупый вопрос. Чем больше читаешь, тем больше вопросов. Обязательно ли нужно заниматься archiso?</blockquote>Я тоже об этом думал, но ведь при установке под arch-chroot из AUR ничего не поставишь, а поддержку ZFS надо именно там вставлять.<br />---upd---<br />archiso - это самое простое из всего, за 5 мин. делается :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189894"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189894/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Я правильно понимаю, что в zfs-linux все необходимое имеется?</blockquote>Да, больше ничего не требуется. Это группа.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189895"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189895/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>s-ugra@ya.ru</em><br>но ведь при установке под arch-chroot из AUR ничего не поставишь</blockquote>Кто мешает дописать в pacman.conf:<br />[archlinuxcn]<br />SigLevel = Optional TrustedOnly<br />Server = <a href="http://repo.archlinuxcn.org/$arch">http://repo.archlinuxcn.org/$arch</a><br />Установить yaourt и ставить из AUR?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189896"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189896/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <strong>RusWolf</strong>,<br />в вики про это не говорится<br /><blockquote><em>RusWolf</em><br>SigLevel = Optional TrustedOnly</blockquote><a href="https://wiki.archlinux.org/index.php/Unofficial_user_repositories#archlinuxcn">https://wiki.archlinux.org/index.php/Unofficial_user_repositories#archlinuxcn</a>
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189897"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189897/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>RusWolf</em><br>Установить yaourt и ставить из AUR?</blockquote>Войдя в устанавливаемую систему через arch-chroot находишься под правами root, а yaourt под root пакеты не ставит.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189898"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189898/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <strong>s-ugra@ya.ru</strong>, в репе <strong>archlinuxcn</strong> уже собранные пакеты, есть если что...<br /><pre><code>archlinuxcn/zfs-dkms 0.6.5.9-1 [installed]
+    Kernel modules for the Zettabyte File System.
+archlinuxcn/zfs-dkms-git 0.7.0_rc4_r24_g4358afa0f-1
+    Kernel modules for the Zettabyte File System. (Git version)
+archlinuxcn/zfs-utils 0.6.5.9-1 [installed]
+    Kernel module support files for the Zettabyte File System.
+archlinuxcn/zfs-utils-dkms-git 0.7.0_rc4_r24_g4358afa0f-1
+    Kernel module support files for the Zettabyte File System. (Git version)</code></pre><br />и вроде ничто не мешает создать пользователя в chroot, зайти под ним и собрать что нужно йогуртом.<br />но это конечно мелочи и заморочки...<br />проще добавить репу с уже собранными нужными пакетами.
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189899"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189899/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>nafanja</strong>, возможно, как вариант можно сделать и через AUR, например, если под рукой нет рабочего Арча чтобы собрать установочный образ, но мне было проще использовать archiso.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189965"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/jim945/index.html">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189965/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/jim945/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/jim945/posts/index.html">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>s-ugra@ya.ru</em><br>Можно использовать и другие варианты разбивки, принципиально только чтобы был загрузочный раздел, и он должен быть не под ZFS.</blockquote>grub поддерживает загрузку из zfs
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189967"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189967/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>jim945</em><br>grub поддерживает загрузку из zfs</blockquote>По wiki - да, но по тем материалам, на которые я дал ссылку в шапке, пишут что не получилось, и я пробовать не стал. Если у кого получится - давайте, добавим. Если у кого с UEFI получится, тоже давайте. У меня получилось только так как описал.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="indexfdb0.html?page=4" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="indexaf4d.html?page=5">5 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexc575.html?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index235c.html?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdfa.html?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index0b08.html?page=9">9</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index1448.html?page=10">10</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index1c8b.html?page=11">11</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="indexc575.html?page=6" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index2adf.html?next=/forum/topic/17491/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17491/?page=5 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:37:23 GMT -->
+</html>

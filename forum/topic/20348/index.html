@@ -1,0 +1,1124 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20348/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:14:42 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        dnsproxy + dnsmasq на 53 порту
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/13/index.html">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>dnsproxy + dnsmasq на 53 порту</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>dnsproxy + dnsmasq на 53 порту</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237388"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/UserName91238/index.html">
+                <span class="post-username">UserName91238</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237388/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/UserName91238/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/UserName91238/posts/index.html">
+                    9
+                </a>
+            </div>
+            <div>
+                Участник с: 22 ноября 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Есть виртуальные машины на qemu, с граф.интерфеисом KVM.(Сеть работает на libvrt запуск сети virsh net-start)<br />Дело в том что сеть виртуалок запускается на 53 порту, но он занят dnsproxy который отказывается работать на других портах(не выполняет основную функцию днс).<br />Как можно указать libvrt что запускать все нужно на другом порту?<br /><pre><code>$ sudo ss -lntup
+Netid State Recv-Q Send-Q Local Address:Port Peer Address:Port Process
+udp UNCONN 0 0      192.168.100.1:53   0.0.0.0:*        users:((&quot;dnsmasq&quot;,pid=39811,fd=5))
+udp UNCONN 0 0      0.0.0.0:54         0.0.0.0:*        users:((&quot;dnsmasq&quot;,pid=39880,fd=4))
+udp UNCONN 0 0      0.0.0.0%virbr0:67  0.0.0.0:*        users:((&quot;dnsmasq&quot;,pid=39811,fd=3))
+udp UNCONN 0 0      0.0.0.0:58262      0.0.0.0:*        users:((&quot;avahi-daemon&quot;,pid=398,fd=14))
+udp UNCONN 0 0      0.0.0.0:5353       0.0.0.0:*        users:((&quot;avahi-daemon&quot;,pid=398,fd=12))
+udp UNCONN 0 0      [::]:54            [::]:*           users:((&quot;dnsmasq&quot;,pid=39880,fd=6))
+udp UNCONN 0 0      *:55               *:*              users:((&quot;dnsproxy&quot;,pid=39841,fd=3))
+udp UNCONN 0 0      [::]:58015         [::]:*           users:((&quot;avahi-daemon&quot;,pid=398,fd=15))
+udp UNCONN 0 0      [::]:5353          [::]:*           users:((&quot;avahi-daemon&quot;,pid=398,fd=13))
+tcp LISTEN 0 32     0.0.0.0:54         0.0.0.0:*        users:((&quot;dnsmasq&quot;,pid=39880,fd=5))
+tcp LISTEN 0 4096   127.0.0.1:9050     0.0.0.0:*        users:((&quot;tor&quot;,pid=503,fd=6))
+tcp LISTEN 0 4096   0.0.0.0:5900       0.0.0.0:*        users:((&quot;qemu-system-x86&quot;,pid=4372,fd=12))
+tcp LISTEN 0 32     192.168.100.1:53   0.0.0.0:*        users:((&quot;dnsmasq&quot;,pid=39811,fd=6))
+tcp LISTEN 0 32     [::]:54            [::]:*           users:((&quot;dnsmasq&quot;,pid=39880,fd=7))
+tcp LISTEN 0 4096   *:55               *:*              users:((&quot;dnsproxy&quot;,pid=39841,fd=7))
+tcp LISTEN 0 32     *:21               *:*              users:((&quot;ftpd&quot;,pid=500,fd=4))</code></pre>Здесь поднял dnsmasq на 54(но он не работает обычно и не вижу в нем смысла, он только зависимость для виртуалки).<br />dnsproxy на 55 порту при этом функцию днс он не выполняет и безполезен.<br />А на 53 порту подняты злополучные интерфеисы dnsmasq для я так понимаю обеспечения интернета на виртуалках, но без dnsproxy он не работает т.к указал в NetworkManager что берем от сети только dhcp, и получилось что интернет на виртуалках не работает так как я не поднял днс на 53 порту.<br /><br />измененый конфиг dnsmasq(остальное все по дефолту):<br /><br /><pre><code># Listen on this specific port instead of the standard DNS port
+# (53). Setting this to zero completely disables DNS function,
+# leaving only DHCP and/or TFTP.
+port=54</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237389"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/UserName91238/index.html">
+                <span class="post-username">UserName91238</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237389/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/UserName91238/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/UserName91238/posts/index.html">
+                    9
+                </a>
+            </div>
+            <div>
+                Участник с: 22 ноября 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            не знаю почему еще днс слушает только на 53 порту, а на других нет
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237395"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237395/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            вы хотите настроить сеть в qemu?<br /><pre><code>-device virtio-net-pci,netdev=n -netdev user,ipv4,id=n</code></pre>
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237397"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/UserName91238/index.html">
+                <span class="post-username">UserName91238</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237397/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/UserName91238/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/UserName91238/posts/index.html">
+                    9
+                </a>
+            </div>
+            <div>
+                Участник с: 22 ноября 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br>вы хотите настроить сеть в qemu?<br /><pre><code>-device virtio-net-pci,netdev=n -netdev user,ipv4,id=n</code></pre></blockquote>Нет, в qemu все вроде хорошо. У меня при команде<pre><code> $virsh net-start network</code></pre> создается сеть 192.168.100.1:53 она висит на 53 порту и за счет нее, как я понял, осуществляется выход в интернет виртуальной машиной.Но она не сможет выйти если у меня поднят dnsproxy на том же 53 порту.<br />Как мне при команде <pre><code>$virsh net-start network</code></pre> поднимать сеть на каком либо другом порту.<br />(Может я все неправильно понимаю и ставлю вопрос неправильно, прошу меня простить :(( )
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237400"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237400/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ну так задайте другой порт в dns-proxy, зачем он вам вообще...
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237403"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/UserName91238/index.html">
+                <span class="post-username">UserName91238</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237403/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/UserName91238/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/UserName91238/posts/index.html">
+                    9
+                </a>
+            </div>
+            <div>
+                Участник с: 22 ноября 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я когда задаю другой порт в dnsproxy он собсна не работает, я не знаю почему.<br />Нужен чтоб днс запросы не обрабатывал провайдер, я ведь забочусь о нем.<br />dns шифруется посредством dns-overhttps.<br /><br />вот так все работает:<br /><pre><code> ./dnsproxy -u <a href="https://dns.adguard.com/dns-query">https://dns.adguard.com/dns-query</a> -b 1.1.1.1:53</code></pre><br />а вот так нет:<br /><pre><code>./dnsproxy -u <a href="https://dns.adguard.com/dns-query">https://dns.adguard.com/dns-query</a> -b 1.1.1.1:54 -p 54
+или
+./dnsproxy -u <a href="https://dns.adguard.com/dns-query">https://dns.adguard.com/dns-query</a> -b 1.1.1.1:53 -p 54
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237449"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237449/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У программы dnsproxy которая весит в aur нет опции u, откуда вы её брали?<br />Я что-то не могу понять как она работает, надо наверно читать инструкцию((<br />Но с моей колокольни браузеру нужно как-то указать чтобы забирал у неё адрес dns, вряд-ли что бы она меняла системный.<br />Ну с определённой вероятностью нужно указывать порт тому кто у этой программы адресс и забирает.<br /><br />Ну и с увереностью в 99% внешний порты у вас за nat провайдера, не вдаваясь в подробности из за этого номер порта не имеет вообще никакого значения.<br /><br />p.s. лишнии темы создавать не стоит, злая администрация выгонит.
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237450"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237450/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>UserName91238</em><br>измененый конфиг dnsmasq</blockquote>Ну и конфигурацию возможно нужно указывать в xml для libvrt, этот файл может он и не использует
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237459"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/UserName91238/index.html">
+                <span class="post-username">UserName91238</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237459/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/UserName91238/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/UserName91238/posts/index.html">
+                    9
+                </a>
+            </div>
+            <div>
+                Участник с: 22 ноября 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br>p.s. лишнии темы создавать не стоит, злая администрация выгонит.</blockquote>С темами погарячился, но все таки покоя вопрос мне не дает.<br /><blockquote><em>indeviral</em><br>У программы dnsproxy которая весит в aur нет опции u, откуда вы её брали?</blockquote>Брал с гит репозитория <a href="https://github.com/AdguardTeam/dnsproxy">https://github.com/AdguardTeam/dnsproxy</a>, инструкцию там -же (за первоисточник не ручаюсь).<br /><blockquote>Но с моей колокольни браузеру нужно как-то указать чтобы забирал у неё адрес dns, вряд-ли что бы она меняла системный.</blockquote>Браузер(firefox) порт не берет, только адресс(оный 127.0.0.1), но когда dnsproxy работает на 54 порту, саиты не грузят, но вот на 53 все блин работает.<br />Не работает так-же dns на qemu, на том же 54 порту, указать могу только адресс.<br />если можно как то системе указать что вот смотри днс вот там то и порт, в настроиках wifi я указываю что dns servers 127.0.0.1, но там опять же безпорта
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237460"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/UserName91238/index.html">
+                <span class="post-username">UserName91238</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237460/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/UserName91238/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/UserName91238/posts/index.html">
+                    9
+                </a>
+            </div>
+            <div>
+                Участник с: 22 ноября 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вот xml настройка виртуальной сети<br /><pre><code>&lt;network&gt;
+  &lt;name&gt;VirtManagerNet&lt;/name&gt;
+  &lt;uuid&gt;a6b49429-d353-d7ad-3185-4451cc786437&lt;/uuid&gt;
+  &lt;forward mode=&quot;nat&quot;&gt;
+    &lt;nat&gt;
+      &lt;port start=&quot;1024&quot; end=&quot;65535&quot;/&gt;
+    &lt;/nat&gt;
+  &lt;/forward&gt;
+  &lt;bridge name=&quot;virbr0&quot; stp=&quot;on&quot; delay=&quot;0&quot;/&gt;
+  &lt;mac address=&quot;00:16:3e:1a:b3:4a&quot;/&gt;
+  &lt;domain name=&quot;127.0.0.1&quot;/&gt;
+  &lt;dns&gt;
+    &lt;forwarder addr=&quot;127.0.0.1&quot;/&gt;
+  &lt;/dns&gt;
+  &lt;ip address=&quot;192.168.100.1&quot; netmask=&quot;255.255.255.0&quot;&gt;
+    &lt;dhcp&gt;
+      &lt;range start=&quot;192.168.100.128&quot; end=&quot;192.168.100.254&quot;/&gt;
+    &lt;/dhcp&gt;
+  &lt;/ip&gt;
+&lt;/network&gt;
+</code></pre>Не могу задать порт создания самой сети,всегда на 53 идет.<br />Неработающие строки(/dns), KVM сам убирает
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index4a2a.html?next=/forum/topic/20348/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20348/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:14:42 GMT -->
+</html>

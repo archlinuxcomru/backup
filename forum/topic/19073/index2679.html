@@ -1,0 +1,1142 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19073/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:32:48 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        PRA - модульная squashfs сборка с использованием AUFS
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/6/index.html">Разработка</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/21/index.html">Разработки арчеводов</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>PRA - модульная squashfs сборка с использованием AUFS</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>PRA - модульная squashfs сборка с использованием AUFS</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexaf4d.html?page=5">5</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214319"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sfs/index.html">
+                <span class="post-username">sfs</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214319/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sfs/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sfs/posts/index.html">
+                    116
+                </a>
+            </div>
+            <div>
+                Участник с: 07 февраля 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <a href="indexfdb0.html?page=4#post-224521"><strong>PRA-Roll-1912</strong></a><br /><br />В ядре арча AUFS давно слит. В Mаnjaro есть и используется<br /><br />Основные идеи <a href="http://wiki.puppyrus.org/puppyrus/start">PRA</a>, которые редко встречаются в других дистрибутивах:<br />Сложно убиваемый , ориентированный на домашнее использование новичками дистрибутив.<br />Можно поставить даже на ntfs  раздел с виндой. Или на флэшку (т.е. не заморачиваться и не бояться испортить)<br />Т.е. сверхзадача - показать простым людям, что есть оси кроме винды. Оживить комп непригодный по железу для винды<br /><br />Неубиваемость достигается : squashfs база (т.е. RO)+ поверх RW слой AUFS в виде tmpfs или каталога (файла)<br />Кроме того есть готовые модули софта, которые по мере необходимости можно подключать(отключать) по горячему, скачав из инета<br />Overlayfs  (или я) так не умеет.<br /><br />В итоге можно иметь на флэшке базовый дистр метров 200. Остальное подгрузить из инета<br />Чтобы  pacman работал без обновления базовых модулей - арч репа заморожена. Поэтому Arch. В других дистрах заморозки нет<br />На выходе получаем дистр в стиле &quot;для запуска браузера&quot; : PRA03 PRA64. Модули браузеров обновляются.<br />Много скриптов любительского уровня. GUI на yad, gtkdialog<br />Установка - просто скопировать папку с модулями и добавить строку в груб<br /><br />Если хочется нормальных арч-обновлений, но не хочется прощаться с неубиваемостью  и т.п.: <a href="http://wiki.puppyrus.org/puppyrus/pra-roll"><strong>PRA-roll</strong></a><br />Желающим попробовать эти фишки достаточно пересобрать <a href="http://wiki.puppyrus.org/soft/arch-initrd-rootaufs2">initrd</a> и добавить параметров ядра в любом имеющемся линуксе. Есть вариант с overlayfs. Дорабатывал сам. Уровень кода любительский. Приму любую помощь по совершенствованию<br />Установка - распаковка squashfs<br /><br />Дистр сделан не вчера. Т.к. ориентирован на новичков - на этом форуме не анонсировал. В соседней теме (IceArch) пошли вопросы про PRA. Чтобы не делать мешанину в той теме - создал отдельную<br /><br /><blockquote><em>akorop</em><br>&quot;Пароли пользователей root и live рекомендуется изменить…&quot;, но &quot;sudo по умолчанию настроено на полное разрешение запуска всем всего без пароля.&quot;. И что толку в измении паролей, если sudo беспарольный?</blockquote>Чтобы враги не зашли ssh ftp c дефолтным паролем<br /><blockquote><em>akorop</em><br>&quot;Работа под root (как в puppy) Очень небезопасно&quot; А можно назвать пару опасностей, грозящих тем, кто работает по рутом?</blockquote>Случайно убить винду  и потом рассказывать виндузятникам, что линукс плохой :)<br /><blockquote><em>akorop</em><br>обычный набор ритуальных фраз без серьёзного анализ опасностей и мер их блокирования.</blockquote>Вы же сами ответили:<br /><blockquote><em>akorop</em><br>Система в домашнем линуксе - это мелочь, о которой и жалеть нечего, особенно при технологии puppy</blockquote><blockquote><em>jim945</em><br>sfs, скажи пожалуйста нафига там три разных загрузчика? Три блин!!!</blockquote>EFI - для железа, где по другому никак<br />syslinux - чтобы iso был гибридным (Т.е. можно dd на флэшку). Из него сделан переход в<br />grub4dos - самый простой и маленький<br /><blockquote><em>jim945</em><br>Выбор видео дров через загрузчик, тоже выглядит довольно странно, но это еще как-то можно понять.</blockquote>Ядро не из арч репы. Скомпилить модули ядра видях - задача не для новичков. Да если бы и из репы - тоже не для новичков<br /><blockquote><em>jim945</em><br>Потом я открыл init и стало страшно))) Разобраться в нем довольно сложно.</blockquote>:( См. выше &quot;Уровень кода любительский&quot;...
+            
+                
+                    <div class="post-signature">
+                        <a href="https://sourceforge.net/projects/puppyrusa/"><strong>PuppyRusArch (PRA)</strong></a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214322"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/jim945/index.html">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214322/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/jim945/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/jim945/posts/index.html">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sfs</em><br>EFI - для железа, где по другому никак<br />syslinux - чтобы iso был гибридным (Т.е. можно dd на флэшку). Из него сделан переход в<br />grub4dos - самый простой и маленький</blockquote>Всё делается вторым грабом. Могу помочь перейти на него.<br />Кстати можно ядро с initrd прямо в sfs запихнуть)))<br /><blockquote><em>sfs</em><br>Ядро не из арч репы. Скомпилить модули ядра видях - задача не для новичков. Да если бы и из репы - тоже не для новичков</blockquote><blockquote><em>sfs</em><br>:( См. выше &quot;Уровень кода любительский&quot;&#8230;</blockquote>Там же pf ядро? Почему не использовать его из aur. Логику перенести в стандартные хуки.<br />Сейчас как раз, по мере возможностей, пытаюсь подружиться с хуком <strong>systemd</strong>, на dracut нет особого желания полностью переходить.
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214323"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/jim945/index.html">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214323/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/jim945/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/jim945/posts/index.html">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            кстати<br />linux<strong>16</strong> /boot/grub4dos/grub.exe
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214328"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/jim945/index.html">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214328/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/jim945/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/jim945/posts/index.html">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sfs</em><br>Неубиваемость достигается : squashfs база (т.е. RO)+ поверх RW слой AUFS в виде tmpfs или каталога (файла)<br />Кроме того есть готовые модули софта, которые по мере необходимости можно подключать(отключать) по горячему, скачав из инета<br />Overlayfs (или я) так не умеет.</blockquote>Интереса ради. Сколько слоев выдерживает AUFS?<br />Как количество слоев на производительность.<br />Да Overlayfs на горячую не умеет.
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214329"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sfs/index.html">
+                <span class="post-username">sfs</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214329/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sfs/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sfs/posts/index.html">
+                    116
+                </a>
+            </div>
+            <div>
+                Участник с: 07 февраля 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>jim945</em><br>Всё делается вторым грабом</blockquote>А он точно работает с ntfs fat?<br /><blockquote><em>jim945</em><br>Могу помочь перейти на него.</blockquote>Интересно<br /><blockquote><em>jim945</em><br>Почему не использовать его из aur</blockquote>Потому, что новички не умеют aur<br />Да и вообще - дистр, для полноценной работы которого надо дособирать  aur ...<br /><blockquote><em>jim945</em><br>Кстати можно ядро с initrd прямо в sfs запихнуть)))</blockquote>А смысл? В PRA фругал даже initrd не привязано к ядру (нужное монолитно). Поэтому легко заменить<br /><blockquote><em>jim945</em><br>кстати<br />linux16 /boot/grub4dos/grub.exe</blockquote>Если предлагаете перейти grub2-&gt;g4dos у меня не получилиось. g4d не находит свой конфиг
+            
+                
+                    <div class="post-signature">
+                        <a href="https://sourceforge.net/projects/puppyrusa/"><strong>PuppyRusArch (PRA)</strong></a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214330"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sfs/index.html">
+                <span class="post-username">sfs</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214330/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sfs/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sfs/posts/index.html">
+                    116
+                </a>
+            </div>
+            <div>
+                Участник с: 07 февраля 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>jim945</em><br>Сколько слоев выдерживает AUFS?</blockquote>Вроде задается при компиляции ядра. Что-то больше 100. Проблем с нехваткой не возникало<br /><blockquote><em>jim945</em><br>Как количество слоев на производительность.</blockquote>По моим наблюдениям никак. Но каждый слой отжырает на свое обслуживание порядка 1,5мб RAM. Поэтому мельчить не имеет смысла<br />Всегда можно <a href="http://wiki.puppyrus.org/soft/arch-initrd-rootaufs2">склеить\расклеить</a> модули
+            
+                
+                    <div class="post-signature">
+                        <a href="https://sourceforge.net/projects/puppyrusa/"><strong>PuppyRusArch (PRA)</strong></a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214331"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214331/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            я так понял этот PRA почти тоже самое что и убунтовский Snap?
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214333"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/jim945/index.html">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214333/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/jim945/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/jim945/posts/index.html">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sfs</em><br>А он точно работает с ntfs fat?</blockquote>100%<br /><blockquote><em>sfs</em><br>Потому, что новички не умеют aur<br />Да и вообще - дистр, для полноценной работы которого надо дособирать aur &#8230;</blockquote>Не вникал как там все устроено в этом плане. Ядро и инит самодельные?  Чем это лучше?<br /><blockquote><em>sfs</em><br>А смысл? В PRA фругал даже initrd не привязано к ядру (нужное монолитно). Поэтому легко заменить</blockquote>Это было в тему к возможностям второго граба.<br /><blockquote><em>sfs</em><br>Если предлагаете перейти grub2-&gt;g4dos у меня не получилиось. g4d не находит свой конфиг</blockquote>Для начала там неправильная команда. Нужно linux16.<br />управление передается в g4d и он уже ищет menu.lst<br />я бы логику перенес на grub2. Например<br /><pre><code>menuentry &quot;2k10&quot; {
+  search --no-floppy --fs-uuid --set=root 58B98C765FB386C0
+  linux16 /2k10/GRUB4DOS/Grub.exe --config-file=/2k10/GRUB4DOS/2K10.LST
+}</code></pre>А если по классике, то поиск корня по лейблу.<br /><br /><blockquote><em>sfs</em><br>Вроде задается при компиляции ядра. Что-то больше 100. Проблем с нехваткой не возникало</blockquote>Пробовал перепакечивать арчевские пакеты в лоб (т.к. лень делать свой дистрибутив, объединять пакеты, следить за этим) естественно у меня overlay закончился где-то в этом же районе.<br /><blockquote><em>sfs</em><br>По моим наблюдениям никак. Но каждый слой отжырает на свое обслуживание порядка 1,5мб RAM. Поэтому мельчить не имеет смысла</blockquote>Неплохо.
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214336"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/jim945/index.html">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214336/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/jim945/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/jim945/posts/index.html">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Понял. Монолитное ядро + постоянный initrd.<br /><br />Неизменный initrd конечно интересно, но мне это чуждо. Самому ядро пересобирать из-за этого...<br />Ядро отдельным sfs модулем проще.
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214337"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/jim945/index.html">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214337/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/jim945/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/jim945/posts/index.html">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br>я так понял этот PRA почти тоже самое что и убунтовский Snap?</blockquote>Вот кстати вопрос к <strong>sfs</strong>. По какому принципу выбирается содержимое модулей.
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexaf4d.html?page=5">5</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexec14.html?next=/forum/topic/19073/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19073/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:32:48 GMT -->
+</html>

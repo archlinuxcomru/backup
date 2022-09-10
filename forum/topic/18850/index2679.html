@@ -1,0 +1,1067 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Как с мастдайки (оперативно) получить файлы находящиеся на Линуксовой машине?
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Как с мастдайки (оперативно) получить файлы находящиеся на Линуксовой машине?</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Как с мастдайки (оперативно) получить файлы находящиеся на Линуксовой машине?</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210372"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/ilya/">
+                <span class="post-username">ilya</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/210372/">#</a>
+            3 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/ilya/topics/">
+                    18
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/ilya/posts/">
+                    77
+                </a>
+            </div>
+            <div>
+                Участник с: 15 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Сегодня у меня случился форсмажор: перепутал документы, а тратить &gt;4 часов на поездку за документами не очень хотелось. Хоть у меня на смарте и установлен SSH клиент, но серьёзно на нем работать, это извращение.<br />Решил проблему извращенным путём, больше похожим на удаление гланд, через анальное отверстие. :D<br />1) У людей оказался нотер и ессно с богомерзкой мастдайкой - всяко удобнее, чем втыкать в смарт<br />2) Скачал и установил putty.<br />3) Залез на свой домашний &quot;сервер&quot;<br />4) Слава OpenVPN!!! Мой комп подключен к другой сети.<br />5) Нашёл сканы требуемых док-тов на своём компе, но затупил как их скинуть на чужой мастдайский комп. :|<br />6) Вспомнил, что на &quot;сервере&quot; поднят Apache и у сервера статический IP.<br />7) Перекинул сканы в /srv/http/<br />8) зашёл на http:/<a href="http://myserver.ip/doc...jpg">myserver.ip/doc...jpg</a> и вуаля!<br />Правда только сейчас вспомнил, что у меня еще и ftp поднят.<br /><br />Собственно вопрос: как имея комп с мастдайкой и доступ по ssh, скопировать файлы на мастдайку?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210377"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/redix/">
+                <span class="post-username">redix</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/210377/">#</a>
+            3 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/85/25/8525b8b3d838c29f000f57cb18c9307a.png" alt="redix avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/redix/topics/">
+                    34
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/redix/posts/">
+                    3433
+                </a>
+            </div>
+            <div>
+                Участник с: 11 марта 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Установите <a href="https://www.ext2fsd.com/">Ext2Fsd</a>, у вас появится доступ R/W из вендовоза к разделам ext3 и 4.
+            
+                
+                    <div class="post-signature">
+                        In Tux We Trust
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210378"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/corner/">
+                <span class="post-username">corner</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/210378/">#</a>
+            3 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/corner/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/corner/posts/">
+                    773
+                </a>
+            </div>
+            <div>
+                Участник с: 21 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <pre><code>
+PS C:\Users\olegn\Downloads&gt; scp -C <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="214e4d4446614544524a554e51">[email&#160;protected]</a>:~/Downloads/jd_base.png .
+jd_base.png                                                                                                                                       100%  157KB  78.3KB/s   00:02
+PS C:\Users\olegn\Downloads&gt; dir
+    Directory: C:\Users\olegn\Downloads
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+
+-a----       10/28/2018     18:40         160275 jd_base.png
+-a----       10/18/2018     13:42         162332 WhoIs.zip
+</code></pre><br />Как-то так работает из PowerShell,<br />т.е. вроде как нативно
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210381"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/ilya/">
+                <span class="post-username">ilya</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/210381/">#</a>
+            3 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/ilya/topics/">
+                    18
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/ilya/posts/">
+                    77
+                </a>
+            </div>
+            <div>
+                Участник с: 15 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>redix</em><br>Установите <a href="https://www.ext2fsd.com/">Ext2Fsd</a>, у вас появится доступ R/W из вендовоза к разделам ext3 и 4.</blockquote>Спасибо, но у меня не было особенно времени на всяческие установки!  Так то возможно проще облако поднять.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210382"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/ilya/">
+                <span class="post-username">ilya</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/210382/">#</a>
+            3 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/ilya/topics/">
+                    18
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/ilya/posts/">
+                    77
+                </a>
+            </div>
+            <div>
+                Участник с: 15 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>corner</em><br><pre><code>
+PS C:\Users\olegn\Downloads&gt; scp -C <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a2cdcec7c5e2c6c7d1c9d6cdd2">[email&#160;protected]</a>:~/Downloads/jd_base.png .
+jd_base.png                                                                                                                                       100%  157KB  78.3KB/s   00:02
+PS C:\Users\olegn\Downloads&gt; dir
+    Directory: C:\Users\olegn\Downloads
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+
+-a----       10/28/2018     18:40         160275 jd_base.png
+-a----       10/18/2018     13:42         162332 WhoIs.zip
+</code></pre><br />Как-то так работает из PowerShell,<br />т.е. вроде как нативно</blockquote>Спасибо! Цэ дило! :) А начиная с какой винды есть этот повершелл и надо ли его устанавливать дополнительно?<br /><br />Тащемта я настолько &quot;деградировал&quot; с ентими вашими Линуксами, что  даже растерялся увидев винду! Где билять терминал!? :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210383"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/corner/">
+                <span class="post-username">corner</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/210383/">#</a>
+            3 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/corner/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/corner/posts/">
+                    773
+                </a>
+            </div>
+            <div>
+                Участник с: 21 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <a href="https://aur.archlinux.org/packages/powershell">PowerShell</a><br /><a href="https://github.com/PowerShell/PowerShell#get-powershell">Get PowerShell</a><br /><br />В Win 10 точно есть
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210384"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/210384/">#</a>
+            3 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>ilya</em><br>Где билять терминал!? :)</blockquote>Терминал то тоже есть и в чем то похож на наш, конечно, не во всем, но мать то одна - DOS
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210385"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/corner/">
+                <span class="post-username">corner</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/210385/">#</a>
+            3 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/corner/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/corner/posts/">
+                    773
+                </a>
+            </div>
+            <div>
+                Участник с: 21 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Все это работает и в command также<br />Просто нужно установить  SSH  от GitHub<br /><a href="https://git-scm.com/downloads">git-scm</a><br />И так получаете почти полный пакет SSH, во всяком случае ssh и scp<br />P.S.<br />Просто стало интересно, как там Windows за последние 10 лет развилась.<br />На один из ноутов поставил.<br />Сначала даже понравилось.<br />Потом меньше :)<br />В общем, сейчас на ней можно сделать практически все.<br />Но есть некоторые неудобства...<br />Лучше Arch.<br />Debian  тоже снес и потихоньку отказываюсь на серверах в пользу CentOS.<br />Ubuntu снес с матами, нет слов просто.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210386"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/chronos/">
+                <span class="post-username">chronos</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/210386/">#</a>
+            3 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/e5/b3/e5b356d224cbeef88b07e8fced8d6ae9.png" alt="chronos avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/chronos/topics/">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/chronos/posts/">
+                    518
+                </a>
+            </div>
+            <div>
+                Участник с: 15 марта 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>corner</em><br><a href="https://aur.archlinux.org/packages/powershell">PowerShell</a><br /><a href="https://github.com/PowerShell/PowerShell#get-powershell">Get PowerShell</a><br /><br />В Win 10 точно есть</blockquote>Там и убунта кастрированная есть!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210387"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/corner/">
+                <span class="post-username">corner</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/210387/">#</a>
+            3 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/corner/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/corner/posts/">
+                    773
+                </a>
+            </div>
+            <div>
+                Участник с: 21 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ну да, а в Linux есть кастрированная Windows (типа Wine)... Или нет?<br />Кстати, не только Ubuntu. Это <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">WSL</a><br />Во всяком случае Windows существенно изменилась, и в лучшую сторону.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/18850/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747b37d5c8e29d63',m:'wmLF7hK5lGTRoFWb31XP196O7OvnkRZcivLFbJmfPPo-1662677165-0-Afa/GmBne5tGpfDmjj8349YivHVV+AldOrRwXMOyuByHtJXWGTS5KPfdvB1lGDAX94pquzAhYBb6KnXMgPb1h2QqTIqgibjgjO4SlLpzPTHUqHBJTP3UbqKtxq+tIQuKLXC78vbvC6eZkJcUfn+Shxs=',s:[0x561c855685,0x9d92257288],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

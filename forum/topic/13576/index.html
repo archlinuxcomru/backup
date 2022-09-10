@@ -1,0 +1,941 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/13576/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:10:59 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Multi-boot установка Win2k/XP/2k3 в VHD образ, без перезаписи GRUB2 
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/8/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/25/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Multi-boot установка Win2k/XP/2k3 в VHD образ, без перезаписи GRUB2 </li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Multi-boot установка Win2k/XP/2k3 в VHD образ, без перезаписи GRUB2 </h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-136866"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/136866/index.html">#</a>
+            8 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Введение</strong><br /><br />Операционные системы семейства Windows, в частности их инсталляторы, широко известны своим &quot;дружественным&quot; отношением к другим ОС, установленным на вашем компьютере. Совместное проживание Windows и *nix систем осложняется тем, что первая считает MBR своей собственностью, и её инсталлятор не задумываясь пишет в неё свой загрузочный сектор. Кроме того, творение редмодовцев требует для себя первичный раздел на hdd, а Win7/8 ещё и около 100 Мб в начале диска, для создания раздела с загрузчиком. Все ухищрения по установке всё равно сводятся к необходимости после инсталяции восстанавливать загрузочную запись того же grub, для возможности загрузки других ОС.<br /><br />Не знаю кому как, а мне всё это дело не нравилось с самого начала. Поэтому решение вопроса использования Linux и Windows на одном компьютере по началу почти всегда сопровождалось потерей данных на диске, а позже, после преобретения некоторого опыта, стало просто неприятным занятием, которого хотелось избежать. Именно по этой причине около года назад я отказался от дуалбута в пользу Linux как основной системы, и виртуальной Windows для использования вордов/экселей и прочего софта, без которого в реалиях современного документооборота и организации научной работы, как не крути, не обойтись.<br /><br />Однако в моей деятельности существует ряд задач, которые нерешаемы без использования Windows в реальном аппаратном окружении. Это прежде всего моделирующие программы, в частности &quot;Универсальный механизм&quot;, который работает в вайне, но довольно таки криво. И поиграть в игры - тоже хочется :). А потрошить HDD для установки винды, рискуя при обрыве питания получить венегрет из единиц и нулей на прилично забитом данными терабайтном винтчестере - ой как неохота.<br /><br />Оказалось что решение есть. Довольно простое и эффективное.<br /><br /><strong>1. VHD-контейнеры, или как это реализует Microsoft</strong><br /><br />VHD - формат образа жесткого диска, используемый виртуальной машиной Virtual PC и гипервизором Hyper-V. Довольно распространен, в виду чего открытый VirtualBox поддерживает данный формат в полном объеме. Это же касается и QEMU, в состав которого входят утилиты для преобразования других образов в VHD.<br /><br />В Windows 7 Ultimate (насчет висты я не в курсе) имеет в своем составе утилиты для создания дисков формата VHD и управления ими, а интсталятор win7 позволяет установить на такой диск семерку и настроить загрузчик для запуска установленной ОС на реальном железе. Гугление по этому поводу дает достаточно информации, вполне адекватная документация есть и на сайте Microsoft. При этом мы получаем полноценную систему, установленную в файл образа.<br /><br />Но линуксоиды не были бы линуксоидами, если бы не придумали способа реализовать подобное своими силами. Имеется сайт <a href="http://reboot.pro/">http://reboot.pro</a>, где освещены данные вопросы, имеется несколько разрозненных и уклончивых инструкций на разных it-форумах. Среди наших форумчан есть люди, реализовавшие такую возможность на практике.<br /><br />Цель данной статьи - подробно осветить и собрать воедино информацию, касающуюся данной задачи. Дабы облегчить жизнь тем, кому эта технология может пригодится. Строго не судите - приобретя некоторое знание, хочу поделиться им с окружающими.<br /><br />Задачу будет освещаться в аспекте того, как её решал автор. Заинтересованное лицо, возможно, найдет для себя иной удобный ему способ реализации.<br /><br />Инструментарий, который мы будем использовать:<br /><br /><ul><li>Утилита для управления разделами HDD, например <strong>gparted</strong></li><li>Менеджер виртуальных машин <strong>VirtualBox</strong></li><li>Установленная на ВМ ОС Windows (XP/7)</li><li>Загрузчик <strong>grub4dos</strong></li><li>Драйвер <strong>WinVBlock</strong></li><li>Утилита <strong>wincontig</strong> от Марка Русиновича для дефрагментации образов - <a href="http://wincontig.mdtzone.it/ru/index.htm">берем тут</a></li></ul><br /><strong>2. Готовим почву: размещение образа и настройка загрузчика</strong><br /><br />Для размещения образов необходим раздел жесткого диска (или отдельный диск) с файловой системой, которую будет понимать Windows. Выбор тут невелик - NTFS, так как FAT32 не поддерживает файлов более 4 Гб, а наши образы будут существенно больше. Раздел можно создать в gparted и там же и отформатировать, например у меня сделано вот так - воспользовался местом, резервированном для вероятной установки другой системы и экспериментов.<br /><br /><a href="http://itmages.ru/image/view/1686886/01e0bd23"><img src="http://storage7.static.itmages.ru/i/14/0526/s_1401115718_4135960_01e0bd238a.png"></a><br /><br />Теперь этот раздел необходимо пробросить в виртуальную машину. Это нужно для того, чтобы выполнять операции над файлами из нативной виндозной среды, в частности может потребоваться дефрагментация образов, о чем будет чуть ниже. Для этого создаем файл-ссылку на физический жесткий диск/раздел диска средствами VirtualBox<br /><br /><pre><code>
+VBoxManage internalcommands createrawvmdk -filename ~/&lt;Путь к файлу&gt;/ntfs_hdd.vdmk -rawdisk /dev/&lt;раздел&gt;
+</code></pre><br />Полученный виртуальный диск подключаем в виртуалбоксе к машине с установленной виндой (лучше с win7), допустим вот так<br /><br /><a href="http://itmages.ru/image/view/1686915/974fdcec"><img src="http://storage5.static.itmages.ru/i/14/0526/s_1401116159_4697068_974fdcec5d.png"></a><br /><br />Таким образом, почву мы подготовили.<br /><br />Что касается загрузчика, то для нашей задачи необходим grub4dos - этот загрузчик умеет работать с образами hdd, в том числе и VHD-формата. Качаем его <a href="https://code.google.com/p/grub4dos-chenall/downloads/list">отсюда</a>. Необходимо брать последнюю версию, так как у подобраной на гитхабе версии 0.4.4 обнаружилась проблема с определением геометрии диска - для любого образа он выдавал 1024 цилиндра, вне зависимости от размера оного. Автором использован 0.4.6a.<br /><br />Можно установить загрузчик как основной, но у большинства пользователей арча используется grub2, поэтому имеет смысл использовать его для загрузки по цепочке. Просто копируем содержимое архива с grub4dos, например в <strong>/boot/grub4dos/</strong>. Создаем файл<br /><br /><strong>/etc/grub.d/40-custom</strong><br /><pre><code>
+menuentry &quot;Grub4dos&quot; {
+  linux16 /boot/grub4dos/grub.exe --config-file=/boot/grub4dos/my_menu.lst
+  boot
+}
+</code></pre>где <strong>my_menu.lst</strong> - кастомное меню, где мы пропишем все наши винды. Перегенерируем конфиг груба<br /><pre><code>
+# grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre>и в меню grub2 появится пункт, запускающий grub4dos.<br /><br /><strong>Предупреждение:</strong> grub4dos очевидно не понимает разметки GPT, так что сказанное выше, как и вся статья, справедливы для тех, кто использует старую разметку.<br /><br /><strong>3. Создание VHD-образа</strong><br /><br />Тут возможны варианты. Быстрый - создать образ диска средствами VirtualBox. Образ должен быть фиксированного размера в формате VHD. Кроме того, и это самое принципиальное, образ не должен быть фрагментирован! В противном случае, при  попытке маппинга, g4d выдаст ошибку<br /><pre><code>
+Error 60: File for drive emulation must be in one contiguous disk area
+</code></pre>Это значит, что образ фрагментирован и для его маппинга потребуется дефрагментация.<br /><br />Образы, созданные VirtualBox практически всегда фрагментированы, во всяком случае мне показалось, что степень из фрагментации некая случайная величина. Так что мимо дефрагментации не пройти. Ещё можно произвести утилитой wincontig из виртуальной машины с виндой, к которой подключен раздел где мы храним образы.<br /><br />Второй путь - создать VHD из ВМ c win7 через &quot;Управление дисками&quot;. Результат не будет фрагментированным, однако на создание образа уйдет время, пропорциональное размеру образа.<br /><br />Необходимо так же учитывать, что для успешной дефрагментации надо располагать достаточным объемом раздела, где будут лежать образы, иначе дефрагментатор пошлет нас подальше сообщением &quot;недостаточно свободных кластеров для дефрагментации&quot;.<br /><br />После создания образа переходим к установке целевой винды на образ. Создаем виртуальную машину, либо подключаем диск к имеющейся ВМ и устанавливае винду. Стандартно, хотя сетевые устройства можно выкинуть из конфигурации, чтобы процесс занимал меньшее время.<br /><br /><strong>Предупреждение:</strong> Ни в коем разе не устанавливаем дополнения гостевой ОС! Эта система всё равно будет работать на Вашем реальном железе, так что они и без надобности, и лишний повод для BSOD нам не нужен.<br /><br /><strong>4. Настройка загрузчика grub4dos</strong><br /><br />В файле my_menu.lst пишем следующее (пример соотвествует моей конфигурации разделов на винте)<br /><br /><pre><code>
+# Имя пункта меню
+title Windows XP
+
+# Прямой маппинг образа - связываем образ
+# (winxp.vhd в директории vhd четвертого раздела первого диска)
+# с именем первого диска в системе
+map (hd0,3)/vhd/winxp.vhd (hd0)
+# Выполняем маппинг непосредственно сейчас
+map --hook
+# Задаем корневой раздел для поиска загрузчика
+root (hd0,0)
+# Грузим в память загрузчик winNT
+chainloader /ntldr
+</code></pre><br />Этот код стартует загрузку винды из образа. Однако выполнив его без соотвествующей подготовки загружаемой ОС мы обязательно получим BSOD с кодом 0x7B - ошибка ввода/вывода связанная с обращением к дисковой подсистеме. Попросту говоря загрузчик и ядро не увидят образа диска и расположенных на нем файлов.<br /><br /><strong>5. Установка драйвера WinVBlock</strong><br /><br />При загрузке совсем старых, версий винды ветки win9x никаких дополнительных действий не требуется - эти частитчно 16-разрядные системы обращаются к диску на начальном этапе загрузки используя прерывание BIOS 13h. 32-битные ОС семейства NT используют драйвера защищенного режима. Тоже самое касается и современного ядра Linux и FreeBSD. Поэтому для обеспечения загрузки из VHD-образа необходимо наличие в загружаемой системе соотвествующего драйвера, позволяющего ОС обращатся к образу как к блочному устройству.<br /><br />Таковой драйвер имеется в win7 (vhdmp.sys) и такой проблемы нет (зато есть другие, пока не решенные мной проблемы...). Для рассматриваемых нами систем подобный драйвер написан человеком с ником Sha0, исходники расположены <a href="https://github.com/Sha0/winvblock">тут</a>. Однако собрать их у меня не вышло, так что я выцарапал готовые сборки из пакета VHD_XP_Setup, и выкладываю <a href="http://yadi.sk/d/Akx33iiRRM2nz">вот тут</a>. Внутри архива имеется интсрукция по установке, она довольно проста.<br /><br />Устанавливаем данный драйвер в систему на образе. И остался последний штрих<br /><br /><strong>6. Подготовка к запуску на реальном железе</strong><br /><br />Мы помним, что наша система инсталирована в ВМ, а поэтому некоторые устройства определены на этапе установки и система подсунула для них соотвествующие драйвера. При запуске на Вашем реальном компьютере с вероятностью в 99% снова получится BSOD 0x7b. Это связано с тем, что VirtualBox эмулирует контролер IDE следующим образом<br /><a href="http://itmages.ru/image/view/1687159/5d33ba4f"><img src="http://storage5.static.itmages.ru/i/14/0526/s_1401127793_2847859_5d33ba4f06.png"></a><br />и этот драйвер, работая в загружаемой системе конфликтует с реально установленным на мат. плате контроллером, при попытке системы прочесть файл образа с диска.<br /><br />Решается просто - выбираем &quot;Обновить драйвер&quot;, говорим, что не надо искать а мы сами укажем нужный драйвер и выберем &quot;Стандартный двухканальный контролер IDE&quot;. После этой процедуры система будет &quot;бсодить&quot; уже при запуске в VirtualBox, а вот на реальной машине - заведется )<br /><br />Теперь можно перезагрузить машину и выбором пунктов в меню Grub2 и Grub4dos загрузить нашу систему. После загрузки система яростно начнет определять реальные железки, может быть проблема с USB-шиной, так что надо запастись хотя бы мышью с интерфейсом PS/2. Оталось достать порядком заброшенные диски, шедшие в комплекте с железками и установить необходимые драйвера в системе.<br /><br /><strong>Выводы</strong><br /><br />Описанные действия - это довольно простой и элегантный вариант установки ОС Windows параллелено с Linux без затрагивания разделов hdd и загрузочной записи. В общем это то, чего не хватало лично мне.<br /><br />Эксперимент дал положительный результат с системами WinXP SP3 и Win2k3 Server SP2 Enterprise. 64-разрядная экспи хоть и не &quot;бсодила&quot;, но задумчиво бегала ползунком на заставке без шевеления HDD и так и не стартовала...<br /><br /><strong>Благодарности</strong><br /><br />Отдельное спасибо форумчанину с ником <strong>denchik</strong> за предоставленные для экспериментов образы и конфиги загрузчика )
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-137075"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/137075/index.html">#</a>
+            8 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><br>Операционные системы семейства Windows, в частности их инсталляторы, широко известны своим &quot;дружественным&quot; отношением к другим ОС, установленным на вашем компьютере. Совместное проживание Windows и *nix систем осложняется тем, что первая считает MBR своей собственностью, и её инсталлятор не задумываясь пишет в неё свой загрузочный сектор. Кроме того, творение редмодовцев требует для себя первичный раздел на hdd, а Win7/8 ещё и около 100 Мб в начале диска, для создания раздела с загрузчиком. Все ухищрения по установке всё равно сводятся к необходимости после инсталяции восстанавливать загрузочную запись того же grub, для возможности загрузки других ОС.</blockquote><br />Ничего не имею против, но что то вы усложняете)) Я не встречал такого загрузчика который бы не считал mbr своей собственностью (разве что grub2 иногда ругается на 47 сектор или типа того). 100мб раздел требуется походу если разбивать винчестер средствами инсталятора, иначе он  и не нужен)) даже если раздел с windows не в начале.  Ну mbr затирается по любому это да, но гораздо проще его востановить (на мой взгляд) чем использовать ваш способ.<br /><br />Таки да, единственный косяк который у меня вылезал это флаг boot раздела, но всё решаемо))
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-137092"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/137092/index.html">#</a>
+            8 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>ind.indeviral</em><br>100мб раздел требуется походу если разбивать винчестер средствами инсталятора</blockquote>Да, если ставить в готовый раздел ntfs, то bootmgr и винда ставятся в этот раздел без создания скрытого раздела.<br /><br />Мне показалось удобной установка винды в виртуальной машине, настройка загрузки простой правкой конфига загрузчика, возможность последующего перемещения в другое место и т.д.
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-137104"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/elsonador/index.html">
+                <span class="post-username">elsonador</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/137104/index.html">#</a>
+            8 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c4/74/c4744210be47d6c1692ba03d7d1a5b83.png" alt="elsonador avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/elsonador/topics/index.html">
+                    63
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/elsonador/posts/index.html">
+                    996
+                </a>
+            </div>
+            <div>
+                Участник с: 09 апреля 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Надуманная проблема. Нужен софт под <strong>Windows</strong> - ставим <strong>Windows</strong>. Всё, что есть в <strong>Linux</strong>, можно запустить в ней же. Без виртуализации.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-137105"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/137105/index.html">#</a>
+            8 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>elsonador</em><br>Надуманная проблема</blockquote>Не согласен. Есть технология - загрузка системы с VHD-диска, её можно использовать. Статья предлагает метод реализации подобного.<br /><br />Надуманным является то, что при наличии достаточно универсального загрузчика - Grub и спецификации Multiboot, разработчики ОС до сих пор не пришли к единому стандарту по загрузке систем.<br /><br />Собственна <a href="http://maisvendoo.org/?p=177">ссылка на статью про семерку</a>
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-139816"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/paranoik/index.html">
+                <span class="post-username">paranoik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/139816/index.html">#</a>
+            8 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/paranoik/topics/index.html">
+                    14
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/paranoik/posts/index.html">
+                    150
+                </a>
+            </div>
+            <div>
+                Участник с: 27 апреля 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            maisvendoo, есть след. проблема. Когда я устанавливал арч, забыл про винду. Погуглив пришел к следующему:<br />1. отрезаю от текущего загр. раздела(200мб) 100мб.<br />2 . форматирую созд. раздел в фат, ставлю флаг &quot;загрузочный&quot;<br />3.  ставлю винду<br />4. захожу с лифСД в арч, выполняю grub-install /dev/sda.<br />5. славлю флаг загрузки на раздел с груб.<br />Все ли правильно?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-140414"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/140414/index.html">#</a>
+            8 лет, 1 месяц назад
+            
+                (отредактировано
+                
+                    8 лет, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>paranoik</em><br>Все ли правильно?</blockquote>Навскидку, вроде всё верно<br /><blockquote><em>paranoik</em><br>форматирую созд. раздел в фат</blockquote>а зачем в FAT? Можно же и в нтфс. Правда, поправочка, нтфс полученный с помощью gparted неприспособлен для установки винды, установщик семерки на него матерится, так что форматировать лучше из установщика винды с помощью diskpart
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-140420"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/akorop/index.html">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/140420/index.html">#</a>
+            8 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/akorop/topics/index.html">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/akorop/posts/index.html">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>maisvendoo</em><br>Кроме того, творение редмодовцев требует для себя первичный раздел на hdd, а Win7/8 ещё и около 100 Мб в начале диска, для создания раздела с загрузчиком.</blockquote> Это неправда. Любая NT-винда без проблем грузится откуда угодно. В частности, с логического диска - лишь бы там были нужные для загрузки файлы и менеджер загрузки запустил загрузчик винды. А это умеет и grub, и hgub4dos. А если кому-то приспичит использовать что-то совсем простое, вроде lilo или vpart, то даже в этом случае достаточно передать управление бутсектору раздела винды, если поле HiddenSectors содержит адрес раздела (если раздел форматировали виндой, то это уже обеспечено).<br /><blockquote><em>maisvendoo</em><br>Все ухищрения по установке всё равно сводятся к необходимости после инсталяции восстанавливать загрузочную запись того же grub, для возможности загрузки других ОС.</blockquote> Это настолько просто, что другие решения рассматривать как-то даже не интересно.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-153616"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/153616/index.html">#</a>
+            7 лет, 1 месяц назад
+            
+                (отредактировано
+                
+                    7 лет, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>maisvendoo</em><br>Необходимо так же учитывать, что для успешной дефрагментации надо располагать достаточным объемом раздела, где будут лежать образы, иначе дефрагментатор пошлет нас подальше сообщением &quot;недостаточно свободных кластеров для дефрагментации&quot;.</blockquote><br />Решил поиграться, уперся в то что при создании vhd более ~10gb он уже не дефрагментируется, может быть дело в чём то другом, а не вместе на разделе?<br /><br />p.s. описочка <strong>.vmdk</strong>
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index79a9.html?next=/forum/topic/13576/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/13576/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:10:59 GMT -->
+</html>

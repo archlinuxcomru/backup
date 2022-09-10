@@ -1,0 +1,884 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        как и с чем готовить Systemd
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/4/">Рабочие Среды / Менеджеры Окон</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/20/">GNOME 3 &amp; Cinnamon</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>как и с чем готовить Systemd</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>как и с чем готовить Systemd</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=3" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=4">4 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-4321"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/4321/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Daryl</em><br/>Если полностью перешел зачем тогда вот этот чудной пакет у тебя стоял local/systemd-sysvcompat 195-2 (base)? Или ты все же не полностью перешел.</blockquote>Этот нужный пакет является частью системд. Заметь он в группе <strong>base</strong><br/><br/><blockquote><em>Natrio</em><br/>А вообще, сносить систему, чтобы поставить её же заново – дурная форточная привычка, которой нет оправданий.</blockquote>А вот с этим не соглашусь. Если обновляться спустя рукава, править конфиги смутно осознавая что делаешь не записывая изменения, ковыряться там где не положено, то переустановка это единственный простой и быстрый способ исправить появившиеся в следствии этого проблемы.<br/>Главное быть готовым к переустановке/восстановлению, делать бекапы, хранить важные данные на отдельном разделе, и заодно в архиве на запасном носителе для случая выхода винта из строя. Соблюдая эти простые правила даже новичок без тонких знаний системы сможет ее восстановить в самые короткие сроки.
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-4322"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Perfect_Gentleman/">
+                <span class="post-username">Perfect_Gentleman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/4322/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Perfect_Gentleman/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Perfect_Gentleman/posts/">
+                    1039
+                </a>
+            </div>
+            <div>
+                Участник с: 29 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br/>. Соблюдая эти простые правила даже новичок без тонких знаний системы сможет ее восстановить в самые короткие сроки.</blockquote>два-три часа максимум
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-4323"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/daryl/">
+                <span class="post-username">daryl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/4323/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/daryl/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/daryl/posts/">
+                    57
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            &gt;&gt;&gt;Этот нужный пакет является частью системд. <br/>Этот пакет нужен для гибридной системы, по названию пакета это даже видно же, для чистого системд он не нужен.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-4324"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/4324/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            Daryl, не суди по названию, зри в корень ;)<br/><strong>pacman -Ql systemd-sysvcompat | grep bin/</strong><br/><div class="code"><pre>systemd-sysvcompat /sbin/
+systemd-sysvcompat /sbin/halt
+systemd-sysvcompat /sbin/init
+systemd-sysvcompat /sbin/poweroff
+systemd-sysvcompat /sbin/reboot
+systemd-sysvcompat /sbin/runlevel
+systemd-sysvcompat /sbin/shutdown
+systemd-sysvcompat /sbin/telinit</pre></div><strong>ls -l /sbin/halt /sbin/init /sbin/poweroff /sbin/reboot /sbin/runlevel /sbin/shutdown /sbin/telinit</strong><br/><div class="code"><pre>lrwxrwxrwx 1 root root 18 окт.  25 03:38 /sbin/halt -&gt; /usr/bin/systemctl*
+lrwxrwxrwx 1 root root 26 окт.  25 03:38 /sbin/init -&gt; ../usr/lib/systemd/systemd*
+lrwxrwxrwx 1 root root 18 окт.  25 03:38 /sbin/poweroff -&gt; /usr/bin/systemctl*
+lrwxrwxrwx 1 root root 18 окт.  25 03:38 /sbin/reboot -&gt; /usr/bin/systemctl*
+lrwxrwxrwx 1 root root 18 окт.  25 03:38 /sbin/runlevel -&gt; /usr/bin/systemctl*
+lrwxrwxrwx 1 root root 18 окт.  25 03:38 /sbin/shutdown -&gt; /usr/bin/systemctl*
+lrwxrwxrwx 1 root root 18 окт.  25 03:38 /sbin/telinit -&gt; /usr/bin/systemctl*</pre></div>
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-4325"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/redVi/">
+                <span class="post-username">redVi</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/4325/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/95/48/95487f0c49ae21d7c82870966b5d4443.png" alt="redVi avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/redVi/topics/">
+                    17
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/redVi/posts/">
+                    396
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Присоединиться что ли к вашей мирной беседе со своими костылями? Тыц:<br/><div class="code"><pre>$ cat /etc/modprobe.d/load_modules.conf
+acpi-cpufreq
+cpufreq_conservative</pre></div><br/>Подгружаем модуль, ругается:<br/><div class="code"><pre># modprobe cpufreq_conservative 
+libkmod: kmod_config_parse: /etc/modprobe.d/load_modules.conf line 1: ignoring bad line starting with 'acpi-cpufreq'
+libkmod: kmod_config_parse: /etc/modprobe.d/load_modules.conf line 2: ignoring bad line starting with 'cpufreq_conservative'</pre></div><br/>Удаляем load_modules.conf, подгружаем модуль, всё ок:<br/><div class="code"><pre># modprobe cpufreq_conservative
+# lsmod | grep cpufreq
+cpufreq_conservative     5393  0 
+cpufreq_powersave        990  0 
+acpi_cpufreq            5933  1 
+mperf                   1267  1 acpi_cpufreq
+processor              26855  1 acpi_cpufreq</pre></div><br/>Почемy они вдруг стали bad line? Это результат пробной установки с нового образа. Чистый systemd. Ранее, после перехода на systemd на старой системе, всё было нормально.<br/>&mdash;&mdash;<br/>Ох ты, не в той теме совсем. Перенесите, пожалуйста, в более подходящее место.<br/><br/>&mdash;&ndash;<br/><br/>Что-то я в последнее время подтормаживаю, сам себе злобный бобр или как там? =)<br/><span style="color:#4080ff">/etc/modules-load.d/</span> - не <span style="color:#4080ff">/etc/modprobe.d/</span>
+            
+                
+                    <div class="post-signature">
+                        HP Pavilion g6-1054er<br />DualCore Intel Core i5-2410M, 8GB DDR3 SDRAM, Mobile Intel HD Graphics, ATI Radeon HD 6470M
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-4326"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/bobart/">
+                <span class="post-username">bobart</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/4326/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/bobart/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/bobart/posts/">
+                    2537
+                </a>
+            </div>
+            <div>
+                Участник с: 28 ноября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ПалПалыч, перименуй тему! &ldquo;Грош цена этому Systemd&rdquo; - что за троллинг? Или мне переименовать?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-4327"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/palpalych/">
+                <span class="post-username">palpalych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/4327/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/47/d0/47d0dfe31100e02907f5e9bb71c76f86.png" alt="palpalych avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/palpalych/topics/">
+                    89
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/palpalych/posts/">
+                    1126
+                </a>
+            </div>
+            <div>
+                Участник с: 09 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            это крик души, переименовал&#8230;
+            
+                
+                    <div class="post-signature">
+                        Арчи ~]$ ...as always want ready-made solutions that would make even tastier
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=3" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=4">4 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/497/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747a2cc4bcc1165a',m:'SiCUftNH2JWsZQdrto0fC1CAhA0wZpeBqGXD2Si2LW8-1662666228-0-AR96E2woa30Rw8LSOGssa2F+j1SLn+rVfeZtN2/US0lAyfUXISoitQkJ7PvN2CGTc/WBxO3vCxNVkXSfhLiOoxTrRJvpoVTLOhwRC2Y2pDtmIZ5n9NCFgZB+HWaZz+gfzkwWCDZw/wz9a9wQf2Xto6A=',s:[0xe2c178f5b9,0x5063b20560],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

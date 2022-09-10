@@ -1,0 +1,1191 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/21053/?page=3 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:09:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Archlinux BTRFS, снапшоты в GRUB
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/6/index.html">Разработка</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/21/index.html">Разработки арчеводов</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Archlinux BTRFS, снапшоты в GRUB</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Archlinux BTRFS, снапшоты в GRUB</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index4658.html?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index9ba9.html?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexaf4d.html?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexc575.html?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index235c.html?page=7">7</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="indexfdb0.html?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252118"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252118/index.html">#</a>
+            9 месяцев, 2 недели назад
+            
+                (отредактировано
+                
+                    9 месяцев, 2 недели назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vs220</em><br>Тем не менее некоторые данные из свапа теоритически можно же получить</blockquote>Пусть пробуют получить для начала ... но не которые, а действительно секретные.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252119"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252119/index.html">#</a>
+            9 месяцев, 2 недели назад
+            
+                (отредактировано
+                
+                    9 месяцев, 2 недели назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Nebulosa</em><br>видеоинструкции на ютубе</blockquote>facepalm<br /><br />p.s. я за ext4 и за выборочный инкрементальный бэкап с помощью tar или чего-нибудь похожего, и если шифровать то шифровать определённые файлы, а не заниматься ***ю с шифрованием целых разделов.
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252255"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252255/index.html">#</a>
+            9 месяцев, 1 неделя назад
+            
+                (отредактировано
+                
+                    9 месяцев, 1 неделя назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Nebulosa</em><br>А можете накидать пример как пользуетесь? Понимаю что там две-три команды, но для общего развития сгодится.</blockquote>snapbtrfs:<br /><pre><code>#!/bin/bash
+
+mount UUID=db6ca898-c846-47e5-898c-b98704fbd05c /mnt
+btrfs subvolume delete /mnt/root_BACKUP.*
+btrfs subvolume delete /mnt/home_BACKUP.*
+btrfs subvolume snapshot /mnt/@ /mnt/root_BACKUP.$(date +%Y-%m-%d)_$(date +%T)
+btrfs subvolume snapshot /mnt/@home /mnt/home_BACKUP.$(date +%Y-%m-%d)_$(date +%T)
+umount /mnt
+</code></pre><br />01-btrfs-autosnap.hook:<br /><pre><code>[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Target = *
+
+[Action]
+Description = Making BTRFS snapshot...
+Depends = btrfs-progs
+When = PreTransaction
+Exec = /usr/bin/snapbtrfs
+AbortOnFail
+NeedsTargets</code></pre>Вот и всё использование.<br /><br /><blockquote><em>Nebulosa</em><br>Тоже могу путать, но если есть отдельный раздел / и он зашифрован, то нужно также дополнительно шифровать раздел swap для дополнительной безопасности? Или у вас полностью весь диск зашифрован?</blockquote>Весь диск, на нём два раздела, swap и раздел с btrfs.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252266"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252266/index.html">#</a>
+            9 месяцев, 1 неделя назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>RusWolf</em><br>snapbtrfs:</blockquote>Красиво и минималистично, но сохраняет только один последний бэкап, а если что-то сломалось в предпоследнем и не успел заметить? Ведь пакеты обновляются часто, и не всегда всё проверишь...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252269"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252269/index.html">#</a>
+            9 месяцев, 1 неделя назад
+            
+                (отредактировано
+                
+                    9 месяцев, 1 неделя назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>s-ugra@ya.ru</em><br>а если что-то сломалось в предпоследнем и не успел заметить? Ведь пакеты обновляются часто, и не всегда всё проверишь&#8230;</blockquote>Есть снапшоты на резервном диске.<br />Раз в неделю их отправляю на резервный диск.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252271"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/wau/index.html">
+                <span class="post-username">wau</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252271/index.html">#</a>
+            9 месяцев, 1 неделя назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/wau/topics/index.html">
+                    132
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/wau/posts/index.html">
+                    956
+                </a>
+            </div>
+            <div>
+                Участник с: 11 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Могу ошибаться, но одной из основых идей снапшота корневого раздела является быстрый откат на одно из предыдущих состояний, это помимо &quot;моментальности&quot;. Соответственно заливка их на примонтированный временно раздел - это действительно аналогия бэкапу силами tar or rsync. И скриптам, соотв., следовало БЫ предусматривать сценарии &quot;туда-обратно&quot;. Т.е. варианты переключения снапшотов, как на &quot;горячую&quot;, так и на &quot;холодную&quot; (с перезагрузкой).
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252272"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252272/index.html">#</a>
+            9 месяцев, 1 неделя назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>wau</em><br>но одной из основых идей снапшота корневого раздела является быстрый откат на одно из предыдущих состояний</blockquote>Использовать корень btrfs, есть моветон, для этого придумали subvolume и их монтирование.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252274"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Nebulosa/index.html">
+                <span class="post-username">Nebulosa</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252274/index.html">#</a>
+            9 месяцев, 1 неделя назад
+            
+                (отредактировано
+                
+                    9 месяцев, 1 неделя назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4a/9b/4a9bd66c7a2a170b1585f3b56cdb48de.png" alt="Nebulosa avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Nebulosa/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Nebulosa/posts/index.html">
+                    830
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br><blockquote><em>Nebulosa</em><br>видеоинструкции на ютубе</blockquote>facepalm</blockquote>Ухты! Настоящий Ъ! Тот самый, который по ссылкам не ходит но уже осуждает.<br /><blockquote><em>indeviral</em><br>p.s. я за ext4 и за выборочный инкрементальный бэкап с помощью tar или чего-нибудь похожего, и если шифровать то шифровать определённые файлы, а не заниматься ***ю с шифрованием целых разделов.</blockquote>Никто ж не запрещает, не вылазьте главное из криокамеры!! :)<br /><br />А мы продолжаем..<br /><br />Сильно отвлекает работа.. но скрипт допиливаю понемногу вечерами, переустанавливаю и переустанавливаю..<br /><br />Выводы на сегодня:<br />1. Выносить отдельно @var как оказалось, плохая идея, база пакмана ломается на раз, достаточно: установить софт и сделать снимок, затем удалить софт, загружаемся в снапшот, софт на месте, однако пакман считает, что его нет в системе и даже переустановку делать тоже не даёт. Совершенно не похоже на откат системы к предыдущему состоянию, только хуже делаем.<br /><br />2. На третий день (!) переустановок мой зоркий глаз заметил, что снапшоты у таймшифта загружаются в режиме записи, а ведь весь замысел вынесения @var строился на том, что снапшот доступен только для чтения. Это справедливо, для snapper но совершенно не нужно для timeshift. Пока закомментировал.<br /><br />3. После того как загружаешься в какой-то из снимков, таймшифт загружается при входе и предлагает восстановить снимок. btfrs subvolume list /  показывает, что @ ссылается на снимок, в самой программе приходится ещё раз указывать нужный снимок и опять перезагружаться. Куча лишних действий..<br /><br />Ещё и hook установленного timeshift-autosnap не срабатывает, закономерность не уловил, до этого работало, теперь нет.. Буду ковырять дальше.<br /><br />Итак, плюс-минус сетап понятен, дальше надо ковырять grub-btrfs настроить текст пунктов меню, там много лишнего и не хватает нормальных комментариев из лога пакмана. Также нужно будет понять, как изменить логику загрузки, чтобы при выборе пункта сначала восстанавливалась система из снапшота, а затем грузилась сама. Без этих лишних действий.<br /><br />Ну и var/lib/machines появлятся почти сразу.. В общем пока одни вопросы!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252275"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252275/index.html">#</a>
+            9 месяцев, 1 неделя назад
+            
+                (отредактировано
+                
+                    9 месяцев, 1 неделя назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Nebulosa</em><br>осуждает</blockquote>Я ничего не осуждаю, просто сомневаюсь в рациональности усилий на копирование команд из видеоряда, с фотографий это делать гораздо удобнее.<br /><br /><blockquote><em>Nebulosa</em><br>криокамеры</blockquote>Когда сумеете полностью отказаться от fat32, будем вместе вякать, а пока ...
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252280"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252280/index.html">#</a>
+            9 месяцев, 1 неделя назад
+            
+                (отредактировано
+                
+                    9 месяцев, 1 неделя назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br>полностью отказаться от fat32</blockquote>а есть ли устройства со встроенной ext4 или хотя бы ext2?
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index4658.html?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index9ba9.html?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexaf4d.html?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexc575.html?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index235c.html?page=7">7</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="indexfdb0.html?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index5a5c.html?next=/forum/topic/21053/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/21053/?page=3 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:09:49 GMT -->
+</html>

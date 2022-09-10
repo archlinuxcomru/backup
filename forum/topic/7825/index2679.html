@@ -1,0 +1,1056 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Ядро kernel26-bfs
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/5/">Разное</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/4/">/dev/null</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Ядро kernel26-bfs</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Ядро kernel26-bfs</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-75596"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/infectionless/">
+                <span class="post-username">infectionless</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/75596/">#</a>
+            12 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/infectionless/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/infectionless/posts/">
+                    5
+                </a>
+            </div>
+            <div>
+                Участник с: 21 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вчера поставил ядро с <a href="http://ck.kolivas.org/patches/bfs/">BFS</a>. Ощущения приятные, ютуб в HQ и фулскрине действительно не тормозит(но грузит С2D T7700 на ~70%):<br/><a href="https://i31.photobucket.com/albums/c389/Arrest/2009-09-21-133604_1280x800_scrot.png"><img src="https://i31.photobucket.com/albums/c389/Arrest/th_2009-09-21-133604_1280x800_scrot.png"></img></a><br/>Ставил из AUR, пакет kernel26-bfs. Ядро 2.6.31, патч 230 - самые свежие. Ядро поставилось в одно движение yaourt'ом, но слетели драйвера на видео от nVidia. Пакет nvidia-bfs ставиться не захотел: в dependency прописано kernel26-bfs только 2.6.30. Пришлось ставить nvidia-bfs-beta; в pkgbuild ошибки, он может поставиться только в систему x86_64, у меня же просто x86, кроме того, там указан kernelname(который uname -r) 2.6.31-bfs; по дефолту ядро ставится как 2.6.31-bfs230-bfs. Правильный pkgbuild такой:<br/><div class="code"><pre>#Maintainer: &lt;SpeedVin at archlinux dot us&gt;
+pkgname=nvidia-bfs-beta
+pkgver=190.32
+_kernver='2.6.31-bfs230-bfs'
+pkgrel=1
+pkgdesc="NVIDIA drivers for kernel26-bfs."
+arch=('i686' 'x86_64')
+[ "$CARCH" = "i686"   ] &amp;&amp; ARCH=x86
+[ "$CARCH" = "x86_64" ] &amp;&amp; ARCH=x86_64
+url="http://www.nvidia.com/"
+depends=('kernel26-bfs&gt;=2.6.31' 'kernel26-bfs&lt;2.6.32' 'nvidia-utils-beta=190.32')
+conflicts=('nvidia-96xx' 'nvidia-173xx')
+license=('custom')
+install=nvidia-bfs.install
+source=("http://download.nvidia.com/XFree86/Linux-$ARCH/${pkgver}/NVIDIA-Linux-$ARCH-${pkgver}-pkg0.run")
+build() {
+cd $srcdir
+sh NVIDIA-Linux-$ARCH-${pkgver}-pkg0.run --extract-only
+cd NVIDIA-Linux-$ARCH-${pkgver}-pkg0
+cd usr/src/nv/
+ln -s Makefile.kbuild Makefile
+make SYSSRC=/lib/modules/${_kernver}/build module || return 1
+mkdir -p $pkgdir/lib/modules/${_kernver}/kernel/drivers/video/
+install -m644 nvidia.ko $pkgdir/lib/modules/${_kernver}/kernel/drivers/video/
+sed -i -e "s/KERNEL_VERSION='.*'/KERNEL_VERSION='${_kernver}'/" $startdir/nvidia-bfs.install
+}
+md5sums=('0cf2686f8ff4112ed07ed6d35c013827')</pre></div>и еще нужно будет поправить md5sum в конце, этот для версии x86_64. Драйвер работает хорошо(несмотря на то, что он beta), еще ни разу не падал.<br/>Сообщение считать отчетом о проделанной работе :-)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-75597"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/ProFfeSsoRr/">
+                <span class="post-username">ProFfeSsoRr</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/75597/">#</a>
+            12 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/96/0a/960adce5ced4a532d34888cc7b42720e.png" alt="ProFfeSsoRr avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/ProFfeSsoRr/topics/">
+                    82
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/ProFfeSsoRr/posts/">
+                    948
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ждем-с еще кого-нибудь для испытаний на х64.<br/><br/>P.S. Мб им буду я. Где-то через месяц, не раньше. Если не забуду :) 
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-75598"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/devsyukov/">
+                <span class="post-username">devsyukov</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/75598/">#</a>
+            12 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/devsyukov/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/devsyukov/posts/">
+                    159
+                </a>
+            </div>
+            <div>
+                Участник с: 03 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня при использовании BFS ядро периодически валилось, утягивая за собой работающие процессы&#8230; <br/>У меня используется процессор Core2Duo E8400, в ядре естественно включено SMP и multycore. У Вас такой проблемы не наблюдается? Какой процессор используется??
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-75599"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sirocco/">
+                <span class="post-username">sirocco</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/75599/">#</a>
+            12 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sirocco/topics/">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sirocco/posts/">
+                    2501
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>D.Evsyukov</em><br/>Какой процессор используется??</blockquote>Во втором предложении написано.  ;) 
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-75600"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/alexdsp/">
+                <span class="post-username">alexdsp</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/75600/">#</a>
+            12 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/alexdsp/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/alexdsp/posts/">
+                    307
+                </a>
+            </div>
+            <div>
+                Участник с: 07 февраля 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            bash-4.0# uname -a<br/>Linux comp 2.6.30-bfs #1 SMP PREEMPT Tue Sep 8 21:58:51 MSD 2009 x86_64 AMD Athlon&trade; 64 X2 Dual Core Processor 3800+ AuthenticAMD GNU/Linux<br/>Вроде бы полёт нормальный. Нареканий нет. Отзывчивость системы по ощущениям выросла однозначно.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-75601"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/infectionless/">
+                <span class="post-username">infectionless</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/75601/">#</a>
+            12 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/infectionless/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/infectionless/posts/">
+                    5
+                </a>
+            </div>
+            <div>
+                Участник с: 21 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>У Вас такой проблемы не наблюдается? Какой процессор используется??</blockquote>Нет, не наблюдается, все работает, еще ничего не падало(кроме пресловутого флеша, но у меня подозрения на браузер). Процессор - Core 2 Duo T7700. .config ядра дефолтный, не менял.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-75602"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/oboroten/">
+                <span class="post-username">oboroten</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/75602/">#</a>
+            12 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/oboroten/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/oboroten/posts/">
+                    28
+                </a>
+            </div>
+            <div>
+                Участник с: 01 июня 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А кто подскажет, как узнать какой I/O Sheduler в данный момент используется?<br/>По команде dmesg | grep schedule мне выводит следующее:<br/><div class="code"><pre>io scheduler noop registered
+io scheduler anticipatory registered
+io scheduler deadline registered
+io scheduler cfq registered (default)</pre></div>Хотя ядро запущено 2.6.31-bfs, ставил с AUR.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-75603"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sirocco/">
+                <span class="post-username">sirocco</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/75603/">#</a>
+            12 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sirocco/topics/">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sirocco/posts/">
+                    2501
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Oboroten</em><br/>А кто подскажет, как узнать какой I/O Sheduler в данный момент используется?<br/>По команде dmesg | grep schedule мне выводит следующее:<br/><div class="code"><pre>io scheduler noop registered
+io scheduler anticipatory registered
+io scheduler deadline registered
+io scheduler cfq registered (default)</pre></div>Хотя ядро запущено 2.6.31-bfs, ставил с AUR.</blockquote><br/>cfq и используется. Можно ещё так посмотреть<br/><div class="code"><pre>cat /sys/block/sda/queue/scheduler</pre></div><br/>P.S. bfs - это не io scheduler
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-75604"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/ProFfeSsoRr/">
+                <span class="post-username">ProFfeSsoRr</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/75604/">#</a>
+            12 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/96/0a/960adce5ced4a532d34888cc7b42720e.png" alt="ProFfeSsoRr avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/ProFfeSsoRr/topics/">
+                    82
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/ProFfeSsoRr/posts/">
+                    948
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ну поставил я, разницы не особо видно, ну так и конфиг мощный :) Погоняю, потестирую, погляжу.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-75605"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/oboroten/">
+                <span class="post-username">oboroten</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/75605/">#</a>
+            12 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/oboroten/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/oboroten/posts/">
+                    28
+                </a>
+            </div>
+            <div>
+                Участник с: 01 июня 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sirocco</em><br/>P.S. bfs - это не io scheduler</blockquote>Это process scheduler? А в чем различие?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/7825/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747a965559860c36',m:'c2.ShsHrDqx1eEjmgfM_Yp7fwrDcQ0GCfWhG.MmtOWM-1662670550-0-AX5gIxS3OnfW7HU1VzdrAni0zRkKyzH6OXZw02pklB8di0yJCjSC0/NuxgvToC/6HjtNvZEt5Ut7QLMDf4qy0/vAcjVWf07KBGk70vWOUV5YfyV4+QkupHf2q6pqg5ZGN2xq8P6YaB66sPrZoAApv98=',s:[0x8002ec4a58,0x31326aad38],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

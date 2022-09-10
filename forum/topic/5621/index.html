@@ -1,0 +1,1083 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [РЕШЕТО] Crond, wmfs, status.sh
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/5/">Разное</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/4/">/dev/null</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[РЕШЕТО] Crond, wmfs, status.sh</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[РЕШЕТО] Crond, wmfs, status.sh</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55154"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/wilful/">
+                <span class="post-username">wilful</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55154/">#</a>
+            11 лет, 10 месяцев назад
+            
+                (отредактировано
+                
+                    11 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/wilful/topics/">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/wilful/posts/">
+                    312
+                </a>
+            </div>
+            <div>
+                Участник с: 24 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вот такая запись:<br/><div class="code"><pre>$crontab -l
+*       *       *       *       *   sh /home/wilful/dev/shell/scripts/wmfs/status.sh</pre></div>От юзера выполняется отлично, вывод пустой:<br/><div class="code"><pre>$sh /home/wilful/dev/shell/scripts/wmfs/status.sh</pre></div>Сам скрипт:<br/><div class="code"><pre>#!/bin/bash
+#Чет 19:54 2010-11-04
+DATE=`date +%a\ %H:%M\ %F`
+wmfs -s "\\#f88017\\$DATE"
+if [ $? -eq 0 ]; then
+    exit 0
+fi</pre></div>Вчера часа два мучался с этим в логах:<br/><div class="code"><pre>Nov  5 11:01:01 localhost crond[3356]: FILE /var/spool/cron/wilful-5 USER wilful-5 PID 4717 sh /home/wilful/dev/shell/scripts/wmfs/status.sh
+Nov  5 11:01:01 localhost crond[4720]: mailing cron output for user wilful-5 sh /home/wilful/dev/shell/scripts/wmfs/status.sh
+Nov  5 11:01:01 localhost crond[4720]: unable to exec /usr/sbin/sendmail: cron output for user wilful-5 sh /home/wilful/dev/shell/scripts/wmfs/status.sh to /dev/null</pre></div>Но в конце концов заработало, но седня с утра снова та же херь!<br/>Прописывал с перенаправлениями:<br/><div class="code"><pre>Nov  5 11:00:01 localhost crond[3356]: FILE /var/spool/cron/wilful-5 USER wilful-5 PID 4710 sh /home/wilful/dev/shell/scripts/wmfs/status.sh &gt; /dev/null 2&gt;&amp;1</pre></div>Собственно так и заработал вчера, но седня снова в контры! помогите пожалуйста, я кажется что-то упускаю.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55155"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/anthonio/">
+                <span class="post-username">anthonio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55155/">#</a>
+            11 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/anthonio/topics/">
+                    18
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/anthonio/posts/">
+                    378
+                </a>
+            </div>
+            <div>
+                Участник с: 11 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <div class="code"><pre>wmfs -s "\\#f88017\\$DATE"</pre></div>Тоже когда-то воевал с cron'ом. Думаю, тут стоит указать полный путь до wmfs.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55156"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/wilful/">
+                <span class="post-username">wilful</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55156/">#</a>
+            11 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/wilful/topics/">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/wilful/posts/">
+                    312
+                </a>
+            </div>
+            <div>
+                Участник с: 24 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Не помогло, для date тоже путь прописал<br/><div class="code"><pre>#!/bin/bash
+#DATE=`date`
+#19:54 2010-11-04
+#DATE=`date +%H:%M\ %F`
+#Чет 19:54 2010-11-04
+DATE=`LANG=ru_RU.utf8 /bin/date +%a\ %H:%M\ %F`
+/usr/bin/wmfs -s "\\#f88017\\$DATE"
+if [ $? -eq 0 ]; then
+    exit 0
+fi</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55157"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Nebulosa/">
+                <span class="post-username">Nebulosa</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55157/">#</a>
+            11 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4a/9b/4a9bd66c7a2a170b1585f3b56cdb48de.png" alt="Nebulosa avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Nebulosa/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Nebulosa/posts/">
+                    831
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А зачем писать как &ldquo;sh /home/wilful/dev/shell/scripts/wmfs/status.sh&rdquo; там же внутри скрипта указан интерпретатор? Файл исполняемый?<br/><br/>Что должен делать скрипт вообще? wmfs это что такое?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55158"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/legioner/">
+                <span class="post-username">legioner</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55158/">#</a>
+            11 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/legioner/topics/">
+                    14
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/legioner/posts/">
+                    102
+                </a>
+            </div>
+            <div>
+                Участник с: 02 марта 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Почитай тут<br/><br/><a href="https://archlinux.org.ru/forum/viewtopic.php?f=8&amp;t=1553">http://archlinux.org.ru/forum/viewtopic.php?f=8&amp;t=1553</a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55159"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/wilful/">
+                <span class="post-username">wilful</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55159/">#</a>
+            11 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/wilful/topics/">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/wilful/posts/">
+                    312
+                </a>
+            </div>
+            <div>
+                Участник с: 24 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>legioner</em><br/>Почитай тут<br/><br/><a href="https://archlinux.org.ru/forum/viewtopic.php?f=8&amp;t=1553">http://archlinux.org.ru/forum/viewtopic.php?f=8&amp;t=1553</a></blockquote><br/>Нифига не понял причем тут это, может посвятите? В тексте скрипта date для примера, можно вставлять любой текст.<br/><br/><blockquote><em>Nebulosa</em><br/>А зачем писать как &ldquo;sh /home/wilful/dev/shell/scripts/wmfs/status.sh&rdquo; там же внутри скрипта указан интерпретатор? Файл исполняемый?<br/><br/>Что должен делать скрипт вообще? wmfs это что такое?</blockquote>Это я уже пробовал варианты и с sh и без&#8230;<br/>Да, с файлом всё в порядке, шабанг есть вон в листинге в первом посте.<br/><br/><div class="code"><pre> ls -l /home/wilful/dev/shell/scripts/wmfs/status.sh
+-rwxr-xr-x 1 wilful-5 users 216 Ноя  5 11:59 /home/wilful/dev/shell/scripts/wmfs/status.sh</pre></div><br/><br/><a href="http://wmfs.info/projects/wmfs">wmfs</a> это WM очень удобный. В скрипте вывод на панель текстовой информации (Дата и время, с периодом 1 минута)<br/>Я не пойму как у меня вчера ночью то заработало! Сегодня снова анус&#8230;<br/><br/>Еще на засыпку:<br/><div class="code"><pre>$cat .profile 
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+export PATH
+echo $PATH</pre></div><div class="code"><pre>$./.profile 
+/home/wilful-5/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/bin/perlbin/vendor:/usr/lib/perl5/core_perl/bin:/opt/qt/bin</pre></div><br/><div class="code"><pre>$echo $PATH
+/bin:/usr/bin:/sbin:/usr/sbin:/usr/bin/perlbin/vendor:/usr/lib/perl5/core_perl/bin:/opt/qt/bi</pre></div> <br/>Не работает export? В другой консоли тоже самое, по крайней мере, когда я это делал всё работало, т.е. я пользовался папкой /bin в хомяке&#8230; Что случилось то?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55160"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/wilful/">
+                <span class="post-username">wilful</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55160/">#</a>
+            11 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/wilful/topics/">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/wilful/posts/">
+                    312
+                </a>
+            </div>
+            <div>
+                Участник с: 24 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Убрал sh, как видите крон изменения увидел, но ничё делать так и не желает<br/><div class="code"><pre>Nov  5 12:18:01 localhost crond[3356]: reading /var/spool/cron/cron.update
+Nov  5 12:18:01 localhost crond[3356]: FILE /var/spool/cron/wilful-5 USER wilful-5 PID 6076 /home/wilful/dev/shell/scripts/wmfs/status.sh
+Nov  5 12:18:01 localhost crond[6079]: mailing cron output for user wilful-5 /home/wilful/dev/shell/scripts/wmfs/status.sh
+Nov  5 12:18:01 localhost crond[6079]: unable to exec /usr/sbin/sendmail: cron output for user wilful-5 /home/wilful/dev/shell/scripts/wmfs/status.sh to /dev/null</pre></div><br/><br/><div class="code"><pre>crontab -l
+*       *       *       *       *   /home/wilful/dev/shell/scripts/wmfs/status.sh</pre></div><br/>Можно ли заставить крон отправить вывод в файл, а не на почту? Лень сейчас что-то ставить&#8230;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55161"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/wilful/">
+                <span class="post-username">wilful</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55161/">#</a>
+            11 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/wilful/topics/">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/wilful/posts/">
+                    312
+                </a>
+            </div>
+            <div>
+                Участник с: 24 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Нашел бяку<br/><br/><div class="code"><pre>/usr/bin/wmfs -s "\\#f88017\\$DATE" &gt; /tmp/log.txt 2&gt;&amp;1</pre></div><br/><div class="code"><pre>cat /tmp/log.txt 
+wmfs: cannot open X server.</pre></div><br/>Видимо недопиленный ВМ, как же я вчера то это сделал? о_О<br/><br/>PS: А вот как: /etc/rc.d/crond restart<br/>Может кто нибудь прокомментировать, почему ребут крона помогает, баг крона или менеджера? И что с export?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55162"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/bobart/">
+                <span class="post-username">bobart</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55162/">#</a>
+            11 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/bobart/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/bobart/posts/">
+                    2537
+                </a>
+            </div>
+            <div>
+                Участник с: 28 ноября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня тоже была ругань в логе крона на сендмейл и /dev/null. Я просто забил. Скрипт рабочий, крон отрабатывает по расписанию, т.е. результат их совместных действий устраивает? Устраивает. Сейчас, кстати, всё чисто:<div class="code"><pre>Nov  5 10:50:31 localhost crond[4326]: /usr/sbin/crond 4.4 dillon's cron daemon, started with loglevel info
+Nov  5 10:55:01 localhost crond[4326]: FILE /var/spool/cron/bob USER bob PID 4925 /home/bob/.cron.daily/conncheck.sh
+Nov  5 11:00:01 localhost crond[4326]: FILE /var/spool/cron/bob USER bob PID 5371 /home/bob/.cron.daily/conncheck.sh
+Nov  5 11:05:01 localhost crond[4326]: FILE /var/spool/cron/bob USER bob PID 5810 /home/bob/.cron.daily/conncheck.sh
+Nov  5 11:10:01 localhost crond[4326]: FILE /var/spool/cron/bob USER bob PID 6201 /home/bob/.cron.daily/conncheck.sh</pre></div>Если интересны подробности, то сам скрипт <a href="https://archlinux.org.ru/forum/viewtopic.php?f=16&amp;t=3475&amp;start=60">viewtopic.php?f=16&amp;t=3475&amp;start=60</a> , ну, в смысле синтаксиса и семантики)<br/>Почему рестарт crond помогает&#8230;, хз. Видимо какие-то изменения подхватываются при рестарте демона, ну а как ещё объяснить. Причём, у тебя ведь всё бодро, с периодичностью в 1 минуту. Может в процессе твоих манипуляций со скриптом, вы с кроном лбами столкнулись? Я когда со скриптом возился, так просто останавливал крон, потом запускал скрипт и смотрел, что там делается в терминале.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55166"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/wilful/">
+                <span class="post-username">wilful</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55166/">#</a>
+            11 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/wilful/topics/">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/wilful/posts/">
+                    312
+                </a>
+            </div>
+            <div>
+                Участник с: 24 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>bobart</em><br/>У меня тоже была ругань в логе крона на сендмейл и /dev/null. Я просто забил. Скрипт рабочий, крон отрабатывает по расписанию, т.е. результат их совместных действий устраивает? Устраивает. Сейчас, кстати, всё чисто:<div class="code"><pre>Nov  5 10:50:31 localhost crond[4326]: /usr/sbin/crond 4.4 dillon's cron daemon, started with loglevel info
+Nov  5 10:55:01 localhost crond[4326]: FILE /var/spool/cron/bob USER bob PID 4925 /home/bob/.cron.daily/conncheck.sh
+Nov  5 11:00:01 localhost crond[4326]: FILE /var/spool/cron/bob USER bob PID 5371 /home/bob/.cron.daily/conncheck.sh
+Nov  5 11:05:01 localhost crond[4326]: FILE /var/spool/cron/bob USER bob PID 5810 /home/bob/.cron.daily/conncheck.sh
+Nov  5 11:10:01 localhost crond[4326]: FILE /var/spool/cron/bob USER bob PID 6201 /home/bob/.cron.daily/conncheck.sh</pre></div>Если интересны подробности, то сам скрипт <a href="https://archlinux.org.ru/forum/viewtopic.php?f=16&amp;t=3475&amp;start=60">viewtopic.php?f=16&amp;t=3475&amp;start=60</a> , ну, в смысле синтаксиса и семантики)<br/>Почему рестарт crond помогает&#8230;, хз. Видимо какие-то изменения подхватываются при рестарте демона, ну а как ещё объяснить. Причём, у тебя ведь всё бодро, с периодичностью в 1 минуту. Может в процессе твоих манипуляций со скриптом, вы с кроном лбами столкнулись? Я когда со скриптом возился, так просто останавливал крон, потом запускал скрипт и смотрел, что там делается в терминале.</blockquote><br/>Загадка в том, что после старта системы никуя не работает =) Следом рестарт крона и поехала тогда
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/5621/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747a5cec491d16c7',m:'klkd2fRZEiVSy9VGPpI.O_ju4Ub8SE1T3ewLXKUHXOA-1662668198-0-ATOA1cW2eXSp1hABOYv4t71ZpYfacJhwgX9Pyu+h7owuq7Ng9ifBqbxbDOjVttv4I5HQfajMZpwQUDQjeoqHogjqWZaiQiL0NVCW1UC+nWNmMLYTK51hzyvXy3N1ET4cOHONFli6mxZg7ZAd45jvYE8=',s:[0xcd3dba33ee,0x8b5029dd9e],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

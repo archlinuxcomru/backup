@@ -1,0 +1,1117 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/7314/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 09:03:00 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Ускоряем pacman при работе с базой данных
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/3/index.html">Пакетная система</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/7/index.html">Pacman и обновления</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Ускоряем pacman при работе с базой данных</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Ускоряем pacman при работе с базой данных</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-70666"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/amigo/index.html">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/70666/index.html">#</a>
+            12 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/amigo/topics/index.html">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/amigo/posts/index.html">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong><span style="color:#ff0000">Внимание! Использование изложенного материала может нанести вред и стать причиной неработоспособности операционной системы. Если Вы не понимаете суть вводимых команд, не используйте данный материал. В будущем эти рекомендации могут оказаться деструктивными. Участники этого обсуждения не несут ответственности за Вашу безответственность.</span></strong><br/> :evil: <br/><br/>Неоднократно встречаю в сети высказывания типа: &ldquo;pacman тормоз!&rdquo;. В большей степени, пользователи относят это к работе pacman с его же базой данных при операциях поиска, обновлениях. Если Вы сторонник данного высказывания, то эта статья может побудить Вас исправить своё мнение.<br/><br/>База данных pacman расположена в файловой системе в каталоге <strong>/var/lib/pacman</strong>. Здесь содержится информация о пакетах из репозитория (<strong>sync</strong>) и локально установленных(<strong>local</strong>). В своей структуре это каталоги с названиями пакетов и их версиями (<em>на примере local</em>):<br/><div class="code"><pre>tunguska% ls /var/lib/pacman/local | head
+a52dec-0.7.4-4
+abs-2.3.3-1
+acl-2.2.48-1
+acpid-1.0.10-1
+acpitool-0.5.1-1
+akonadi-1.2.1-3
+alsa-lib-1.0.21.a-1
+alsa-utils-1.0.21-1
+amarok-2.2.1-2
+apr-1.3.9-1</pre></div>В которых мета информация содержится в 2-х или более маленьких текстовых файлах (<em>на примере a52dec</em>):<br/><div class="code"><pre>tunguska% ls -l /var/lib/pacman/local/a52dec-0.7.4-4/
+итого 3
+-rw-r--r-- 1 root root  17 Ноя 17 17:45 depends
+-rw-r--r-- 1 root root 288 Ноя 17 17:45 desc
+-rw-r--r-- 1 root root 444 Ноя 17 17:45 files</pre></div><br/>Теперь о цифрах. Репозитории <strong>core</strong>, <strong>extra</strong>, <strong>community</strong> в общей сложности содержат примерно 5000 пакетов, а локально установленных (<em>у меня</em>) - чуть более 700. В сумме ~6 000 пакетов или столько же каталогов в база данных pacman. Умножаем это число на два и получаем как минимум <strong><u>12 000 маленьких файлов</u></strong> с метаданными о пакетах. <span style="color:#aaaaaa">Дальше ещё интереснее.</span><br/><br/>На какой файловой системе хранится база данных pacman? У меня это ext4 размером 20GB монтируемая в корень (<strong>/</strong>). Учитывая размеры ФС и количество маленьких файлов метаданных пакетов, не трудно догадаться, какими требовательными будут операции файловой подсистемы, особенно при первом обращении (<em>пустом кеше ФС</em>) к базе данных pacman. <span style="color:#aaaaaa">Уже близко.</span><br/><br/>Сколько же всё это добро использует дискового пространства? Смотрим:<br/><div class="code"><pre>tunguska% du -hs /var/lib/pacman
+72M     /var/lib/pacman</pre></div>Вы скажете: &ldquo;72MB? Да у меня диск читает со скоростью 100MB/s&rdquo;. Угу, правильно. Правильно, но к файловым система это имеет посредственное отношение. В общем, 72MB как минимум двенадцати тысяч мелких файлов а) занимают много места ФС; б) очень долго открываются. Поэтому основная задача сводится к избавлению от этих недостатков. <span style="color:#aaaaaa">Приехали.</span><br/><br/><strong>План свержения расточительного руководства pacman и захват власти в &ldquo;свои руки&rdquo;:</strong><br/><ol><li>Резервное копирование базы данных pacman;<br/></li><li>Создание &ldquo;крохотной&rdquo; ФС внутри раздела <strong>/var/lib</strong>;<br/></li><li>Монтирование полученной ФС;<br/></li><li>Перенос базы данных на новую ФС;<br/><br/>И так начнём (<em>все команды требуют привилегий пользователя root</em>):<br/><strong><span style="color:#ff0000">Забыл предупредить, что устанавливать или удалять пакеты, пока не принято решение оставить этот способ, категорически не рекомендуется.</span></strong><br/></li><li><strong>Резервное копирование базы данных pacman:</strong><br/><div class="code"><pre>tar cfj ~/pacman.db.tar.bz2 /var/lib/pacman</pre></div></li><li><strong>Создание &ldquo;крохотной&rdquo; ФС:</strong><br/><div class="code"><pre>dd if=/dev/zero of=/var/lib/pacman.db bs=1M count=100</pre></div><div class="code"><pre>mkfs.ext4 /var/lib/pacman.db</pre></div></li><li><strong>Монтирование полученной ФС:</strong><br/><div class="code"><pre>echo "/var/lib/pacman.db /var/lib/pacman ext4 loop 0 0" &gt;&gt; /etc/fstab</pre></div><div class="code"><pre>sed -i "s/MODULES=(/MODULES=(loop /" /etc/rc.conf</pre></div><div class="code"><pre>mount -a</pre></div></li><li><strong>Перенос базы данных на новую ФС:</strong><br/><div class="code"><pre>cd /</pre></div><div class="code"><pre>tar xfj ~/pacman.db.tar.bz2</pre></div></li><li><strong>Profit!!!</strong><br/><br/>Теперь вся база данных pacman находится в одном большом файле и занимает:<br/><div class="code"><pre>tunguska% du -hs /var/lib/pacman
+24M     /var/lib/pacman</pre></div>против прежних 72MB. Разница примерно в три раза. Тестирование скорости обработки данных, я думаю, Вы оцените сами.  :) <br/><br/>ЗЫ: Не удалена старая база (она перекрылась монтированием). Возврат к прежней схеме хранения базы данных после установки или удаления пакетов возможен при синхронизации каталога <strong>local</strong>.<br/><br/>ЗЫЫ: На оригинальность не претендую, возможно, кто-то уже пользуется таким или иным методом ускорения pacman. Замечания и поправки приветствуются.</li></ol>
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-70667"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/pioner14/index.html">
+                <span class="post-username">pioner14</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/70667/index.html">#</a>
+            12 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/pioner14/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/pioner14/posts/index.html">
+                    196
+                </a>
+            </div>
+            <div>
+                Участник с: 21 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Интересно, сейчас попробую.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-70668"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/pioner14/index.html">
+                <span class="post-username">pioner14</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/70668/index.html">#</a>
+            12 лет, 8 месяцев назад
+            
+                (отредактировано
+                
+                    12 лет, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/pioner14/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/pioner14/posts/index.html">
+                    196
+                </a>
+            </div>
+            <div>
+                Участник с: 21 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            После последней команды:<br/><div class="code"><pre># tar xfj ~/pacman.db.tar.bz2                                        
+tar: var/lib/pacman/local/gclient-svn-72-1/files: Невозможно open: На устройстве кончилось место
+tar: var/lib/pacman/local/gclient-svn-72-1/depends: Невозможно open: На устройстве кончилось место
+tar: var/lib/pacman/local/xorg-fonts-encodings-1.0.3-1: Невозможно mkdir: На устройстве кончилось место
+tar: var/lib/pacman/local/xorg-fonts-encodings-1.0.3-1/desc: Невозможно open: Нет такого файла или каталога
+tar: var/lib/pacman/local/xorg-fonts-encodings-1.0.3-1/install: Невозможно open: Нет такого файла или каталога
+tar: var/lib/pacman/local/xorg-fonts-encodings-1.0.3-1/files: Невозможно open: Нет такого файла или каталога  
+tar: var/lib/pacman/local/xorg-fonts-encodings-1.0.3-1/depends: Невозможно open: Нет такого файла или каталога
+tar: var/lib/pacman/local/kdelibs3-3.5.10-7: Невозможно mkdir: На устройстве кончилось место    </pre></div>???<br/><div class="code"><pre> pacman -Syu                                                                                            
+:: Синхронизируются базы данных пакетов...                                                                                 
+ошибка: не удалось начать запрос (не удалось заблокировать базу данных)
+  если вы уверены, что pacman не запущен, можете
+  удалить /var/lib/pacman/db.lck</pre></div><div class="code"><pre> pacman -Syu                                                                                            
+:: Синхронизируются базы данных пакетов...                                                                                 
+ошибка: не удалось начать запрос (не удалось заблокировать базу данных)
+  если вы уверены, что pacman не запущен, можете
+  удалить /var/lib/pacman/db.lck</pre></div><br/>Вот такие дела.<br/>Сразу вспоминается красная надпись. :( 
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-70669"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/cucullus/index.html">
+                <span class="post-username">cucullus</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/70669/index.html">#</a>
+            12 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/3e/fc/3efc5087b47b238689d6b1152d129048.png" alt="cucullus avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/cucullus/topics/index.html">
+                    256
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/cucullus/posts/index.html">
+                    3437
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            стоит ли ради 5 секунд такой огород городить?<br/>лучше б гимп ускорили ;)
+            
+                
+                    <div class="post-signature">
+                        такие дела.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-70670"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/amigo/index.html">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/70670/index.html">#</a>
+            12 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/amigo/topics/index.html">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/amigo/posts/index.html">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>pioner14</em><br/>На устройстве кончилось место<br/>Сразу вспоминается красная надпись. :( </blockquote>конечно. я же ошибку допустил :) <br/><br/>посмотри какого размера у тебя файл /var/lib/pacman.db
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-70671"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/amigo/index.html">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/70671/index.html">#</a>
+            12 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/amigo/topics/index.html">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/amigo/posts/index.html">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В ходе обсуждения на irc канале выяснился прирост в производительности<br/><blockquote> &lt;amigo&gt; pacman -Si  1,85s user 2,64s system 36% cpu 12,348 total<br/> &lt;amigo&gt; против<br/> &lt;amigo&gt; pacman -Si  0,72s user 0,64s system 39% cpu 3,442 total<br/></blockquote>
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-70673"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/amigo/index.html">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/70673/index.html">#</a>
+            12 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/amigo/topics/index.html">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/amigo/posts/index.html">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            исправил п.4 <div class="code"><pre>cd /var/lib/pacman</pre></div>на <div class="code"><pre>cd /</pre></div>
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-70674"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/pioner14/index.html">
+                <span class="post-username">pioner14</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/70674/index.html">#</a>
+            12 лет, 8 месяцев назад
+            
+                (отредактировано
+                
+                    12 лет, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/pioner14/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/pioner14/posts/index.html">
+                    196
+                </a>
+            </div>
+            <div>
+                Участник с: 21 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Amigo</em><br/><blockquote><em>pioner14</em><br/>На устройстве кончилось место<br/>Сразу вспоминается красная надпись. :( </blockquote>конечно. я же ошибку допустил :) <br/><br/>посмотри какого размера у тебя файл /var/lib/pacman.db</blockquote>du -hs /var/lib/pacman.db<br/>101M    /var/lib/pacman.db<br/><br/>Как исправить????
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-70672"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/h4tr3d/index.html">
+                <span class="post-username">h4tr3d</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/70672/index.html">#</a>
+            12 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/h4tr3d/topics/index.html">
+                    34
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/h4tr3d/posts/index.html">
+                    2656
+                </a>
+            </div>
+            <div>
+                Участник с: 12 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            На ноуте jfs, попробывать погонять ext4 в таком хотя бы варианте:) да! jfs зло, или мне не везет - бывает содержимоей файлов теряется, даже при нормальном завершении работы, что-то тут не чисто. Где то был проект там базу засунули в мускуль, но тут уже нужно сам пакман фиксить
+            
+                
+                    <div class="post-signature">
+                        systemd должен умереть.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-70675"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/pioner14/index.html">
+                <span class="post-username">pioner14</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/70675/index.html">#</a>
+            12 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/pioner14/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/pioner14/posts/index.html">
+                    196
+                </a>
+            </div>
+            <div>
+                Участник с: 21 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Amigo</em><br/>исправил п.4 <div class="code"><pre>cd /var/lib/pacman</pre></div>на <div class="code"><pre>cd /</pre></div></blockquote><br/>Может <br/><div class="code"><pre>cd ~/</pre></div><br/>Все таки?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexc48f.html?next=/forum/topic/7314/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'745ee28e3a251498',m:'soE1Gcuyqa7Dkr2DFABf7V4cfhDvm5EBjai8dBhcl28-1662380076-0-Aet/LgKXqx8GVOQmfTQrLj3UpH7oEzpzGkwqKCIJjtdhaUOiIJF4TZk+TJ51NcrEorStqNhk/UrT/Czfcrg39meMIekbjRmhqDCtJANDs6rkG9qM9DyR6J7MdcFC0IlsLqLEPaZgM81Ti4NtEn0zaFA=',s:[0x87bf3e8345,0x51524d1126],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible5615.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/7314/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 09:03:00 GMT -->
+</html>

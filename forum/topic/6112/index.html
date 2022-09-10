@@ -1,0 +1,1070 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Как работает Arch Rolling Release?
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/5/">Разное</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/4/">/dev/null</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Как работает Arch Rolling Release?</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Как работает Arch Rolling Release?</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-59195"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/alex-user/">
+                <span class="post-username">alex-user</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/59195/">#</a>
+            12 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/alex-user/topics/">
+                    58
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/alex-user/posts/">
+                    219
+                </a>
+            </div>
+            <div>
+                Участник с: 02 августа 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я так понимаю, если не обновлять Arch года 4, а потом сделать обновление при помощи pacman, будет установлена самая последняя версия Arch - это и есть Rolling Release. Но как происходит такое обновление? Ведь там кроме софта ещё должна обновляться система, конфигурационные файлы и прочее, что в большинстве дистрибутивов обновляется только переустановкой системы на новую версию. Неужели pacman обновляет это всё (даже то, что другие дистрибутивы просто не умеют обновлять) или просто в Arch ничего не меняется?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-59196"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/amigo/">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/59196/">#</a>
+            12 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/amigo/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/amigo/posts/">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ты тролль? <a href="http://forum.linux.by/viewtopic.php?f=5&amp;t=11028&amp;p=78274">http://forum.linux.by/viewtopic.php?f=5&amp;t=11028&amp;p=78274</a> 
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-59197"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/amigo/">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/59197/">#</a>
+            12 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/amigo/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/amigo/posts/">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+             <a href="https://ru.wikipedia.org/wiki/Arch_Linux#.D0.A0.D0.B5.D0.BB.D0.B8.D0.B7.D1.8B">http://ru.wikipedia.org/wiki/Arch_Linux &#8230; 0.B7.D1.8B</a> 
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-59198"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/alex-user/">
+                <span class="post-username">alex-user</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/59198/">#</a>
+            12 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/alex-user/topics/">
+                    58
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/alex-user/posts/">
+                    219
+                </a>
+            </div>
+            <div>
+                Участник с: 02 августа 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Amigo</em><br/>Ты тролль? <a href="http://forum.linux.by/viewtopic.php?f=5&amp;t=11028&amp;p=78274">http://forum.linux.by/viewtopic.php?f=5&amp;t=11028&amp;p=78274</a> </blockquote>Мне там не смогли ответить. Причём тут тролли???
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-59199"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/anthonio/">
+                <span class="post-username">anthonio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/59199/">#</a>
+            12 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/anthonio/topics/">
+                    18
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/anthonio/posts/">
+                    378
+                </a>
+            </div>
+            <div>
+                Участник с: 11 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Alex User</em><br/>Мне там не смогли ответить.</blockquote>Там же и ответили :)<br/>Но если есть желание &ndash; поставьте эксперимент. Через 4 года отпишитесь сюда :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-59200"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Nebulosa/">
+                <span class="post-username">Nebulosa</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/59200/">#</a>
+            12 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4a/9b/4a9bd66c7a2a170b1585f3b56cdb48de.png" alt="Nebulosa avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Nebulosa/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Nebulosa/posts/">
+                    831
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Alex User</em><br/>Я так понимаю, если не обновлять Arch года 4, а потом сделать обновление при помощи pacman, будет установлена самая последняя версия Arch - это и есть Rolling Release. Но как происходит такое обновление?<br/></blockquote>pacman -Syu. Будет установлены последние версии пакетов которые используются в системе. Понятия &ldquo;самая последняя версия Arch&rdquo; не существует, как и не существует понятия &ldquo;дефолтного Арча&rdquo;.<br/><blockquote><em>Alex User</em><br/>Неужели pacman обновляет это всё</blockquote>Да.<br/><blockquote><em>Alex User</em><br/>(даже то, что другие дистрибутивы просто не умеют обновлять)</blockquote>Даже. Но сравнение некорректное, другие дистрибутивы (по сути срезы) работают по другому принципу, им не нужно обновлять пакеты.<br/><blockquote><em>Alex User</em><br/>или просто в Arch ничего не меняется?</blockquote>Меняется. При обновлении пакетов, если поменялось что-то глобальное, требуется донастройка конфигов. Все пакеты которые более не требуются в системе pacman предложит удалить, все пакеты которые заменяют собой другие пакеты pacman предложит деинсталлировать и установит новые.<br/><br/>Существует ненулевая вероятность, что после 4 лет без обновлений вы не сможете (у вас не хватит знаний) перенастроить все необходимые файлы конфигураций, либо это займет слишком много вашего времени. Для облегчения процесса перехода на новый софт периодически выходят инсталляционные iso ArchLinux. Это не настроенные срезы, с файлами конфигурации и предустановленным софтом, как это происходит у других дистрибутивов. Образ iso у ArchLinux - это лишь вариации инсталлятора, который может давать (сразу при инсталляции) доступ к новым функциям ядра - например, установка системы на ext4.<br/><br/>И еще раз:<br/>Можно скачать образ iso отсюда - <a href="http://mirror.yandex.ru/archlinux/iso/2007.08/">http://mirror.yandex.ru/archlinux/iso/2007.08/</a> и попробовать установить арч. Врядли у инсталлятора будет опция установки системы, например, на ext4, но с репазиториев вы все равно будете качать самые новые пакеты. И еще rc.conf который будет сгенерирован, будет немного устаревшим, поправить его можно через обычный редактор текста прочитав wiki.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-59201"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/pztrn/">
+                <span class="post-username">pztrn</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/59201/">#</a>
+            12 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/pztrn/topics/">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/pztrn/posts/">
+                    1436
+                </a>
+            </div>
+            <div>
+                Участник с: 20 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Обновлять rolling-release дистрибутив через срок, больший месяца - самоубийство
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-59202"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/h4tr3d/">
+                <span class="post-username">h4tr3d</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/59202/">#</a>
+            12 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/h4tr3d/topics/">
+                    34
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/h4tr3d/posts/">
+                    2656
+                </a>
+            </div>
+            <div>
+                Участник с: 12 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>PoZiTPoH</em><br/>Обновлять rolling-release дистрибутив через срок, больший месяца - самоубийство</blockquote><br/>неправда (первый ужас): год и 1.5 года, но это были сервера (второй ужас), там специализированного софта не много.
+            
+                
+                    <div class="post-signature">
+                        systemd должен умереть.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-59203"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/pztrn/">
+                <span class="post-username">pztrn</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/59203/">#</a>
+            12 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/pztrn/topics/">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/pztrn/posts/">
+                    1436
+                </a>
+            </div>
+            <div>
+                Участник с: 20 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Серверы - это серверы. Их можно хоть два года не обновлять (если там нет специализированного софта). Тут речь про десктопы идет, это же очевидно :&gt;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-59204"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/alex-user/">
+                <span class="post-username">alex-user</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/59204/">#</a>
+            12 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/alex-user/topics/">
+                    58
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/alex-user/posts/">
+                    219
+                </a>
+            </div>
+            <div>
+                Участник с: 02 августа 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>PoZiTPoH</em><br/>Тут речь про десктопы идет, это же очевидно :&gt;</blockquote>Поправка: про клиенты.<br/> <a href="http://forum.linux.by/viewtopic.php?f=8&amp;t=10814">http://forum.linux.by/viewtopic.php?f=8&amp;t=10814</a> <br/><br/><blockquote>Существует ненулевая вероятность, что после 4 лет без обновлений вы не сможете (у вас не хватит знаний) перенастроить все необходимые файлы конфигураций, либо это займет слишком много вашего времени.</blockquote>Конфиги программ (типа тех, что находятся в home directory)?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/6112/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747c030e8f8116e3',m:'iPZw2dR_YEhtT4oDBidCSnqxRKKO1xGgqOKsrV5Y4Ms-1662685493-0-Af8BilTeRawZX+h5/1F29qCJAulKCwBfpHf0maV8apkDzxdFuOr4w1AgmM5CYiM5FZRY7MkoHai8n0k1ZkxB7WQ0TtGLgfLsriOiD1DMah4T4TptzIlizdk9IEuzsqn3PQ4cuVQ2RdrpaGqFdD8vJag=',s:[0x42d829427b,0x6afef24425],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

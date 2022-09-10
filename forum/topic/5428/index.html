@@ -1,0 +1,631 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [Решено]Apache вирт. хосты, польз. директории, доступ извне
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[Решено]Apache вирт. хосты, польз. директории, доступ извне</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[Решено]Apache вирт. хосты, польз. директории, доступ извне</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-53088"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/gard/">
+                <span class="post-username">gard</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/53088/">#</a>
+            11 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    11 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/5c/f5/5cf5a07c0739d7bc6ac7ac27f4f6a0be.png" alt="gard avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/gard/topics/">
+                    66
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/gard/posts/">
+                    1167
+                </a>
+            </div>
+            <div>
+                Участник с: 15 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Привет всем!<br/>Я уже что-то запутался совсем. Следуя вики, я создал для себя виртуальный хост, это просто каталог Site в моей домашней директории. В браузере я набираю Site и попадаю на сайт, лежащий в этом каталоге. И у меня возник вопрос, ответа на который я никак не найду. Мне надо, чтобы люди извне могли заходить на этот сайт (посмотреть), а как это сделать, если сайт лежит не в /srv/http/ а в моем каталоге? Пробовал делать userdir, но это имеет проблему с корнем сайта и путями (не страшно, но неудобно).. Подскажите кто знает =)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-53089"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Nebulosa/">
+                <span class="post-username">Nebulosa</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/53089/">#</a>
+            11 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4a/9b/4a9bd66c7a2a170b1585f3b56cdb48de.png" alt="Nebulosa avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Nebulosa/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Nebulosa/posts/">
+                    831
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Как я вижу тут несколько подзадач.<br/><br/>1. Доступ извне уже существует? (Скажем у вас &ldquo;белый&rdquo; IP к которому уже сейчас можно подсоединится, или NAT c прокинутыми портами 80?)<br/><br/>2. Что именно вы набираете в браузере и по какому именно wiki настраивали виртуальные хосты?<br/><br/>3. Как соотносится путь /srv/http/ с доступом?.. Покажите чтоли Apache.conf.. может будет понятно. И заодно пути по которым вы хотите чтобы был доступен сайт.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-53090"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/gard/">
+                <span class="post-username">gard</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/53090/">#</a>
+            11 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/5c/f5/5cf5a07c0739d7bc6ac7ac27f4f6a0be.png" alt="gard avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/gard/topics/">
+                    66
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/gard/posts/">
+                    1167
+                </a>
+            </div>
+            <div>
+                Участник с: 15 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Спасибо за ответы =)<br/><br/>1) Доступ извне есть, IP динамический, мой комп за NATом, порт проброшен, сайт извне открыть можно<br/>2) Чтобы открыть сайт извне, пользователю достаточно вписать мой текущий IP или же (как и бывает чаще всего) имя dynDNS (<a href="http://gard.selfip.org">gard.selfip.org</a>), которое содержит мой текущий IP, пользователь в этом случае попадет на сайт, расположенный в каталоге /srv/http на моей машинке (фактически там сейчас ничего нет).<br/>3) На самом деле сайт расположен у меня в /home/gard/Site, я с локалхоста набираю в браузере <a href="http://site">http://site</a> и попадаю на него. Вот настройка вирт. хостов:<br/><div class="code"><pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1a6875756e5a7b687f7b2f2b">[email&#160;protected]</a> ~]# cat /etc/httpd/conf/extra/httpd-vhosts.conf 
+#
+# Use name-based virtual hosting.
+#
+NameVirtualHost 127.0.0.1:80
+&lt;VirtualHost 127.0.0.1:80&gt;
+    ServerAdmin <a href="/cdn-cgi/l/email-protection#20474152440e41524541151160474d41494c0e434f4d"><span class="__cf_email__" data-cfemail="3a5d5b485e145b485f5b0f0b7a5d575b535614595557">[email&#160;protected]</span></a>
+    DocumentRoot "/home/gard/Site"
+    ServerName Site
+    ServerAlias Site
+        &lt;Directory /home/gard/Site/&gt;
+		DirectoryIndex index.htm index.html
+		Options -Indexes
+		AllowOverride None
+	&lt;/Directory&gt; 
+    ErrorLog "/var/log/httpd/site_error_log"
+    CustomLog "/var/log/httpd/site_access_log" common
+&lt;/VirtualHost&gt;</pre></div>Также есть запись в /etc/hosts, что Site это я:<div class="code"><pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f1839e9e85b190839490c4c0">[email&#160;protected]</a> ~]# cat /etc/hosts
+127.0.0.1		localhost.localdomain	localhost area51
+192.168.2.1		kate
+127.0.0.1		Site</pre></div>В /etc/http/http.conf по сути больше ничего не менялось (менялось, но уже заменялось назад =). И вот собственно задача в том, что я то попадаю на свой сайт в /home/gard/Site, а как внешним пользователям на него попасть, они при наборе <a href="http://gard.selfip.org">gard.selfip.org</a> запрашивают сайт из /srv/http/, которого нет..
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-53091"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Nebulosa/">
+                <span class="post-username">Nebulosa</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/53091/">#</a>
+            11 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4a/9b/4a9bd66c7a2a170b1585f3b56cdb48de.png" alt="Nebulosa avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Nebulosa/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Nebulosa/posts/">
+                    831
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            То что порт проброшен, гут, идём дальше:<br/><br/><div class="code"><pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2a5845455e6a4b584f4b1f1b">[email&#160;protected]</a> ~]# cat /etc/httpd/conf/extra/httpd-vhosts.conf 
+#
+# Use name-based virtual hosting.
+#
+NameVirtualHost *:80
+&lt;VirtualHost *:80&gt;
+    ServerAdmin <a href="/cdn-cgi/l/email-protection#45222437216b243720247074052228242c296b262a28"><span class="__cf_email__" data-cfemail="0d6a6c7f69236c7f686c383c4d6a606c6461236e6260">[email&#160;protected]</span></a>
+    DocumentRoot "/home/gard/Site"
+    ServerName <a href="http://gard.selfip.org">gard.selfip.org</a>
+    ServerAlias <a href="http://www.gard.selfip.org">www.gard.selfip.org</a>
+        &lt;Directory /home/gard/Site/&gt;
+		DirectoryIndex index.htm index.html
+		Options -Indexes
+		AllowOverride None
+	&lt;/Directory&gt; 
+    ErrorLog "/var/log/httpd/site_error_log"
+    CustomLog "/var/log/httpd/site_access_log" common
+&lt;/VirtualHost&gt;</pre></div>Теперь все кто запрашивает <a href="http://gard.selfip.org">gard.selfip.org</a> будут попадать в /home/gard/Site по 80 порту.<br/><blockquote><em>gard</em><br/>Также есть запись в /etc/hosts, что Site это я:<div class="code"><pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="98eaf7f7ecd8f9eafdf9ada9">[email&#160;protected]</a> ~]# cat /etc/hosts
+127.0.0.1		localhost.localdomain	localhost area51
+192.168.2.1		kate
+127.0.0.1		Site</pre></div></blockquote><br/>Теперь, после указанной выше настройки, запись в /etc/hosts практически бесполезна.<br/><br/>Кстати, <a href="http://gard.selfip.org/">http://gard.selfip.org/</a> уже открывается, есть контент, я опоздал с советами?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-53092"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/gard/">
+                <span class="post-username">gard</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/53092/">#</a>
+            11 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/5c/f5/5cf5a07c0739d7bc6ac7ac27f4f6a0be.png" alt="gard avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/gard/topics/">
+                    66
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/gard/posts/">
+                    1167
+                </a>
+            </div>
+            <div>
+                Участник с: 15 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Спасибо за ответы. Я немножко просто не догоняю логику работы. Я убрал запись из /etc/hosts/ и теперь могу попасть в него по localhost со своей локальной машинки. На это влияют строки эти строки?<div class="code"><pre>NameVirtualHost *:80
+&lt;VirtualHost *:80&gt;</pre></div>Еще раз спасибо, сейчас попросил проверить человека - все работает. Надо почитать еще манов. =)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/5428/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747bbc27f8410022',m:'bsA6OaV4yXnyJRzXT7LWqdfRfwcK7PDrLu8mUY1tgB4-1662682585-0-AeFWeGKpzILTYEV1W1EgO5j0sie0wi+AWjpL5SKU1xzLeo1yOjUMp8vo8SdaeuYftWM4aron0adPbJPQRoIvuu3bX0GcJ+NnpJfXn4hqDCDtgMt7C7IRPstVWXPhEDDNreBvM/NYjfPT5+DdqWHolA0=',s:[0xcf1d5b5a81,0x31326aad38],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

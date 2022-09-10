@@ -1,0 +1,1110 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Перевод старого арча на systemd
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Перевод старого арча на systemd</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Перевод старого арча на systemd</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-5115"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/RAMZAY/">
+                <span class="post-username">RAMZAY</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/5115/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/00/cf/00cf8778fdfc123989b84be78849fb61.png" alt="RAMZAY avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/RAMZAY/topics/">
+                    43
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/RAMZAY/posts/">
+                    448
+                </a>
+            </div>
+            <div>
+                Участник с: 21 мая 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sleepycat</em><br/>для справки у системд должен быть свой планировщик, как и ЛОГометр.<br/><div class="code"><pre>pacman -S cronie
+systemctl enable cronie.service</pre></div></blockquote>Спасибо,всем спасибо. Сейчас буду перезагружаться,с богом !<br/><br/>UPD. И так,прикольная новая загрузочка,но старая почему то больше нравилась,в этой всё мелко как то =)<br/>И да,что то там у меня сфейлилось,ругнулось на rc. что то там,но всё нормально загрузилось,щас посмотрим  логи<br/>эм,а где systemd держит логи о загрузке ?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-5116"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/5116/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>RAMZAY</em><br/>эм,а где systemd держит логи о загрузке ?</blockquote><strong>journalctl -b</strong>
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-5117"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/RAMZAY/">
+                <span class="post-username">RAMZAY</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/5117/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/00/cf/00cf8778fdfc123989b84be78849fb61.png" alt="RAMZAY avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/RAMZAY/topics/">
+                    43
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/RAMZAY/posts/">
+                    448
+                </a>
+            </div>
+            <div>
+                Участник с: 21 мая 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            вот такие вот ошибки нашел в логе:<br/><br/>Oct 28 16:19:29 archlinux systemd: Starting /etc/rc.local Compatibility&#8230;<br/>Oct 28 16:19:29 archlinux systemd: Failed at step EXEC spawning /etc/rc.local: Exec format error<br/><br/>ct 28 16:19:30 archlinux systemd: Failed to start /etc/rc.local Compatibility.<br/>Oct 28 16:19:30 archlinux systemd: Unit rc-local.service entered failed state<br/>Oct 28 16:19:30 archlinux /usr/sbin/crond: (CRON) INFO (Syslog will be used instead of sendmail.): Нет такого файла или каталога<br/>Oct 28 16:19:30 archlinux /usr/sbin/crond: (CRON) INFO (running with inotify support)<br/><br/>Oct 28 16:19:49 archlinux pulseaudio:  bluetooth-util.c: org.bluez.Manager.ListAdapters() failed: org.freedesktop.systemd1.LoadFailed: Unit dbus-org.bluez.service failed to load: No such file or directory. See system logs and &lsquo;systemctl status dbus-org.bluez.service&rsquo; for details.<br/><br/>$ systemctl status dbus-org.bluez.service<br/>dbus-org.bluez.service<br/>	  Loaded: error (Reason: No such file or directory)<br/>	  Active: inactive (dead)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-5118"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/arcanis/">
+                <span class="post-username">arcanis</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/5118/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8e/cd/8ecde9b9bf77f0b2a47300c7eb3d904f.png" alt="arcanis avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/arcanis/topics/">
+                    31
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/arcanis/posts/">
+                    1496
+                </a>
+            </div>
+            <div>
+                Участник с: 09 сентября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>RAMZAY</em><br/>Oct 28 16:19:29 archlinux systemd: Starting /etc/rc.local Compatibility&#8230;<br/>Oct 28 16:19:29 archlinux systemd: Failed at step EXEC spawning /etc/rc.local: Exec format error<br/><br/>ct 28 16:19:30 archlinux systemd: Failed to start /etc/rc.local Compatibility.<br/>Oct 28 16:19:30 archlinux systemd: Unit rc-local.service entered failed state</blockquote>а как выглядит rc-local.service? Я в свое время его не нашел, делал ручками по вики. Щас смотрю вики, а там уже и нету этого блока
+            
+                
+                    <div class="post-signature">
+                        PGP <a href="http://pgp.mit.edu:11371/pks/lookup?op=vindex&amp;fingerprint=on&amp;exact=on&amp;search=0x779CD2942629B7FA04AB8F172E89012331361F01">0x31361F01</a><br /><a href="https://repo.arcanis.me/">arcanisrepo</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-5119"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/RAMZAY/">
+                <span class="post-username">RAMZAY</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/5119/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/00/cf/00cf8778fdfc123989b84be78849fb61.png" alt="RAMZAY avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/RAMZAY/topics/">
+                    43
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/RAMZAY/posts/">
+                    448
+                </a>
+            </div>
+            <div>
+                Участник с: 21 мая 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>arcanis</em><br/><blockquote><em>RAMZAY</em><br/>Oct 28 16:19:29 archlinux systemd: Starting /etc/rc.local Compatibility&#8230;<br/>Oct 28 16:19:29 archlinux systemd: Failed at step EXEC spawning /etc/rc.local: Exec format error<br/><br/>ct 28 16:19:30 archlinux systemd: Failed to start /etc/rc.local Compatibility.<br/>Oct 28 16:19:30 archlinux systemd: Unit rc-local.service entered failed state</blockquote>а как выглядит rc-local.service? Я в свое время его не нашел, делал ручками по вики. Щас смотрю вики, а там уже и нету этого блока</blockquote><br/>То та и оно,вики нам вот что говорит<br/><br/><blockquote>Чистая установка systemd<br/>В конце концов, возможно вовсе удалить initscripts и sysvinit и использовать только лишь systemd.<br/>1) Следуйте инструкциям для смешанной установки systemd/initscripts.<br/>2) Убедитесь, что более не имеется каких-либо демонов для запуска из массива DAEMONS в конфигурационном файле /etc/rc.conf и оба файла /etc/rc.local и /etc/rc.local.shutdown пусты.<br/>3) Удалите пакет initscripts из вашей системы.</blockquote>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-5120"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/5120/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            да не паникуйте вы, может просто файла то и нет rc.local. Да и нужен ли он вам?
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-5121"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/RAMZAY/">
+                <span class="post-username">RAMZAY</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/5121/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/00/cf/00cf8778fdfc123989b84be78849fb61.png" alt="RAMZAY avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/RAMZAY/topics/">
+                    43
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/RAMZAY/posts/">
+                    448
+                </a>
+            </div>
+            <div>
+                Участник с: 21 мая 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sleepycat</em><br/>да не паникуйте вы, может просто файла то и нет rc.local. Да и нужен ли он вам?</blockquote>rc.local есть. Да я и не паникую,всё же работает,просто надо бы потом какнить это всё пофиксить.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-5122"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/arcanis/">
+                <span class="post-username">arcanis</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/5122/">#</a>
+            9 лет, 10 месяцев назад
+            
+                (отредактировано
+                
+                    9 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8e/cd/8ecde9b9bf77f0b2a47300c7eb3d904f.png" alt="arcanis avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/arcanis/topics/">
+                    31
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/arcanis/posts/">
+                    1496
+                </a>
+            </div>
+            <div>
+                Участник с: 09 сентября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ну у меня он выглядит как то так<br/><div class="code"><pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7b0914140f3b3a29383a353228">[email&#160;protected]</a> arcanis]# cat /etc/systemd/system/rc-local.service     
+[Unit]
+Description=/etc/rc.local Compatibility
+[Service]
+Type=oneshot
+ExecStart=/etc/rc.local
+TimeoutSec=0
+StandardInput=tty
+RemainAfterExit=yes
+[Install]
+WantedBy=multi-user.target</pre></div>потом соответственно<br/><div class="code"><pre>systemctl enable rc-local.service</pre></div>но реально таки да, мне кажется, все можно повесить на сервисы и нужда в rc.local просто отпадает
+            
+                
+                    <div class="post-signature">
+                        PGP <a href="http://pgp.mit.edu:11371/pks/lookup?op=vindex&amp;fingerprint=on&amp;exact=on&amp;search=0x779CD2942629B7FA04AB8F172E89012331361F01">0x31361F01</a><br /><a href="https://repo.arcanis.me/">arcanisrepo</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-5123"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/RAMZAY/">
+                <span class="post-username">RAMZAY</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/5123/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/00/cf/00cf8778fdfc123989b84be78849fb61.png" alt="RAMZAY avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/RAMZAY/topics/">
+                    43
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/RAMZAY/posts/">
+                    448
+                </a>
+            </div>
+            <div>
+                Участник с: 21 мая 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            попробывал саздать,и включить,пишет ошибку. Ну и чёрт с ним.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-5124"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/5124/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            давай этот рц сюда.
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/571/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747ca4dfad0c9da4',m:'uB68m6vpHc8hCJWAXQJiEDjlRZQpWGuRmSOzr.f11mo-1662692119-0-AbKFWBKHdrwdi57z4Ovih6SJH/TF4q307xBX4IlX1Cc2TptVAD2Bxn5ogffQsre4lT3DbdWahgn/9zzg5bOOiQSqAsokdo72L3Vq9OkJi/xRI4jYvZ/zjPmoC8nwo7/U/KgT/jSo2feEnsDjHV3A/3E=',s:[0xee5fc00f00,0x3b6ea00577],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

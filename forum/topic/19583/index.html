@@ -1,0 +1,754 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Проблемы с SMB/CIFS и монтированием
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Проблемы с SMB/CIFS и монтированием</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Проблемы с SMB/CIFS и монтированием</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223012"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Kalit/">
+                <span class="post-username">Kalit</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/223012/">#</a>
+            2 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Kalit/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Kalit/posts/">
+                    8
+                </a>
+            </div>
+            <div>
+                Участник с: 18 ноября 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Всем привет!<br />Для меня эта тема темный лес. Пытался что-то делать сам, но безуспешно.<br />Имеется роутер Keenetic Giga KN-1010 и подключенный к нему внешний жесткий диск Toshiba.<br /><br /><strong>1)</strong> в Dolphin (файловый менеджер KDE) в меню слева &quot;В сети&quot; не находятся автоматически &quot;Shared Folders (SMB)&quot; но при этом доступно и работает добавление в ручную. В итоге открывается в ФМ так: &quot;smb://192.168.7.1/&quot;<br />Это подходит в качестве временного решения, не более. Мне нужно, чтобы в ФМ все находилось автоматически.<br />Кстати, по имени роутера (unknown в моем случае) не добавляется.<br /><br /><strong>2)</strong> Монтирование. Чтобы иметь возможность работать с файлами не только в Dolphin, добавил в /etc/fstab такую запись:<br /><blockquote>//192.168.7.1/faylo                             /cifs/faylo     cifs            guest,rw,uid=myuser,gid=users 0 0</blockquote>при команде<br /><blockquote>$ sudo mount -a</blockquote>Все монтируется отлично, но стоит только перезагрузиться и логи кричат про какую-то не существующую директорию:<br /><strong>$</strong> systemctl status cifs-faylo.mount<br /><blockquote>● cifs-faylo.mount - /cifs/faylo<br />   Loaded: loaded (/etc/fstab; generated)<br />   Active: failed (Result: exit-code) since Mon 2019-11-18 10:12:18 +07; 10min ago<br />    Where: /cifs/faylo<br />     What: //192.168.7.1/faylo<br />     Docs: man:fstab(5)<br />           man:systemd-fstab-generator(8)<br /><br />ноя 18 10:12:17 arch systemd[1]: Mounting /cifs/faylo&#8230;<br />ноя 18 10:12:18 arch mount[480]: mount error(2): No such file or directory<br />ноя 18 10:12:18 arch mount[480]: Refer to the mount.cifs(8) manual page (e.g. man mount.cifs) and kernel log messages (dmesg)<br />ноя 18 10:12:18 arch systemd[1]: cifs-faylo.mount: Mount process exited, code=exited, status=32/n/a<br />ноя 18 10:12:18 arch systemd[1]: cifs-faylo.mount: Failed with result &#39;exit-code&#39;.<br />ноя 18 10:12:18 arch systemd[1]: Failed to mount /cifs/faylo.</blockquote>в чем проблема - не понимаю. На cifs права у рута, но на faylo у myuser:users.<br /><br />3) Авто-монтирование. Это реализуемо? Не то, чтобы в роутер часто вставляются различные внешние винты и флешки, но хотелось бы чтобы все автоматически монтировалось в ту же директорию /cifs<br /><br />Сильно не пинайте, все эти сетевые хранилища/samba для меня как для убунтушника Gentoo...<br />Буду благодарен за любую помощь. Если кто-то поможет ссылками, то по возможности на русском языке, ибо в английском 0 а переводчики часто только путают.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223019"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Kalit/">
+                <span class="post-username">Kalit</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/223019/">#</a>
+            2 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Kalit/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Kalit/posts/">
+                    8
+                </a>
+            </div>
+            <div>
+                Участник с: 18 ноября 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>$</strong> systemctl status cifs-faylo.mount<br /><blockquote>● cifs-faylo.mount - Mount Share faylo at boot<br />   Loaded: loaded (/etc/systemd/system/cifs-faylo.mount; enabled; vendor preset: disabled)<br />   Active: failed (Result: exit-code) since Mon 2019-11-18 13:31:47 +07; 5min ago<br />    Where: /cifs/faylo<br />     What: //192.168.7.1/faylo<br /><br />ноя 18 13:31:47 arch systemd[1]: Mounting Mount Share faylo at boot&#8230;<br /><strong>ноя 18 13:31:47 arch mount[497]: mount error(2): No such file or directory</strong><br />ноя 18 13:31:47 arch mount[497]: Refer to the mount.cifs(8) manual page (e.g. man mount.cifs) and kernel log messages (dmesg)<br />ноя 18 13:31:47 arch systemd[1]: cifs-faylo.mount: Mount process exited, code=exited, status=32/n/a<br />ноя 18 13:31:47 arch systemd[1]: cifs-faylo.mount: Failed with result &#39;exit-code&#39;.<br />ноя 18 13:31:47 arch systemd[1]: Failed to mount Mount Share faylo at boot.</blockquote>так тоже не работает.<br />$ cat /etc/systemd/system/cifs-faylo.mount<br /><blockquote>[Unit]<br />Description=Mount Share faylo at boot<br /><br />[Mount]<br />What=//192.168.7.1/faylo<br />Where=/cifs/faylo<br />Options=iocharset=utf8,rw,guest,uid=myuser,gid=users<br />Type=cifs<br />TimeoutSec=30<br /><br />[Install]<br />WantedBy=multi-user.target</blockquote><br />$ ls -lh /cifs/<br /><blockquote>итого 4,0K<br />drwxr-xr-x 2 myuser users 4,0K ноя 18 00:47 faylo</blockquote>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223021"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/223021/">#</a>
+            2 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Kalit</em><br>не существующую директорию:</blockquote>ну всё правильно, сети то нет.<br /><blockquote><em>Kalit</em><br>Авто-монтирование. Это реализуемо?</blockquote>конечно, никаких проблем. Надо в fstab прописать x-systemd.automount  и netdev как один из вариантов.<br /><blockquote><em>Kalit</em><br>убунту</blockquote>один в один, никакой разницы..<br /><blockquote>/cifs/faylo</blockquote>Вам существующих в корне директорий не хватает?
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223044"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Kalit/">
+                <span class="post-username">Kalit</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/223044/">#</a>
+            2 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Kalit/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Kalit/posts/">
+                    8
+                </a>
+            </div>
+            <div>
+                Участник с: 18 ноября 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br>ну всё правильно, сети то нет.</blockquote>Подозревал этот момент, но не решался попробовать поднимать сеть через wpa_supplicant (например) во время загрузки. Окей, как тогда быть с NetworkManager, если сетью в кедах рулит он? Нельзя сделать так, чтобы он поднимал сеть до запуска DE и соответственно монтирования cifs?<br /><br /><blockquote><em>indeviral</em><br>конечно, никаких проблем. Надо в fstab прописать x-systemd.automount и netdev как один из вариантов.</blockquote>Спасибо.<br />Мне нужно, чтобы сетевые ресурсы (подключенные к роутеру винты и флешки) автоматически обнаруживались и монтировались в указанную директорию. Просто не хочется для каждой флешки и винта подключенных к роутеру создавать отдельные записи fstab/AutoFS.<br />Наверное fstab для этого не подойдет?<br /><br />Во время написания комментария наткнулся на AutoFS. монтирует без танцев с бубном и после ребутов тоже все ОК. Единственное, я не понял, возможна ли в нем реализация того, что я описал выше?<br /><br /><blockquote><em>indeviral</em><br>Вам существующих в корне директорий не хватает?</blockquote>Изначально было по другому, потом увидел в гугле пример монтирования, так и оставил пока... В AutoFS монтируется в /media.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223045"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/223045/">#</a>
+            2 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Kalit</em><br>Нельзя сделать так, чтобы он поднимал сеть до запуска DE и соответственно монтирования cifs?</blockquote>можно, особого смысла нету.<br /><blockquote><em>Kalit</em><br>винты и флешки</blockquote>сколько одновременно вы собрались подключать?) да и там же usb 2.0(или вообще 1.0) если у вас гигабитная сеть то это очень узкое место...<br /><blockquote><em>Kalit</em><br>Изначально было по другому</blockquote>верните как было.<br /><br />вот так монтируется у меня, он не идеален есть шерховатости, но если кто-нибудь знает лучше может кинуть в меня камнем.<br /><pre><code>//<a href="http://home.loc/data1">home.loc/data1</a> /media/<a href="http://home.loc/data1/">home.loc/data1/</a> cifs uid=uid,gid=gid,file_mode=0664,dir_mode=0775,username=user,password=user,noauto,nofail,x-systemd.automount,x-systemd.requires=network-online.target,x-systemd.device-timeout=10,workgroup=workgroup 0 0
+</code></pre>p.s. про камень эт я погорячился, знаю я вас...
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223069"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Kalit/">
+                <span class="post-username">Kalit</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/223069/">#</a>
+            2 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Kalit/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Kalit/posts/">
+                    8
+                </a>
+            </div>
+            <div>
+                Участник с: 18 ноября 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br>сколько одновременно вы собрались подключать?) да и там же usb 2.0(или вообще 1.0) если у вас гигабитная сеть то это очень узкое место&#8230;</blockquote>У меня в роутере два порта. Первый 3.0, второй 2.0. К первому подключен usb 3.0 хаб на 7 портов с внешним питанием. 5 флешек и 2 внешних винта (3.0). Не все работают одновременно, чаще только 1 флешка и 2 винта.<br /><br /><blockquote><em>indeviral</em><br>вот так монтируется у меня</blockquote>Cпасибо, теперь хоть иногда работает монтирование.. Проблема в том, что внешние винты у меня засыпают при отсутствии активности и прежде чем сработает авто-монтирование, мне нужно через ФМ обратиться по протоколу smb://[ip_addr]/faylo к одному из файлов на винте и только тогда через какое-то время все монтируется само.<br />Если такие манипуляции не проводить:<br /><blockquote>● media-faylo.automount<br />   Loaded: loaded (/etc/fstab; generated)<br />   Active: <strong>active (waiting)</strong> since Tue 2019-11-19 11:40:55 +07; 19min ago<br />    Where: /media/faylo<br />     Docs: man:fstab(5)<br />           man:systemd-fstab-generator(8)<br /><br />ноя 19 11:40:55 arch systemd[1]: Set up automount media-faylo.automount.</blockquote>что делать в таком случае?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223097"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/223097/">#</a>
+            2 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Kalit</em><br>что делать в таком случае?</blockquote>это вам нужно заняться настройкой энергосбережения в вашем &quot;роутере&quot;.
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/19583/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747c09770ce29daa',m:'fj_2f8JBv2CBqZkiHQCjgJyJ8UhM3Vkvmg35cPDSqw8-1662685750-0-AZXc9LArsg03Iq5lfwSUr6DdzFV768EKNBo3GGNPRkobkMerxy8j391w1Nyq4weJFm4qyBJZkts91JVsVNp4HAX2nXm12XkD0VzgTyDa6tE2ECEGyg8QAb33Ql0mHideXDVm4ksq8tpC3iMSdynjuqg=',s:[0xe4943572dc,0x7d145ce5c3],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

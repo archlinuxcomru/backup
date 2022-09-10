@@ -1,0 +1,836 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/16087/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:17:52 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [Solved]Установка из chroot с linux-хоста, монтирование раздела
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/11/index.html">Установка</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[Solved]Установка из chroot с linux-хоста, монтирование раздела</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[Solved]Установка из chroot с linux-хоста, монтирование раздела</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-169509"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/lusik/index.html">
+                <span class="post-username">lusik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/169509/index.html">#</a>
+            6 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    6 лет, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/lusik/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/lusik/posts/index.html">
+                    19
+                </a>
+            </div>
+            <div>
+                Участник с: 19 мая 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Перешла  в chroot по гайду<br /><a href="https://wiki.archlinux.org/index.php/Install_from_existing_Linux_(Русский)">https://wiki.archlinux.org/index.php/Install_from_existing_Linux_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29</a><br />до момента <blockquote>Следуйте Installation guide#Mount the partitions</blockquote>дальше <blockquote>Смонтируйте корневой раздел в /mnt. После этого вы можете создать каталоги для отдельных разделов (/mnt/boot, /mnt/home и т. д.) и смонтировать их, а также активировать ваш раздел подкачки если вы хотите, чтобы эти разделы впоследствии были определены genfstab.</blockquote>не совсем уверена что куда монтировать - текущий fstab системы<br /><pre><code>
+UUID=6e3e0f95-d6cf-4109-9891-5cde4f96675a[/dev/sda1]     /boot              ext2 noatime,discard,rw,suid,dev,exec,auto,nouser,async 0 2
+UUID=41bc2f6a-de94-4264-902f-05181eafe8f8[/dev/sda4]      /                      ext4 noatime,discard,rw,suid,dev,exec,auto,nouser,async,nodiratime,errors=remount-ro 0 1
+UUID=8b7eb8f9-4ebc-4d5c-868d-d14428d0b236[/dev/sda2]   /home/ssd     ext4 noatime,discard,users,rw,suid,dev,exec,auto,async,nodiratime 0 2
+UUID=c2a54822-9ae4-445f-ada2-87315b00b4e9[/dev/sda3]   none               swap    sw              0       0
+
+UUID=e6e9a05f-5056-40dc-9168-d93402a9f5be[/dev/sdb7]    /home           ext4    defaults        0       2
+UUID=6f9fbdd9-fc77-4f74-a44b-38cde278d549[/dev/sdb5]      /tmp              ext4    defaults        0       2
+UUID=23570322-04f7-41d1-a194-e8e4a69e1689[/dev/sdb6]  /var                ext4    defaults        0       2
+</code></pre>chroot в директории /home/lusik/archdist/root.x86_64<br />корень текущей системы на /dev/sda4<br />т.е. мне надо под чрут именно /dev/sda4  примонтировать в  /mnt ?  или в принципе любой раздел?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-169518"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/cucullus/index.html">
+                <span class="post-username">cucullus</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/169518/index.html">#</a>
+            6 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    6 лет, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/3e/fc/3efc5087b47b238689d6b1152d129048.png" alt="cucullus avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/cucullus/topics/index.html">
+                    256
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/cucullus/posts/index.html">
+                    3435
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Смысл процесса в том, что в некоторой директории Вы создаёте дерево новой системы. Монтировать можно куда угодно, /mnt это хороший тон, не более.<br /><br />А лучше читайте английски вариант, он отличается (на первый взгляд).
+            
+                
+                    <div class="post-signature">
+                        такие дела.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-169522"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/shpinog/index.html">
+                <span class="post-username">shpinog</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/169522/index.html">#</a>
+            6 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/shpinog/topics/index.html">
+                    20
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/shpinog/posts/index.html">
+                    140
+                </a>
+            </div>
+            <div>
+                Участник с: 05 августа 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Монтируй куда хочешь , просто потом pacstrap<strong> /mnt</strong> base не забудь поменять . Fstab генерирует genfstab ,в зависимости от того что куда примонтированно   во время установки .<br />Нужно примонтировать  в /mnt (или другой каталог)  <strong>корень</strong>  ,как сказали выше для дерева новой системы вы создаете  каталоги /var /temp и тд  ,в   /mnt (или другом каталоге) и монтируете разделы в соответствующие каталоги .
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-169523"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/169523/index.html">#</a>
+            6 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>lusik</em><br>т.е. мне надо под чрут именно /dev/sda4 примонтировать в /mnt ? или в принципе любой раздел?</blockquote>Ага, примонтируйте любой, какой захочеться и посмотрите что будет :-D<br /><br />Монтировать надо <strong>корневой раздел будущей системы</strong>. То есть тот, который Вы планируете под корень арча. А в нем уже создаете точки монтирования для других разделов
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-169530"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/lusik/index.html">
+                <span class="post-username">lusik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/169530/index.html">#</a>
+            6 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/lusik/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/lusik/posts/index.html">
+                    19
+                </a>
+            </div>
+            <div>
+                Участник с: 19 мая 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <br /><blockquote>Монтировать надо <strong>корневой раздел будущей системы</strong>. То есть тот, который Вы планируете под корень арча. А в нем уже создаете точки монтирования для других разделов</blockquote>   спасибо, вот именно этого уточнения и не хватало  <strong>корневой раздел будущей системы</strong>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-169531"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/169531/index.html">#</a>
+            6 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вообще по поводу chroot и его смысла могу посоветовать <a href="https://habrahabr.ru/post/257941/">прочесть вот это</a>. К арчу это не относится, но первая глава пытается разъяснить смысл команды chroot
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-169736"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/kximer/index.html">
+                <span class="post-username">kximer</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/169736/index.html">#</a>
+            6 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/kximer/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/kximer/posts/index.html">
+                    7
+                </a>
+            </div>
+            <div>
+                Участник с: 11 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            это загрузчик<br />UUID=6e3e0f95-d6cf-4109-9891-5cde4f96675a[/dev/sda1]     /boot              ext2 noatime,discard,rw,suid,dev,exec,auto,nouser,async 0 2<br />это корневой<br />UUID=41bc2f6a-de94-4264-902f-05181eafe8f8[/dev/sda4]      /                      ext4 noatime,discard,rw,suid,dev,exec,auto,nouser,async,nodiratime,errors=remount-ro 0 1<br />это что-то свое)<br />UUID=8b7eb8f9-4ebc-4d5c-868d-d14428d0b236[/dev/sda2]   /home/ssd     ext4 noatime,discard,users,rw,suid,dev,exec,auto,async,nodiratime 0 2<br />Своп раздел<br />UUID=c2a54822-9ae4-445f-ada2-87315b00b4e9[/dev/sda3]   none               swap    sw              0       0<br />Раздел пользователей<br />UUID=e6e9a05f-5056-40dc-9168-d93402a9f5be[/dev/sdb7]    /home           ext4    defaults        0       2<br />Вот это зачем отдельно выносить? Ну темп еще более менее понятно, но var?<br />UUID=6f9fbdd9-fc77-4f74-a44b-38cde278d549[/dev/sdb5]      /tmp              ext4    defaults        0       2<br />UUID=23570322-04f7-41d1-a194-e8e4a69e1689[/dev/sdb6]  /var
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-169743"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/lusik/index.html">
+                <span class="post-username">lusik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/169743/index.html">#</a>
+            6 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/lusik/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/lusik/posts/index.html">
+                    19
+                </a>
+            </div>
+            <div>
+                Участник с: 19 мая 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>kximer</em><br>Вот это зачем отдельно выносить? Ну темп еще более менее понятно, но var?<br />UUID=6f9fbdd9-fc77-4f74-a44b-38cde278d549[/dev/sdb5]      /tmp              ext4    defaults        0       2<br />UUID=23570322-04f7-41d1-a194-e8e4a69e1689[/dev/sdb6]  /var</blockquote>это давно еще билось, только ssd купила, после прочтения кучи инфы что лучше на ссд, что на hdd как-то так разбилось<br />sdb = hdd<br />sda - ssd
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index47b9.html?next=/forum/topic/16087/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/16087/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:17:52 GMT -->
+</html>

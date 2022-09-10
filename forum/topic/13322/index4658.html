@@ -1,0 +1,1129 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [РЕШЕНО] systemd-212-1 - сломали автомонтирование udev
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/12/">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[РЕШЕНО] systemd-212-1 - сломали автомонтирование udev</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[РЕШЕНО] systemd-212-1 - сломали автомонтирование udev</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133708"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/maisvendoo/">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133708/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/maisvendoo/topics/">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/maisvendoo/posts/">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>tchgefest</em><br>Очень глупый вопрос,а для чего автомонтирование в иксах</blockquote>Для банального удобства. Недавно мне пришлось последовательно с интервалом в минуту воткнуть штук 10-15 флешек - скидывал инфу коллегам. И особо командами не помонтируешь )
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133711"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/tchgefest/">
+                <span class="post-username">tchgefest</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133711/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/tchgefest/topics/">
+                    51
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/tchgefest/posts/">
+                    1505
+                </a>
+            </div>
+            <div>
+                Участник с: 20 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>maisvendoo</em><br>Для банального удобства. Недавно мне пришлось последовательно с интервалом в минуту воткнуть штук 10-15 флешек - скидывал инфу коллегам</blockquote>Да ладно!?Сейчас попробовал подключить через hub 4 flash и 1 sd карту заняло 20&quot; и umount  20&quot;.<br /><a href="http://itmages.ru/image/view/1587388/78007b0e"><img src="http://storage9.static.itmages.ru/i/14/0331/s_1396291795_9227994_78007b0edd.png"></a><br />Копирование файлов больше времени забирает.
+            
+                
+                    <div class="post-signature">
+                        Последний крик моды - эхо 30-летней давности.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133712"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/maisvendoo/">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133712/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/maisvendoo/topics/">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/maisvendoo/posts/">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Каждому свое
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133714"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/tchgefest/">
+                <span class="post-username">tchgefest</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133714/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/tchgefest/topics/">
+                    51
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/tchgefest/posts/">
+                    1505
+                </a>
+            </div>
+            <div>
+                Участник с: 20 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>maisvendoo</em><br>интервалом в минуту воткнуть штук 10-15 флешек - скидывал инфу коллегам</blockquote>Вот это неудобство,я бы собрал флешки  и разом скинул.
+            
+                
+                    <div class="post-signature">
+                        Последний крик моды - эхо 30-летней давности.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133716"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/akorop/">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133716/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/akorop/topics/">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/akorop/posts/">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br>Мой юниксвейный mnt не заметил никаких изменений, но от udev он зависит только по группам, которые присваиваются устройствам правилами udev, а эти группы присваиваются успешно.<br />Автомонтированием я не пользуюсь, но для проверки только что специально сделал юнит <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b3deddc7f39dc0d6c1c5dad0d6">[email&#160;protected]</a> :</blockquote>Записал я такой сервис в /etc/systemd/system (это правильно?), но грандиозные nmt и umt заменил на простейшие однострочные скрипты, которые пытаются писать лог. При втыкании флэшки сервис, вроде, запускается, но никаких следов запуска скриптов я не вижу. А при перезагрузке этот сервис всё вешает с особой жестокостью.<br /><br />Так что я бы хотел перенести рассмотрение на гораздо более простой вопрос: монтирование CD. И сделать рассмотрение более конкретным.<br />У меня статически создан каталог /media/cdrom, и вот туда диск монтируется при втыкании, и отмонтируется при извлечении. До systemd 211 это работало на ура, с 212 работать перестало. Почему? Что делать?<br /><br /><strong>/etc/udev/rules.d/14-autodvd.rules</strong><pre><code>KERNEL==&quot;sr0&quot;, ACTION==&quot;change&quot;, RUN+=&quot;/usr/local/bin/autodvd&quot;</code></pre><strong>/usr/local/bin/autodvd</strong><pre><code>#!/bin/bash
+FSTYPE=`lsblk -no FSTYPE /dev/sr0`
+if [ -n &quot;$FSTYPE&quot; ]; then
+  mount -t $FSTYPE  /dev/sr0 /media/cdrom
+else
+  umount  /dev/sr0
+fi
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133717"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133717/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Что-то я не понял, зачем вы определяете тип фс, если не используете его для изменения параметров? Определять фс mount умеет и сам.<br /><br />Я бы прописал в правило udev старт и стоп юнита, а в юнит прямой mount и umount.<br /><br />Использовать монтирование непосредственно из udev чревато, он может убить слишком долгий процесс, в том числе и скрипт. А вот systemctl лишь подаёт сигнал systemd и завершается, и монтирование будет выполняться уже в другом процессе и другой сессии, так долго, как требуется.<br /><br />P.S.<br />Не вижу ничего грандиозного в моих скриптах. Код pmount был куда сложнее, udevil ещё более громоздок, не говоря уже об udisks+polkit :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133733"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/akorop/">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133733/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/akorop/topics/">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/akorop/posts/">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br>Что-то я не понял, зачем вы определяете тип фс, если не используете его для изменения параметров? Определять фс mount умеет и сам.</blockquote> Мне важно проверить <strong>наличие</strong> ФС - именно это позволяет понять, вставлен диск или извлечён. Ну а уж если я выяснилил ФС, то почему бы не передать её mount, чтобы не определять ещё раз?<br /><blockquote><em>Natrio</em><br>Я бы прописал в правило udev старт и стоп юнита, а в юнит прямой mount и umount.</blockquote> Стоп прописать невозможно, поскольку нет возможности различить, вставили диск или вынули.<br /><blockquote><em>Natrio</em><br>Использовать монтирование непосредственно из udev чревато, он может убить слишком долгий процесс, в том числе и скрипт. А вот systemctl лишь подаёт сигнал systemd и завершается, и монтирование будет выполняться уже в другом процессе и другой сессии, так долго, как требуется.</blockquote>&quot;Слишком долгий&quot; - это сколько? 1 мс, 100 мс, 10с? В данном случает IMHO время будет очень малым. При вставлении диска событие change возникает несколько раз, и только последнее них - после распознавания ФС. Соответственно, монтирование после этого происходит быстро.<br /><blockquote><em>Natrio</em><br>Не вижу ничего грандиозного в моих скриптах. Код pmount был куда сложнее, udevil ещё более громоздок, не говоря уже об udisks+polkit :)</blockquote>Ладно, бог с ними с флэшками. Мои средства по CD/DVD - уж точно простые, проще некуда. И почему они с systemd 211 работают, а с 212 - нет?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133734"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/akorop/">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133734/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/akorop/topics/">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/akorop/posts/">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Сделал работу с CD через сервис - работает, и с 211, и с 212. Блин, твёрдой рукой загоняют в счастливое будуще... Придётся с флэшками тоже повозиться.<br /><br /><strong>/etc/udev/rules.d/14-autodvd.rules</strong><pre><code>KERNEL==&quot;sr0&quot;, ACTION==&quot;change&quot;, RUN+=&quot;/usr/bin/systemctl start autodvd.service</code></pre><br /><strong>/etc/systemd/system/autodvd.service</strong><pre><code>[Unit]
+Description=(u)mount CD/DVD
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/autodvd
+TimeoutSec=0
+RemainAfterExit=no
+</code></pre><br /><strong>/usr/local/bin/autodvd</strong><pre><code>#!/bin/bash
+FSTYPE=`lsblk -no FSTYPE /dev/sr0`
+if [ -n &quot;$FSTYPE&quot; ]; then
+  mkdir -p /media/cdrom ;
+  mount -t $FSTYPE  /dev/sr0 /media/cdrom
+else
+  if umount  /dev/sr0 2&gt; /dev/null ; then true
+  fi
+  if rmdir /media/cdrom 2&gt; /dev/null ; then true
+  fi
+fi
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133741"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/akorop/">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133741/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/akorop/topics/">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/akorop/posts/">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>2All</strong><br />Прошу помощи по организации взаимодействия скриптов, вызываемых из сервиса.<br />Сервис автомонтирования стартуется при появлении устройства, стопится при исчезновении. При старте сервис вызывает один скрипт (mnt), при стопе - другой (rm_mp), оба с именем устройства в качестве параметра. Скрипт mnt каким-то способом определяет точку монтирования, создаёт этот каталог и монтирует устройство. Каким образом передать это имя каталога в rm_mp, чтобы тот удалил каталог? Самого монтирования в момент вызова rm_mp обычно уже нет (заранее отмонтировали вручную).<br />Я сделал это через вспомогательные файлы вроде /tmp/mnt_$1, но это мне очень не нравится. Хотелось бы через переменные окружения или что-то в таком роде.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133777"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133777/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Переменные окружения связаны с процессом и наследуются ТОЛЬКО его потомками, больше никем. Насколько я понимаю, это общее свойство переменных окружения, независимо от системы. Если процесс завершился, и потомков у него нет, то никакие переменные окружения он больше никому не передаст.<br /><br />Так что выбранный вами способ хранения вполне адекватен. Единственное что, я бы создал для этого отдельный каталог где-нибудь в /run
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/13322/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747b8a184aa49d98',m:'2FPT0GyPpw4GinzLOsS9EQdK4qeXip.dSFOSlqBIylY-1662680536-0-Ac52aO/XZzkVmBuhvS/D1R4W6FEZXICrpMzIV8qq6U5dRZ8bz5VBq13WgGZClh1asti95aJ7nyvn623YXnbQrKvIH6Vstaz6G6dotcb1nh7W4ytUxytD4u5A/8vL70Upt+VJwQaQpJadKuCALTz1JwA=',s:[0x40fbb8951d,0xe9e2133e04],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

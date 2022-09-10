@@ -1,0 +1,1206 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/13386/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:28:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [РЕШЕНО] Ошибка сегментирования при вызове malloc()
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/6/index.html">Разработка</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/19/index.html">Уголок разработчика</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[РЕШЕНО] Ошибка сегментирования при вызове malloc()</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[РЕШЕНО] Ошибка сегментирования при вызове malloc()</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-134487"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/134487/index.html">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Толком не сплю уже неделю - отлаживаю один алгоритм. И вот только он подал признаки жизни и пришла пора тестировать на серьезных вещах - вот вам пожалуйста - сабж<br /><br />Имеется участок кода<br /><pre><code>
+        nv = 17
+        n = 6*nv - 4;
+	nb = 3*nv - 2;
+	nr = nb - 1;
+	n_ef = 2*nv - 2;
+
+	// Set mass
+	m = new double[nb];
+
+	memset(m, 0, nb*sizeof(double));
+
+	for (int i = 0; i &lt; nv; i++)
+	{
+		int k = 3*i;
+
+		m[k] = mv;
+		m[k+1] = mt;
+		m[k+2] = mt;
+	}
+
+	// Create matrixes
+
+	A = create_matrix(nb, nb+nr);
+
+	L = create_matrix(nr, nb);
+	L1 = create_matrix(nr, nb);
+
+	for (int i = 0; i &lt; nr; i++)
+	{
+		L[i][i] = 1;
+		L[i][i+1] = -1;
+	}
+
+	K = create_matrix(nb, nr);
+	K1 = create_matrix(nb, nr);
+
+	for (int i = 0; i &lt; nv-1; i++)
+	{
+		int j = 3*i;
+
+		K1[j][j] = K[j][j] = -1;
+		K1[j+1][j] = K[j+1][j] = 1;
+
+		K1[j+1][j+1] = K[j+1][j+1] = 1;
+		K1[j+2][j+1] = K[j+2][j+1] = -1;
+
+		K1[j+2][j+2] = K[j+2][j+2] = -1;
+		K1[j+3][j+2] = K[j+3][j+2] = 1;
+	}
+	lock = new bool[nr];
+
+	for (int i = 0; i &lt; nr; i++)
+		lock[i] = true;
+
+	p = new double[nb];
+	q = new double[nb];
+
+	memset(p, 0, nb*sizeof(double));
+	memset(q, 0, nb*sizeof(double));
+
+	Tef = new double[n_ef];
+	ef_sign = new int[n_ef];
+
+	n_ef = 32;
+	coup = new coup_t[n_ef];
+	for (int i = 0; i &lt; n_ef; i++)
+	{
+		coup_t tmp = new CEFcoupling();
+		coup[i] = tmp;
+	}
+</code></pre><br />Ошибка возникает при <strong>nv = 18</strong> в строке<br /><pre><code>
+coup_t tmp = new CEFcoupling();
+</code></pre><br />При nv = 17 все работает. Анализ крэша в отладчике дает стек вызовов из которого понятно, что падает все на вызове malloc().<br /><pre><code>
+Program received signal SIGSEGV, Segmentation fault.
+0x00007ffff707668f in _int_malloc () from /usr/lib/libc.so.6
+(gdb) bt full
+#0  0x00007ffff707668f in _int_malloc () from /usr/lib/libc.so.6
+No symbol table info available.
+#1  0x00007ffff7078030 in malloc () from /usr/lib/libc.so.6
+No symbol table info available.
+#2  0x00007ffff7919e9d in operator new(unsigned long) () from /usr/lib/libstdc++.so.6
+No symbol table info available.
+#3  0x00007ffff7919f99 in operator new[](unsigned long) () from /usr/lib/libstdc++.so.6
+No symbol table info available.
+#4  0x0000000000401fe9 in ode_systems_init () at train.cpp:177
+No locals.
+#5  0x0000000000400b69 in main () at main.cpp:23
+        solver = 0x400a50 &lt;_start&gt;
+</code></pre><br />Если инструкцию, вызывающую сбой убрать, при nv=18 сбой возникает на любой другом, следующим за ним операторе <strong>new</strong>.<br /><br />Короче говоря я в шоке<br /><br />P. S.:<br />Забыл приложить код вызываемых функций<br /><pre><code>
+//-------------------------------------------------------------------
+//
+//-------------------------------------------------------------------
+matrix_t create_matrix(int n, int m)
+{
+	matrix_t tmp = 0;
+
+	tmp = new matrix_str_t[n];
+
+	for (int i = 0; i &lt; n; i++)
+	{
+		tmp[i] = new double[m];
+		memset(tmp[i], 0, m*sizeof(double));
+	}
+
+	return tmp;
+}
+</code></pre><br />и описание используемых типов<br /><pre><code>
+typedef double* matrix_str_t;
+typedef matrix_str_t* matrix_t;
+</code></pre><br />Точно выяснено - ошибка зависит от того, сколько динамической памяти выделено перед роковым вызовом. Неужели при имеется ограничение на размер кучи???
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-134502"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/cucullus/index.html">
+                <span class="post-username">cucullus</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/134502/index.html">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/3e/fc/3efc5087b47b238689d6b1152d129048.png" alt="cucullus avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/cucullus/topics/index.html">
+                    256
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/cucullus/posts/index.html">
+                    3435
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вы можете сказать, что я не по теме, и будете отчасти правы.<br />Но stl векторы как раз и предназначены для того, чтобы не копаться в таком коде.<br />Дополнительного огонька подливают дополнительные выделения памяти для многомерных матриц. Я давно пришёл к конструкциям вида a[y*xsize+x].<br />Впрочем, это, оффтоп. Код не читал, ибо подобного рода нагромождения не вдохновляют...<br /><br />PS Разве что бросилась в глаза эта конструкция:<br /><pre><code>for (int i = 0; i &lt; nr; i++)
+	{
+		L[i][i] = 1;
+		L[i][i+1] = -1;
+	}</code></pre><br />Сочетание &quot;i&lt;nr&quot; и &quot;[i+1] =&quot; обычно не сулит ничего хорошего ;)
+            
+                
+                    <div class="post-signature">
+                        такие дела.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-134504"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/kurych/index.html">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/134504/index.html">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/kurych/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/kurych/posts/index.html">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вроде как далеко ходить не надо. Уже в самом начале кода<br /><blockquote><em>maisvendoo</em><br>Имеется участок кода<br /><pre><code><br />        nv = 17<br />        n = 6*nv - 4;<br />	nb = 3*nv - 2;<br />	nr = nb - 1;<br />	n_ef = 2*nv - 2;<br /><br />	// Set mass<br />	m = new double[nb];<br /><br />	memset(m, 0, nb*sizeof(double));<br /><br />	for (int i = 0; i &lt; nv; i++)<br />	{<br />		int k = 3*i;<br /><br />		m[k] = mv;<br />		m[k+1] = mt;<br />		m[k+2] = mt;<br />	}<br /></code></pre></blockquote><br />nb = 3*nv - 2; и размер m[] соответствующий, а в цикле идет обращение к m[k+2], где в максимуме достигает к=3*(nv-1)+2,<br />что заведомо выходит за границы выделенной для массива памяти, потому что<br />3*(nv-1)+2 = 3*nv-3+2 = 3*nv-1<br />          <strong>3*nv-2 &lt; 3*nv-1</strong><br />Ну а дальше вы огребаете последствия обращения за границы выделенной памяти.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-134512"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/134512/index.html">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>kurych</strong>, спасибо что не поленились посмотреть. Я замыленным взглядом пропустил бы - неделю в разнообразных отладках а сроки жмут.<br /><br />Исправил это на<br /><pre><code>
+        m[0] = mv;
+	m[1] = mt;
+
+	for (int i = 2; i &lt; nb-2; i += 3)
+	{
+		m[i] = mt;
+		m[i+1] = mv;
+		m[i+2] = mt;
+	}
+
+	m[nb-2] = mt;
+	m[nb-1] = mv;
+</code></pre><br />и заработало не только это, а правильно стали вычислятся все силы.<br /><br />Огромное человеческое спасибо :)<br /><br />P.S.: Динамическая память такая динамическая :)<br /><br />P.P.S.: Хотя с силами я поторопился, но это уже другой специфичный вопрос...
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-135017"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/135017/index.html">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Получил вот такой график<br /><a href="http://itmages.ru/image/view/1625526/ecaaeb0d"><img src="http://storage5.static.itmages.ru/i/14/0419/s_1397932939_9769683_ecaaeb0dc6.jpg"></a><br />По заявлению руководителя это &quot;то что надо&quot;, да я и сам это понимаю.<br /><br />Хочу поблагодарить откликнувшихся на сабж людей, без вас нашел бы ошибку но не сегодня. А ложка, как известно, дорога к обеду. Хорошо, что у нас такое сообщество :)
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-135019"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/cucullus/index.html">
+                <span class="post-username">cucullus</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/135019/index.html">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/3e/fc/3efc5087b47b238689d6b1152d129048.png" alt="cucullus avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/cucullus/topics/index.html">
+                    256
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/cucullus/posts/index.html">
+                    3435
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            оси не подписаны!
+            
+                
+                    <div class="post-signature">
+                        такие дела.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-135027"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/135027/index.html">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>cucullus</em><br>оси не подписаны!</blockquote>Рабочий вариант. Не оформил ещё.<br /><br />А так у меня есть самописная библиотека которая генерирует в латэхе красивый отчет. Не прикрутил ещё к этому проекту, не успел
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-135239"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/135239/index.html">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ну, вот с подписанными осями после доводки )<br /><a href="http://itmages.ru/image/view/1632842/dfa4b430"><img src="http://storage9.static.itmages.ru/i/14/0423/s_1398283157_2316819_dfa4b4307d.jpg"></a>
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-135240"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/cucullus/index.html">
+                <span class="post-username">cucullus</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/135240/index.html">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/3e/fc/3efc5087b47b238689d6b1152d129048.png" alt="cucullus avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/cucullus/topics/index.html">
+                    256
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/cucullus/posts/index.html">
+                    3435
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            крысота! легенда, правда, напрашивается в правый верхний угол.<br /><br />А что есть отрицательная тяга? Это же не пневмоторможение? Включение заднего хода?<br />В случае штатного торможения такой колбасни быть не должно вроде. (В сферическом поезде с одинаковыми по весу вагонами).<br />Если поезд натянут &quot;в струнку&quot; (а он только что был под тягой, значит так и должно быть) при идеальном торможении вообще не должно быть биений по идее.
+            
+                
+                    <div class="post-signature">
+                        такие дела.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-135243"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/135243/index.html">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>cucullus</em><br>А что есть отрицательная тяга?</blockquote>Рекуперация или реостатное торможение. Двигатели переводятся в генераторный режим и отдают энергию либо в сеть, либо на тормозные резисторы.<br /><br />Конечно, так никто не рекуперирует особенно на грузовых. Но этот результат - тест модели.
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index40fa-2.html?next=/forum/topic/13386/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/13386/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:28:06 GMT -->
+</html>

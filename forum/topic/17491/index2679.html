@@ -1,0 +1,1363 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17491/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:10:22 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Установка Arch Linux на файловую систему ZFS [upd - октябрь 2017]
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/8/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/25/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Установка Arch Linux на файловую систему ZFS [upd - октябрь 2017]</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Установка Arch Linux на файловую систему ZFS [upd - октябрь 2017]</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexaf4d.html?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexc575.html?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index235c.html?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdfa.html?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index0b08.html?page=9">9</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index1448.html?page=10">10</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index1c8b.html?page=11">11</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189780"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189780/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    4 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В блоге использованы материалы:<br />Алексей Федорчук <a href="http://alv.me/CHto-emu-Gekuba-zfs-on-linux-dlya-primenitelya/">Что ему Гекуба? ZFS on Linux для применителя</a> и <a href="http://alv.me/antergos-i-zfs-snapshoty/">Antergos и ZFS. Снапшоты</a><br /><a href="https://ru.wikipedia.org/wiki/ZFS">WIKI</a><br />JOHN RAMSDEN <a href="https://ramsdenj.com/2016/06/23/arch-linux-on-zfs-part-1-embed-zfs-in-archiso.html">Arch Linux on ZFS</a><br />Shaun Foulkes <a href="https://www.shaunpc.com/arch_zfs_root">Arch Linux on ZFS Root With Separate Boot</a><br />Brian Koopman <a href="https://briankoopman.com/zfs-automated-snapshots/">ZFS: Automated Snapshots</a><br />Дополнительно по теме можно почитать:<br />Виктор Латушкин <a href="http://wolandblog.com/601-zfs-novyj-vzglyad-na-fajlovye-sistemy/">ZFS — новый взгляд на файловые системы</a> (спасибо <strong>vasek</strong> за ссылку)<br />@gmelikov, состоит в проекте ZFS on Linux<strong><a href="https://habrahabr.ru/post/314506/"> ZFS on Linux: вести с полей 2017</a></strong> - добавлено 22.10.2017<br /><br /><strong>Пролог</strong><br /><br />Установка Арча на ZFS дело не такое уж и простое, но оно того стоит.<br />У меня это получилось не сразу, поэтому, когда все же получилось, я решил записать это, так как рабочих мануалов по установке ZFS на Linux в сети не так уж много и мне пришлось собирать их по крохам из разных источников.<br /><br />ZFS (Zettabyte File System) — файловая система, изначально созданная в Sun Microsystems для операционной системы Solaris.<br /><br />Основное достоинство ZFS в том что она обладает функционалом систем управления томами, позволяя использовать его с легкостью, без той громоздкости, которая присуща LVM.<br />При этом она осуществляет полный контроль над физическими и логическими носителями. Зная, как именно расположены данные на дисках, ZFS способна обеспечить высокую скорость доступа к ним, контроль их целостности, а также минимизацию фрагментации данных. Это позволяет динамически выделять или освобождать дисковое пространство на одном или более носителях для логической файловой системы. Кроме того, имеет место переменный размер блока, что лучшим образом влияет на производительность, параллельность выполнения операций чтения-записи, а также 64-разрядный механизм использования контрольных сумм, сводящий к минимуму вероятность незаметного разрушения данных.<br />Изначальной конструкцией ZFS  является пул, который есть некий аналог RAID. Пул может состоять и из одного физического диска, однако возможности ZFS начинают реализовываться в полной мере когда пул содержит хотя бы 2, а лучше 3 диска и особенно, если среди них хотя бы один SSD. Кратко возможные варианты пулов выглядят так:<br /><br />Stripe<br />Нет избыточности, как в RAID0.<br />Режим создания пула по умолчанию.<br /><br />RAIDZ<br />Минимум 3 диска.<br />Один диск может быть потерян без сбоя пула.<br />Один из дисков является избыточным и не предоставляет места хранения.<br /><br />RAIDZ2<br />Минимум 4 диска.<br />Два диска могут быть потеряны без сбоя пула.<br />Два диска являются избыточными и не обеспечивают места хранения.<br /><br />RAIDZ3<br />Минимум 5 дисков.<br />Три диска могут быть потеряны без сбоя пула.<br />Три из этих дисков являются избыточными и не обеспечивают объем.<br /><br />Mirror- Минимум 2 диска.<br />Половина дисков может быть потеряна без сбоя пула.<br />Хранение с половины дисков используется как избыточность и не обеспечивает места хранения.<br />Обеспечивает максимальную производительность и гибкость при стоимости пространства для хранения.<br /><br />Для меня особый интерес представляет вариант Stripe, который используется по умолчанию (аналог RAID0, что на мой взгляд имеет смысл в настольной системе). В него можно объединить любое количество дисков разного размера и быстродействия. При этом суммарный объем пула не будет выравниваться на наименьшему диску, а составит просто арифметическую их сумму. Нагрузка же на пул будет распределяться так, чтобы наиболее востребованные данные оказывались на самом быстром из носителей.<br /><br />Более того, при наличии небольшого и быстрого SSD и большого и «медленного» HDD можно настроить так называемый кешируемый пул, имеющий все функции аппаратных гибридных дисков из SSD и HDD «в одном стакане». Которые, как известно, стоят почему-то больше суммы. Да при этом еще норовят нормально работать только в одной-единственной ОС, и ОС эта, как легко догадаться, не Linux.<br /><br />Вторая фича ZFS  - это возможность нарезать пул на любое количество файловых систем (datasets), каждая со своими опциями монтирования. Эти файловые системы по умолчанию «безразмерны», то есть не требуют предварительного расчёта места под несущие их разделы. Но при желании объём некоторых из них можно ограничить, а для других, напротив, зарезервировать. То есть сделать недоступным для «захвата» иными файловыми системами. Причем делается это действительно также просто, как создание нового каталога в традиционной файловой системе.<br />В отличие от BTRFS, где командой только создается subolume, а затем вы еще должны обеспечить его монтирование сами, в ZFS вы одной командой<br /><pre><code>zfs cteate zarch/home/projects</code></pre>сразу создаете и точку монтирования и раздел файловой системы. Разумеется, для команды доступны и опции, с которыми вы можете задать другую точку монтирования либо обойтись без нее. Дополнительно (или сразу при создании) можно задать и другие параметры. Например, команда<br /><pre><code>zfs set reservation=5G zarch/home/projects</code></pre>зарезервирует объем для файловой системы projects<br /><br />Файловые системы с критически важными данными могут монтироваться с несколькими копиями контрольных сумм. В тех же из них, что предназначены для «хлама», от подсчёта контрольных сумм можно отказаться вовсе. Каталоги с хорошо сжимаемыми данными могут монтироваться с компрессией. Опцию atime можно устанавливать только для тех ветвей файловой иерархии, для которых действительно необходимо знание времени последнего доступа, всем же остальным придать свойство noaime. Наконец, для отдельных файловых систем можно отключить такие свойства, как exec, setuid, devices. И, разумеется, для файловых систем, изменение которых нежелательно, можно придать свойство readonly.<br /><br />Так же стоит упомянуть о просторе работы со снапшотами. Вам не надо думать где их располагать и как откатиться. ZFS все делает сама.<br /><br />Сделать снимок корня системы:<br /><pre><code>zfs snapshot zant@ваше_навание_снимка</code></pre><br />Результатом команды в такой форме было создание снапшота именно и только корня, без ветвей zant/home и всех прочих. Но можно создать и полную копию с помощью опции -r (то есть рекурсивно):<br /><pre><code>zfs snapshot -r zant@ваше_навание_снимка</code></pre><br />Просмотреть все имеющиеся снимки:<br /><pre><code>zfs list -t snapshot</code></pre><br />Сами снапшоты сохраняются в корней «родной» файловой системы в виде скрытых каталогов с именем .zfs, которые, однако, не будут присутствовать в выводе команды ls -a. Однако, при желании их можно сделать видимыми командой:<br /><pre><code>zfs set snapdir=visible zant</code></pre><br />И самое интересное, в чем у ZFS в плане снапшотов имеется преимущество перед BTRFS, что для отката нужна всего лишь одна команда из под работающей системы без всякой перезагрузки:<br /><pre><code>zfs rollback zant@ваше_навание_снимка</code></pre>Это мгновенно откатит корень системы.<br /><br />В общем, оценить простоту и гибкость управления пулом ZFS и его datasets можно, только попробовав все это в деле. И только такое опробование способно убедить, что польза от перечисленных фич (к которым в качестве своего рода «бонусов» прилагаются и многие другие) с лихвой перекрывает возможные недостатки этой системы и сложности ее установки.<br />А основных недостатков два:<br />По сугубо юридически-бюрократическим причинам ZFS штатно не поддерживается ядром Linux из-за несовместимости лицензий, поэтому ее использование в Linux разрешено, но делать все нужно самостоятельно. Впрочем, дистрибутив Antergos на это забил и внедрил поддежку ZFS в свой инсталятор. Но конфигурирование ZFS при установке там сильно ограничено и многие параметры там просто не доступны.<br />Требовательность к ресурсам, особенно если вы захотите включить опцию сжатия. Для комфортной работы лучше иметь не менее 8 GB оперативной памяти.<br /><br />Далее рассмотрим создание установочного образа Arch Linux с поддержкой ZFS.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189781"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189781/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Часть 1. Создание установочного образа Arch Linux с поддержкой ZFS</strong><br /><br />Итак, нам нужно получить ZFS на установочном носителе, чтобы Arch легко можно было установить из ISO<br /><br />Поскольку установочный образ Arch Linux по умолчанию не поддерживает ZFS как файловую систему, проще всего установить Arch на ZFS, создав свой установочный образ  со всеми необходимыми пакетами. Хотя это может показаться сложным, инструмент Archiso содержит все необходимое для создания нового образа с нуля. Фактически Archiso - это то, что проект Arch Linux использует для создания официальных образов, который вы можете загрузить с сайта. Для использования Archiso необходима система Arch Linux для создания образа.<br />Чтобы использовать Archiso, необходим пакет archiso. Выполняем на работающей системе Arch x86_64.<br /><br />Установить пакет<br /><pre><code>sudo pacman -S archiso</code></pre><br />Чтобы избежать проблем с правами доступа к образам, рекомендуется выполнять все шаги от имени root.<br /><pre><code>sudo -i</code></pre><br />Archiso поставляется с настраиваемым профилем, расположенным в каталоге /usr/share/archiso/configs/releng, скопируйте его содержимое в местоположение для настройки, которое создадим в домашнем каталоге<br /><pre><code>mkdir ~/archlive
+cp -r /usr/share/archiso/configs/releng/* ~/archlive</code></pre><br />Добавить репозиторий ZFS<br />Используя Archiso, вы можете указать, какие пакеты должны быть установлены в образе, и любые команды, которые должны быть запущены для установки образа. Самый простой способ добавить ZFS к образу - использовать репозиторий archzfs. Чтобы использовать репозиторий archzfs, он должен быть добавлен в список репозиториев в файле pacman.conf.<br /><br />Отредактируйте файл pacman.conf:<br /><pre><code>nano ~/archlive/pacman.conf</code></pre><br />Над репозиториями [core], [extra] и [community], добавить [archzfs].<br /><pre><code>#
+# /etc/pacman.conf
+#
+# See the pacman.conf(5) manpage for option and repository directives
+
+#
+# REPOSITORIES
+
+[archzfs]
+SigLevel = Never
+Server = <a href="http://archzfs.com/$repo/x86_64">http://archzfs.com/$repo/x86_64</a>
+
+# Другие репозитории...
+</code></pre>Добавить пакет ZFS<br /><br />Добавьте группу archzfs-linux в список пакетов  в ~ /archlive/packages.x86_64, которые должны быть установлены, это может быть единственный пакет в списке.<br /><pre><code>nano ~/archlive/packages.x86_64</code></pre>Впишем<br /><pre><code>#
+# ~/archlive/packages.x86_64
+#
+
+archzfs-linux
+
+Другие пакеты...</code></pre><br />Создание образа<br />Мне нравится копировать окончательный каталог archlive в /tmp и создавать там мои образы, это сохраняет исходный каталог, в котором я внес изменения, чистым. Запустите build.sh, чтобы сгенерировать образ.<br />Создайте каталог out в архиве, и окончательный образ будет там.<br /><pre><code>cp -r archlive/ /tmp
+cd /tmp/archlive/
+mkdir out
+./build.sh -v</code></pre><br />Использование образа<br />Образ можно записать на USB-накопитель.<br /><br />Найдите нужный диск (флешку) с помощью lsblk.<br /><pre><code>lsblk</code></pre>NAME    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT<br />sdx       8:48   0 447.1G  0 disk<br />└─sdxY    8:49   0 447.1G  0 part<br />Когда правильный диск /dev/sdx будет найден, запишите образ на usb-диск с помощью dd. Это приведет к уничтожению всего диска. Убедитесь, что вы выбрали полный диск sdx, а не раздел sdxY.<br /><pre><code>dd bs=4M if=archlinux-2016.01.29-dual.iso  of=/dev/sdx status=progress &amp;&amp; sync</code></pre><br />По завершению, диск должен быть загрузочным и готовым к установке.<br />Вы можете проверить это загрузившись с него и выполнив команду<br /><pre><code>modprobe zfs</code></pre><br />Если все сделано правильно, то не должно быть никакого вывода от modprobe.<br /><br />Далее рассмотрим процесс установки Arch Linux на ZFS.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189782"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189782/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    4 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Часть 2. Установка Arch Linux на ZFS</strong><br /><br />В описываемом варианте установки имеется 2 HHD  по 1 Tb каждый, которые будут подключены в пул в режиме Stripe без избыточности, как в RAID0 и SSD 120 Gb, у которого первый раздел 2Gb будет загрузочным, второй (все оставшееся) будет подключен как кэш пула.<br />Выглядеть будет так<br /><pre><code>NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda      8:0    0 931,5G  0 disk
+├─sda1   8:1    0 931,5G  0 part
+└─sda9   8:9    0     8M  0 part
+sdb      8:16   0 931,5G  0 disk
+├─sdb1   8:17   0 931,5G  0 part
+└─sdb9   8:25   0     8M  0 part
+sdc      8:32   0 111,8G  0 disk
+├─sdc1   8:33   0     2G  0 part /boot
+└─sdc2   8:34   0 109,8G  0 part</code></pre>Можно использовать и другие варианты разбивки, принципиально только чтобы был загрузочный раздел, и он должен быть не под ZFS.<br /><br />Загружаемся из установочного носителя, создание котрого описывалось в предыдущем разделе.<br /><br />Готовим SSD<br /><pre><code>fdisk /dev/sdc</code></pre>Выбираем &quot;o&quot; для создания новой таблицы MBR<br />Затем &quot;n&quot; для создания нового раздела<br />Жмем Enter 3 раза, подтверждая следующие вопросы:<br />&quot;p&quot; раздел будет первичным<br />&quot;1&quot; раздел будет первым<br />&quot;2048&quot; номер первого сектора<br />Далее указываем размер<br />&quot;+2G&quot; для конца раздела<br />Жмем &quot;n&quot; для создания нового раздела<br />Жмем 4 раза Enter оставляя все вопросы по умолчанию<br />Жмем &quot;w&quot; для записи изменений на диск.<br /><br />Готовим HDD<br /><pre><code>fdisk /dev/sda</code></pre>Выбираем &quot;o&quot; для создания новой таблицы MBR<br />Жмем &quot;w&quot; для записи изменений на диск.<br /><pre><code>fdisk /dev/sdb</code></pre>Выбираем &quot;o&quot; для создания новой таблицы MBR<br />Жмем &quot;w&quot; для записи изменений на диск.<br /><br />Теперь создаем и форматируем BTRFS subvolume для /boot<br /><pre><code>mkfs.btrfs -f /dev/sdc1
+mount /dev/sdc1 /mnt
+btrfs subvolume create /mnt/boot
+umount /mnt</code></pre><br />Получим имена идентификаторов дисков<br /><pre><code>ls /dev/disk/by-id/</code></pre><br /><pre><code>ata-Corsair_Force_LS_SSD_1410815400009947039b
+ata-Corsair_Force_LS_SSD_1410815400009947039b-part1
+ata-Corsair_Force_LS_SSD_1410815400009947039b-part2
+ata-ST1000LM024_HN-M101MBB_S2TTJ9AC612857
+ata-ST1000LM024_HN-M101MBB_S2TTJ9DCA07166</code></pre><br />Проверим наличие ZFS в системе, не должно быть никакого вывода от modprobe.<br /><pre><code>modprobe zfs</code></pre><br />Создадим пул<br /><pre><code>zpool create -f -o ashift=12 zarch ata-ST1000LM024_HN-M101MBB_S2TTJ9AC612857 ata-ST1000LM024_HN-M101MBB_S2TTJ9DCA07166 cache ata-Corsair_Force_LS_SSD_1410815400009947039b-part2</code></pre><br />Проверим успешность создания пула<br /><pre><code>zpool status</code></pre><br /> <pre><code>pool: zarch
+ state: ONLINE
+  scan: none requested
+config:
+
+	NAME                                                   STATE     READ WRITE CKSUM
+	zarch                                                  ONLINE       0     0     0
+	  ata-ST1000LM024_HN-M101MBB_S2TTJ9AC612857            ONLINE       0     0     0
+	  ata-ST1000LM024_HN-M101MBB_S2TTJ9DCA07166            ONLINE       0     0     0
+	cache
+	  ata-Corsair_Force_LS_SSD_1410815400009947039b-part2  ONLINE       0     0     0
+
+errors: No known data errors</code></pre><br />По умолчанию для пула устанавливается точка монтирования /, но, поскольку под / будет монтироваться zarch/ROOT/default задаем пулу во избежание конфликтов никуда не монтироваться<br /><pre><code>zfs set mountpoint=none zarch</code></pre><br />По <a href="https://habrahabr.ru/post/314506/">рекомендации</a> установим следующие параметры для пула:<br /><pre><code>zfs set compression=lz4 zarch
+zfs set atime=off zarch
+zfs set relatime=on zarch</code></pre><br />Там же рекомендуется, но я не пробовал, так что применяйте по своему усмотрению:<br /><pre><code>zfs set xattr=sa zarch
+zfs set recordsize=128K zarch</code></pre><br />Создаем наборы данных и установим их точки монтирования.<br /><pre><code>zfs create -o mountpoint=none zarch/ROOT
+zfs create -o mountpoint=/ zarch/ROOT/default
+zfs create -o mountpoint=/home zarch/home</code></pre>Опционально (если хотите монтировать отдельно):<br /><pre><code>zfs create -o setuid=off -o devices=off -o sync=disabled -o mountpoint=/tmp zarch/tmp
+zfs create -o xattr=sa -o mountpoint=/var zarch/var
+zfs create -o mountpoint=/usr zarch/usr</code></pre><br />Набор данных, который будет использоваться как «root» должен иметь свойство bootfs.<br /><pre><code>zpool set bootfs=zarch/ROOT/default zarch</code></pre><br />В качестве меры предосторожности и предотвращения последующих проблем размонтируем пул и все наборы данных.<br /><pre><code>zfs umount -a
+</code></pre>Пул готов, но не экспортирован. Это необходимый шаг для предотвращения проблем с импортом.<br /><pre><code>zpool export zarch</code></pre><br />Импортируем пул в то место, где будет выполнена установка, /mnt.<br /><pre><code>zpool import -d /dev/disk/by-id -R /mnt zarch</code></pre><br />Монтируем загрузочный раздел<br /><pre><code>mkdir /mnt/boot
+mount -o compress=lzo,subvol=boot,ssd /dev/sdc1 /mnt/boot</code></pre><br />В пуле создан важный файл кэша. Скопируем его в новую систему.<br /><pre><code>mkdir /mnt/etc
+mkdir /mnt/etc/zfs
+cp /etc/zfs/zpool.cache /mnt/etc/zfs/zpool.cache</code></pre><br />Проверим, что все успешно установлено<br /><pre><code>zfs mount
+</code></pre><pre><code>zarch/ROOT/default              /mnt
+zarch/home                      /mnt/home
+zarch/tmp                       /mnt/tmp
+zarch/usr                       /mnt/usr
+zarch/var                       /mnt/var</code></pre><br />Cгенерируем fstab<br /><pre><code>genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab</code></pre><br />Проверяем<br /><pre><code>nano /mnt/etc/fstab</code></pre>В fstab нужен только загрузочный раздел<br /><pre><code># /dev/sdс1
+UUID=466f96c7-d74b-4309-8ee4-97e5dc6d7229       /boot           btrfs           rw,relatime,compress=lzo,ssd,space_cache,subvol=boot  0 0</code></pre><br />Остальное удаляем<br /><br />Установим базовую систему (пакет wpa_supplicant нужен только если у вас wi-fi)<br /><pre><code>pacstrap -i /mnt base base-devel grub mc wpa_supplicant</code></pre><br />Настройка Ramdisk<br /><pre><code>nano /mnt/etc/mkinitcpio.conf</code></pre><br />Если для /usr используется отдельный набор данных, необходимо включить хук usr. Хук shutdown нужен для корректного отмонтирования /var при выключении.<br /><pre><code># ...
+HOOKS=&quot;base udev autodetect modconf block keyboard zfs usr filesystems shutdown&quot;
+# ...</code></pre><br />Теперь можно выполнить chroot.<br /><pre><code>arch-chroot /mnt /bin/bash</code></pre><br />Настройка репозиториев ZFS<br /><br />Репозиторий archzfs должен быть указан первым, так что это предпочтительный сервер. Поместим его над всеми другими зеркалами.<br /><pre><code>nano /etc/pacman.conf</code></pre><pre><code># REPOSITORIES
+[archzfs]
+SigLevel = Never
+Server = <a href="http://archzfs.com/$repo/x86_64">http://archzfs.com/$repo/x86_64</a></code></pre><br />Обновим зеркала и установим ZFS.<br /><pre><code>pacman -Syyu
+pacman -S  zfs-linux-git</code></pre><br />Поставим в автозапуск zfs службы<br /><pre><code>systemctl enable zfs.target
+systemctl enable zfs-import-cache.service
+systemctl enable zfs-mount.service</code></pre><br />Создадим Ramdisk<br /><pre><code>mkinitcpio -p linux</code></pre><br />Установим загрузчик<br /><pre><code>grub-install --target=i386-pc /dev/sdc
+grub-mkconfig -o /boot/grub/grub.cfg</code></pre><br />И получим следующий вывод об ошибке, что-то вроде:<br /><pre><code>/dev/sdc
+Installing for i386-pc platform.
+grub-install: error: failed to get canonical path of `/dev/ata-ST1000LM024_HN-M101MBB_S2TTJ9AC612857&#39;.</code></pre><br />Создадим symlink на разделы с идентификаторами<br /><pre><code>ln -s /dev/sda /dev/ata-ST1000LM024_HN-M101MBB_S2TTJ9AC612857
+ln -s /dev/sdb /dev/ata-ST1000LM024_HN-M101MBB_S2TTJ9DCA07166
+ln -s /dev/sdc2 /dev/ata-Corsair_Force_LS_SSD_1410815400009947039b-part2</code></pre><br />Повторяем<br /><pre><code>grub-mkconfig -o /boot/grub/grub.cfg</code></pre>Все должно пройти успешно<br /><br />Теперь отредактируем grub<br /><pre><code>nano /boot/grub/grub.cfg</code></pre>Нам нужно подкоррекитровать ZFS dataset. В секции 10_linux находим linux   /boot/vmlinuz-linux root=ZFS=/ROOT/default rw  quiet и меняем<br />с:<br />linux   /boot/vmlinuz-linux root=ZFS=/ROOT/default rw  quiet<br />на:<br />linux   /boot/vmlinuz-linux zfs=zarch rw quiet<br /><br />Это должно быть в 3 местах и во всех трех изменяем.<br /><br />Выходим из установки.<br /><pre><code>exit</code></pre><br />Экспорт пула<br /><br />Завершив все необходимые действия для завершения установки, важно правильно экспортировать пул перед перезапуском. В противном случае пул не будет импортироваться при загрузке.<br /><pre><code>umount /mnt/boot
+zfs umount -a</code></pre><br />Теперь пул можно экспортировать.<br /><pre><code>zpool export zarch</code></pre><br /><pre><code>reboot</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189783"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189783/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Часть 2.1 Вариант установки с UEFI</strong><br />Зарезервировано...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189784"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189784/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    4 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Эпилог</strong><br /><br />Имеем Arch Linux, установленный на файловую систему ZFS<br /><a href="https://itmages.ru/image/view/5764221/a3060175"><img src="http://storage2.static.itmages.ru/i/17/0523/s_1495534584_6504540_a306017508.png"></a><br /><br /><strong>Автоматическое создание снапшотов в ZFS</strong><br />По материалам статьи Brian Koopman <a href="https://briankoopman.com/zfs-automated-snapshots/">ZFS: Automated Snapshots</a><br /><br />Снапшоты (Snapshots) позволяют копировать состояние вашего пула и/или его отдельных наборов данных. Это может быть полезно во многих отношениях. Например, если вы удаляете нужный файл, и у вас есть моментальный снимок времени, когда у вас есть этот файл, вы можете его восстановить. Снимки в силу архитектуры ZFS абсолютно не влияют на производительность, поэтому их рекомендуется делать часто. Перед настройкой автоматических снимков я сделал снапшоты вручную. Вы можете просмотреть свои снимки с помощью команды:<br /><pre><code>zfs list -t snapshot
+zarch/ROOT/default@171030                585M      -  10,0G  -
+zarch/home@171030                       82,5M      -   693M  -</code></pre>Это отличное начало, но мы не хотим просто полагаться на создание снимков вручную. Было бы более полезно, если бы у нас была автоматизированная система для моментальных снимков. К счастью, такие инструменты уже существуют. Я собираюсь установить <a href="https://github.com/zfsonlinux/zfs-auto-snapshot">zfs-auto-snapshot</a> из AUR, разработанный сообществом <a href="http://zfsonlinux.org/">zfsonlinux</a>.<br />Эта автоматическая система, используемая для запуска включенного в нее скрипта zfs-auto-snapshot, использующая таймеры systemd.<br />Если вы не знакомы с таймерами systemd, то достаточно знать, что они просто таймеры, которые управляют службой systemd. Вы можете просматривать активные таймеры с помощью list-timers systemctl. Вы заметите, что когда мы установили zfs-auto-snapshot, в /usr/lib/systemd/system был установлен набор файлов .service и .timer:<br />zfs-auto-snapshot-daily.service<br />zfs-auto-snapshot-daily.timer<br />zfs-auto-snapshot-frequent.service<br />zfs-auto-snapshot-frequent.timer<br />zfs-auto-snapshot-hourly.service<br />zfs-auto-snapshot-hourly.timer<br />zfs-auto-snapshot-monthly.service<br />zfs-auto-snapshot-monthly.timer<br />zfs-auto-snapshot-weekly.service<br />zfs-auto-snapshot-weekly.timer<br /><br />Каждая пара .service и .timer - это временной интервал для создания моментальных снимков. Давайте посмотрим на часовую пару.<br /><br />zfs-auto-snapshot-hourly.timer<br /><pre><code># See systemd.timers and systemd.time manpages for details
+[Unit]
+Description=ZFS hourly snapshot timer
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target</code></pre><br />zfs-auto-snapshot-hourly.service<br /><pre><code>[Unit]
+Description=ZFS hourly snapshot service
+
+[Service]
+ExecStart=/usr/bin/zfs-auto-snapshot --prefix=znap --quiet --syslog --label=hourly --keep=24 //</code></pre><br />Как вы можете видеть, файлы довольно просты. Persistent=true в файле .timer запустит задание, в том числе если оно было пропущено, скажем, компьютер был выключен или приостановлен. Файл .service запускает скрипт zfs-auto-snapshot, именуемый как ежечасный, и сохраняющий 24 моментальных снимка. // ссылается на все узлы хранения.<br /><br />Чтобы включить автоматические снимки, сначала нужно установить параметры автоматических снапшотов:<br /><pre><code>sudo -i
+zfs set com.sun:auto-snapshot=true pool/dataset</code></pre><br />Для наборов данных, которые мы не хотим сохранять автоматически:<br /><pre><code>zfs set com.sun:auto-snapshot=false pool/dataset
+</code></pre>где pool и dataset соответственно ваш пул и ваш набор данных.<br /><br />Затем нам нужно включить любой таймер(ы), который мы хотим, это запустит автоматическое резервное копирование на этом интервале:<br /><pre><code>sudo systemctl enable zfs-auto-snapshot-daily.timer
+</code></pre>Вы всегда можете вручную запустить скрипт zfs-auto-snapshot, который будет создавать одну резервную копию. Просмотреть параметры запуска можно командой<br /><pre><code>zfs-auto-snapshot --help</code></pre><br /><strong>Возможные проблемы</strong><br /><br /><strong>1.</strong> <strike>Бывает что после установки и первой перезагрузки мы при загрузке системы видим что пул пытается монтироваться в /zarch и при этом будет выводиться соответствующее сообщение об ошибке</strike> upd - устраняется при установке<br />Для устранения выполняем от root:<br /><pre><code>zfs umount /zarch
+zfs set mountpoint=none zarch</code></pre><br /><strong>2.</strong> <strike>Устройства пула будут отображаться в левой панели pcmanfm.</strike> upd - в данное время не наблюдается<br />Чтобы их скрыть нужно создать правило для udev (предполагается, что установлен пакет udisks2)<br /><pre><code>sudo nano /etc/udev/rules.d/10-local.rules</code></pre>  GNU nano 2.8.2               Файл: /etc/udev/rules.d/10-local.rules<br /><pre><code>KERNEL==&quot;sda1&quot;, ENV{UDISKS_IGNORE}=&quot;1&quot;
+KERNEL==&quot;sda9&quot;, ENV{UDISKS_IGNORE}=&quot;1&quot;
+KERNEL==&quot;sdb1&quot;, ENV{UDISKS_IGNORE}=&quot;1&quot;
+KERNEL==&quot;sdb9&quot;, ENV{UDISKS_IGNORE}=&quot;1&quot;
+KERNEL==&quot;sdc2&quot;, ENV{UDISKS_IGNORE}=&quot;1&quot;</code></pre><br />Обновить правила для udev:<br /><pre><code>sudo udevadm trigger</code></pre>Перезагрузить<br /><a href="https://wiki.archlinux.org/index.php/Udisks_(Русский)">Источник</a><br /><br />Дополнительно:<br />Проверить статус служб<br /><pre><code>sudo systemctl status zfs.target
+sudo systemctl status zfs-import-cache.service
+sudo systemctl status zfs-mount.service</code></pre><br />upd - Если возникнет проблема с загрузчиком (он не на zfs) или выйдет из строя SSD, система не загрузится. В этом случае загружаемся из установочного носителя, находим и монтируем пул:<br /><pre><code>modprobe zfs
+zpool import -R /mnt -f zarch</code></pre>Монтируем boot:<br /><pre><code>mount -o compress=lzo,subvol=boot,ssd /dev/sdc1 /mnt/boot</code></pre>Входим в систему:<br /><pre><code>arch-chroot /mnt</code></pre>Устраняем проблему (к примеру, устанавливаем grub, как описано в установке)<br />Затем обновимся:<br /><pre><code>pacman -Syu</code></pre>Переустановим zfs:<br /><pre><code>pacman -S  zfs-linux-git
+mkinitcpio -p linux</code></pre>Выходим<br /><pre><code>exit</code></pre>Размонтируем устройства:<br /><pre><code>umount /mnt/boot
+zfs umount -a</code></pre>Экспортируем пул:<br /><pre><code>zpool export zarch</code></pre>И перегружаемся<br /><pre><code>reboot</code></pre>---<br />Если у кого есть замечания/дополнения/уточнения, готов принять с благодарностью и надеюсь что совместными усилиями мы дополируем эту шпаргалку, чтобы она была полезна тем кого это заинтересует :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189791"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189791/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>s-ugra@ya.ru</strong>, молодец, хорошо все описал.<br />Давно хотел опробовать данную файловую систему, но когда приступил к освоению азов ее применения, сдержали следующие факторы:<br />- данная файловая система предназначена в основном для создания отказоустойчивого хранилища данных и рекомендуют размещать ОС на отдельном HDD (и лучше на SSD), а не в самом хранилище;<br />- чтобы получить все преимущества данной fs, необходимо использовать как минимум два HDD;<br />- максимальная надежность и производительность достигается при использовании HDD одной модели и производителя.<br />То есть, если этому верить, то использовать на обычном/стандартном ноутбуке такую файловую систему нет смысла. Так ли это на практике, я не знаю, так как опыта ее использования не имею, а потому прошу высказаться на этот счет тех, кто имеет опыт ее использования. Проводить эксперимент для этих целей самому, не вижу смысла.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189793"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189793/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>vasek</strong>, в моем случае использован именно ноутбук :))) Модель Asus N76VZ. Он имеет с завода места для двух HDD и вместо CD-привода был установлен SSD на <a href="http://www.dns-shop.ru/catalog/f056dad773aa4e77/salazki-k-hdd-dlya-noutbukov/">специальные салазки</a>. Конечно, использование нескольких дисков желательно, т.к. нагрузка на файловую подсистему будет распределяться одновременно  на несколько дисков/контроллеров. Ведь ZFS умная и сама все распределяет :) Но ничто не мешает поставить все это и на один физический диск, фишки/плюшки то ведь от этого никуда не денутся.<br />--upd--<br />Для примера: Antergos при выборе установки на ZFS просто &quot;откусывает&quot; от первого диска 512 Мб загрузочный раздел, а все остальное - ZFS.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189795"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189795/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>s-ugra@ya.ru</em><br>Но ничто не мешает поставить все это и на один физический диск, фишки/плюшки то ведь от этого никуда не денутся.</blockquote>Меня в этом смысле интересует производительность. Как то попался на глаза один топик, в котором ТС жаловался на постоянную работу и дерганья HDD и падение производительности. Правда верить этому особо и не стоит, но узнать истину хотелось бы.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189800"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189800/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Меня в этом смысле интересует производительность</blockquote>Я могу сравнивать только с вариантом, когда на этом буке стоял Арч на SSD под BTRFS, а хомяк был на HDD. Разница в скорости обращения к дискам визуально наблюдается, но очень небольшая. В частности загрузка раза в 3 стала дольше<br /><pre><code>Startup finished in 9.722s (kernel) + 14.444s (userspace) = 24.167s
+         22.305s man-db.service
+          7.520s systemd-udev-settle.service
+          5.684s systemd-journald.service
+          4.036s logrotate.service
+          2.123s ldconfig.service
+          1.858s systemd-udevd.service
+          1.220s systemd-tmpfiles-setup-dev.service
+           974ms NetworkManager.service
+           805ms systemd-logind.service
+           622ms systemd-journal-catalog-update.service
+           411ms zfs-import-cache.service
+           395ms systemd-backlight@leds:asus::kbd_backlight.service
+           371ms polkit.service
+           362ms systemd-binfmt.service
+           362ms systemd-sysctl.service
+           351ms systemd-tmpfiles-setup.service
+           337ms dev-hugepages.mount
+           281ms systemd-tmpfiles-clean.service
+           272ms dev-mqueue.mount
+           259ms user@1000.service
+           245ms systemd-udev-trigger.service
+           224ms wpa_supplicant.service
+</code></pre>В целом в работе системы харды иногда активируются без видимой причины, а иногда наоборот - явно д.б. обращение к дискам, но они молчат и все происходит мгновенно - догадываюсь, что отрабатывает SSD, но это и неудивительно, ведь фс сама решает какие файлы наиболее часто используются и перекидывает их на кэш. Визуально замедлений не ощущается, работа комфортная. ИМХО нужно какое-то время чтобы все обкаталось, пока только вторая неделя полета, но сказать что по скорости стало хуже - не могу, скорее лучше :) Скорость загрузки при старте для меня не критична.<br />--upd--<br />Перед этим пробовал на нем ZFS под Antergos - вот тот подтупливал заметнее.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189803"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189803/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>s-ugra@ya.ru</em><br>Скорость загрузки при старте для меня не критична.</blockquote>Для меня тоже. Спасибо за быстрые и конкретные вопросы. Для себя решил, что буду ставить на новый ноут, к которому присматриваюсь и хочу, чтобы было 2 HDD, один из которых SSD.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexaf4d.html?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexc575.html?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index235c.html?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdfa.html?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index0b08.html?page=9">9</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index1448.html?page=10">10</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index1c8b.html?page=11">11</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index2adf.html?next=/forum/topic/17491/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17491/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:10:22 GMT -->
+</html>

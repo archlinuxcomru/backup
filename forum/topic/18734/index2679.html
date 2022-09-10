@@ -1,0 +1,404 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18734/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:17:36 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        LUKS+LVM+rEFInd
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/11/index.html">Установка</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>LUKS+LVM+rEFInd</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>LUKS+LVM+rEFInd</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-208655"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/dancerla2/index.html">
+                <span class="post-username">dancerla2</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/208655/index.html">#</a>
+            4 года назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/dancerla2/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/dancerla2/posts/index.html">
+                    16
+                </a>
+            </div>
+            <div>
+                Участник с: 26 февраля 2018
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Привет.<br />Ставлю систему с нуля на зашифрованный раздел, тут никаких проблем.<br />Далее пытаюсь организовать загрузку системы, и тут у меня возникают проблемы - Либо нет пункта загрузки Арча в меню EFI, либо оно не работает. Вываливается в rootfs с сообщением device &#39; &#39; not found<br />Похоже это мой косяк, я не могу правильно сконфигурировать конфиг рефайнда.<br />Конфигурация разделов такая<br /><pre><code>
+sda                 8:0    0 111,8G  0 disk
+├─sda1              8:1    0   512M  0 part
+└─sda2              8:2    0   104G  0 part
+  └─container     254:0    0   104G  0 crypt
+    ├─rootvg-swap 254:1    0     4G  0 lvm
+    └─rootvg-root 254:2    0   100G  0 lvm
+</code></pre>где sda1 - EFI-раздел, монтируется в последствии как /boot<br />rootvg-swap - как видно своп<br />rootvg-root - корневой том, ФС - btrfs. Внутри созданы подтома @root - не посредственно сам корень и @home - домашняя папка<br />Соответственно @root монтирую как /<br />@home в /home<br />sda1 в /boot<br /><pre><code>
+sda                 8:0    0 111,8G  0 disk
+├─sda1              8:1    0   512M  0 part  /mnt/boot
+└─sda2              8:2    0   104G  0 part
+  └─container     254:0    0   104G  0 crypt
+    ├─rootvg-swap 254:1    0     4G  0 lvm   [SWAP]
+    └─rootvg-root 254:2    0   100G  0 lvm   /mnt/home
+</code></pre>blkid<br /><pre><code>
+/dev/sda1: UUID=&quot;8A74-A7CF&quot; TYPE=&quot;vfat&quot; PARTLABEL=&quot;EFI System&quot; PARTUUID=&quot;df0040f1-f65b-4fd3-b1bf-1f16f4dca1cc&quot;
+/dev/sda2: UUID=&quot;bc17e6a8-91a5-409d-b9f2-4fb23d6f6fe6&quot; TYPE=&quot;crypto_LUKS&quot; PARTLABEL=&quot;Linux LUKS&quot; PARTUUID=&quot;4f53a576-0cf9-40d0-96e0-809d0105e505&quot;
+
+/dev/mapper/container: UUID=&quot;Ebjqyz-au6T-WPPu-hMkW-b2Ab-QH2O-q29VWe&quot; TYPE=&quot;LVM2_member&quot;
+/dev/mapper/rootvg-swap: LABEL=&quot;swap&quot; UUID=&quot;1755f2a2-1d64-4c44-94b8-4a47c1c24ae7&quot; TYPE=&quot;swap&quot;
+/dev/mapper/rootvg-root: LABEL=&quot;root&quot; UUID=&quot;a27d4e6e-4db8-459c-b3b6-94ae4fe0a7b4&quot; UUID_SUB=&quot;9b37a22d-3e17-42c6-a6c8-b45361a979ac&quot; TYPE=&quot;btrfs&quot;</code></pre><br />fstab целевой системы<br /><pre><code>
+# /dev/mapper/rootvg-root LABEL=root
+UUID=a27d4e6e-4db8-459c-b3b6-94ae4fe0a7b4	/	btrfs	rw,noatime,discard,compress=lzo,ssd,subvolid=257,subvol=/@root,subvol=@root	0 0
+
+# /dev/mapper/rootvg-root LABEL=root
+UUID=a27d4e6e-4db8-459c-b3b6-94ae4fe0a7b4	/home	btrfs	rw,noatime,discard,compress=lzo,ssd,subvolid=258,subvol=/@home,subvol=@home	0 0
+
+# /dev/sda1
+UUID=8A74-A7CF					/boot	vfat	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro	0 2
+
+# /dev/mapper/rootvg-swap LABEL=swap
+UUID=1755f2a2-1d64-4c44-94b8-4a47c1c24ae7	none	swap	defaults,pri=-2	0 0</code></pre><br />mkinitcpio.conf<br /><pre><code>HOOKS=(base udev autodetect modconf block keymap encrypt lvm2 filesystems keyboard fsck)</code></pre><br />/boot/refind_linux.conf<br /><pre><code>menuentry &quot;Arch Linux&quot; {
+    icon     /boot/EFI/refind/icons/os_arch.png
+    volume   UUID=bc17e6a8-91a5-409d-b9f2-4fb23d6f6fe6
+    loader   /boot/vmlinuz-linux
+    initrd   /boot/intel-ucode.img
+    options  &quot;initrd=/boot/initramfs-linux.img root=UUID=a27d4e6e-4db8-459c-b3b6-94ae4fe0a7b4 rw rootflags=subvol=@root add_efi_memmap&quot;
+}</code></pre>Подозреваю, что здесь у меня каша и неверно указаны UUIDы разделов и опции загрузки<br /><br />в /boot/EFI/refind/refind.conf раскоментировал и оставил нужные значения<br />scanfor external,manual<br />external работает, refind отображает винт с лив-системой<br />а manual конфиг не видит.<br />Если scanfor закоментировать, то refind видит ядро в /boot (sda1) но загрузка уходит в rootfs при отработке хука encrypt с сообщением device &#39; &#39; not found<br />Нужна помощь, спаисбо
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-208898"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/dancerla2/index.html">
+                <span class="post-username">dancerla2</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/208898/index.html">#</a>
+            4 года назад
+            
+                (отредактировано
+                
+                    4 года назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/dancerla2/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/dancerla2/posts/index.html">
+                    16
+                </a>
+            </div>
+            <div>
+                Участник с: 26 февраля 2018
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вообщем запустил систему<br />Вернулся к использованию конфига /boot/refind-linux.conf<br /><pre><code>
+&quot;Boot using default options&quot;     &quot;initrd=/initramfs-linux.img cryptdevice=UUID=bc17e6a8-91a5-409d-b9f2-4fb23d6f6fe6:container rootflags=subvol=@root root=dev/mapper/rootvg-root rw add_efi_memmap&quot;</code></pre>Прошу знающих людей проверить правильность оформления этой записи. Система хоть грузиться и работает, но хочу знать на верняка.<br />По поводу функции TRIM в SSD, надо ли прописывать diskard в этой записи, или хватит и опций монтирования в fstab?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexd612.html?next=/forum/topic/18734/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18734/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:17:36 GMT -->
+</html>

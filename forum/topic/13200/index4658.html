@@ -1,0 +1,1070 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/13200/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:11:30 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        В systemd-210 изменилась реализация именования сетевых интерфейсов
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/1/index.html">Основное</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/1/index.html">Новости Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>В systemd-210 изменилась реализация именования сетевых интерфейсов</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>В systemd-210 изменилась реализация именования сетевых интерфейсов</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index9ba9.html?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132138"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/tchgefest/index.html">
+                <span class="post-username">tchgefest</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132138/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/tchgefest/topics/index.html">
+                    51
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/tchgefest/posts/index.html">
+                    1505
+                </a>
+            </div>
+            <div>
+                Участник с: 20 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br>да, есть такое</blockquote>Да тоже решил <a href="https://bbs.archlinux.org/viewtopic.php?pid=1388486">Почитал</a>
+            
+                
+                    <div class="post-signature">
+                        Последний крик моды - эхо 30-летней давности.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132143"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Dganic/index.html">
+                <span class="post-username">Dganic</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132143/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/20/94/209416cc929c93f654b38d2836e80c5a.png" alt="Dganic avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Dganic/topics/index.html">
+                    26
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Dganic/posts/index.html">
+                    189
+                </a>
+            </div>
+            <div>
+                Участник с: 23 октября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня есть фаилик: <strong>/etc/udev/rules.d/10-network.rules</strong><br /><br />вот с таким содержанием:<br /><br /><pre><code>server@dga-serv:~ $  cat  /etc/udev/rules.d/10-network.rules
+# SERVER (beeline)
+SUBSYSTEM==&quot;net&quot;, ACTION==&quot;add&quot;, DRIVERS==&quot;?*&quot;, ATTR{address}==&quot;00:1c:f0:9e:4e:a8&quot;, ATTR{dev_id}==&quot;0x0&quot;, ATTR{type}==&quot;1&quot;, KERNEL==&quot;eth*&quot;, NAME=&quot;beeline&quot;
+
+# SWITCH (local 192.168.0.x)
+SUBSYSTEM==&quot;net&quot;, ACTION==&quot;add&quot;, DRIVERS==&quot;?*&quot;, ATTR{address}==&quot;90:94:e4:81:af:4d&quot;, ATTR{dev_id}==&quot;0x0&quot;, ATTR{type}==&quot;1&quot;, KERNEL==&quot;eth*&quot;, NAME=&quot;switch&quot;
+
+#FREEDOM (local 10.14.24.244)
+SUBSYSTEM==&quot;net&quot;, ACTION==&quot;add&quot;, DRIVERS==&quot;?*&quot;, ATTR{address}==&quot;64:70:02:04:54:48&quot;, ATTR{dev_id}==&quot;0x0&quot;, ATTR{type}==&quot;1&quot;, KERNEL==&quot;eth*&quot;, NAME=&quot;freedom&quot;
+</code></pre><br />После перезагрузки имена интерфейсов превратятся в тыкву или нет?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132146"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/arcanis/index.html">
+                <span class="post-username">arcanis</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132146/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8e/cd/8ecde9b9bf77f0b2a47300c7eb3d904f.png" alt="arcanis avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/arcanis/topics/index.html">
+                    31
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/arcanis/posts/index.html">
+                    1496
+                </a>
+            </div>
+            <div>
+                Участник с: 09 сентября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Dganic</em><br>После перезагрузки имена интерфейсов превратятся в тыкву или нет?</blockquote>у вас старая заглушка (пустой  /etc/udev/rules.d/80-net-name-slot.rules) должна быть на месте тогда. При обновлении она просто переименуется автоматически. У меня также было, проблем не было
+            
+                
+                    <div class="post-signature">
+                        PGP <a href="http://pgp.mit.edu:11371/pks/lookup?op=vindex&amp;fingerprint=on&amp;exact=on&amp;search=0x779CD2942629B7FA04AB8F172E89012331361F01">0x31361F01</a><br /><a href="https://repo.arcanis.me/">arcanisrepo</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132159"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/koshon/index.html">
+                <span class="post-username">koshon</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132159/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/koshon/topics/index.html">
+                    19
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/koshon/posts/index.html">
+                    102
+                </a>
+            </div>
+            <div>
+                Участник с: 15 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ну вот очередное обновление не прошло и мимо меня (здравствуй, &quot;стабильность&quot;).<br />Задание на проблему: есть zen-kernel, который при обновлении очередного <strike>рака-лебедя-щуки</strike> systemd пытается запустить 4 дополнительных процесса (по сути обращенные к монтированию разделов), полторы минуты дергает рукой туда-сюда и вываливается в итоге в timed out for waiting device... В случае с ванилью он уже не думает так долго, но на определенном разделе &quot;повисает&quot;, не загружаясь дальше и понимает только cntrl+alt+del.<br />Доп. сведения: zen-kernel собран без mkinitcpio  - все включено в ядро без единого модуля.<br />fstab имеется вида: /dev/sda№ &lt;dir&gt; /ext4 defaults 0 0<br />итого 4 раздела. Думает он как раз над этими разделами и еще с net-setup-link, но это дело десятое.<br />Покопавшись в нете нашел решения с fstab&#39;ом, но у меня такой же формат, на который меняют и у всех запускается (в исходном варианте у проблемников fstab начинается с LABEL= ).<br />Ещё думаю, что может как-то добавить отдельно юнитов или что там, но тут мои технические познания заканчиваются.<br />С дефолтным systemctl пробовал.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132172"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132172/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>koshon</strong>, этот баг, скорей всего, не связан с обновлением, поскольку наблюдался и раньше – прошлая версия systemd тоже иногда грешила &quot;зависаниями&quot; в процессе отмонтирования при завершении работы. В нынешней версии в этом смысле ничего не изменилось.<br /><br />Кстати, зависает оно не на совсем, где-то через минуту-две всё проходит. До сих пор у меня руки не доходили поймать этот баг, но я знаю о нём уже давно. И да, ни с какими LABEL он тоже не связан.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132173"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/koshon/index.html">
+                <span class="post-username">koshon</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132173/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/koshon/topics/index.html">
+                    19
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/koshon/posts/index.html">
+                    102
+                </a>
+            </div>
+            <div>
+                Участник с: 15 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Попробовал подождать и там, и там. Итог неоч.<br />Еще пишет Dependency failed for /home<br />Welcome to emergency mode.<br />Это на zen кернеле.<br />Вы мне скажите выхлопы каких файлов где расположенных показать я с кноппикса загружусь и покажу.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132174"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/koshon/index.html">
+                <span class="post-username">koshon</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132174/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/koshon/topics/index.html">
+                    19
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/koshon/posts/index.html">
+                    102
+                </a>
+            </div>
+            <div>
+                Участник с: 15 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            UPD: сменил последний столбец fstab&#39;а (pass) на 2 у /home и /boot - ванильное завелось сразу же. Дзен лежит. Хотелось бы восстановить не ванильное D:
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132175"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Dganic/index.html">
+                <span class="post-username">Dganic</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132175/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/20/94/209416cc929c93f654b38d2836e80c5a.png" alt="Dganic avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Dganic/topics/index.html">
+                    26
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Dganic/posts/index.html">
+                    189
+                </a>
+            </div>
+            <div>
+                Участник с: 23 октября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>arcanis</em><br><blockquote><em>Dganic</em><br>После перезагрузки имена интерфейсов превратятся в тыкву или нет?</blockquote>у вас старая заглушка (пустой  /etc/udev/rules.d/80-net-name-slot.rules) должна быть на месте тогда. При обновлении она просто переименуется автоматически. У меня также было, проблем не было</blockquote><br />У меня в каталоге  /etc/udev/rules.d/ кроме вышеназванного файлика: /etc/udev/rules.d/10-network.rules ничего нет, я так понимаю это хорошо? и после перезагрузки всё будет работать как раньше? Просто я уже обновился без этого файлика, или мне все же надо создать пустой файлик с новым именем?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132176"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Waleyn/index.html">
+                <span class="post-username">Waleyn</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132176/index.html">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Waleyn/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Waleyn/posts/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Участник с: 07 марта 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня сеть отвалилась <a href="http://www.linux.org.ru/forum/admin/10261380">http://www.linux.org.ru/forum/admin/10261380</a> :( что делать?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132177"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Kycok/index.html">
+                <span class="post-username">Kycok</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132177/index.html">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/b7/3e/b73e340446ad65d73a75ebec48fc70c8.png" alt="Kycok avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Kycok/topics/index.html">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Kycok/posts/index.html">
+                    1585
+                </a>
+            </div>
+            <div>
+                Участник с: 09 января 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Waleyn</strong>, а &quot;на другом компе с арчем&quot; тоже pppoe?
+            
+                
+                    <div class="post-signature">
+                        <a href="https://github.com/Kycko">GitHub</a>, <a href="https://wiki.archlinux.org/index.php/User:Kycok">ArchWiki</a>, <a href="https://aur.archlinux.org/account/Kycok">AUR</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index9ba9.html?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index6ca8.html?next=/forum/topic/13200/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/13200/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:11:30 GMT -->
+</html>

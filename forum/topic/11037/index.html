@@ -1,0 +1,593 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        postfix + dovecot(?) БЕз *sql и прочего
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>postfix + dovecot(?) БЕз *sql и прочего</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>postfix + dovecot(?) БЕз *sql и прочего</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-102102"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/killer1804/">
+                <span class="post-username">killer1804</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/102102/">#</a>
+            9 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/killer1804/topics/">
+                    54
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/killer1804/posts/">
+                    515
+                </a>
+            </div>
+            <div>
+                Участник с: 13 марта 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Хочется поднять простой почтовый сервер для 10ти человек - прием + отправка почты. SQL не нужен, LDAP не нужен.<br/>Нужен pop/imap сервер + smtp сервер, авторизация пользователей через файл на жестком диске, типа  /etc/sasldb2 или dovecotpw (утилиты, на которую ссылаются авторы интернет статей, но которой уже нет :)).<br/>Для начала хотелось бы узнать вашего мнении - какой лучше pop/imap сервер использовать для группы человек из 10-40 штук - imap, dovecot, или что-то еще ?<br/>Ну и главное - может кто-то поделится опытом поднятия такого сервера ?<br/>Желательно объяснить ньюансы - типа если почта пользователей хранится в /var/spool/mail, то нужно ли для каждого пользователя создавать вложенный в нее каталог, причем если да, то в каком виде - просто user, или все-таки <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c7b2b4a2b587afa8b4b3a9a6aaa2e9b5b2">[email&#160;protected]</a> ?, и нужно ли еще в добавок к этому создавть папки вида Inbox, outbox, trash  в каталогах пользователей ?<br/>Или созданием каталогов займется сам сервер pop/imap ?<br/><br/>Заранее спасибо. :))
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-102111"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/102111/">#</a>
+            9 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            такие нюансы наврдяли ктото будет объяснять, мой вам совет , скачайте книгу по постфиксу, хоть старую, там нахватаетесь нюансов. Системный почтовик, виртуальные альясы, привязка альясов к реальным учеткам и т.д. этого хватит на статью, да и к тому же лучше иметь рабочий вариант, например у меня с момента как снес фряху , мышки нету, так что могу ляпнуть чтото устаревшее. Какие каталоги тоже вопос не прямой, зависит от того каким методом будет лежать почта. В случае если она лежит контейнером, то можно и не создавать, если лежит сортировано то да, нужно создавать и поддиры(обычно это делает почтарь, но при желании можно и джедайствовать)... это как правило описано в доках к директивам, которые определяют тип ящика, просто я уже не помню признаться честно, даже термины...склероз xD<br/>А в  случае с бд, например часто мускул, то тут можно как хранить только инфу в ней, так и саму почту, т.е. в последнем варианте вам вообще не надо ничего создавать. Многие пугаются, мол сложно... Напрасно, как правило схемы бд идут в примерах, т.е. типовую бд самому можно не создавать, а просто импортировать, можно создать свою, дополнить готовую и т.д., если вы владеете sql хоть как-то и вам это надо.<br/>Возьмите довекот, по нему примеров адская туча. Хотя меня обычно имап не интересует, так что можно сказать, что я довекот ставлю по наитию, тобишь "все побежали и я побежал", но не пожалел, он не сложен для "самомэнокапания", да и как говорил выше, его много кто пробовал и из этих людей многие еще и оставили хаутушки для потомков.  По ним можно ориентрироваться, если не копипастом(не рекомендуется), то для поиска директив в мане или (для чтения комментариев) в дефолтном конфиге(рекомендуется).
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-102216"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/cucullus/">
+                <span class="post-username">cucullus</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/102216/">#</a>
+            9 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/3e/fc/3efc5087b47b238689d6b1152d129048.png" alt="cucullus avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/cucullus/topics/">
+                    257
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/cucullus/posts/">
+                    3438
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            у меня так примерно и сделано. только не postfix, а exim. и не для 10-ти, а для 1-го человека.<br/>в принципе документации с избытком. проблем никаких.<br/>если что конкретное – спрашивайте.<br/>как называть ящики – дело Ваше. внутри ящика ничего создавать не надо, почтовики сами разберутся.
+            
+                
+                    <div class="post-signature">
+                        такие дела.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-102427"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/killer1804/">
+                <span class="post-username">killer1804</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/102427/">#</a>
+            9 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/killer1804/topics/">
+                    54
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/killer1804/posts/">
+                    515
+                </a>
+            </div>
+            <div>
+                Участник с: 13 марта 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            cucullus, У меня для релея тоже используется exim на работе, потому что очень просто настраивался - в конф файле прописал с каких ip можно релеить и все (только из локалки).<br/>А так - прочитал эту статью<br/><a href="https://tnadm.blogspot.ru/2012/08/blog-post_16.html">http://tnadm.blogspot.ru/2012/08/blog-post_16.html</a><br/>Получилось кое-как поднять сервак - почта отправляется и принимается. Но ввиду отсутствия записи в обратной зоны днс - реально его использовать нельзя...<br/>Для себя понял что структура каталогов в /var/spool/mail (или другом каталоге, который указан в конфиге pop/imap-сервера) строится автоматические при первом логине пользователя.<br/>А dovecot, в частности хорош тем, что поддерживает собственную базу для пользователей с паролями, но можно использовать и внешнюю - какую нить /etc/sasldb2.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-102448"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/cucullus/">
+                <span class="post-username">cucullus</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/102448/">#</a>
+            9 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/3e/fc/3efc5087b47b238689d6b1152d129048.png" alt="cucullus avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/cucullus/topics/">
+                    257
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/cucullus/posts/">
+                    3438
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ну хотя бы по ip то можно работать.<br/>а так-то они все свои базы пользователей могут поддерживать. имхо более ценно чтобы единую базу поддерживали.
+            
+                
+                    <div class="post-signature">
+                        такие дела.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/11037/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747c297e0d1b9d63',m:'RybuJ9AVyhLrWBZWpzcmVIx9PzsiGaTm6PTTfWBLyNQ-1662687063-0-AVq4CXOeZKuHoWQzshtmcn9h3LaQ3KP0O6GCIOlevebV0lNWmYmSBLxxUKs+OOgTYh51YB3/3QLAxyVnWcDrBux6s7RqQfT3OdZePooZyPJbAfOPQyHVOg21pNaRyTB8hC5dAEP9A2IzWmIQb0IzqSQ=',s:[0x6ccc569f0a,0x32a03ccbfc],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

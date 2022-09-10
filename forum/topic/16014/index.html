@@ -1,0 +1,963 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Postfix и PHP (создание алиас)
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Postfix и PHP (создание алиас)</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Postfix и PHP (создание алиас)</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-168587"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Arch_noob/">
+                <span class="post-username">Arch_noob</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/168587/">#</a>
+            6 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Arch_noob/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Arch_noob/posts/">
+                    9
+                </a>
+            </div>
+            <div>
+                Участник с: 06 апреля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Всем привет!<br />Вопрос простой и наверняка решение простое, но уже второй день мучаюсь. PHP отправляет пользователю письмо и мне надо изменить адрес отправителя. Но есть одна незадача. Далее пример, что видит получатель письма:<br /><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="315945454171555e5c545f1f4344">[email&#160;protected]</a> (http)<br />в php.ini пишем<br />sendmail_path = /usr/sbin/sendmail -t -i -f <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b7d9d89ac5d2c7dbd6cef7d3d8dad2d999c5c2">[email&#160;protected]</a><br />и вроде бы все решено, но получателю письма приходит<br /><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dcb2b3f1aeb9acb0bda59cb8b3b1b9b2f2aea9">[email&#160;protected]</a> <strong>(http)</strong><br />и вот как убрать этот (http), я не могу понять.<br />Выручайте!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-168596"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/168596/">#</a>
+            6 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            а какая проблема в php скрипте указать отправителя?
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-168612"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kurych/">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/168612/">#</a>
+            6 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kurych/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kurych/posts/">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Еще разочек, где вы что меняете (в примере уже произведена замена?).<br />И лучше покажите заголовки полученного письма.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-168620"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Arch_noob/">
+                <span class="post-username">Arch_noob</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/168620/">#</a>
+            6 лет, 4 месяца назад
+            
+                (отредактировано
+                
+                    6 лет, 4 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Arch_noob/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Arch_noob/posts/">
+                    9
+                </a>
+            </div>
+            <div>
+                Участник с: 06 апреля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>kurych</em><br>Еще разочек, где вы что меняете (в примере уже произведена замена?).<br />И лучше покажите заголовки полученного письма.</blockquote><br />Я делаю изменения только в php.ini, дописав к строке (дополнение выделено) sendmail_path = /usr/sbin/sendmail -t -i <strong>-f <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7719185a0512071b160e3713181a1219590502">[email&#160;protected]</a></strong><br />Теперь получаю письмо с измененным адресом, но User (http) остается все равно в поле From. Т.е. в списке почтовика письмо пришло от Http.<br />Вот этого Http из поля отправителя надо убрать, оставив только адрес <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2d4342005f485d414c546d4942404843035f58">[email&#160;protected]</a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-168628"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kurych/">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/168628/">#</a>
+            6 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kurych/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kurych/posts/">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Из man sendmail:<br /><blockquote>-fname Sets the name of the ``from&#39;&#39; person. This option is valid only if no From: line is specified within the header of the email.</blockquote>В создаваемом где-то в недрах скриптов теле письма создается поле From:, которое и портит вам жизнь. Изменять надо именно где-то там.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-168629"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Arch_noob/">
+                <span class="post-username">Arch_noob</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/168629/">#</a>
+            6 лет, 4 месяца назад
+            
+                (отредактировано
+                
+                    6 лет, 4 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Arch_noob/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Arch_noob/posts/">
+                    9
+                </a>
+            </div>
+            <div>
+                Участник с: 06 апреля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>kurych</em><br>Из man sendmail:<br /><blockquote>-fname Sets the name of the ``from&#39;&#39; person. This option is valid only if no From: line is specified within the header of the email.</blockquote>В создаваемом где-то в недрах скриптов теле письма создается поле From:, которое и портит вам жизнь. Изменять надо именно где-то там.</blockquote><br />From в php скрипте у меня пустой, поэтому адрес меняется с <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1b736f6f6b5b7f74767e7535696e">[email&#160;protected]</a> на <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="aac4c587d8cfdac6cbd3eacec5c7cfc484d8df">[email&#160;protected]</a>, но неизменно выводится имя системного юзера. На ранее собранном сервере такой проблемы нет, но переехал (собрал новые сервера) и началось.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-168630"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kurych/">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/168630/">#</a>
+            6 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kurych/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kurych/posts/">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А явное указание ключа  -F fullname не поможет?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-168631"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Arch_noob/">
+                <span class="post-username">Arch_noob</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/168631/">#</a>
+            6 лет, 4 месяца назад
+            
+                (отредактировано
+                
+                    6 лет, 4 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Arch_noob/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Arch_noob/posts/">
+                    9
+                </a>
+            </div>
+            <div>
+                Участник с: 06 апреля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>kurych</em><br>А явное указание ключа  -F fullname не поможет?</blockquote><br />тоже самое прописано в php.ini, но и если писать непосредственно в скрипте - только имя отправителя в адресе (до @), но http остается. Сдается мне, что это в наследство от sendmail осталось. Наверное стоит поставить ее повторно, поправить конфиг и внести изменения в систему, а потом снова ставить postfix.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-168634"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kurych/">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/168634/">#</a>
+            6 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kurych/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kurych/posts/">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вот я специально проверил у себя. Команда<br /><pre><code>cat test_mail.txt | sendmail -t -i -f <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2749480a5542574b465e6743484a4249095552">[email&#160;protected]</a> -F &quot;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d2bcbdffa0b7a2beb3ab92b6bdbfb7bcfca0a7">[email&#160;protected]</a>&quot;</code></pre>отсылает письмо<br /><blockquote>$ cat test_mail.txt<br />To: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ea9f998f98aa878b8386c48285878f">[email&#160;protected]</a><br />Subject: test<br /><br />Body of test</blockquote>с правильными заголовками и обратными адресами, без лишних полей<br /><blockquote>Return-Path: &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b5dbda98c7d0c5d9d4ccf5d1dad8d0db9bc7c0">[email&#160;protected]</a>&gt;<br />X-Original-To: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2e5b5d4b5c6e434f4742004641434b">[email&#160;protected]</a><br />Delivered-To: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f683859384b69b979f9ad89e999b93">[email&#160;protected]</a><br />Received: by mail.home (Postfix, from userid 1000)<br />        id 6DD8820D5D; Sun,  1 May 2016 16:25:31 +0300 (MSK)<br />To: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2d585e485f6d404c44410345424048">[email&#160;protected]</a><br />Subject: test<br />Message-Id: &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a092909196909590919193929593918e96e4e498989290e495e4e0cdc1c9cc8ec8cfcdc5">[email&#160;protected]</a>&gt;<br />Date: Sun,  1 May 2016 16:25:31 +0300 (MSK)<br />From: &quot;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="402e2f6d3225302c213900242f2d252e6e3235">[email&#160;protected]</a>&quot; &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0f6160227d6a7f636e764f6b60626a61217d7a">[email&#160;protected]</a>&gt;<br /><br />Body of test</blockquote>Попробуйте проделать подобное вручную у себя. В зависимости от результата надо думать, в какую сторону копать.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-168635"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Arch_noob/">
+                <span class="post-username">Arch_noob</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/168635/">#</a>
+            6 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Arch_noob/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Arch_noob/posts/">
+                    9
+                </a>
+            </div>
+            <div>
+                Участник с: 06 апреля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>kurych</em><br>Вот я специально проверил у себя. Команда<br /><pre><code>cat test_mail.txt | sendmail -t -i -f <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1f7170326d7a6f737e665f7b70727a71316d6a">[email&#160;protected]</a> -F &quot;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c5abaae8b7a0b5a9a4bc85a1aaa8a0abebb7b0">[email&#160;protected]</a>&quot;</code></pre>отсылает письмо<br /><blockquote>$ cat test_mail.txt<br />To: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5f2a2c3a2d1f323e3633713730323a">[email&#160;protected]</a><br />Subject: test<br /><br />Body of test</blockquote>с правильными заголовками и обратными адресами, без лишних полей<br /><blockquote>Return-Path: &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="94fafbb9e6f1e4f8f5edd4f0fbf9f1fabae6e1">[email&#160;protected]</a>&gt;<br />X-Original-To: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="deabadbbac9eb3bfb7b2f0b6b1b3bb">[email&#160;protected]</a><br />Delivered-To: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ccb9bfa9be8ca1ada5a0e2a4a3a1a9">[email&#160;protected]</a><br />Received: by mail.home (Postfix, from userid 1000)<br />        id 6DD8820D5D; Sun,  1 May 2016 16:25:31 +0300 (MSK)<br />To: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dbaea8bea99bb6bab2b7f5b3b4b6be">[email&#160;protected]</a><br />Subject: test<br />Message-Id: &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="182a28292e282d2829292b2a2d2b29362e5c5c20202a285c2d5c5875797174367077757d">[email&#160;protected]</a>&gt;<br />Date: Sun,  1 May 2016 16:25:31 +0300 (MSK)<br />From: &quot;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8ee0e1a3fcebfee2eff7ceeae1e3ebe0a0fcfb">[email&#160;protected]</a>&quot; &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bfd1d092cddacfd3dec6ffdbd0d2dad191cdca">[email&#160;protected]</a>&gt;<br /><br />Body of test</blockquote>Попробуйте проделать подобное вручную у себя. В зависимости от результата надо думать, в какую сторону копать.</blockquote><br />Бинго! Огромное спасибо! Надо было писать в кавычках!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/16014/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747bb2640e2e9d99',m:'00Aidcb2frGyaGPa_zZeMn08rOj8ZN7p70mI3AhELyE-1662682184-0-ASq9krCKWYQUP6rOXF82WB7aEtgQY1xiQIwnGOabLyPuBF1dqtdZfPeO4A6q2ARyCpkIAF2EyPUIKKN+P8RTaP9RWYyCN2kXihwMdmJ+1UYHlHouSpGUqed4QMtAEXEV1vPifE1Pdt9fOvCEQi883lk=',s:[0xed35e11e68,0x936fd7a91a],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

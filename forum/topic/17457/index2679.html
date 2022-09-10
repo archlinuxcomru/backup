@@ -1,0 +1,994 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Загрузчик и частота обновления образов initramfs-linux.img и vmlinuz-linux
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/23/">Демоны и загрузка системы</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Загрузчик и частота обновления образов initramfs-linux.img и vmlinuz-linux</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Загрузчик и частота обновления образов initramfs-linux.img и vmlinuz-linux</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189170"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/xShift/">
+                <span class="post-username">xShift</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/189170/">#</a>
+            5 лет, 4 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 4 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/4d/594d2af6e93963e19328c20f4785113d.png" alt="xShift avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/xShift/topics/">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/xShift/posts/">
+                    35
+                </a>
+            </div>
+            <div>
+                Участник с: 10 мая 2017
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            Собственно дело было так. Я три раза переустанавливал Arch Linux из консоли пока не добился желаемого результата и на последнем этапе забыл подмонтировать  /dev/sda1, а так как у меня используется спаренная система типа Clover EFI bootloader :: MacOS + Windows + Archlinux, то grub установился в созданную для неуспешного монтирования директорию /boot/ . Соответственно все образы системы и остались на разделе EXT4, который нативным железом подцепить не получится, а загрузка системы осуществляется с помощью Clover.<br /><br />Трогать заново установку  grub желания совсем нет так как у меня при указании путей до целевого раздела в виде UUID и путей до initramfs-linux.img и vmlinuz-linux система ArchLinux прекрасно стартует и средствами Clover.<br /><br />Вопрос: как часто обновляются такие файлы образы и какого их значение меняется при обновлении системы? Grub у меня на EFI разделе тупо удален ибо мне не нужен лишний пункт меню загрузки, который не скрывается ни в какую.<br /><br />На сколько рисковано бросать осиротевшие образы initramfs-linux.img и vmlinuz-linux и как часто их нужно будет обновлять? Можно ли мне оставить все как есть и класть эти образы периодически в EFI вручную или стоит озаботится переустановкой grub на раздел EFI?<br /><br />Спасибо!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189177"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/pztrn/">
+                <span class="post-username">pztrn</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/189177/">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/pztrn/topics/">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/pztrn/posts/">
+                    1436
+                </a>
+            </div>
+            <div>
+                Участник с: 20 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Лучше добиться автоматического &quot;выкладывания&quot; куда нужно, ибо образы обновляются в случае:<br /><br /><ul><li>Установки драйверов</li><li>Обновления ядра (которое довольно частое)</li><li>Возможно, по каким-то еще причинам, о которых я запамятовал, но которые могут возникнуть.</li></ul>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189178"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Aivar/">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/189178/">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Aivar/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Aivar/posts/">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>xShift</em><br>какого их значение меняется</blockquote>Такого. Матчасть учить не желаем, желаем умничать?<br />initramfs-linux.img - грубо говоря загрузочный образ ядра;<br />vmlinuz-linux - собственно ядро.<br />Обновляться как минимум и то и другое будет при каждом обновлении пакета <a href="https://www.archlinux.org/packages/core/x86_64/linux/">linux</a>, т.б. ядра. Плюс варианты ручной пересборки образа, ядра и т.д.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189185"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/xShift/">
+                <span class="post-username">xShift</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/189185/">#</a>
+            5 лет, 4 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 4 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/4d/594d2af6e93963e19328c20f4785113d.png" alt="xShift avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/xShift/topics/">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/xShift/posts/">
+                    35
+                </a>
+            </div>
+            <div>
+                Участник с: 10 мая 2017
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Aivar</em><br><blockquote><em>xShift</em><br>какого их значение меняется</blockquote>Такого. Матчасть учить не желаем, желаем умничать?<br />initramfs-linux.img - грубо говоря загрузочный образ ядра;<br />vmlinuz-linux - собственно ядро.<br />Обновляться как минимум и то и другое будет при каждом обновлении пакета <a href="https://www.archlinux.org/packages/core/x86_64/linux/">linux</a>, т.б. ядра. Плюс варианты ручной пересборки образа, ядра и т.д.</blockquote><br />Понял. Значит буду отслеживать обновление ядра и драйверов и напишу небольшой баш для автоматического копирования на EFI.<br />Такой вопрос: mkinitcpio это и делает? Или это делает grub?<br /><br />Просто мне grub нахрен не нужен вообще ...<br /><br />p.s.: сам себе ответил. не нужен мне grub вообще.<br /><br /><pre><code>
+mkinitcpio -p linux
+==&gt; Building image from preset: /etc/mkinitcpio.d/linux.preset: &#39;default&#39;
+  -&gt; -k /boot/vmlinuz-linux -c /etc/mkinitcpio.conf -g /boot/initramfs-linux.img
+==&gt; ERROR: Unable to write to /boot/initramfs-linux.img
+==&gt; Building image from preset: /etc/mkinitcpio.d/linux.preset: &#39;fallback&#39;
+  -&gt; -k /boot/vmlinuz-linux -c /etc/mkinitcpio.conf -g /boot/initramfs-linux-fallback.img -S autodetect
+==&gt; ERROR: Unable to write to /boot/initramfs-linux-fallback.img
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189189"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Aivar/">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/189189/">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Aivar/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Aivar/posts/">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>xShift</em><br>мне grub нахрен не нужен вообще ...</blockquote>Не нужен - не устанавливайте, это опционально.<br /><br /><blockquote><em>xShift</em><br>буду отслеживать обновление ядра и драйверов и напишу небольшой баш для автоматического копирования на EFI.</blockquote>Это не нужно. В /etc/mkinitcpio.d/linux.preset прописываете пути к ядру и образу. А модули (драйвера) вообще находятся в /usr/lib/modules/*<br /><br /><blockquote><em>xShift</em><br>Такой вопрос: mkinitcpio это и делает?</blockquote>Нет, он только генерирует initramfs.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189194"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/jim945/">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/189194/">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/jim945/topics/">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/jim945/posts/">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Aivar</em><br>Это не нужно. В /etc/mkinitcpio.d/linux.preset прописываете пути к ядру и образу.</blockquote>Только там прописывается: <strong>куда</strong> ложить образ и <strong>откуда</strong> брать ведро.<br />А данный вопрос решается правильным монтированием разделов.
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189203"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/xShift/">
+                <span class="post-username">xShift</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/189203/">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/4d/594d2af6e93963e19328c20f4785113d.png" alt="xShift avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/xShift/topics/">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/xShift/posts/">
+                    35
+                </a>
+            </div>
+            <div>
+                Участник с: 10 мая 2017
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>jim945</em><br><blockquote><em>Aivar</em><br>Это не нужно. В /etc/mkinitcpio.d/linux.preset прописываете пути к ядру и образу.</blockquote>Только там прописывается: <strong>куда</strong> ложить образ и <strong>откуда</strong> брать ведро.<br />А данный вопрос решается правильным монтированием разделов.</blockquote><br />вот с монтированием то и беда. не охота сквозняк в EFI создавать. На Mac OS я ее тоже руками монтирую, когда Clover обновляю, чтобы беды не натворить ... мне кажется написать bash, который будет монтировать и копировать - самый оптимальный вариант, а потом демонтировать сразу и ребутить.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189204"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/pztrn/">
+                <span class="post-username">pztrn</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/189204/">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/pztrn/topics/">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/pztrn/posts/">
+                    1436
+                </a>
+            </div>
+            <div>
+                Участник с: 20 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            С кловером граб с ядром никак не пересекаются, поэтому можно автоматически монтировать безбоязненно.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189207"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/xShift/">
+                <span class="post-username">xShift</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/189207/">#</a>
+            5 лет, 4 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 4 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/4d/594d2af6e93963e19328c20f4785113d.png" alt="xShift avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/xShift/topics/">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/xShift/posts/">
+                    35
+                </a>
+            </div>
+            <div>
+                Участник с: 10 мая 2017
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>pztrn</em><br>С кловером граб с ядром никак не пересекаются, поэтому можно автоматически монтировать безбоязненно.</blockquote><br />В общем замечено следующее:  после монтирования EFI в Linux и установки grub все файлы в папке созданной на Mac OS теряют свои настройки &quot;порядка&quot;. Вот например делаю arange by name и все строится в красивую сеточку и все файлики в порядке под Mac Os X, но после установки граба в той же папке наичнается бардак и потом сортировка не работает вообще. Каким образом Linux умудрился залезти в .DS_Store совсем не ясно, но очевидно что дело в xattrs(extended attributes of files).  Эти ксатры есть на почти любой системе, например на Mac OS на этих атрибутах висит файловый антивирус песочница и перед запуском каждого файла происходит автоматическая проверка на &quot;все в порядке&quot;.<br /><br />На удивление у меня Arch Linux смог подмонтировать разделы HFS+, но, к счастью, только для чтения. Дело в том, что формат xattrs для Linux и Mac OS различный и смешивание доступа из разных систем ломает логику других систем.<br /><br />Я не параноик, но сторонник того, чтобы эти фишки не пересекались вообще. У меня на папке EFI прицеплена &quot;вирусная&quot; иконка работающая через xattrs, которая не дает без лишних действий навредить структуре папок внутри, но она ломается из-за доступа системы Linux.<br /><br />В общем как-то так. Не доверяю я линуксовым xattr, коли они даже просто при доступе к ФС приводят файлы в беспорядок.<br /><br />p.s.: посоветуйте ядро. выбираю между PF и Zen, но больше хочется PF так как я не доверяю собранному на базе PF Iptables&#39;у вообще. Да и опыт наконфиживания PF у меня выше чем желание ковыряться в беспонтовом строчно-командном виде Iptables. Подскажите пока не успел залезть в systemctl.conf -- он как? гнется или совсем кастрирован как у большинства Linux?<br /><br />p.s.s: поставил пока zen (: чем дальше тем интереснее становится. поделитесь опытом конфижинья systemctl? есть ли какие-то мануалы на тему повышения характеристик безопасности и можно ли в Linux ограничить например исходящие порты до 5000 максимально под потолок, чтобы шпионилки задохнулись?<br /><br /><img src="http://savepic.ru/13952116.png"><br /><br />p.s.s.: а кто-то пробовал использовать <a href="https://build.opensuse.org/package/show/home:post-factum/linux-pf-skylake">https://build.opensuse.org/package/show/home:post-factum/linux-pf-skylake</a>? - его почему то нету в официальном репозитории ):
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189259"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/xShift/">
+                <span class="post-username">xShift</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/189259/">#</a>
+            5 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/4d/594d2af6e93963e19328c20f4785113d.png" alt="xShift avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/xShift/topics/">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/xShift/posts/">
+                    35
+                </a>
+            </div>
+            <div>
+                Участник с: 10 мая 2017
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            Посмотрел sysctl - даже потюнить нечего ): Видимо у Linux все интересные настройки захардкожены и не меняются. А может дело в ядре zen ... В общем даже поковыряться больше не в чем кроме хуков и модулей - получил вроде настроенную готовую систему. Скучно ... Всем спасибо - тему можно закрыть.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/17457/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b8f3c7d3d3374',m:'WwwnmabtFXmktVFYHr30EoF9JhWBU0A_bWUq9tIWKPA-1662680747-0-AUhJkZL4zZkm7Chl+4xMkGCdGVL0PsiY8mNzaTX6T2Q0JFSrKVj8OIOiDv9lC8yTdfSeAZE5tiwxTKv2r0IE3iLhv06R/UJzpBL3rGEU8HWfgPu22Tc+EDlxTRJGIYjRm8rNxR5x4HhE7i45QAVz8Rk=',s:[0xdb08afae0c,0xe981523108],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

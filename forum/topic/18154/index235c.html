@@ -1,0 +1,950 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Спонтанный Suspend через 10 секунд после загрузки ядра
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Спонтанный Suspend через 10 секунд после загрузки ядра</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Спонтанный Suspend через 10 секунд после загрузки ядра</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=6" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=7">7 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-200288"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Werd/">
+                <span class="post-username">Werd</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/200288/">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Werd/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Werd/posts/">
+                    204
+                </a>
+            </div>
+            <div>
+                Участник с: 15 августа 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Обновился вроде без проблем. Правда это только усугубило ситуацию с саспендом ))<br /><br /><pre><code>янв 23 16:41:03 dell systemd[1]: Starting Suspend...
+янв 23 16:41:03 dell systemd-sleep[14022]: Suspending system...
+янв 23 16:41:03 dell kernel: PM: suspend entry (deep)
+янв 23 16:41:03 dell kernel: PM: Syncing filesystems ... done.
+янв 23 16:41:03 dell kernel: bbswitch: enabling discrete graphics
+янв 23 16:41:37 dell kernel: Freezing user space processes ... (elapsed 0.001 seconds) done.
+янв 23 16:41:37 dell kernel: OOM killer disabled.
+янв 23 16:41:37 dell kernel: Freezing remaining freezable tasks ... (elapsed 0.001 seconds) done.
+янв 23 16:41:37 dell kernel: Suspending console(s) (use no_console_suspend to debug)
+янв 23 16:41:37 dell kernel: sd 0:0:0:0: [sda] Synchronizing SCSI cache
+янв 23 16:41:37 dell kernel: sd 0:0:0:0: [sda] Stopping disk
+янв 23 16:41:37 dell kernel: ACPI: Preparing to enter system sleep state S3
+янв 23 16:41:37 dell kernel: ACPI: EC: event blocked
+янв 23 16:41:37 dell kernel: ACPI: EC: EC stopped
+янв 23 16:41:37 dell kernel: PM: Saving platform NVS memory
+янв 23 16:41:37 dell kernel: Disabling non-boot CPUs ...
+янв 23 16:41:37 dell kernel: smpboot: CPU 1 is now offline
+янв 23 16:41:37 dell kernel: smpboot: CPU 2 is now offline
+янв 23 16:41:37 dell kernel: smpboot: CPU 3 is now offline
+янв 23 16:41:37 dell kernel: smpboot: CPU 4 is now offline
+янв 23 16:41:37 dell kernel: smpboot: CPU 5 is now offline
+янв 23 16:41:37 dell kernel: smpboot: CPU 6 is now offline
+янв 23 16:41:37 dell kernel: smpboot: CPU 7 is now offline
+янв 23 16:41:37 dell kernel: ACPI: Low-level resume complete
+янв 23 16:41:37 dell kernel: ACPI: EC: EC started
+янв 23 16:41:37 dell kernel: PM: Restoring platform NVS memory
+янв 23 16:41:37 dell kernel: Enabling non-boot CPUs ...
+янв 23 16:41:37 dell kernel: x86: Booting SMP configuration:
+янв 23 16:41:37 dell kernel: smpboot: Booting Node 0 Processor 1 APIC 0x1
+янв 23 16:41:37 dell kernel: Disabled fast string operations
+янв 23 16:41:37 dell kernel:  cache: parent cpu1 should not be sleeping
+янв 23 16:41:37 dell kernel: CPU1 is up
+янв 23 16:41:37 dell kernel: smpboot: Booting Node 0 Processor 2 APIC 0x2
+янв 23 16:41:37 dell kernel: Disabled fast string operations
+янв 23 16:41:37 dell kernel:  cache: parent cpu2 should not be sleeping
+янв 23 16:41:37 dell kernel: CPU2 is up
+янв 23 16:41:37 dell kernel: smpboot: Booting Node 0 Processor 3 APIC 0x3
+янв 23 16:41:37 dell kernel: Disabled fast string operations
+янв 23 16:41:37 dell kernel:  cache: parent cpu3 should not be sleeping
+янв 23 16:41:37 dell kernel: CPU3 is up
+янв 23 16:41:37 dell kernel: smpboot: Booting Node 0 Processor 4 APIC 0x4
+янв 23 16:41:37 dell kernel: Disabled fast string operations
+янв 23 16:41:37 dell kernel:  cache: parent cpu4 should not be sleeping
+янв 23 16:41:37 dell kernel: CPU4 is up
+янв 23 16:41:37 dell kernel: smpboot: Booting Node 0 Processor 5 APIC 0x5
+янв 23 16:41:37 dell kernel: Disabled fast string operations
+янв 23 16:41:37 dell kernel:  cache: parent cpu5 should not be sleeping
+янв 23 16:41:37 dell kernel: CPU5 is up
+янв 23 16:41:37 dell kernel: smpboot: Booting Node 0 Processor 6 APIC 0x6
+янв 23 16:41:37 dell kernel: Disabled fast string operations
+янв 23 16:41:37 dell kernel:  cache: parent cpu6 should not be sleeping
+янв 23 16:41:37 dell kernel: CPU6 is up
+янв 23 16:41:37 dell kernel: smpboot: Booting Node 0 Processor 7 APIC 0x7
+янв 23 16:41:37 dell kernel: Disabled fast string operations
+янв 23 16:41:37 dell kernel:  cache: parent cpu7 should not be sleeping
+янв 23 16:41:37 dell kernel: CPU7 is up
+янв 23 16:41:37 dell kernel: ACPI: Waking up from system sleep state S3
+янв 23 16:41:37 dell kernel: ACPI: EC: event unblocked
+янв 23 16:41:37 dell kernel: iwlwifi 0000:03:00.0: RF_KILL bit toggled to enable radio.
+янв 23 16:41:37 dell kernel: ACPI: button: The lid device is not compliant to SW_LID.
+янв 23 16:41:37 dell kernel: sd 0:0:0:0: [sda] Starting disk
+янв 23 16:41:37 dell kernel: iwlwifi 0000:03:00.0: Radio type=0x2-0x2-0x1
+янв 23 16:41:37 dell kernel: iwlwifi 0000:03:00.0: Radio type=0x2-0x2-0x1
+янв 23 16:41:37 dell kernel: r8169 0000:06:00.0 enp6s0: link down
+янв 23 16:41:37 dell kernel: usb 1-1.4: reset high-speed USB device number 3 using ehci-pci
+янв 23 16:41:37 dell kernel: ata5: SATA link down (SStatus 0 SControl 300)
+янв 23 16:41:37 dell kernel: ata2: SATA link up 1.5 Gbps (SStatus 113 SControl 300)
+янв 23 16:41:37 dell kernel: ata2.00: configured for UDMA/133
+янв 23 16:41:37 dell kernel: usb 4-1.2: reset low-speed USB device number 3 using ehci-pci
+янв 23 16:41:37 dell kernel: psmouse serio1: synaptics: queried max coordinates: x [..5398], y [..4728]
+янв 23 16:41:37 dell kernel: usb 4-1.5: reset full-speed USB device number 4 using ehci-pci
+янв 23 16:41:37 dell kernel: usb 4-1.5:1.0: rebind failed: -517
+янв 23 16:41:37 dell kernel: usb 4-1.5:1.1: rebind failed: -517
+янв 23 16:41:37 dell kernel: OOM killer enabled.
+янв 23 16:41:37 dell kernel: Restarting tasks ... done.
+янв 23 16:41:37 dell systemd[1]: Starting Load/Save RF Kill Switch Status...
+янв 23 16:41:37 dell systemd-rfkill[14101]: Failed to open device rfkill1: No such device
+янв 23 16:41:38 dell systemd[1]: Reloading Laptop Mode Tools.
+янв 23 16:41:38 dell systemd[1]: bluetooth.target: Unit not needed anymore. Stopping.
+янв 23 16:41:38 dell kernel: video LNXVIDEO:00: Restoring backlight state
+янв 23 16:41:38 dell kernel: video LNXVIDEO:01: Restoring backlight state
+янв 23 16:41:38 dell kernel: bbswitch: disabling discrete graphics
+янв 23 16:41:38 dell systemd[1]: Stopped target Bluetooth.
+янв 23 16:41:38 dell systemd[1]: Started Load/Save RF Kill Switch Status.
+янв 23 16:41:38 dell systemd[1]: Reached target Bluetooth.
+янв 23 16:41:38 dell systemd-sleep[14022]: System resumed.
+янв 23 16:41:38 dell kernel: PM: suspend exit
+янв 23 16:41:38 dell systemd[1]: Started Suspend.
+янв 23 16:41:38 dell systemd[1]: sleep.target: Unit not needed anymore. Stopping.
+янв 23 16:41:38 dell systemd[1]: Stopped target Sleep.
+янв 23 16:41:38 dell systemd[1]: Reached target Suspend.
+янв 23 16:41:38 dell systemd-logind[2001]: Operation &#39;sleep&#39; finished.
+янв 23 16:41:38 dell systemd[1]: suspend.target: Unit not needed anymore. Stopping.
+янв 23 16:41:38 dell systemd[1]: Stopped target Suspend.
+янв 23 16:41:38 dell bluetoothd[4563]: LEAdvertisingManager skipped, LE unavailable
+янв 23 16:41:38 dell laptop_mode[14124]: Laptop mode
+янв 23 16:41:38 dell laptop_mode[14124]: enabled, active [unchanged]
+янв 23 16:41:39 dell kernel: ata1: SATA link up 3.0 Gbps (SStatus 123 SControl 300)
+янв 23 16:41:39 dell kernel: ata1.00: ACPI cmd ef/5a:00:00:00:00:a0 (SET FEATURES) succeeded
+янв 23 16:41:39 dell kernel: ata1.00: ACPI cmd ef/5a:00:00:00:00:a0 (SET FEATURES) succeeded
+янв 23 16:41:39 dell kernel: ata1.00: configured for UDMA/133</code></pre><br />Я не могу понять что происходит, он похоже пытается уснуть но ничего не выходит.<br />Сначала думал что это из за USB. Отключил пробуждение по USB в биосе и освободил все порты, не помогло.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-200293"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/200293/">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Werd</em><br>Я не могу понять что происходит, он похоже пытается уснуть но ничего не выходит.<br />Сначала думал что это из за USB. Отключил пробуждение по USB в биосе и освободил все порты, не помогло.</blockquote>Вот твоя ошибка — система не понимается состояние крышки ноутбука, точнее записано одно состояние, а фактически другое, а это состояние завязано на модуль button (кнопка включения/выключения)<br /><blockquote><em>Werd</em><br>&#8230;.. ACPI: button: The lid device is not compliant to SW_LID.</blockquote>Гугли по этой фразе, для начала посмотри <a href="https://bbs.archlinux.org/viewtopic.php?id=226302">это</a>, нашел на BBS - в подробности не вникал, вообщем ГУГЛИ.<br />И вроде я уже указывал тебе на этот bug и приводил способ для проверки, но, похоже, ты так и не проверил.<br /><br /><strong>EDIT 1</strong> - и это не ошибка ArchLinux, а вероятнее всего причина обусловлена кривизной таблиц ACPI.<br /><br /><strong>EDIT 2</strong> - Может твоя крышка показывает всегда открыто? Посмотри вывод -<strong> journalctl -b | grep Lid</strong><br />Если была команда на suspend, то должен показать чередование closed и opened<br />В приведенной выше мной ссылке есть сылка на другие топики, которые ссылаются еще дальше. Насколько понял. Это проблема не нова.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-200297"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Werd/">
+                <span class="post-username">Werd</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/200297/">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Werd/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Werd/posts/">
+                    204
+                </a>
+            </div>
+            <div>
+                Участник с: 15 августа 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>И вроде я уже указывал тебе на этот bug и приводил способ для проверки, но, похоже, ты так и не проверил.</blockquote>Так у меня другая ситуация была. Я кажется не проверял, но у меня тогда другая проблема была...<br /><br />Ссылку на bbs я находил, но почему то показалось что это не мой случай. Сейчас проверил, да действительно состояние крышки не меняется.<br />Если раньше при закрытии/открытии крышки:<br /><br /><pre><code>sudo cat /dev/input/event3</code></pre><br />показывал кракозябры, то сейчас ничего..<br /><br />крышка всегда в открытом состоянии..<br /><pre><code>$ cat /proc/acpi/button/lid/LID0/state
+state:      open</code></pre><br /><pre><code>$ journalctl -b | grep Lid
+янв 23 16:40:31 dell kernel: input: Lid Switch as /devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0D:00/input/input4
+янв 23 16:40:31 dell kernel: ACPI: Lid Switch [LID0]
+янв 23 16:40:38 dell systemd-logind[2001]: Watching system buttons on /dev/input/event3 (Lid Switch)
+</code></pre><br />А где датчик положения крышки находится? Рядом с тачпадом кажется да? Просто годик назад я подзалил это место водичкой.. =/<br /><br />Я прочитал все треды по твоей ссылке. Ну там они нашли какой то способ временно вернуть функциональность датчика вот так:<br /><br /><blockquote>I mean: If you follow this thread, you can see that pushing the battery reset hardware button can restore lid detection, which then works for a while but eventually fail again, independently of any kernel upgrade (except in your case, that&#39;s why I&#39;m inclined toward a coincidence). That doesn&#39;t look like a kernel issue to me. That said, I can be wrong :-)</blockquote><br />Похоже никто не понял чем это вызывается =/ Мне кажется что это просто сломанный датчик..<br /><br />Можно как то перенастроить выход из саспенда на power button например? Или на клавиатуру?<br />Через ACPI таблицу же можно? Но как там расшифровать коды девайсов?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-200298"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/200298/">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Насчет приведенных мною ссылок - я детально их не анализировал, а потому ничего в части ошибки состояния Lido сказать не могу. И нужно в эту тему влазить капитально, а для этого нужно иметь под рукой такую проблему и пробовать. А так это будут одни разговоры и гадания. Кроме того для начала нужно проверить и понять какие значения установлены в logind.<br />В части<br /><blockquote><em>Werd</em><br>Можно как то перенастроить выход из саспенда на power button например? Или на клавиатуру?</blockquote>Выход из suspend по дефолту  настроен на power button. Кроме того, <strong>vs220</strong>, уже указывал что у тебя выход из suspend настроен на Lido<br /><blockquote><em>Werd</em><br>LID0 S3 *enabled platform:PNP0C0D:00</blockquote>Разберись с этим и определись, что тебе нужно.<br />В части настройки выхода из suspend - уже писали, можно настроить все, если твое устройство прописано (или имеет отношение через bus, например, через hub) в файле /proc/acpi/wakeup
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-200321"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Werd/">
+                <span class="post-username">Werd</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/200321/">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Werd/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Werd/posts/">
+                    204
+                </a>
+            </div>
+            <div>
+                Участник с: 15 августа 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ок, я просто отключил саспенд по крышке в /proc/acpi/wakeup.<br />И в logind.conf поставил саспенд на power button.<br />Пока мне все нравится =)<br />Как доберусь до цивилизации отнесу ноут в сервис, проверить датчик и тачпад...<br /><br />Спасибо большое всем за помощь =)<br /><br />UPDATE:<br />А не подскажет ли кто, как мне понять где у меня клавиатура в /proc/acpi/wakeup ?<br />Хочу попробовать пробуждение и через нее еще сделать, а то кнопка питания подглючивает иногда.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-200372"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/200372/">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Werd</em><br>А не подскажет ли кто, как мне понять где у меня клавиатура в /proc/acpi/wakeup ?</blockquote>Имеешь ввиду тачпад?<br />Редкие ноутбуки имеют функцию просыпаться от тачпада.<br />И в твоем файле /proc/acpi/wakeup что то я не вижу устройства типа TPAD (может называться и по другому - как обзовет разработчик).<br />И уже писал, что все, что подключается к USB портам, если они настроены на просыпание, настроить можно - в том числе и от клавиатуры и от мыши.<br />Погугли по фразе - <strong>wakeup for keyboard</strong><br />А как найти - там же прописаны обозначения bus - ищи по ним.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=6" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=7">7 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/18154/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b7c6f8e349d46',m:'Wc3egJoAfeqRJBYxk.GGzCuK7wuE0DOfJERqK7mb72I-1662679974-0-ATsMJHaqKCAikzJ/21X9m+pfDuId2BjypBKbA96E/WUqijJTLEMZIUjqZthQHUcIu1nFt5uSlYIofMrkddaJEc8KgzkFolvSalrbDAKbzVL5FP+hkF0DuHUTJjqoVa/J+8c2SkBHJKoN8wMQyzXiHIo=',s:[0x20bb173c81,0x58e5fbc635],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

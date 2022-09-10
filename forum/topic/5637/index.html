@@ -1,0 +1,686 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Настройка Vlan в ArchLinux
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Настройка Vlan в ArchLinux</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Настройка Vlan в ArchLinux</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55270"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/atomlab/">
+                <span class="post-username">atomlab</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55270/">#</a>
+            11 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/atomlab/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/atomlab/posts/">
+                    16
+                </a>
+            </div>
+            <div>
+                Участник с: 02 ноября 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Здравствуйте. Вот решил попробовать Арч. Столкнулся  с проблемой по настройке вланов.<br/>Штатные средсва по настройки сети не поддерживают работу с вланами.<br/>Установил  пакет netcfg-vlan. Смотрю пример:<br/># cat /etc/network.d/examples/vlan <br/>  <div class="code"><pre>                                                                                           
+INTERFACE="eth0.10"                                                                                                                
+CONNECTION="vlan"
+DESCRIPTION="Example VLAN connection"                                                                                                                        
+IP="dhcp"
+  </pre></div>Пытался настроить статический ip.<br/>cat /etc/network.d/vlan.10<br/><div class="code"><pre>CONNECTION="vlan"
+INTERFACE="eth0.10"                                                                                                                
+DESCRIPTION="Example VLAN connection"                                                                                                                        
+IP="static"                                                                                                                               
+ADDR='10.0.0.5'</pre></div>'<br/>Запускаю профиль, интерфейс создается, но не поднимается и ip не присваивается.Похоже только dhcp понимает. Странно.<br/>#netcfg vlan.10                                                                                                                         <br/>:: vlan.10 up<br/>&gt; No connection<br/><br/># ifconfig -a                                                         <br/>  <div class="code"><pre>                                                                 
+eth0      Link encap:Ethernet  HWaddr 00:1D:72:12:26:74                                                                                                      
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1                                                                                                         
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0                                                                                                 
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0                                                                                               
+          collisions:0 txqueuelen:1000                                                                                                                       
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)                                                                                                             
+          Interrupt:16                                                                                                                                       
+                                                                                                                                                             
+eth0.10   Link encap:Ethernet  HWaddr 00:1D:72:12:26:74                                                                                                      
+          BROADCAST MULTICAST  MTU:1500  Metric:1                                                                                                            
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0                                                                                                 
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0                                                                                               
+          collisions:0 txqueuelen:0                                                                                                                          
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)</pre></div><br/>Если тупо  создать влан<br/><div class="code"><pre>vconfig add eth0 10
+ifconfig eth0.10 10.0.0.5 up</pre></div>То это работает конечно.<br/>Но хочется это настраивать более красиво.<br/>Искал,но находил только решения с применением патчей.<br/>Например:<br/><a href="http://www.tune-it.ru/web/pakhom/home/-/blogs/%430%432%442%43E%43C%430%442%438%447%435%441%43A%43E%435-%43A%43E%43D%444%438%433%443%440%438%440%43E%432%430%43D%438%435-vlan-%438%43D%442%435%440%444%435%438%441%43E%432-%432-arch-linux">http://www.tune-it.ru/web/pakhom/home/-/blogs/автоматическое-конфигурирование-vlan-интерфеисов-в-arch-linux</a><br/><br/><a href="https://bugs.archlinux.org/task/15661?string=vlan">https://bugs.archlinux.org/task/15661?string=vlan</a><br/><br/>Можно ли в Арче настроить вланы без напильников и патчей?<br/><br/>Спасибо.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55271"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/h4tr3d/">
+                <span class="post-username">h4tr3d</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55271/">#</a>
+            11 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/h4tr3d/topics/">
+                    34
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/h4tr3d/posts/">
+                    2656
+                </a>
+            </div>
+            <div>
+                Участник с: 12 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Эх, настраивал когда ещё netcfg-vlan не существовало, тогда я сделал модифицированные версии /etc/rc.d/network_vlan и так на двух сервачках они до сих пор и работают (сервачки уже даже не мои :)) Могу поделиться, ничего патчить не нужно, просто скопировать и использовать вместо стандартного /etc/rc.d/network, вланы прописывать как и простые интерфейсы в /etc/rc.conf. Для удобвства, для себя принял такое именование:<br/><br/>eth0a1=&ldquo;eth0:1 &#8230;&rdquo; &lt;- для alias, хотя лучше использовать ip addr add &#8230;<br/>eth0v1=&ldquo;eth0.0001 &#8230;&rdquo; &lt;- для vlan<br/><br/>ессесно это условность, переменную можно назвать хоть tarapupa, вроде :)
+            
+                
+                    <div class="post-signature">
+                        systemd должен умереть.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55272"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/atomlab/">
+                <span class="post-username">atomlab</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55272/">#</a>
+            11 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/atomlab/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/atomlab/posts/">
+                    16
+                </a>
+            </div>
+            <div>
+                Участник с: 02 ноября 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>h4tr3d</em><br/>Могу поделиться&#8230;</blockquote><br/>Если не затруднит. Буду очень благодарен:)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55273"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/h4tr3d/">
+                <span class="post-username">h4tr3d</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55273/">#</a>
+            11 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/h4tr3d/topics/">
+                    34
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/h4tr3d/posts/">
+                    2656
+                </a>
+            </div>
+            <div>
+                Участник с: 12 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+             <a href="http://hatred.homelinux.net/%7Ehatred/network_vlan">http://hatred.homelinux.net/~hatred/network_vlan</a> <br/><br/>скрипт рабочий, на двух серверах трудится, как говорил. Использовать: скопировать в /etc/rc.d, а в /etc/rc.conf закоменть network, а вместо него впиши network_vlan<br/><br/>ну вланы я так зову:<br/><div class="code"><pre>eth2v13="eth2.13 86.102.109.xxx netmask 255.255.255.255"
+...
+interfaces=(... eth2v13 ...)</pre></div>
+            
+                
+                    <div class="post-signature">
+                        systemd должен умереть.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55274"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/atomlab/">
+                <span class="post-username">atomlab</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55274/">#</a>
+            11 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/atomlab/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/atomlab/posts/">
+                    16
+                </a>
+            </div>
+            <div>
+                Участник с: 02 ноября 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Спасибо огромное:)<br/>Все работает:)<br/><br/>Я тока  начал знакомится с Арчем. Вы не в курсе случаем, сборщики дистрибутива собираются включать настройку вланов в стандартные средства по настрйке сети?Вроде штука достаточно нужная.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-55275"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/mblmp/">
+                <span class="post-username">mblmp</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/55275/">#</a>
+            11 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/mblmp/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/mblmp/posts/">
+                    2
+                </a>
+            </div>
+            <div>
+                Участник с: 31 декабря 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            проблема в том, что интерфейсы для vLan'ов - логические и привязываются к физическому интерфейсу. а вы забыли его активировать. <br/>команда ifconfig -a показывает все имеющиеся интерфейсы, в том числе и те, которые в состоянии down. <br/>я вот так настраивал интерфейсы:<br/><div class="code"><pre>eth0="eth0 up"
+INTERFACES=(eth0)
+...
+NETWORKS=(eth0v05 eth0v10 eth0v20)
+DAEMONS=(syslog-ng network net-profiles ...)</pre></div>первые две строчки говорят о том, что нужно поднять физический интерфейс без настройки сетевого адреса (в принципе, можно было бы настроить еще один профайл для активации физического интерфейса, но, имхо, слишком много лишних телодвижений)<br/>потом говорим какие профайлы поднимать <br/>ну и потом, все это хозяйство прописываем в стартап.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/5637/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b33512c637b23',m:'8.4xZIOmdz_Cd8GaxA.ZMOB8gYoHKq0pe6hLrC8V35E-1662676979-0-AYbdfrE4DlD5EZ8xxG5hcxKzxQuOGYm4UUgtw2/Obo2dM9qld2Kb0jijt7wi1SLqHpSEqM6vi4eiOnk+Afy3btgIwQVI+2+iDfCeSy+lj3hxlCGG4SizucDjp43U8LPXCTIMjizwZPTAkD0LGJN8WLA=',s:[0xd67dac1088,0x682a5da7db],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

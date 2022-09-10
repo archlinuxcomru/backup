@@ -1,0 +1,583 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        миграция с gentoo: mount/automount проблема
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>миграция с gentoo: mount/automount проблема</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>миграция с gentoo: mount/automount проблема</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-92148"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/timth/">
+                <span class="post-username">timth</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/92148/">#</a>
+            14 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/timth/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/timth/posts/">
+                    2
+                </a>
+            </div>
+            <div>
+                Участник с: 09 ноября 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            рецепт <a href="https://wiki.archlinux.org/index.php/HAL_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D%200%B9%29">http://wiki.archlinux.org/index.php/HAL_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D 0%B9)</a> не работет<br/><br/>pmount монтирует обычный плеер (ex /dev/sdb vfat), но напрочь отказывается монтировать переносной хард (ex /dev/sdс1 (ext2)): Error: device /dev/sdc1 is not removable (под гентоо сабж работал без всяких проблем)<br/><br/>более менее работает thunar-volman, монтирует и то, и то, но vfat девайсы монтирует с: rw,nosuid,nodev,uid=1000,fmask=0022,dmask=0022,codepage=cp437,iocharset=iso8859 -1,shortname=winnt 0 0 в результате чего, русского языка лишен. (в гентоо всё нормально автоматом определялось)<br/><br/>системная локаль en_US.utf8, пользователь в группах disk wheel games video audio optical storage users
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-92149"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/h4tr3d/">
+                <span class="post-username">h4tr3d</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/92149/">#</a>
+            14 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/h4tr3d/topics/">
+                    34
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/h4tr3d/posts/">
+                    2656
+                </a>
+            </div>
+            <div>
+                Участник с: 12 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Если мне не изменяет память, то pmount работает как раз только с removable устройствами что бы их можно было не от рута примонтировать если они не прописаны в fstab. В свою бытность, когда я сделал автомонтирование средствами udev (если нужно, скину рецепт, только никаких &ldquo;иконок на работем столе&rdquo; это создавать не будет ;) ) то обнаружил, что у переносного винта подрубленного на USB не стоит флаг removable, отсюда видать и корень твоей проблемы.<br/><br/>Как вариант, допилить только более внимательно hal или&#8230; или пробывать заюзать ivman:<br/> <a href="https://wiki.archlinux.org/index.php/Ivman_%28Russian%29">http://wiki.archlinux.org/index.php/Ivman_%28Russian%29</a> 
+            
+                
+                    <div class="post-signature">
+                        systemd должен умереть.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-92150"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/malcolm/">
+                <span class="post-username">malcolm</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/92150/">#</a>
+            14 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/malcolm/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/malcolm/posts/">
+                    3
+                </a>
+            </div>
+            <div>
+                Участник с: 29 мая 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня всё нормально монтируется. В том числе и съёмный usb-винт, но кодировка не та. Где можно поменять кодировку?<br/>Используется ivman+hal. локаль ru_RU.UTF-8.<br/>Вручную, с ключем utf8 всё проходит нормально, а вот автоматом нет:(
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-92151"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/minsler/">
+                <span class="post-username">minsler</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/92151/">#</a>
+            14 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/minsler/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/minsler/posts/">
+                    7
+                </a>
+            </div>
+            <div>
+                Участник с: 20 февраля 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>malcolm</em><br/>У меня всё нормально монтируется. В том числе и съёмный usb-винт, но кодировка не та. Где можно поменять кодировку?<br/></blockquote>в версиях выше 0.5 ивман будет использовать опции монтировани для юсб из /etc/fstab если они там есть<br/>так что пропиши кодировки там
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-92152"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/h4tr3d/">
+                <span class="post-username">h4tr3d</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/92152/">#</a>
+            14 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/h4tr3d/topics/">
+                    34
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/h4tr3d/posts/">
+                    2656
+                </a>
+            </div>
+            <div>
+                Участник с: 12 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>minsler</em><br/>в версиях выше 0.5 ивман будет использовать опции монтировани для юсб из /etc/fstab если они там есть<br/>так что пропиши кодировки там<br/></blockquote><br/>у меня разное количество флешек, фотоаппарат. винты внешние, каждый раз прописывать новое устройство в fstab? тогда мне проще будет команду дать mount /media/flash1 или что-то подобное. проблема в автомонтировании, это как раз уйти от привязки опций к устройству конкретному, завязять из например на UUID или тип фс или ещё что.
+            
+                
+                    <div class="post-signature">
+                        systemd должен умереть.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/9815/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b690329099d86',m:'aNJIYPXlBuyIiLwaMBmnThyUebCPW1V9pT5vPaaBudY-1662679178-0-Afr5Y2dkzX8++3WFsjUVHPftqypdiBycouu7aM+Jmbt7wji0sBNHhDuyWfX3Z15mu+ip6ZDIfowBcM7gFVOJRrlFlkNS5qXfNs6Sq/wpf+nlhCP9oZUKNdekT/OaXfj2mzcDT8ezN0lR6gOQrVL9UPY=',s:[0xd476f5805d,0x4a0f124b6d],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

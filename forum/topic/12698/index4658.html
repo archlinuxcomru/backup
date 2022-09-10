@@ -1,0 +1,1063 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/12698/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:33:31 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Мой юниксвейный mnt. Часть 1: Системный диск, имена и группы.
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/8/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/25/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Мой юниксвейный mnt. Часть 1: Системный диск, имена и группы.</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Мой юниксвейный mnt. Часть 1: Системный диск, имена и группы.</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index9ba9.html?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124123"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/124123/index.html">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Если бы это была "ностальгия о прошлом" <em>(как будто она бывает о будущем)</em>, я бы не писал об этом.<br/>Нет, это вполне работающая система, которой я пользуюсь каждый день :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124124"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/elsonador/index.html">
+                <span class="post-username">elsonador</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/124124/index.html">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c4/74/c4744210be47d6c1692ba03d7d1a5b83.png" alt="elsonador avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/elsonador/topics/index.html">
+                    63
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/elsonador/posts/index.html">
+                    996
+                </a>
+            </div>
+            <div>
+                Участник с: 09 апреля 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Но есть и положительные моменты: обнаружил у себя две версии <strong>udisks</strong>. Высадил. Вот и причина, почему флешки долго обнаруживались.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124125"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/anode/index.html">
+                <span class="post-username">anode</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/124125/index.html">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/anode/topics/index.html">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/anode/posts/index.html">
+                    982
+                </a>
+            </div>
+            <div>
+                Участник с: 30 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Лет пять назад подсмотрел где-то правило для юдэв и монтирую флешки автоматически вообще ни во что не тыкая ни в ДЕ ни в голой консоли. Чет вы с "прошлым" погорячились. Natrio, спасибо, давай ещё!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124128"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/124128/index.html">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>nafanja, ты не мог бы уточнить, что именно подразумевал под "это все"?</blockquote>я о абсолютной не нужности /dev/hd* зачем оно надо? что бы один раз в конфиг прописать?<br/>еще и серийники дописывать вручную... тоже самое что и с UUID, но у UUID тут хоть есть практическая выгода при клонировании/переносе разделов. а серийник это привязка в винту.
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124130"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/domov0y/index.html">
+                <span class="post-username">domov0y</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/124130/index.html">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/domov0y/topics/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/domov0y/posts/index.html">
+                    819
+                </a>
+            </div>
+            <div>
+                Участник с: 09 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>зачем оно надо?</blockquote>с телефона пробовали в ssh скомандовать df -h  если в фстаб прописаны uuid (или на худой конец  команду mount)?
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с вами знание ip адреса
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124131"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/124131/index.html">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>с телефона пробовали в ssh</blockquote>нет, только с холодильника и стиральной машины пробовал... )))<br/><br/>да и /dev/sd* всегда работает если речь о консоле.
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124152"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/tsn/index.html">
+                <span class="post-username">tsn</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/124152/index.html">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/tsn/topics/index.html">
+                    13
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/tsn/posts/index.html">
+                    144
+                </a>
+            </div>
+            <div>
+                Участник с: 04 октября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Господа!<br/>Простите великодушно. :-)<br/><br/>Мы тут трындычать будем или дослушаем о чем человек поведать нам захотел?<br/>Что бы понять буду я это использовать или нет, как минимум, я хочу дочитать до конца...<br/>Даже если потом я решу, что оно мне не надо, то польза от статьи будет несомненно.<br/><br/>Поэтому:<br/><blockquote>Natrio, спасибо, давай ещё!</blockquote>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124153"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/agoomboom/index.html">
+                <span class="post-username">agoomboom</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/124153/index.html">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/agoomboom/topics/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/agoomboom/posts/index.html">
+                    46
+                </a>
+            </div>
+            <div>
+                Участник с: 25 декабря 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Было hdX/sdY, нас вынудили юзать UUID, или удава...<br/>потом вместо ethY/wlanZ - enpблаблабла, или удава...<br/>и ещё что-то про приручение удава...<br/>системдэ и тэдэ  и тэпэ,<br/>а за убийство второгнома - им <strike>п***ец</strike> нет прощения.<br/>На оффтопик, я не вернусь!<br/>Что дальше?<br/>Ждём вяленого.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124162"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/124162/index.html">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Продолжение:<br/><a href="../12702/index.html"><u>Мой юниксвейный mnt. Часть 2: флешки, диски и прочие карточки.</u></a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124519"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/akorop/index.html">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/124519/index.html">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/akorop/topics/index.html">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/akorop/posts/index.html">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Хм... Про разделы основного винта оно, конечно, всё умнО, и unix-way, вот только непонятно зачем. Слава богу, понятие метки раздела (файловой системы) пока не отменили, и использование меток в fstab тоже не запретили. Скажем, у меня есть раздел, в котором лежат всяческие бэкапы, так метка у него (вы угадали!) - backup, и в fstab оно так и прописано:<br/><div class="code"><pre>LABEL=backup /mnt/backup auto  noauto 0 1</pre></div>И все прочие разделы - аналогично. И если я, допустим прикуплю ещё один винт и решу перенести бэкапы на него, то я просто скопирую туда раздел, а старый удалю. <strong>И всё</strong>. Не надо корректировать ни fstab, ни хитрые скрипты udev.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index9ba9.html?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexac08.html?next=/forum/topic/12698/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/12698/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:33:31 GMT -->
+</html>

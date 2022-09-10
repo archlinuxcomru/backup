@@ -1,0 +1,910 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20366/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:15:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        systemd-nspawn как альтернатива chroot ... ?
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/5/index.html">Разное</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/4/index.html">/dev/null</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>systemd-nspawn как альтернатива chroot ... ?</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>systemd-nspawn как альтернатива chroot ... ?</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237795"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237795/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>anode</em><br>аргументы?</blockquote>Никаких, что касается безопасности.<br />Лично мне удобнее, нагдядно видно, хотя бы в том, что я вижу - где я нахожусь ... а так - решетка там, решетка здесь - и забываю где я нахожусь.<br />Ну и для размышления - разное окружение ...<br /><br />Так и не понял - что там с файлами /usr/lib/os-release, /etc/os-release ?
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237800"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/anode/index.html">
+                <span class="post-username">anode</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237800/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/anode/topics/index.html">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/anode/posts/index.html">
+                    982
+                </a>
+            </div>
+            <div>
+                Участник с: 30 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Естественно, их нет и быть не должно. /usr/lib/os-release принадлежит systemd.<br />Если такой файл создать, лучше от єтого не становится.<br />Да и речь совершенно о другом. Chroot - традиционная юникс команда, предназначенная для выполнения в специальном корневом каталоге команды из этого каталога. Имеет 5 параметров,два из которых --version и --help. И man страницу на 10 строк.<br /> systemd-nspawn - контейнер, со всеми вытекающими, пусть и легковесный, пусть очередной велосипед от Лёни, но контейнер:  сотня опций, конфиги и.т.д. Конечно, можно использовать вместо chroot, для наивных так в руководстве и написано: продвинутый chroot, но это из пушки по воробьям.<br />ЗЫ.<br />Все привыкли чарутиться с командой /bin/sh -i, но ведь можно и так:<br /><pre><code>-su-5.0# uname -a
+Linux TM8481 4.19.57-1 #1 SMP PREEMPT Sat Jul 6 08:46:19 EEST 2019 x86_64 Intel(R) Core(TM) i3-2357M CPU @ 1.30GHz GenuineIntel GNU/Linux
+-su-5.0# chroot /mnt/arch /usr/bin/mkinitcpio -p linux
+==&gt; ERROR: /proc must be mounted!
+-su-5.0# mount -B /proc /mnt/arch/proc
+-su-5.0# mount -B /dev /mnt/arch/dev
+-su-5.0# mount -B /sys /mnt/arch/sys
+-su-5.0# ls -l /mnt/arch/boot/*.img
+-rw-r--r-- 1 root root 3164160 чер 12 21:00 /mnt/arch/boot/intel-ucode.img
+-su-5.0# chroot /mnt/arch /usr/bin/mkinitcpio -p linux
+==&gt; Building image from preset: /etc/mkinitcpio.d/linux.preset: &#39;default&#39;
+  -&gt; -k /boot/vmlinuz-linux -c /etc/mkinitcpio.conf -g /boot/initramfs-linux.img
+==&gt; Starting build: 5.7.2-arch1-1
+  -&gt; Running build hook: [base]
+  -&gt; Running build hook: [udev]
+  -&gt; Running build hook: [resume]
+  -&gt; Running build hook: [autodetect]
+  -&gt; Running build hook: [modconf]
+  -&gt; Running build hook: [block]
+  -&gt; Running build hook: [filesystems]
+  -&gt; Running build hook: [keyboard]
+  -&gt; Running build hook: [fsck]
+==&gt; Generating module dependencies
+==&gt; Creating gzip-compressed initcpio image: /boot/initramfs-linux.img
+==&gt; Image generation successful
+==&gt; Building image from preset: /etc/mkinitcpio.d/linux.preset: &#39;fallback&#39;
+  -&gt; -k /boot/vmlinuz-linux -c /etc/mkinitcpio.conf -g /boot/initramfs-linux-fallback.img -S autodetect
+==&gt; Starting build: 5.7.2-arch1-1
+  -&gt; Running build hook: [base]
+  -&gt; Running build hook: [udev]
+  -&gt; Running build hook: [resume]
+  -&gt; Running build hook: [modconf]
+  -&gt; Running build hook: [block]
+==&gt; WARNING: Possibly missing firmware for module: aic94xx
+==&gt; WARNING: Possibly missing firmware for module: wd719x
+  -&gt; Running build hook: [filesystems]
+  -&gt; Running build hook: [keyboard]
+  -&gt; Running build hook: [fsck]
+==&gt; Generating module dependencies
+==&gt; Creating gzip-compressed initcpio image: /boot/initramfs-linux-fallback.img
+==&gt; Image generation successful
+-su-5.0# ls -l /mnt/arch/boot/*.img
+-rw-r--r-- 1 root root 34441486 гру  3 12:26 /mnt/arch/boot/initramfs-linux-fallback.img
+-rw-r--r-- 1 root root 13052135 гру  3 12:25 /mnt/arch/boot/initramfs-linux.img
+-rw-r--r-- 1 root root  3164160 чер 12 21:00 /mnt/arch/boot/intel-ucode.img
+</code></pre>Как видите, я сгенерировал образы инитрам для арча находясьв другой ос, не покидая ее и не имея в ней команды mkinitcpio )<br />Можно и так<br /><pre><code>-su-5.0# chroot /mnt/arch /usr/bin/pacman -Sy
+:: Синхронізування бази даних пакунків...
+ core                            132,8 KiB   179 KiB/s 00:01 [################################] 100%
+ extra                          1636,4 KiB  1788 KiB/s 00:01 [################################] 100%
+ community                         5,2 MiB  2,99 MiB/s 00:02 [################################] 100%
+ archlinuxcn                    1433,8 KiB  2,32 MiB/s 00:01 [################################] 100%
+-su-5.0#
+
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237802"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237802/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Это Linux, способов всегда несколько и каждый выбирает то, что ему нравится.<br />Топик открыл с одной целью, чтобы показать альтернативу ... чем больше способов для решения задачи, тем лучше ...<br />Обстоятельства могут быть разные и нужно всегда иметь запасной вариант.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237821"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sfs/index.html">
+                <span class="post-username">sfs</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237821/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sfs/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sfs/posts/index.html">
+                    116
+                </a>
+            </div>
+            <div>
+                Участник с: 07 февраля 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <a href="https://forum.puppyrus.org/index.php?topic=21158.0">chroot2pfs</a>
+            
+                
+                    <div class="post-signature">
+                        <a href="https://sourceforge.net/projects/puppyrusa/"><strong>PuppyRusArch (PRA)</strong></a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237956"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/anode/index.html">
+                <span class="post-username">anode</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237956/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/anode/topics/index.html">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/anode/posts/index.html">
+                    982
+                </a>
+            </div>
+            <div>
+                Участник с: 30 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <pre><code>
+[root@TM-8481 ~]# pacstrap /mnt/cont base
+.....
+[root@TM-8481 ~]# systemd-nspawn -D /mnt/cont/
+Spawning container cont on /mnt/cont.
+Press ^] three times within 1s to kill container.
+[root@cont ~]# hwclock --systohc
+hwclock: Cannot access the Hardware Clock via any known method.
+hwclock: Use the --verbose option to see the details of our search for an access method.
+</code></pre><blockquote><em>vasek</em><br>а вот вместо chroot</blockquote> фиг применеш во время установки, хотя часы можно и потом установить, а вот с grubом как? Попробуйте применить параметр --bind для systemd-nspawn или позаписовать что-то типа &#39; b 8:* rwm&#39; в файл /sys/fs/cgroup/devices/machine.slice/machine-ваш_контейнер.scope/devices.allow на хосте после запуска контейнера. Вам понравится, линукс же, куча методов )))<br />ЗЫ. Запуск командой systemd-nspawn -D /mnt/cont --bind=/dev/rtc0 -b -- --unit rescue.target не дает установить часы:<br /><pre><code>[root@cont ~]# hwclock --systohc
+hwclock: ioctl(RTC_SET_TIME) to /dev/rtc0 to set the time failed: Permission denied
+[root@cont ~]# ls -l /dev
+....
+crw-rw-rw- 1 root root   1, 8 Dec  6 12:35 random
+crw------- 1 root root 249, 0 Dec  5 19:55 rtc0
+drwxrwxrwt 2 root root     40 Dec  6 12:35 shm
+...</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237960"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237960/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>anode</strong>, после моего знакомства с systemd-nspawn вынес одно, что фича довольно сложная и навороченная, <u>но лично мне это все не нужно</u>, ... но понравилось одно, использовать, при необходимости, в качестве альтернативы chroot, с загрузкой в emergency mode, для ремонта системы.<br />Правда давно не вешал так систему, чтобы это использовать, а также так до конца и не понял - что такое можно сделать с использованием systemd-nspawn, чего нельзя сделать с использованием chroot ... пока для себя вижу один плюс - проще запуск.<br /><br />Ну а вообщем - если в systemd появилась новая фича, то опробовать ее нужно  - иначе не будет и развития и знать ни хрена не будешь.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237961"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237961/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>anode</em><br>не дает установить часы</blockquote>В DOC написано<br /><pre><code>systemd-nspawn limits access to various kernel interfaces in the container to read-only, such as /sys, /proc/sys or /sys/fs/selinux. Network interfaces and the system clock may not be changed from within the container. Device nodes may not be created. The host system cannot be rebooted and kernel modules may not be loaded from within the container.</code></pre>И насколько я понял о /sys, /proc, /dev и часах лучше забыть. Не возможно загрузить и модули - пытался подключить USB 3G modem, не смог ... и  больше с этим экпериментировать не буду.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexc295.html?next=/forum/topic/20366/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20366/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:15:15 GMT -->
+</html>

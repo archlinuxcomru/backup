@@ -1,0 +1,655 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Expect - или упрощение работы по ssh (захода по ssh на машину, выключения,выполнения команд скриптом)
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/8/">Блоги</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/25/">Блоги</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Expect - или упрощение работы по ssh (захода по ssh на машину, выключения,выполнения команд скриптом)</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Expect - или упрощение работы по ssh (захода по ssh на машину, выключения,выполнения команд скриптом)</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-96753"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vik/">
+                <span class="post-username">vik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/96753/">#</a>
+            10 лет, 1 месяц назад
+            
+                (отредактировано
+                
+                    10 лет, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vik/topics/">
+                    19
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vik/posts/">
+                    94
+                </a>
+            </div>
+            <div>
+                Участник с: 16 мая 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <br/>У меня дома под столом стоит ПК, и каждый раз что-бы его выключить приходится заходить на него по ssh,  и там писать команду, т.е. вводить еще и пароль при входе- проблемно. Начал искать путь решения и нашел прогу expect,лежит в репах extra. Она умеет заходить на машину по ssh и делать определенные команды<br/><br/>назвал скрипт srv, сделал на него алиас баша и все,набрав в bash'e srv я сразу попадаю на машину без нудных вводов паролей и длинных команд, а если компов много эт сильно все упрощает<br/>#!/usr/bin/expect -f<br/>spawn ssh <a href="/cdn-cgi/l/email-protection#7f0d10100b3f4e464d514e4947514e514e431d0d50411a070f1a1c0b"><span class="__cf_email__" data-cfemail="384a57574c7809010a16090e0016091609">[email&#160;protected]</span><br/>expect</a> assword {send ВАШПАРОЛЬ\r}<br/>interact<br/><br/>собственно еще один скрипт. выключение компа. сделал в менюшке openbox кнопку на него и как только нажимаю на нее комп выключается<br/>#!/usr/bin/expect -f<br/>set timeout 3<br/>set env(TERM)<br/>spawn ssh <a href="/cdn-cgi/l/email-protection#0f7d60607b4f3e363d213e3937213e213e"><span class="__cf_email__" data-cfemail="4c3e2323380c7d757e627d7a74627d627d">[email&#160;protected]</span></a> shutdown -h now<br/>expect assword {send ВАШПАРОЛЬ\r}<br/>expect eof<br/><br/>expect умеет работать как с ssh, так и с телнет и фтп. <br/>можно что бы он заходил, выполнял нужные вам команды и выходил из пк.<br/>подробнее <a href="https://www.ibm.com/developerworks/ru/library/l-expect_3/">http://www.ibm.com/developerworks/ru/library/l-expect_3/</a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-96758"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/shtsh/">
+                <span class="post-username">shtsh</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/96758/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/shtsh/topics/">
+                    9
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/shtsh/posts/">
+                    59
+                </a>
+            </div>
+            <div>
+                Участник с: 11 мая 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А не лучше для этого ключами пользоваться?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-96757"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vik/">
+                <span class="post-username">vik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/96757/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vik/topics/">
+                    19
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vik/posts/">
+                    94
+                </a>
+            </div>
+            <div>
+                Участник с: 16 мая 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            когда это делал, почему то про них не вспомнил, а когда сделал все уже работало :) да  и прога умеет еще разные плюшки помимо тупого захода ведь :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-96756"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kolebas/">
+                <span class="post-username">kolebas</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/96756/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kolebas/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kolebas/posts/">
+                    94
+                </a>
+            </div>
+            <div>
+                Участник с: 15 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            читани хотя бы пол мана ssh или пол-статьи <a href="http://habrahabr.ru/post/122445">http://habrahabr.ru/post/122445</a> и не робы дурныць
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-96755"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vik/">
+                <span class="post-username">vik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/96755/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vik/topics/">
+                    19
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vik/posts/">
+                    94
+                </a>
+            </div>
+            <div>
+                Участник с: 16 мая 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            спасибо, сделал буку) и все же эта прога позволяет делать то что не делает ssh (эти два примера в это не входят) :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-96754"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/muhas/">
+                <span class="post-username">muhas</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/96754/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/ca/e1/cae1323998dd11db4ed5fcc89c5fbd86.png" alt="muhas avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/muhas/topics/">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/muhas/posts/">
+                    342
+                </a>
+            </div>
+            <div>
+                Участник с: 30 октября 2006
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Expect конечно годная полезняшка, но в данном случае проще настроить автоизацию по ключу
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/10512/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747ab5c79d36758f',m:'LCWisWHlIYWksNIbdo_lDoROV3pTbUY6vTWnGWigMYs-1662671838-0-AWsOhNdypTzXqAsixPnZtYkFodxsdrUtp+wB6liLeB5pC46x94ITFGm8xzoNJahONLPvvH2RLm+cSB1j7WonwsOsIt0Np40oK+FfiRqFPZrP/MLg4lP5PfuHI3TWHsreBZD21fCGwJdyvC0kgrAe8UA=',s:[0x571643697e,0xdc95922901],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

@@ -1,0 +1,1022 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Grub2 (grub-mkconfig) и самосборное ядро без initrd
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/12/">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Grub2 (grub-mkconfig) и самосборное ядро без initrd</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Grub2 (grub-mkconfig) и самосборное ядро без initrd</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-104739"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/serkhay/">
+                <span class="post-username">serkhay</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/104739/">#</a>
+            9 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/serkhay/topics/">
+                    24
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/serkhay/posts/">
+                    304
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В общем, давеча я собрал ядро, вкомпилил туда необходимые драйвера и модули, что бы загружаться без initrd. Обновил конфиг grub'а, находясь в стандартном арчевском ядре, все было нормально. Загрузился в свое ядро. Обновляю теперь там конфиг grub'а. Он находит мое ядро, находит стандартное арчевское, затем минуты 3 думает-думает и выдает: "Найден Arch на /dev/sda6". Хотя на /dev/sda6 как раз и лежат те ядра. Получается дублирующийся ненужный пункт в меню. Что за фигня? Подозреваю, что я как то не так вкомпилил какие-то модули, может ext4? Хотя я просто заменил в nconfig &lt;M&gt; на &lt;*&gt;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-104741"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/white_ghost/">
+                <span class="post-username">white_ghost</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/104741/">#</a>
+            9 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/66/18/66184481a3e9bafe3de3ef56c5a79bf3.png" alt="white_ghost avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/white_ghost/topics/">
+                    13
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/white_ghost/posts/">
+                    297
+                </a>
+            </div>
+            <div>
+                Участник с: 22 января 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            удали
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-104742"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/serkhay/">
+                <span class="post-username">serkhay</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/104742/">#</a>
+            9 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/serkhay/topics/">
+                    24
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/serkhay/posts/">
+                    304
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Так зачем их два раза в меню писать то?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-104744"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/104744/">#</a>
+            9 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            GRUB2 равнофигственно грузит ядра и с initrd, и без него.<br/>Ваша проблема относится к автогенератору конфига, то бишь <strong>grub-mkconfig</strong>.<br/>Вам надо либо искать, как указать  ему, что к одному из ваших ядер не требуется initrd, или писать конфиг ручками.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-104747"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/serkhay/">
+                <span class="post-username">serkhay</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/104747/">#</a>
+            9 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/serkhay/topics/">
+                    24
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/serkhay/posts/">
+                    304
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br/>GRUB2 равнофигственно грузит ядра и с initrd, и без него.<br/>Ваша проблема относится к автогенератору конфига, то бишь <strong>grub-mkconfig</strong>.<br/>Вам надо либо искать, как указать  ему, что к одному из ваших ядер не требуется initrd, или писать конфиг ручками.</blockquote>Нет, дело вроде не в этом. Ведь когда обновляю конфиг из под арчевского ядра, все нормально.<br/><br/>Я же говорю, конфиг создается нормально, но почему то grub-mkconfig еще раз находит те же ядра и добавляет их в список, как если бы они находились на другом разделе
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-104751"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/104751/">#</a>
+            9 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Что значит "дело не в этом"?<br/>Я сказал, что у вас grub-mkconfig не справляется с ситуацией, и вы говорите что он не справляется с ситуацией :)<br/>Глючит ваш автоконфигуратор, с ума сходят его скрипты, запутавшись в ваших ядрах.<br/><br/>Могу вам посоветовать три варианта:<br/>1) искать специалистов по автоконфигуратору,<br/>2) препарировать его самостоятельно,<br/>3) плюнуть на него и написать чистый конфиг руками.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-104752"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/serkhay/">
+                <span class="post-username">serkhay</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/104752/">#</a>
+            9 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/serkhay/topics/">
+                    24
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/serkhay/posts/">
+                    304
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br/>Что значит "дело не в этом"?</blockquote>Ну а почему тогда, когда я загружаюсь в арчевское ядро, автоконфигуратор ведет себя нормально, а когда загружаюсь в свое ядро, он ведет себя странно. Разве это не говорит о том, что дело в этом моем ядре? Вот я и пытаюсь понять, что же я не так сделал... Зря отключил поддержку initrd на уровне ядра, может?<br/><br/>И меня устраивает тот конфиг, который генерируется из под арчевского ядра, писать свой мне незачем.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-104756"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/104756/">#</a>
+            9 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>serkhay</em><br/>Ну а почему тогда, когда я загружаюсь в арчевское ядро, автоконфигуратор ведет себя нормально, а когда загружаюсь в свое ядро, он ведет себя странно. Разве это не говорит о том, что дело в этом моем ядре? Вот я и пытаюсь понять, что же я не так сделал... Зря отключил поддержку initrd на уровне ядра, может?</blockquote>Запустите у себя команду <div class="code"><pre>uname -a</pre></div>Она покажет вам ваше текущее ядро. Видимо, скрипт автоконфигурации делает примерно то же самое, потому результат и отличается. Если он начинает глючить, если у текущего ядра нет initrd – это глюк автоконфигуратора.<br/><br/><blockquote>И меня устраивает тот конфиг, который генерируется из под арчевского ядра, писать свой мне незачем.</blockquote>Речь не о сгенерированном конфиге, а о самом автоконфигураторе.<br/><br/><em>P.S.</em><br/>Возможно, в пакет каждого ядра Арч входит какой-то костыль для этой автоконфигурялки, или она ориентируется на костыль для mkinitcpio, не знаю.<br/>В любом случае, у вас есть три варианта. С первым и вторым – не ко мне.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-104759"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/serkhay/">
+                <span class="post-username">serkhay</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/104759/">#</a>
+            9 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/serkhay/topics/">
+                    24
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/serkhay/posts/">
+                    304
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br/>Запустите у себя команду <div class="code"><pre>uname -a</pre></div></blockquote>По вашему, я не знаю, под каким ядром сижу что ли?<br/><br/><blockquote><em>Natrio</em><br/>Если он начинает глючить, если у текущего ядра нет initrd – это глюк автоконфигуратора.</blockquote>Специально для вас, я сгенерировал initrd для своего ядра. И что вы себе думаете? Проблема никуда не исчезла<br/><br/>Я все равно убежден, что это мой косяк, что это я накосячил, когда собирал ядро. Ладно, буду пересобирать, попробую поиграться с опциями
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-104762"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/104762/">#</a>
+            9 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>serkhay</strong>, а теперь прочтите ещё раз, что я написал :)<br/>Команда uname -a показывает текущее ядро. Срипт тоже может выполнить такую или подобную команду и узнать текущее ядро! Дело не обязательно в том, что ядро как-то не так работает (тем более, что всё остальное на нём работает нормально), а в том, что скрипт сходит с ума, не найдя чего-то привычного или просто запутавшись в полученном номере версии.<br/><br/>И если вы собрали ядро БЕЗ поддержки initrd, что толку собирать initrd для него (тем более для меня:)).<br/><br/>В любом случае, спорить об этом бесполезно – я НЕ ПОЛЬЗУЮСЬ автоконфигуратором и разбираться в его глюках не буду, а вы пользуетесь, но искать причину его сбоев не хотите, вместо этого вы пытаетесь угадать, чего ему не хватает в вашем ядре.<br/><br/>Если не хотите писать конфиг сами – дальше без меня.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/11259/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b1f58b9229d3f',m:'i7uAT3McrErJL_MIdNg8FK8Blp7T0VZjQk0B1zdutKM-1662676162-0-AQGBQHIarN04iUpPoxdYylMCEwUUQ6klPHaiY5yKaYHuIF3xQOzvzMybIqO0sJsW07KNQR1q98rihh7LTeqQTxxObaLMK935borL4YGK0EuLrQmfxYnRSC0+yH5GXBr9wKTFqtfHbEq7mfaD/rQzKJE=',s:[0x59558e2031,0x47843b27be],u:'/cdn-cgi/challenge-platform/h/g'};var _cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/cb/invisible.js?cb=747b1f58b9229d3f',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

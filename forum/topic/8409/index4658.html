@@ -1,0 +1,1179 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Сборка ядра
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Сборка ядра</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Сборка ядра</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=9">9</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79794"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kernelpanic/">
+                <span class="post-username">kernelpanic</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79794/">#</a>
+            13 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kernelpanic/topics/">
+                    17
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kernelpanic/posts/">
+                    452
+                </a>
+            </div>
+            <div>
+                Участник с: 14 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ну по моему все очень просто все тоже самое,просто файловую систему корневую и драйвера необходимые для запуска ядра вкомпиливаешь в него и все.Тобишь контроллер SATA например ata_piix и подобные нужные.весит ядро мое 1.5 мб.Ну и модулями вынесен ALSA,XFS(/home),fat,udf,smb,usb.Правда из него выкинуто очень многое но так как я не пользуюсь этими возможностями-выкинул.даже в Network выкинул все почти кроме DHCP так как у меня роутер.приатачу конфиг свой,поковыряй переделай под свое железо,можт понравится.Вобщем приатачить по неизвестным причинам конфиг я не смог,в личке тож не отправляется а в виде кода постить как то неохота(полкилометра).пиши в личку могу скинуть на почту,ну или если модеры не заругаюццо то в виде code выложу
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79795"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Nebulosa/">
+                <span class="post-username">Nebulosa</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79795/">#</a>
+            13 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4a/9b/4a9bd66c7a2a170b1585f3b56cdb48de.png" alt="Nebulosa avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Nebulosa/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Nebulosa/posts/">
+                    831
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>kernel_panic</em><br/>ну по моему все очень просто все тоже самое,просто файловую систему корневую и драйвера необходимые для запуска ядра вкомпиливаешь в него и все.Тобишь контроллер SATA например ata_piix и подобные нужные.весит ядро мое 1.5 мб.Ну и модулями вынесен ALSA,XFS(/home),fat,udf,smb,usb.Правда из него выкинуто очень многое но так как я не пользуюсь этими возможностями-выкинул.даже в Network выкинул все почти кроме DHCP так как у меня роутер.приатачу конфиг свой,поковыряй переделай под свое железо,можт понравится.</blockquote>Спасибо конечно, это не совсем то что я хотел получить. Конфиг я и сам настрою, мне нужно знать что именно наcтраивать и как. :)  Ну и самое главное как им пользоваться - в чем отличия от ядра c initrd?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79796"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kernelpanic/">
+                <span class="post-username">kernelpanic</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79796/">#</a>
+            13 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kernelpanic/topics/">
+                    17
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kernelpanic/posts/">
+                    452
+                </a>
+            </div>
+            <div>
+                Участник с: 14 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <a href="https://www.opennet.ru/base/sys/initrd_intro.txt.html">http://www.opennet.ru/base/sys/initrd_intro.txt.html</a><br/>Собираешь без поддержки  Initial RAM filesystem and RAM disk и  RAM block device support .Его просто не будет&#8230;.. Все нужное  для загрузки должно быть в ядре.Не буду говорить про плюсы и минусы&#8230;..просто я так для себя захотел
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79797"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/fragnat/">
+                <span class="post-username">fragnat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79797/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/fragnat/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/fragnat/posts/">
+                    49
+                </a>
+            </div>
+            <div>
+                Участник с: 16 апреля 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            пасиба всем ^^
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79798"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/fragnat/">
+                <span class="post-username">fragnat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79798/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/fragnat/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/fragnat/posts/">
+                    49
+                </a>
+            </div>
+            <div>
+                Участник с: 16 апреля 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Nebulosa: Вопщем то всё сделал до шага 6 включительно(PKGBUILD изменил), а дальше есть кое какие непонятки..<br/><blockquote>После этого сохраняем в удобное место файл .config<br/><br/>7. Прибираемся: новый .config записываем поверх стандартного. В файле PKGBUILD возвращаем все на место, и добавляем новый md5-хэш нашего нового файла .config вместо стандартного. Удаляем подпапку srс.<br/></blockquote>у меня лично там нет файла .config зато есть config и в 2-х папках..какой из них? проц на 1 ядре..<br/>где находиться стандартный конфиг? и какой смысл менять что то было до этого в файле PKGBUILD если я его никак не использовал после редактирования и теперь нужно всё вернуть на место? я абсолютный новичок я даже не знаю как сделать md5 хэш файла.. папку src надо удалить вот эту /var/abs/local/kernel26-firmware/src/ ?<br/><br/>/var/abs/local/kernel26-firmware/config<br/>/var/abs/local/kernel26-firmware/config.x86_64<br/>/var/abs/local/kernel26-firmware/src/config<br/>/var/abs/local/kernel26-firmware/src/config.x86_64
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79799"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Nebulosa/">
+                <span class="post-username">Nebulosa</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79799/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4a/9b/4a9bd66c7a2a170b1585f3b56cdb48de.png" alt="Nebulosa avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Nebulosa/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Nebulosa/posts/">
+                    831
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>fragnat</em><br/>Nebulosa: Вопщем то всё сделал до шага 6 включительно(PKGBUILD изменил), а дальше есть кое какие непонятки..<br/>у меня лично там нет файла .config зато есть config и в 2-х папках..какой из них? проц на 1 ядре..<br/>где находиться стандартный конфиг? и какой смысл менять что то было до этого в файле PKGBUILD если я его никак не использовал после редактирования и теперь нужно всё вернуть на место? я абсолютный новичок я даже не знаю как сделать md5 хэш файла.. папку src надо удалить вот эту /var/abs/local/kernel26-firmware/src/ ?<br/>/var/abs/local/kernel26-firmware/config<br/>/var/abs/local/kernel26-firmware/config.x86_64<br/>/var/abs/local/kernel26-firmware/src/config<br/>/var/abs/local/kernel26-firmware/src/config.x86_64</blockquote><br/>Эм.. в папке сборки firmware не нужно особо ничего делать.. просто makepkg -ifc..<br/><br/>Да, вы правы, там не .config а config. Поясню этот шаг еще раз - после того как вы сконфигурировали опции ядра через gconfig вам нужно сохранить результаты настройки в любое удобное место, например в config в домашнюю папку, а затем, после удаления /var/abs/local/kernel26/src запишите поверх /var/abs/local/kernel26/config сохраненный файл. Дальше надо будет поправить md5sum в PKGBUILD.<br/><br/>md5 расчитвается так - <em>md5sum PKGBUILD</em> ;D 
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79800"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/fragnat/">
+                <span class="post-username">fragnat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79800/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/fragnat/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/fragnat/posts/">
+                    49
+                </a>
+            </div>
+            <div>
+                Участник с: 16 апреля 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Да но я нечего не конфигурировал..<br/>Я так понимаю теперь надо после редактирования PKGBUILD в папке /var/abs/local/kernel26/ прописать makepkg -ifc?<br/>у вас это упущено, на всякий случай спрашиваю :) 
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79801"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/fragnat/">
+                <span class="post-username">fragnat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79801/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/fragnat/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/fragnat/posts/">
+                    49
+                </a>
+            </div>
+            <div>
+                Участник с: 16 апреля 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Попробовал&#8230;ругаеться на PKGBUILD <br/><div class="code"><pre>kernel26]$ makepkg -ifc
+==&gt; Сборка пакета: kernel26 2.6.29.4-1 i686 (Срд Июн  3 18:35:32 OMSST 2009)
+==&gt; Проверяю необходимые для запуска зависимости...
+==&gt; Проверяю необходимые для сборки зависимости...
+==&gt; Получение исходных файлов...
+  -&gt; Обнаружен linux-2.6.29.tar.bz2 в директории сборки
+  -&gt; Обнаружен patch-2.6.29.4-1-ARCH.bz2 в директории сборки
+  -&gt; Обнаружен config в директории сборки
+  -&gt; Обнаружен config.x86_64 в директории сборки
+  -&gt; Обнаружен kernel26.preset в директории сборки
+==&gt; Проверка исходных файлов с помощью md5sums...
+    linux-2.6.29.tar.bz2 ... Завершено
+    patch-2.6.29.4-1-ARCH.bz2 ... Завершено
+    config ... Завершено
+    config.x86_64 ... Завершено
+    kernel26.preset ... Завершено
+==&gt; Распаковка исходных файлов...
+  -&gt; bsdtar -x -f linux-2.6.29.tar.bz2
+  -&gt; bunzip2 -f patch-2.6.29.4-1-ARCH.bz2
+==&gt; Удаляю существующую директорию pkg/ ...
+==&gt; Вхожу в fakeroot окружение...
+==&gt; Запускается build()...
+PKGBUILD: line 46: patch: команда не найдена
+==&gt; ОШИбКА: Сборка завершилась неудачно.
+    Преждевременный выход...</pre></div>PKGBUILD<br/><div class="code"><pre>build() {
+  KARCH=x86
+  cd ${srcdir}/linux-$_basekernel
+  # Add -ARCH patches
+  # See <a href="https://projects.archlinux.org/git/?p=linux-2.6-ARCH.git;a=summary">http://projects.archlinux.org/git/?p=linux-2.6-ARCH.git;a=summary</a>
+  patch -Np1 -i ${srcdir}/${_patchname} || return 1                 - это 47 строчка интересно почему ему думаеться что это 46
+  if [ "$CARCH" = "x86_64" ]; then
+    cat ../config.x86_64 &gt;./.config
+  else
+    cat ../config &gt;./.config
+  fi
+  if [ "${_kernelname}" != "" ]; then
+    sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" $
+  fi</pre></div><br/>Поставил программу под название Patch, всё оживилось..
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79802"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vitok/">
+                <span class="post-username">vitok</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79802/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vitok/topics/">
+                    13
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vitok/posts/">
+                    389
+                </a>
+            </div>
+            <div>
+                Участник с: 01 сентября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>pacman -Sy base-devel</strong> - чтоб больше ошибок не выдавало.<br/>А вобще я с неделю гоняю разные сборки ядер и rt и самосборное, и вобщем дефолтное ведро арча ведет себя лучше всего) поэтому не советую замарачиваться со самосбором. Хотя такую картину я наблюдаю на x86_64 архитектуре арча, на 686 сидел на самосборе, т.к. дефолтное ему уступало в производительности, а вот на x86_64 заметил обратную картину&#8230;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79803"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/amigo/">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79803/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/amigo/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/amigo/posts/">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vit.ok</em><br/>на 686 сидел на самосборе, т.к. дефолтное ему уступало в производительности</blockquote><br/>А в чём заключалась оптимизация?
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=9">9</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/8409/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747ca1010b911687',m:'hp4uI4zjOQd5OiegKSEdmCD1mZTCzKeAoc5svnhqJn0-1662691961-0-AVwEZgCqkh5CGdp/TPUjEZYLkTyAjoekQzqBLJi2i/WPyjlwLsSbACxXo44BxM7K/oYtq+MlKfYN28q9tEREq8z30tgiz7dEFvNx8QsbGUEMZKrl6TGMRsYBY3p7nlp8Sbws1WcjB+4ANBBRXdagtEc=',s:[0x86350f179e,0xd72698844f],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

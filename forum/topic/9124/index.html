@@ -1,0 +1,957 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/9124/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 11:08:27 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Поведение updatedb, iowait, процессы и тормоза
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/4/index.html">Рабочие Среды / Менеджеры Окон</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/16/index.html">GNOME 2 &amp; Xfce</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Поведение updatedb, iowait, процессы и тормоза</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Поведение updatedb, iowait, процессы и тормоза</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-86185"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/grunewald/index.html">
+                <span class="post-username">grunewald</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/86185/index.html">#</a>
+            13 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/grunewald/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/grunewald/posts/index.html">
+                    665
+                </a>
+            </div>
+            <div>
+                Участник с: 24 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Данная проблема широко распространена на всех дистрибутивах Linux. Заключается она в том, что при запуске updatedb он поглощает все системные ресурсы и начинает свопить винт. IOWait достигает 90 - 100%. В теории, отработав несколько минут процесс должен завершить работу и освободить ресурсы. <br/>Но из-за большого IOWait'а процесс пытается выполнять задачу в течение более длительного времени (у меня прошло 2 часа :) ). В итоге, я сохранил все данные и вышел из гнома, винт потрещал ещё минут 10 и перестал. Но процесс остался висеть в памяти и IOWait снизился лишь до 70 - 80%. Вопрос: нужно ли прибить этот процесс и почему такой высокий IOWait, если обращения к диску нет? Тормозов тоже нет.<br/>Хочется заметить, что когда я был на Убунте, это означало, что нужно перезагружаться (обычно, не получалось даже просто из X-ов выйти). Но после запуска, к примеру, firefox всё повторялось. Арч - единственный дистрибутив, на котором я могу работать без нажимания Reset.<br/>В той же самой Убунте, с некоторых пор, эта проблема решается настройкой её собственного планировщика. А что можно подкрутить в Арче, чтобы работа updatedb была незаметна?<br/>Проконсультируйте, кто-нибудь по значкам тем. Или это просто в epiphany alt к рисункам не работает?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-86186"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vitok/index.html">
+                <span class="post-username">vitok</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/86186/index.html">#</a>
+            13 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vitok/topics/index.html">
+                    13
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vitok/posts/index.html">
+                    389
+                </a>
+            </div>
+            <div>
+                Участник с: 01 сентября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Жесть! у меня таких проблем с гномом никогда небыло не в убунте не в арче. комп бывало что 2-3 недели без ребута держал, даже без ребута иксов. правда в убунте удалял кучу лишних пакетов, тот-же тракер, с его индексированием безполезным.<br/>кстати как гнома ставил?<br/>pacman -S gnome<br/>затем <br/>pacman -S gnome-extra ?<br/><br/>последняя команда не для тру арчеров.<br/>я просто до установил руками что нужно мне было из гном-екстра, к примеру гном-питон, евинсе пдф ридер, гном-повер-менеджер.<br/>мне кстати очень понравилось как в арче зависимости отработаны, ничего лишнего ставить не нужно.<br/>попробуй снести гном-екстра <br/><br/>pacman -Rsn gnome-extra<br/><br/>и ручками поставить что нужно, может поможет.<br/>вожнможно еще нужно будет по удалять папки с конифигами те которые скрытые.<br/><br/>П.С. если несу бред не по теме извиняй, просто реально обидно за гнома, что он у кого-то так жутко тормозит! и рассказал как сам ставил, т.к. у меня все без проблем работает.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-86187"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/rubicon/index.html">
+                <span class="post-username">rubicon</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/86187/index.html">#</a>
+            13 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/rubicon/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/rubicon/posts/index.html">
+                    208
+                </a>
+            </div>
+            <div>
+                Участник с: 17 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ппц парни&#8230; Тредстартер, ты как додумался тему поместить в Gnome &amp;&amp; XFCE, а?<br/><br/>Я ещё понимаю, можно проблему увидеть в updatedb, в модулях для контроллера или в планировщике i/o&#8230; Да хоть в <a href="https://www.google.ru/search?hl=ru&amp;newwindow=1&amp;client=firefox-a&amp;rls=org.mozilla%3Aen-US%3Aofficial&amp;hs=zx0&amp;q=high%2Biowait%2Bsite%3Alkml.org&amp;btnG=%D0%9F%D0%BE%D0%B8%D1%81%D0%BA&amp;lr=&amp;aq=f&amp;oq=">ядре</a>! Но в гноме&#8230; лицоладонь, блин.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-86188"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/grunewald/index.html">
+                <span class="post-username">grunewald</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/86188/index.html">#</a>
+            13 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/grunewald/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/grunewald/posts/index.html">
+                    665
+                </a>
+            </div>
+            <div>
+                Участник с: 24 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А у меня в других DE/WM updatedb нет, вот в Гноме ему и место. :) Или updatedb к мультимедиа относится.<br/>Две минуты тормозов на индексацию я могу и потерпеть, просто было интересно - может чего узнаю.<br/>Удалял tracker? А updatedb с ним никак не связан?  ;) <br/>Как я обычно ставлю Гном:<br/><div class="code"><pre># pacman -Sy gnome-session metacity gnome-panel gnome-applets gnome-terminal</pre></div>Надеюсь, это по Ъ-Арчевски?<br/>Но вот пришли ко мне гости полазить в интернете. Все они Linux в глаза не видели, а у меня TWM на экране. ;D <br/>Как-то неловко стало&#8230; А в кэше был только gnome, gnome-extra.<br/>Поставил, именно так, как ты и предположил.  Чтобы всё блестело, сверкало, играло красками, а то при моём аскетичном подходе даже иконки не ставятся. Гости, конечно были шокированы тем, сколько всего нового они увидели.<br/>Они ушли, а я продолжил работу. А ещё через несколько часов заработал updatedb.<br/>Компы у всех разные, поэтому то, что происходит у меня, у тебя может никогда не произойти и наоборот.<br/>Может прояснится:<br/><ul><li>CPU: Celeron 1500Mhz<br/>ОЗУ: 256 Mb<br/>Video: SiS 651 встроенная 32Mb<br/>HDD: IBM 40Mb (ему уже лет 10, периодически отваливается питание)<br/>На таком конфиге только Арч и спасает.</li></ul>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-86189"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/rubicon/index.html">
+                <span class="post-username">rubicon</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/86189/index.html">#</a>
+            13 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/rubicon/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/rubicon/posts/index.html">
+                    208
+                </a>
+            </div>
+            <div>
+                Участник с: 17 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>grunewald</em><br/>А у меня в других DE/WM updatedb нет, вот в Гноме ему и место. :) Или updatedb к мультимедиа относится.<br/>Удалял tracker? А updatedb с ним никак не связан?  ;) <br/></blockquote>Infinite_facepalm.gif, ей богу.<br/><br/><div class="code"><pre>pacman -Qi $(pacman -Qo $(which updatedb) | cut -d' ' -f3)</pre></div>Тут гномом и не пахнет. И мультимедиа тоже. WTF?<br/><br/><div class="code"><pre>$ iso-info -f ~/Образы/archlinux-2008.06-core-i686.iso | grep mlocate
+    52551 /addons/core-pkgs/mlocate-0.20-2-i686.pkg.tar.gz</pre></div>Он в core, чувак. Где core, а где гном.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-86190"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/alexdsp/index.html">
+                <span class="post-username">alexdsp</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/86190/index.html">#</a>
+            13 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/alexdsp/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/alexdsp/posts/index.html">
+                    307
+                </a>
+            </div>
+            <div>
+                Участник с: 07 февраля 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Мне кажется, если такой IOwait, то может, дело в том, каким образом включен HDD (к тому же он у Вас сам по себе такой медленный). Включен ли режим UDMA? Насколько я понял, у Вас чипсет SIS, может для него что-то надо включать в ядре и т.д? Такая тема обсуждалась часто, касательно тормозов планировщика IO, вроде как было похоже, что часто страдают этой проблемой в основном &ldquo;не интел&rdquo; чипсеты. У меня nvidia mcp51 и такая проблема тоже есть, но в меньшей степени, т.к. HDD быстрые, но тоже немного раздражает, что когда, скажем, DC++ хэширует шару, на компьютере становится работать некомфортно&#8230;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-86191"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/grunewald/index.html">
+                <span class="post-username">grunewald</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/86191/index.html">#</a>
+            13 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/grunewald/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/grunewald/posts/index.html">
+                    665
+                </a>
+            </div>
+            <div>
+                Участник с: 24 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            rubicon, слишком эмоционально - недостойное поведение настоящего аскета. :) Цитировать сам себя не хочу, но под отсутствием updatedb имелось в виду именно его поведение. В других DE/WM кроме Гнома, updatedb отсутствует как причина. :) Хотя, я понимаю, что ты не телепат. Мне не важно где он: в core или в extra, незачем смотреть зависимости пакетов. Тормозит работу он только в Гноме. И именно поэтому я открыл тему в этой ветке. Просто у тебя такой проблемы нет, вот ты и не разобрался. Для тебя вопрос сформулирую так: &ldquo;При выполнении updatedb в Gnome комп тормозит, в других DE/WM тормозов нет.&rdquo;<br/><br/>alexdsp, как выяснилось, высокий IOWait не обязательно означает тормоза системы. Насчёт HDD ты 100%-но прав, но интересно, что так нагружает винт именно в Гноме.<br/><br/>Только что в KDE4 всё отработалось без тормозов и нареканий.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-86192"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/amigo/index.html">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/86192/index.html">#</a>
+            13 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/amigo/topics/index.html">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/amigo/posts/index.html">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Интересно. Какая зависимость между updatedb и gnome?<br/><br/>Какие демоны запущены?<br/>Вывод команды ps aux &ndash;sort=-%cpu когда начались тормоза?
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-86193"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/rubicon/index.html">
+                <span class="post-username">rubicon</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/86193/index.html">#</a>
+            13 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/rubicon/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/rubicon/posts/index.html">
+                    208
+                </a>
+            </div>
+            <div>
+                Участник с: 17 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>grunewald</em><br/>Для тебя вопрос сформулирую так: &ldquo;При выполнении updatedb в Gnome комп тормозит, в других DE/WM тормозов нет.&rdquo;</blockquote>Вообще-то это не вопрос, да и формулировать нужно для всех. Как видишь, не я один не понимаю, причём здесь гном. Наверное объяснить это стоило в первом посте, как считаешь?<br/><br/>Вообще, какого плана тормоза появляются? Недостаток процессорного времени, когда в ФФ страница прокручивается прерывисто и медленно или просто когда программы запускаются очень медленно?<br/><br/>Стандартные лекарства: nice, ionice для /etc/cron.daily/updatedb и hdparm -Tt, fsck для винта. Стоит понизить приоритет updatedb, когда оно запускается по крону, есть вероятность, что это хотя бы не так сильно будет тормозить работу. hdparm покажет скорость винта для сравнения, а fsck определит наличие нечитаемых секторов.<br/><br/><blockquote><em>grunewald</em><br/>rubicon, слишком <em>эмоционально</em> - недостойное поведение настоящего аскета. Хотя, я понимаю, что ты не телепат.</blockquote>Всё зависит от того, <em>как</em> прочитать мой пост. Телепат, просто мана нонче знаешь какая дорогая? Ого-го!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-86194"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/grunewald/index.html">
+                <span class="post-username">grunewald</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/86194/index.html">#</a>
+            13 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/grunewald/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/grunewald/posts/index.html">
+                    665
+                </a>
+            </div>
+            <div>
+                Участник с: 24 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В общем, разобрался я с этой проблемой. :) <br/>Мда&#8230; не знаю теперь куда надо было пихать этот тред, но Гном оказался почти не причём. Проблема оказалась железно-ядерная на которую наложился глюк, опять-таки железа в Гноме. :) А вам слабо?!<br/>Дальше - фантастический триллер:<br/>Получилось следующее: отказала флэшка, в это время rhythmbox играл с неё музыку, я переключился на наутилус, чтобы её грамотно отмаунтить. В это время запустился updatedb. Наутилус подвис. Я решил дать ему время, пока работает индексирование, а сам решил в это время почитать вики через epiphany. Но чего-то увлёкся и пролетел час с лишним. :) На время я обратил внимание только тогда, когда мышь стала тормозить и в браузере задёргались страницы. Тогда я успел в консоли запустить top и увидел знакомую с Ubuntu картину: IOWait=95% (у меня был шок сначала: ведь жили-жили-не тужили. Даже подумалось о никчёмности прошлого перебора дистрибутивов). Я ждал, когда iowait опустится меньше 90% и закрывал одну из программ. После этого IOWait опять подскакивал до 95% и я повторял эти действия, пока всё не закрыл. Потом я вышел из Гнома в консоль (gdm не пользуюсь), запустил там top и стал ждать. Через 10 минут винт перестал шуршать, updatedb оставился в памяти с флагом D, но и IOWait остался высоким. Но я решил, что раз винт не трещит, то высокий IOWait систему тормозить не будет. Так оно и оказалось - когда я запустил Гном уже ничего не тормозило. Я открыл форум и написал этот тред.<br/><br/>Но вот, Amigo задал вопрос по теме и нужно было восстановить ту обстановку, в которой были тормоза. Я решил начать подготовку к эксперименту с полной перезагрузки. <br/><br/>В консоли я остановил top и выполнил reboot. Динамик пропищал и я ждал перезагрузки, но её не последовало. Я ребут в трёх вкладках прописал - бесполезно. Тогда написал shutdown -r now. После писка - ничего. shutdown -h now - то же самое. Вывалился из иксов в консоль и писал уже там те же команды. CTRL-ALT-DEL - пофигу! Полез читать /var/log/errors.log - и нашёл там целый вагон повторяющихся строк (как видно, время совпало с индексированием):<br/><div class="code"><pre>Nov  4 00:02:22 arch FAT: Filesystem panic (dev sdb1)
+Nov  4 00:02:22 arch invalid access to FAT (entry 0xd65ae818)
+Nov  4 00:02:22 arch FAT: Filesystem panic (dev sdb1)
+Nov  4 00:02:22 arch invalid access to FAT (entry 0xf9ddf3c6)
+Nov  4 00:02:22 arch FAT: Filesystem panic (dev sdb1)
+Nov  4 00:02:22 arch invalid access to FAT (entry 0x285484ee)</pre></div>И так далее, только entry разные. FAT у меня только на флэшке и я сразу про неё вспомнил. Я выдернул флэшку - система ребутнулась моментально. После перезагрузки GNOME ругнулся на ошибку запуска gnome-volume-manager и отказался монтировать вообще что-либо. Я переустановил gnome-volume-manager и всё заработало нормально. И сейчас работает! :) Вручную запускал updatedb -v - всё в порядке. Работает очень быстро. Можно ещё раз порадоваться за Арч!<br/><br/><strong>Всем большое спасибо за участие!</strong><br/><strong>Amigo</strong> - ты настоящий Amigo, без твоей помощи я бы не скоро вспомнил про флэшку. Спасибо, что вынудил перезагрузиться.<br/><strong>rubicon</strong>, мы просто мало общались, поэтому до телепатического уровня ещё далеко. Извини, если что не так ляпнул! Есть у меня такое свойство - говорить между строк, никак избавиться не могу. Вы с Amigo про связи и зависимости пакетные, а я - про логические. Кстати, когда были тормоза, процессор был загружен максимум на 17 - 20%.<br/><strong>alexdsp</strong>, ты меня подтолкнул к поиску инфы про HDD на SiS. Спасибо! Железо проблемное оказалось.<br/><strong>All</strong>, я не против Гнома, если у вас сложилось такое впечатление. Я не против вообще чего-либо, кроме проприетарщины (opera не считается).<br/><strong>Arch forever!</strong><br/>USB-Flash отформатирована в reiserfs. Тему, в принципе, можно закрыть.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index2780.html?next=/forum/topic/9124/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'746907064e061660',m:'N9DmLmgaxAXbjH7NK.kgXsuUH.x.WWK_WA_Ez9Ug4mo-1662486421-0-ATR30w4Lkc0LyuL4KPZTTfzbDA3jSH1DGk3Eea4xW9d29+xAl69rUFxWlSqNtyt6mARIH281kgr0hHKEg1090DhhX87GyZv0I6m8B0k5k6C7W6E5jirTsAvj5ELtnQi8r3BrccWvMJEObILm7zzYv5o=',s:[0x9345174882,0xbbc3f1f3ef],u:'/cdn-cgi/challenge-platform/h/b'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../cdn-cgi/challenge-platform/h/b/scripts/alpha/invisible5615.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/9124/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 11:08:27 GMT -->
+</html>

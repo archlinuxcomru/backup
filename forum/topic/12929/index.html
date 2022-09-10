@@ -1,0 +1,1062 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        awk и рекурсия
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>awk и рекурсия</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>awk и рекурсия</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-127519"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kotnaton/">
+                <span class="post-username">kotnaton</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/127519/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kotnaton/topics/">
+                    52
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kotnaton/posts/">
+                    208
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июня 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Задача, собственно,  заключается в том, чтобы находить файлы с нужным расширением и перемещать их на 1 уровень выше... Покурив в интернете, получилось такое вот борзописание:<br/><div class="code"><pre>#!/bin/bash
+for s in $( find . -name *.mp3 ) ;
+        do
+                set destination = $i | awk '{ n = split(s, fld, "\n")
+                sizepath = fld[1]
+                m = split(sizepath, nodes, "/")
+                for( j = 1; j-1 &lt; m; j++ )
+                dir = dir nodes[j] "/"
+                print(dir) }' ;
+                echo $destiantion
+        done</pre></div>Чего то не вкурил ?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-127535"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/arcanis/">
+                <span class="post-username">arcanis</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/127535/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8e/cd/8ecde9b9bf77f0b2a47300c7eb3d904f.png" alt="arcanis avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/arcanis/topics/">
+                    31
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/arcanis/posts/">
+                    1496
+                </a>
+            </div>
+            <div>
+                Участник с: 09 сентября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            или я чего то не понял или зачем так сложно?<br/><div class="code"><pre>#!/bin/bash
+for ITEM in $(find * -iname '*.mp3'); do mv "$ITEM" "$(dirname "$ITEM")/../$(basename "$ITEM")"; done</pre></div>
+            
+                
+                    <div class="post-signature">
+                        PGP <a href="http://pgp.mit.edu:11371/pks/lookup?op=vindex&amp;fingerprint=on&amp;exact=on&amp;search=0x779CD2942629B7FA04AB8F172E89012331361F01">0x31361F01</a><br /><a href="https://repo.arcanis.me/">arcanisrepo</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-127595"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kotnaton/">
+                <span class="post-username">kotnaton</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/127595/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kotnaton/topics/">
+                    52
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kotnaton/posts/">
+                    208
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июня 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Доброго дня !<br/><br/><blockquote><em>arcanis</em><br/>или я чего то не понял или зачем так сложно?<br/><div class="code"><pre>#!/bin/bash
+for ITEM in $(find * -iname '*.mp3'); do mv "$ITEM" "$(dirname "$ITEM")/../$(basename "$ITEM")"; done</pre></div></blockquote>Спасибо, хорошее решение :) Только здесь надо определить переменную IFS иначе find будет "разделять" по пробелам<br/><div class="code"><pre>#!/bin/bash
+IFS="
+"
+for ITEM in $(find * -iname '*.mp3'); do mv "$ITEM" "$(dirname "$ITEM")/../$(basename "$ITEM")"; done</pre></div>Можно ли как-нибудь "возврат каретки" записать в определении переменной одной строкой, чтобы использовать прямо из терминала, или заменить find чем-нибудь другим ?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-127598"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/arcanis/">
+                <span class="post-username">arcanis</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/127598/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8e/cd/8ecde9b9bf77f0b2a47300c7eb3d904f.png" alt="arcanis avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/arcanis/topics/">
+                    31
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/arcanis/posts/">
+                    1496
+                </a>
+            </div>
+            <div>
+                Участник с: 09 сентября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            да, я с пробелами не тестил) На самом деле не знаю, я в find не такой большой спец<br/><br/>А вообще find позволяет тут же и команду выполнить:<br/><div class="code"><pre>find . -iname '*.mp3' -execdir mv {} ../{} \;</pre></div>execdir - выполнить команду из субдиректории. Рекурсивно тоже работает без проблем. И красивше, и проще, и работает.
+            
+                
+                    <div class="post-signature">
+                        PGP <a href="http://pgp.mit.edu:11371/pks/lookup?op=vindex&amp;fingerprint=on&amp;exact=on&amp;search=0x779CD2942629B7FA04AB8F172E89012331361F01">0x31361F01</a><br /><a href="https://repo.arcanis.me/">arcanisrepo</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-128054"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kotnaton/">
+                <span class="post-username">kotnaton</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/128054/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kotnaton/topics/">
+                    52
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kotnaton/posts/">
+                    208
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июня 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>arcanis</strong>,  спасибо !
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-128269"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kotnaton/">
+                <span class="post-username">kotnaton</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/128269/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kotnaton/topics/">
+                    52
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kotnaton/posts/">
+                    208
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июня 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Продолжу мучать тему:<br/><br/>А какая принципиальная разница между командами mv и ln -s ?<br/><br/>Попробовал так:<br/><div class="code"><pre>#!/bin/bash
+IFS="
+"
+for ITEM in $(find * -iname '*.mp3'); do ln -s "$ITEM" "$(dirname "$ITEM")/../$(basename "$ITEM")"; done</pre></div><br/>И получается, что ссылка создается не ожидаемого Track1.mp3 -&gt; Soundtrack/Track1.mp3 а такого вида: Track1.mp3 -&gt; film/Soundtrack/Track1.mp3  - то есть опять рекурсия: есть папка film, где и создаются ссылки, но нет папки film/film<br/><br/>Строка: for i in $( find . -name *.mp3 ) ; do ln -s $i $(dirname "$i")/../$(basename "$i")  ; done<br/><br/>Дает такой же результат - в цели ссылки, после относительного адреса (точки) повторяет имя родительской папки.<br/>???<br/><br/>UPD: Да, и в порядке полного идиотизма, так find . -name *.mp3 -execdir ln -s {} ../{} \;  создаются ссылки на самих себя :(
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-128272"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/arcanis/">
+                <span class="post-username">arcanis</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/128272/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8e/cd/8ecde9b9bf77f0b2a47300c7eb3d904f.png" alt="arcanis avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/arcanis/topics/">
+                    31
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/arcanis/posts/">
+                    1496
+                </a>
+            </div>
+            <div>
+                Участник с: 09 сентября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            это проблема в понимании работы команды ln. Ей по барабану на первый аргумент, что напишете, туда и будет ссылаться. А потом шелл будет удивляться на какой нибудь файл в корневой директории, навроде superproga -&gt; ../../../../bin/superproga.<br/>Правильный вариант, наверное, такой:<br/><div class="code"><pre>find * -type f -name '*.mp3' -execdir ln -sr {} -t ../ \;</pre></div>я еще добавил проверку типа файла, чтобы не создавал симлинк на симлинк на...нувыпонели.<br/>В общем там надо путь, на что ссылается, раскрывать каким угодно образом (в циклах for тоже самое)
+            
+                
+                    <div class="post-signature">
+                        PGP <a href="http://pgp.mit.edu:11371/pks/lookup?op=vindex&amp;fingerprint=on&amp;exact=on&amp;search=0x779CD2942629B7FA04AB8F172E89012331361F01">0x31361F01</a><br /><a href="https://repo.arcanis.me/">arcanisrepo</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133455"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kotnaton/">
+                <span class="post-username">kotnaton</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133455/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kotnaton/topics/">
+                    52
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kotnaton/posts/">
+                    208
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июня 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>arcanis</em><br><pre><code>find * -type f -name &#39;*.mp3&#39; -execdir ln -sr {} -t ../ \;</code></pre></blockquote><br />Спасибо. Отличное решение, равно как спасибо и за basename и dirname, но все-таки проблемка с рекурсией внутри адреса файла остается, например, если надо в каждой директории, где есть, например фотографии, оставить их список:<br /><pre><code>find . -name *.jpg -exec echo {} &gt; $(dirname {})/list.txt \;</code></pre>К сожаалению, такая конструкция создает только один list.txt - в корне рабочей директории. Беда в том, что оператор dirname воспринимает адрес файла слитно, не позволяя разделять вложения по &#39;/&#39;<br />
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133462"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133462/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>kotnaton</strong>, пожалуйста, сформулируйте чётко – что вам требуется сделать?<br /><blockquote><br>находить файлы с нужным расширением и перемещать их на 1 уровень выше</blockquote> Звучит несколько странно и рекурсивно само по себе – находим файлы, перемещаем их на уровень выше, потом снова находим, перемещаем ещё выше... Где тут смысл? Что требуется на самом деле?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133487"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/arcanis/">
+                <span class="post-username">arcanis</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133487/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8e/cd/8ecde9b9bf77f0b2a47300c7eb3d904f.png" alt="arcanis avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/arcanis/topics/">
+                    31
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/arcanis/posts/">
+                    1496
+                </a>
+            </div>
+            <div>
+                Участник с: 09 сентября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>kotnaton</em><br>К сожаалению, такая конструкция создает только один list.txt - в корне рабочей директории.</blockquote>не совсем понял, что вы хотите, но у вас опять команда неправильная =) Надо так примерно:<br /><pre><code>find . -name &#39;*.jpg&#39; -execdir bash -c &quot;echo {} &gt;&gt; list.txt&quot; \;</code></pre>
+            
+                
+                    <div class="post-signature">
+                        PGP <a href="http://pgp.mit.edu:11371/pks/lookup?op=vindex&amp;fingerprint=on&amp;exact=on&amp;search=0x779CD2942629B7FA04AB8F172E89012331361F01">0x31361F01</a><br /><a href="https://repo.arcanis.me/">arcanisrepo</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/12929/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b75106db94979',m:'9vrM7UgHMKqno7EUI709LxUAqOMQTcPSG3rFGfSWAhw-1662679673-0-Ac46hsHr4mHUlKWVsLm09DEkyDt3o0EOxTOt+y0G3qob1BFFc7i16dnf0NLG5BwVPILi2SisKUBGTPB8CN3fqvrcXNIjrX4GoisA7He3SoMpz4814CRhLOgZ8CavUas2vRBRAhQLox7BP0rD+sig2Jo=',s:[0x235c267d42,0x2275297f7a],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

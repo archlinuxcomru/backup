@@ -1,0 +1,849 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        systemd и openvpn запуск юнита
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/23/">Демоны и загрузка системы</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>systemd и openvpn запуск юнита</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>systemd и openvpn запуск юнита</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180183"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/noideal/">
+                <span class="post-username">noideal</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/180183/">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/d1/8bd1f4af62f28e321d537da0d6ebc4c3.png" alt="noideal avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/noideal/topics/">
+                    9
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/noideal/posts/">
+                    55
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Здравствуйте, в общем проблема в том что ранее все работало без проблем. Но не заметил как, перестал работать openvpn в качестве демона.<br />РАботает только если запустить руками. А через systemctl нет. Не могу понять что послужило причиной и как бороться. Нигде ничего не менял.<br /><br />В общем если руками запустить:<br />sudo openvpn blacksrv.conf<br /><br />Все работает замечательно. Но если<br /><br /><pre><code>archhome /etc/openvpn $ systemctl start <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2f405f4a41595f416f4d434e4c445c5d59014c404149">[email&#160;protected]</a>
+Failed to start <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="254a55404b53554b65474944464e5657530b464a4b430b564057534c4640">[email&#160;protected]</a>: Unit <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0d627d68637b7d634d6f616c6e667e7f7b236e62636b237e687f7b646e68">[email&#160;protected]</a> not found.
+archhome /etc/openvpn $ systemctl start <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="610e11040f17110f21030d00020a121317">[email&#160;protected]</a>
+Failed to start <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="620d12070c14120c22000e0301091110144c110710140b0107">[email&#160;protected]</a>: Unit <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="771807121901071937151b16141c04050159041205011e1412">[email&#160;protected]</a> not found.</code></pre><br />Вот так правильно вроде<br />systemctl start <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f699869398808698db959a9f939882b6949a97959d858480d8859384809f9593">[email&#160;protected]</a><br />но:<br /><pre><code>Job for <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="36594653584046581b555a5f53584276545a57555d45444018455344405f5553">[email&#160;protected]</a> failed because the control process exited with error code.
+See &quot;systemctl status <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d4bba4b1baa2a4baf9b7b8bdb1baa094b6b8b5b7bfa7a6a2faa7b1a6a2bdb7b1">[email&#160;protected]</a>&quot; and &quot;journalctl -xe&quot; for details.</code></pre><br />А если посмотреть systemctl status <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a8c7d8cdc6ded8c685cbc4c1cdc6dce8cac4c9cbc3dbdade86dbcddadec1cbcd">[email&#160;protected]</a><br />то:<br /><pre><code>
+● <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e58a95808b93958bc886898c808b91a5878984868e969793cb968097938c8680">[email&#160;protected]</a> - OpenVPN tunnel for blacksrv
+   Loaded: loaded (/usr/lib/systemd/system/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="315e41545f47415f1c525d58545f45711f42544347585254">[email&#160;protected]</a>; disabled; vendor preset: disabled)
+   Active: failed (Result: exit-code) since Tue 2017-01-24 01:17:08 MSK; 15s ago
+     Docs: man:openvpn(8)
+           <a href="https://community.openvpn.net/openvpn/wiki/Openvpn24ManPage">https://community.openvpn.net/openvpn/wiki/Openvpn24ManPage</a>
+           <a href="https://community.openvpn.net/openvpn/wiki/HOWTO">https://community.openvpn.net/openvpn/wiki/HOWTO</a>
+  Process: 20332 ExecStart=/usr/sbin/openvpn --suppress-timestamps --nobind --config %i.conf (code=exited
+ Main PID: 20332 (code=exited, status=1/FAILURE)
+
+янв 24 01:17:08 archhome systemd: Starting OpenVPN tunnel for blacksrv...
+янв 24 01:17:08 archhome openvpn: Options error: In :1: Error opening configuration file
+янв 24 01:17:08 archhome openvpn: Use --help for more information.
+янв 24 01:17:08 archhome systemd: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c1aeb1a4afb7b1afeca2ada8a4afb581a3ada0a2aab2b3b7efb2a4b3b7a8a2a4">[email&#160;protected]</a>: Main process exited, code=exited, s
+янв 24 01:17:08 archhome systemd: Failed to start OpenVPN tunnel for blacksrv.
+янв 24 01:17:08 archhome systemd: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="523d22373c24223c7f313e3b373c2612303e3331392120247c213720243b3137">[email&#160;protected]</a>: Unit entered failed state.
+янв 24 01:17:08 archhome systemd: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d4bba4b1baa2a4baf9b7b8bdb1baa094b6b8b5b7bfa7a6a2faa7b1a6a2bdb7b1">[email&#160;protected]</a>: Failed with result &#39;exit-code&#39;.
+lines 1-16/16 (END)</code></pre><br />На всякий случай. Конфиг openvpn<br /><pre><code>client
+dev tun
+proto udp
+remote XX.XX 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+ca ca.crt
+cert samvpn.crt
+key samvpn.key
+tls-auth ta.key 1
+comp-lzo
+verb 3
+</code></pre><br />Подскажите ребята пожалуйста хоть с чего начать.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180187"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/teplovoz/">
+                <span class="post-username">teplovoz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/180187/">#</a>
+            5 лет, 7 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a3/d5/a3d5377868dad212636a6c6b23eaf059.png" alt="teplovoz avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/teplovoz/topics/">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/teplovoz/posts/">
+                    1046
+                </a>
+            </div>
+            <div>
+                Участник с: 28 мая 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>noideal</em><br>Вот так правильно вроде<br />systemctl start <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="36594653584046581b555a5f53584276545a57555d45444018455344405f5553">[email&#160;protected]</a></blockquote>Может так -  <pre><code>sudo systemctl start <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="97f8e7f2f9e1e7f9baf4fbfef2f9e3d7f5fbf6f4fce4e5e1b9e4f2e5e1fef4f2">[email&#160;protected]</a></code></pre>и в автозагрузку -<br /><pre><code>sudo systemctl enable <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6a051a0f041c1a04470906030f041e2a08060b090119181c44190f181c03090f">[email&#160;protected]</a></code></pre>?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180189"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kurych/">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/180189/">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kurych/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kurych/posts/">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В /etc/openvpn/ появились директории client и server. Нужно файл конфигурации перенести в соответствующее место.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180190"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/binaryshadow/">
+                <span class="post-username">binaryshadow</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/180190/">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/de/3c/de3c388e2f57b6c49e7fe0bf2b2d118d.png" alt="binaryshadow avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/binaryshadow/topics/">
+                    16
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/binaryshadow/posts/">
+                    453
+                </a>
+            </div>
+            <div>
+                Участник с: 30 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А по моему мнению просто проблема с правами доступа к файлу конфигурации:<br /><pre><code>Options error: In :1: Error opening configuration file</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180191"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/teplovoz/">
+                <span class="post-username">teplovoz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/180191/">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a3/d5/a3d5377868dad212636a6c6b23eaf059.png" alt="teplovoz avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/teplovoz/topics/">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/teplovoz/posts/">
+                    1046
+                </a>
+            </div>
+            <div>
+                Участник с: 28 мая 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            О ,  и в новостях присутствует -  <a href="https://archlinux.org.ru/forum/topic/16919/">http://archlinux.org.ru/forum/topic/16919/</a><br /><pre><code>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="86f0c6e7f4e5ee">[email&#160;protected]</a> ~]$ ls /etc/openvpn/
+client  server</code></pre> .
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180194"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/noideal/">
+                <span class="post-username">noideal</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/180194/">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/d1/8bd1f4af62f28e321d537da0d6ebc4c3.png" alt="noideal avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/noideal/topics/">
+                    9
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/noideal/posts/">
+                    55
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>teplovoz</em><br>О ,  и в новостях присутствует -  <a href="https://archlinux.org.ru/forum/topic/16919/">http://archlinux.org.ru/forum/topic/16919/</a><br /><pre><code>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="84f2c4e5f6e7ec">[email&#160;protected]</a> ~]$ ls /etc/openvpn/<br />client  server</code></pre> .</blockquote>Ах вот в чем дело. Скорее всего так и  есть. Попробую отпишусь.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180203"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Velesich/">
+                <span class="post-username">Velesich</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/180203/">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/de/05/de0576f8b854d1c6d989bb44f030c649.png" alt="Velesich avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Velesich/topics/">
+                    14
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Velesich/posts/">
+                    784
+                </a>
+            </div>
+            <div>
+                Участник с: 23 апреля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я перенес конфиг, но старый оставил на месте. При запуске <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f996899c978f89979a95909c978db9d7d7d7">[email&#160;protected]</a> связи нет, зато стандартный вызов работает, т.е. запускающий скрипт можно не менять.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180260"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/noideal/">
+                <span class="post-username">noideal</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/180260/">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/d1/8bd1f4af62f28e321d537da0d6ebc4c3.png" alt="noideal avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/noideal/topics/">
+                    9
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/noideal/posts/">
+                    55
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            1. Перенес все из папки /etc/openvpn в /etc/openvpn/client<br />2. удалил не рабочие юниты openvpn<br />3. sudo systemctl start <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5d322d38332b2d33703e31343833291d3f31">[email&#160;protected]</a>acksrv.service<br />4. sudo systemctl enable <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bed1cedbd0c8ced093ddd2d7dbd0cafedcd2dfddd5cdccc890cddbccc8d7dddb">[email&#160;protected]</a><br /><br />Все взлетело. Всем спасибо.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/17032/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747b920d7a009d55',m:'_YwJoWjUr93t_BKA1GiPTBt4ec55ZcWZf9JmizDzdLU-1662680863-0-AaroOSXVEEoIC2QdP8Qr6GsWWe02gnFCm4SYwm1B2GfULRpE9FICN19JxKUBnRyf0ZP2C/SmAhQtjOI5o+7o/j7b7OItIxbm4L6DSb6vWKWmQckiyyGo2I5IJEAq2xyRrpHtwgUFTIK/QH4sEcWA0ik=',s:[0xd67dac1088,0x25ca6141fc],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

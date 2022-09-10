@@ -1,0 +1,1185 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [Решено] Ошибка при монтировании /boot раздела после обновления ядра + кривое uefi
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/12/">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[Решено] Ошибка при монтировании /boot раздела после обновления ядра + кривое uefi</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[Решено] Ошибка при монтировании /boot раздела после обновления ядра + кривое uefi</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=3" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=4">4 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=8">8</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=5" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195031"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Heinardt/">
+                <span class="post-username">Heinardt</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195031/">#</a>
+            4 года, 12 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 12 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Heinardt/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Heinardt/posts/">
+                    40
+                </a>
+            </div>
+            <div>
+                Участник с: 11 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            На запасном харде, предстварительно физически отключив основной, попробовал поставить минималку по вашей схеме.<br />Разбивку сделал так:<br /><pre><code>/dev/sda1 ESP 512M /boot/efi fat32
+/dev/sda2 root 10G / ext4
+/dev/sda3 home 10G /home ext4
+/dev/sda4 swap 4G</code></pre><br /><pre><code>mkinitcpio -p linux</code></pre>выполнил.<br /><br />Граб ставил без параметров<br /><pre><code>grub-install</code></pre>Efibootmgr установлен. После установки при загрузке получаю<br /><pre><code>error: no such partition
+grub-rescue</code></pre>При установке никаких ошибок.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195032"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Heinardt/">
+                <span class="post-username">Heinardt</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195032/">#</a>
+            4 года, 12 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 12 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Heinardt/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Heinardt/posts/">
+                    40
+                </a>
+            </div>
+            <div>
+                Участник с: 11 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Перепроверил все еще раз. Все разделы правильно созданы и примонтированы, файловая система правильная. В fstab все uuid и другие параметры верные. Но при этом grub rescue.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195033"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/RusWolf/">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195033/">#</a>
+            4 года, 12 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 12 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/RusWolf/topics/">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/RusWolf/posts/">
+                    2395
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Heinardt</strong>, а диск ты в GPT как размечал? Заново или делал преобразование в GPT? Так как в GPT разметке, для совместимости оставлен  MBR, доставшаяся по наследству со всей своей информацией, содержится в блоке LBA 0. И там остался тасоватся mbr загрузчик.<br />До того диск случаем не был в формате MBR BIOS?<br />В настройках UEFI как включено, режим загрузки только в EFI или EFI + Legacy ?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195034"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Heinardt/">
+                <span class="post-username">Heinardt</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195034/">#</a>
+            4 года, 12 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 12 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Heinardt/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Heinardt/posts/">
+                    40
+                </a>
+            </div>
+            <div>
+                Участник с: 11 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>RusWolf</em><br><strong>Heinardt</strong>, а диск ты в GPT как размечал?<br />До того диск случаем не был в формате MBR BIOS?<br />В настройках UEFI как включено, режим загрузки только в EFI или EFI + Legacy ?</blockquote>Да в fdisk сразу создал таблицу GPT. Ошибок нет, я уверен. Все делал внимательно.<br />В ЕФИ включен только ЕФИ режим, secure boot выключен.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195035"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195035/">#</a>
+            4 года, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            а конфиг груба сгенерировал под чрутом когда ставил?
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195036"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Heinardt/">
+                <span class="post-username">Heinardt</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195036/">#</a>
+            4 года, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Heinardt/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Heinardt/posts/">
+                    40
+                </a>
+            </div>
+            <div>
+                Участник с: 11 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br>а конфиг груба сгенерировал под чрутом когда ставил?</blockquote>Да,<br /><pre><code>grub-mkconfig -o /boot/grub/grub.cfg</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195037"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195037/">#</a>
+            4 года, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Heinardt</strong>, ты уже второй у кого после установки grub rescue...<br />а покажи<br /><strong>cat /boot/grub/grub.cfg</strong><br />и<br /><strong>ls /boot/grub/x86_64-efi/</strong>
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195038"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/RusWolf/">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195038/">#</a>
+            4 года, 12 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 12 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/RusWolf/topics/">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/RusWolf/posts/">
+                    2395
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Heinardt</strong>, главное что бы в /boot/grub/x86_64-efi лежали файлы core.efi и grub.efi<br />И что показывает команда <strong>efibootmgr -v</strong> ?<br />UEFI прошивка у тебя случаем не UEFI32 ?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195039"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/RusWolf/">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195039/">#</a>
+            4 года, 12 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 12 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/RusWolf/topics/">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/RusWolf/posts/">
+                    2395
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Heinardt</em><br>Да в fdisk сразу создал таблицу GPT</blockquote>Я предпочитаю cfdisk для GPT разметки.<br /><a href="http://radikal.ru/big/xk7psw9lvccvv"><img src="http://i056.radikal.ru/1709/b7/737668be4754t.jpg"></a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195041"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Heinardt/">
+                <span class="post-username">Heinardt</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195041/">#</a>
+            4 года, 12 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 12 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Heinardt/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Heinardt/posts/">
+                    40
+                </a>
+            </div>
+            <div>
+                Участник с: 11 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>RusWolf</em><br><strong>Heinardt</strong>, главное что бы в /boot/grub/x86_64-efi лежали файлы core.efi и grub.efi<br />И что показывает команда <strong>efibootmgr -v</strong> ?<br />UEFI прошивка у тебя случаем не UEFI32 ?</blockquote>C рабочего диска<br /><pre><code>
+BootCurrent: 0000
+Timeout: 1 seconds
+BootOrder: 0000,0012,0004,0011
+Boot0000* arch	HD(3,GPT,fb05b9ec-025c-487d-b030-b2cfd8ea9581,0x5000800,0x100000)/File(\EFI\ARCH\GRUBX64.EFI)
+Boot0004  Hard Drive	BBS(HD,,0x0)/VenHw(5ce8128b-2cec-40f0-8372-80640e3dc858,0200)..GO..NO..........K.I.N.G.S.T.O.N. .S.V.3.0.0.S.3.7.A.1.2.0.G...................\.,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="705e305e025e145e">[email&#160;protected]</a>=.X..........A...........................&gt;..Gd-.;.A..MQ..L.0.5.2.0.B.6.2.7.9.5.D.0.6.6.D.D. . . . ........BO..NO..........W.D.C. .W.D.1.0.E.Z.E.X.-.0.0.R.K.K.A.0...................\.,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="507e107e227e347e">[email&#160;protected]</a>=.X..........A...........................&gt;..Gd-.;.A..MQ..L. . . . .W. .-.D.M.W.1.C.0.S.5.3.0.4.8.4........BO
+Boot0011  USB KEY	BBS(HD,,0x0)/VenHw(5ce8128b-2cec-40f0-8372-80640e3dc858,0b00)..GO..NO........y.J.e.t.F.l.a.s.h.T.r.a.n.s.c.e.n.d. .8.G.B. .1.1.0.0...................\.,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="032d432d712d672d">[email&#160;protected]</a>=.X..........A.......................6..Gd-.;.A..MQ..L.0.4.W.T.V.R.8.U.L.C.R.1.H.A.1.Y........BO
+Boot0012* UEFI OS	HD(3,GPT,fb05b9ec-025c-487d-b030-b2cfd8ea9581,0x5000800,0x100000)/File(\EFI\BOOT\BOOTX64.EFI)..BO
+</code></pre>Плата на AMI BIOS 7978vAB<br /><br /><blockquote><em>nafanja</em><br>Heinardt, ты уже второй у кого после установки grub rescue...<br />а покажи<br />cat /boot/grub/grub.cfg<br />и<br />ls /boot/grub/x86_64-efi/</blockquote><a href="https://imgur.com/L5YGxwN">https://imgur.com/L5YGxwN</a><br /><a href="https://imgur.com/LteD726">https://imgur.com/LteD726</a><br /><a href="https://imgur.com/a/xIPB5">https://imgur.com/a/xIPB5</a><br /><a href="https://imgur.com/a/xyuST">https://imgur.com/a/xyuST</a><br /><a href="https://imgur.com/a/ogI5Q">https://imgur.com/a/ogI5Q</a><br /><a href="https://imgur.com/zHrV2z7">https://imgur.com/zHrV2z7</a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=3" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=4">4 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=8">8</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=5" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/17823/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747c965ad9429d69',m:'LqrMhkpJSOxW7pfxZvRo32Fm_WHr6PENZo7SVnIPm_w-1662691529-0-ARUCUD2BmYrCdwvNG184/+AKKGCYiOq4u9NCIq/wMS1ZG9oot+p13trRTZhKCS1xlrgrFbh3M9qDYgrWBd+Dq2P/Y2f9HhtJqME6ZZU6ueofJKUtospokFUjovLvKhdP75Bcs1lQuDp28i7Zi5krLjw=',s:[0x38d5bcb749,0x841d4a1621],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

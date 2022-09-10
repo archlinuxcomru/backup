@@ -1,0 +1,1136 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/21053/?page=6 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:36:01 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Archlinux BTRFS, снапшоты в GRUB
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/6/index.html">Разработка</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/21/index.html">Разработки арчеводов</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Archlinux BTRFS, снапшоты в GRUB</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Archlinux BTRFS, снапшоты в GRUB</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="indexaf4d.html?page=5" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexaf4d.html?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="indexc575.html?page=6">6 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index235c.html?page=7">7</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index235c.html?page=7" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-254626"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/254626/index.html">#</a>
+            7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>vs220</strong>, а если не вырывать часть из полной цитаты, то разницы никакой.<br /><br /><blockquote><em>acid_raccoon</em><br>с помощью: btrfs send и btrfs receive?</blockquote>Да, штатные утилиты.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-254629"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Leshkin_Cat/index.html">
+                <span class="post-username">Leshkin_Cat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/254629/index.html">#</a>
+            7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Leshkin_Cat/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Leshkin_Cat/posts/index.html">
+                    150
+                </a>
+            </div>
+            <div>
+                Участник с: 15 октября 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вчера всё установил, как хотел. Всё работает отлично. Но... :) как обычно - есть нюансы.<br /><br />1. где-то я накосячил или пропустил с видео, когда устанавливал свой любимый i3. У меня 4 монитора, но включен 1. При входе на панели видно, что работают все 4 монитора (хотя они выключены). Подскажите пожалуйста, где смотреть, исправить проблему?<br />Я предполагаю, это могло произойти из-за того, что я сразу включил arandr и там по умолчанию установились 4 монитора. xorg, xorg-xrandr, xorg-xinit - установлены.<br /><br />2. Проблема с гибернацией. Я swap зашифровал, потом добавил информацию в /etc/default/grub -<br /><pre><code>GRUB_CMDLINE_LINUX_DEFAULT=&quot;loglevel=3 quiet splash cryptdevice=UUID=ххххххх-хххх-хххх-хххх-ххххххх:cryptdisk root=/dev/mapper/cryptdisk resume=/dev/mapper/swap&quot;</code></pre>и в /etc/mkinitcpio добавил в хук<br /><pre><code>HOOKS=(base udev autodetect modconf block encrypt resume filesystems keyboard fsck)</code></pre>после reboot и ввода пароля выдало сообщение, что устройство для гибернации /dev/mapper/swap не найдено.<br /><br /><pre><code>lsblk
+NAME          MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
+nvme0n1       259:0    0 465.8G  0 disk
+├─nvme0n1p1   259:1    0   300M  0 part  /boot
+├─nvme0n1p2   259:2    0     2G  0 part
+│ └─swap      254:1    0     2G  0 crypt [SWAP]
+└─nvme0n1p3   259:3    0 463.5G  0 part
+  └─cryptdisk 254:0    0 463.5G  0 crypt /run/timeshift/backup
+                                         /home
+                                         /
+</code></pre>железо: CPU AMD Ryzen 5 5600X RAM -16Gb GPU - Nvidia GT710
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-254635"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/254635/index.html">#</a>
+            7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Leshkin_Cat</em><br>Проблема с гибернацией. Я swap зашифровал</blockquote><a href="https://wiki.archlinux.org/title/Dm-crypt/Swap_encryption#mkinitcpio_hook">https://wiki.archlinux.org/title/Dm-crypt/Swap_encryption#mkinitcpio_hook</a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-254641"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Aivar/index.html">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/254641/index.html">#</a>
+            7 месяцев назад
+            
+                (отредактировано
+                
+                    7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Aivar/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Aivar/posts/index.html">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Leshkin_Cat</em><br>У меня 4 монитора, но включен 1. При входе на панели видно, что работают все 4 монитора (хотя они выключены).</blockquote>На какой панели? Нет в i3-wm никакой панели.<br />Если мониторы подключены к видеокарте, то будут видны как &quot;connected&quot; даже если они отключены от сети (питания).<br />Что показывает:<br /><pre><code>$ xrandr</code></pre>?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-254647"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Leshkin_Cat/index.html">
+                <span class="post-username">Leshkin_Cat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/254647/index.html">#</a>
+            7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Leshkin_Cat/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Leshkin_Cat/posts/index.html">
+                    150
+                </a>
+            </div>
+            <div>
+                Участник с: 15 октября 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            RusWolf, спасибо! :) Я сделал всё только в разделе &quot;UUID and LABEL&quot;. Да mkinitcpio hooks не дошёл. Получается, со свапом придётся повозиться...<br />Aivar, я имел ввиду бар, который поли-. Сначала там была &quot;1&quot;, после того, как я установил и открыл arandr, появилось |1|2|3|4| и все &quot;активные&quot;.<br /><blockquote><em>Aivar</em><br>Если мониторы подключены к видеокарте</blockquote>именно так и есть. Я уже подумал вносить исправления в конфиги или вообще переустановить arandr...<br /><br /><blockquote><em>Aivar</em><br>Что показывает:<br />$ xrandr<br />?</blockquote>что все мониторы &quot;connected&quot;, но только один включён<br /><pre><code>$ xrandr
+Screen 0: minimum 8 x 8, current 5120 x 2880, maximum 16384 x 16384
+HDMI-0 connected primary 2560x1440+0+1440 (normal left inverted right x axis y axis) 597mm x 336mm
+  2560x1440     59.95*+  74.97
+...
+HDMI-1 connected (normal left inverted right x axis y axis)
+   2560x1440     59.95 +  74.97
+  </code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-254648"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Aivar/index.html">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/254648/index.html">#</a>
+            7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Aivar/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Aivar/posts/index.html">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Leshkin_Cat</em><br>все мониторы &quot;connected&quot;, но только один включён</blockquote>Так и должно быть.<br /><br /><blockquote><em>Leshkin_Cat</em><br>|1|2|3|4| и все &quot;активные&quot;.</blockquote>Это, видимо, вопрос к конфигу бара, который поли.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-254663"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Leshkin_Cat/index.html">
+                <span class="post-username">Leshkin_Cat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/254663/index.html">#</a>
+            7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Leshkin_Cat/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Leshkin_Cat/posts/index.html">
+                    150
+                </a>
+            </div>
+            <div>
+                Участник с: 15 октября 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Извините, возможно в этом форуме уже были подобные обсуждения проблем с мониторами, но в других темах. Я пытался найти, но не получилось. Я обратился за помощью сюда, т.к. установил всё по известным гайдам, упомянутым в начале темы.<br /><br /><blockquote><em>Aivar</em><br>видимо</blockquote>Прошу прощения, объясните пожалуйста, из чего это видимо? Я задал вопрос<br /><blockquote><em>Leshkin_Cat</em><br>Подскажите пожалуйста, где смотреть, исправить проблему?</blockquote>потому что я не вижу. Раз Вы, Aivar, решили прокомментировать, то Вам виднее, и я Вам доверяю, потому что Вы (как и vasek, vs220) раньше помогали мне и помогли, потому что вы опытнее. Я пытаюсь разобраться и пока что ничего не вижу. Вам не трудно представить себя на моём месте? Если у Вас есть больше информации, видения проблемы - зачем писать &quot;в общем&quot;? Что Вам мешает подсказать конкретнее? Я что-то не дописал, не досмотрел - я пытаюсь найти и прошу помощи, поэтому задал вопросы в форуме, а не &quot;к конфигу&quot;.<br />В конфиге полибара я не увидел модуля, отвечающего за видео, монитор(ы). Я пытался переустановить arandr - не помогло. Когда подключаю к видеокарте все мониторы, после reboot на панельке всё так же - |1|2|3|4|
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-254664"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Aivar/index.html">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/254664/index.html">#</a>
+            7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Aivar/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Aivar/posts/index.html">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Leshkin_Cat</em><br>зачем писать &quot;в общем&quot;?</blockquote>Я никогда не пользовал polybar. i3 тоже отошел в сторону.<br />Попробуйте как отображаются воркспейсы в нативном i3bar (не в polybar). Если так же, то покажите секцию bar конфига i3.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-254665"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Aivar/index.html">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/254665/index.html">#</a>
+            7 месяцев назад
+            
+                (отредактировано
+                
+                    7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Aivar/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Aivar/posts/index.html">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Хотя, признаться, я уже не помню как отображаются воркспейсы в многомониторной конфигурации. Может они и должны быть видны в баре... Судя по докам так и есть, но копать вглубь уже лень. Так что извините что &quot;решил прокомментировать&quot;.<br /><br />Еще можно отключить в xrandr ненужные выходы.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-254676"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Leshkin_Cat/index.html">
+                <span class="post-username">Leshkin_Cat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/254676/index.html">#</a>
+            7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Leshkin_Cat/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Leshkin_Cat/posts/index.html">
+                    150
+                </a>
+            </div>
+            <div>
+                Участник с: 15 октября 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Aivar</em><br>Попробуйте как отображаются воркспейсы в нативном i3bar (не в polybar).</blockquote>Тоже подумал об этом... попробую.<br /><br /><blockquote><em>Aivar</em><br>Может они и должны быть видны в баре</blockquote>Нет, раньше такого не было.<br /><br /><blockquote><em>Aivar</em><br>Еще можно отключить в xrandr ненужные выходы.</blockquote>Да, тоже вариант... почитаю, как это сделать.<br />Спасибо, Aivar! :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="indexaf4d.html?page=5" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexaf4d.html?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="indexc575.html?page=6">6 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index235c.html?page=7">7</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index235c.html?page=7" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index5a5c.html?next=/forum/topic/21053/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/21053/?page=6 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:36:01 GMT -->
+</html>

@@ -1,0 +1,711 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Pixiecore и Arch Netboot. Cборка пакета для AUR на примере pixiecore.
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/8/">Блоги</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/25/">Блоги</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Pixiecore и Arch Netboot. Cборка пакета для AUR на примере pixiecore.</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Pixiecore и Arch Netboot. Cборка пакета для AUR на примере pixiecore.</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-156979"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/red/">
+                <span class="post-username">red</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/156979/">#</a>
+            6 лет, 11 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/fd/eb/fdeb672af87b7c02419e9c58404908a5.png" alt="red avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/red/topics/">
+                    30
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/red/posts/">
+                    1517
+                </a>
+            </div>
+            <div>
+                Участник с: 31 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            PIXIECORE<br /><br /><strong>I.	Применение pixiecore для загрузки Arch Netboot</strong><br /><strong>II. Подготовка пакета для AUR, на примере pixiecore</strong><br /><br /><strong>I. <u>Применение pixiecore для загрузки Arch Netboot</u></strong><br /><a href="https://github.com/google/netboot/tree/master/pixiecore">pixiecore</a> позволяет передать на удалённую машину ядро и первичный корневой раздел используя технологию сетевой загрузки <a href="https://wiki.archlinux.org/index.php/Install_Arch_from_network_via_PXE_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">PXE</a>.<br /><br />Данную программу использовать довольно таки просто, например, для запуска Arch Netboot по сети, достаточно с оф. сайта Арча <a href="https://www.archlinux.org/releng/netboot/">скачать iPXE</a> (&lt; 1M) , а затем одной командой отдать его другой системе в локальной сети которая ожидает сетевую загрузку. Пример для BIOS:<br /><pre><code>% curl -O <a href="https://www.archlinux.org/static/netboot/ipxe.lkrn">https://www.archlinux.org/static/netboot/ipxe.lkrn</a>
+% sudo pixiecore boot ipxe.lkrn -d
+[Init] Starting Pixiecore goroutines
+
+</code></pre><br />Но есть одна проблема, данной программы нету (уже <a href="https://aur.archlinux.org/packages/pixiecore/">есть</a>) в репозиториях Арча, не в <a href="https://www.archlinux.org/packages/">официальном</a> не в <a href="https://aur.archlinux.org/packages/">пользовательском</a>(AUR/АУР).<br />Программа написана на языке программирования <a href="https://wiki.archlinux.org/index.php/Go_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Go (golang)</a>, поэтому для тех кто использует данный язык установить её не составит труда:<br /><pre><code>% go get <a href="http://go.universe.tf/netboot/cmd/pixiecore">go.universe.tf/netboot/cmd/pixiecore</a></code></pre>будет скачан репозиторий, а сама программа будет автоматически собрана из исходников и помещена по адресу $GOPATH/bin/pixiecore<br /><br />Но как быть простым смертным ? Правильно, собрать пакет для АУРа и поделится им с сообществом. Так и поступим.<br />Ниже  будет показана поэтапная подготовка пакета вплоть до заливки в репозиторий АУРа.<br />Нетерпеливые могут просто установить этот пакет:<br /><pre><code>% yaourt -S pixiecore</code></pre><br /><strong>II. <u>Подготовка пакета для AUR, на примере pixiecore</u></strong><br />Информации по созданию пакетов для АУР хватает, но на мой взгляд она неполная, устаревшая, размазанная да и в основном не русскоязычная. Не хватает простого &quot;Hello World&quot; по созданию пакета для AUR в котором поэтапно расписаны необходимые действия.<br />Ну что же, в меру своих сил попробуем это исправить. Надеюсь мастера данного дела меня поправят если что не так.<br />И так, поехали.<br /><br /><ol style="list-style-type:decimal;"><li>Первым делом в системе должны быть установлены необходимые пакеты для работы с AUR:</li><pre><code>% sudo pacman -S git base-devel namcap
+</code></pre><ul><li>git - система контроля версий</li><li>base-devel - группа базовых пакетов для разработки</li><li>namcap - для проверки пакетов на ошибки</li></ul><li>Регистрация на сайте</li>Если ещё не зарегистрированы в AUR то <a href="https://aur.archlinux.org/register/">регистрируемся</a>, и добавляем к своей учётной записи публичный ключ (SSH Public Key). Если впервой то можно посмотреть <a href="https://git-scm.com/book/ru/v1/Git-%D0%BD%D0%B0-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B5-%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D1%82%D0%BE%D0%B3%D0%BE-SSH-%D0%BA%D0%BB%D1%8E%D1%87%D0%B0">здесь</a> или <a href="https://wiki.archlinux.org/index.php/SSH_keys_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">здесь</a>, процедура такая же как для github или bitbucket.
+<li>Подготовка окружения</li>Клонируем репозиторий:
+<pre><code>% git clone ssh://<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3b5a4e497b">[email&#160;protected]</a><a href="https://aur.archlinux.org/pixiecore.git">aur.archlinux.org/pixiecore.git</a>
+Клонирование в «pixiecore»…
+warning: Похоже, что вы клонировали пустой репозиторий.
+Проверка соединения… готово.
+</code></pre>репозиторий будет пустым если пакета с таким названием еще нету.
+Переходим в скачанный репозиторий и копируем в него шаблон рецепта сборки (<a href="https://wiki.archlinux.org/index.php/PKGBUILD">PKGBUILD</a>) :
+<pre><code>% cd pixiecore
+% cp /usr/share/pacman/PKGBUILD.proto PKGBUILD
+</code></pre>все дальнейшие действия будут происходить в этой папке.
+<li>Редактируем файл PKGBUILD.</li>Это самая трудная часть, написание &#39;правильного&#39; рецепта для сборки пакета. PKGBUILD - это bash скрипт, цель которого предоставить команды для получения набора файлов, которые pacman сможет установить.
+<ul><li>Первым делом оставим след в истории:</li><pre><code># Maintainer: Имя &lt;Почта&gt;
+</code></pre><li>Имя пакета:</li><pre><code>pkgname=pixiecore
+</code></pre><li>Версия пакета:</li><pre><code>pkgver=16.10.01.1420</code></pre>Можно прописывать версию вручную в переменную pkgver, или же вычислять её автоматически в функции pkgver().
+Так как автор pixiecore не ведёт нумерации версий, то зададим свою которая будет соответствовать дате последнего коммита (вычисляется как $ git log -1 --format=&quot;%cd&quot; --date=format:&quot;%y.%m.%d.%H%M&quot;).
+В АрчВики есть <a href="https://wiki.archlinux.org/index.php/VCS_package_guidelines">примеры</a> версионирования пакетов для разных систем контроля версий.
+<li>Краткое описание пакета:</li><pre><code>pkgdesc=&quot;An all-in-one tool for easy netbooting&quot;
+</code></pre><li>Архитектура:</li><pre><code>arch=(&#39;i686&#39; &#39;x86_64&#39;)
+</code></pre>для каких архитектур собирается пакет. Для скриптов обычно указывают &#39;any&#39;.
+<li>Лицензия:</li><pre><code>license=(&#39;GPL2&#39;)
+</code></pre>если не знаете то указываете &#39;unknown&#39;.
+<li>Зависимости необходимые для сборки пакета:</li><pre><code>makedepends=(&#39;go&#39; &#39;git&#39;)
+</code></pre>эти пакеты установятся пользователям только на время сборки пакета.
+<li>Функция подготовки:</li><pre><code>prepare() {
+	export GOPATH=&quot;$srcdir/go&quot;
+	mkdir -p $GOPATH
+
+	export GOBIN=&quot;$GOPATH/bin&quot;
+	mkdir -p $GOBIN
+
+	go env
+}</code></pre><li>Функция сборки:</li><pre><code>build() {
+    go get -v <a href="http://go.universe.tf/netboot/cmd/pixiecore">go.universe.tf/netboot/cmd/pixiecore</a>
+}
+</code></pre>в данной функции описываются компиляция программы.
+<li>Функция установки (обязательна):</li><pre><code>package() {
+	install -Dm755 &quot;$GOBIN/${pkgname}&quot; &quot;${pkgdir}/usr/bin/${pkgname}&quot;
+}
+</code></pre>На данном этапе полученный бинарник перекочует в нашу систему.
+<li>PKGBUILD целиком:</li><pre><code># Maintainer: Имя &lt;Почта&gt;
+
+pkgname=pixiecore
+pkgver=16.10.01.1420
+pkgrel=1
+epoch=
+pkgdesc=&quot;An all-in-one tool for easy netbooting&quot;
+arch=(&#39;i686&#39; &#39;x86_64&#39;)
+url=&quot;<a href="https://github.com/google/netboot/tree/master/pixiecore">https://github.com/google/netboot/tree/master/pixiecore</a>&quot;
+license=(&#39;GPL2&#39;)
+groups=()
+depends=()
+makedepends=(&#39;go&#39; &#39;git&#39;)
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=()
+noextract=()
+md5sums=()
+#validpgpkeys=()
+prepare() {
+	export GOPATH=&quot;$srcdir/go&quot;
+	mkdir -p $GOPATH
+
+	export GOBIN=&quot;$GOPATH/bin&quot;
+	mkdir -p $GOBIN
+
+	go env
+}
+
+build() {
+	go get -v <a href="http://go.universe.tf/netboot/cmd/pixiecore">go.universe.tf/netboot/cmd/pixiecore</a>
+}
+
+package() {
+	install -Dm755 &quot;$GOBIN/${pkgname}&quot; &quot;${pkgdir}/usr/bin/${pkgname}&quot;
+}</code></pre><ul><li><strong>startdir</strong> - директория где лежит PKGBUILD, эту переменную использовать не рекомендуется.</li><li><strong>srcdir</strong> = ${startdir}/src  - сюда скачиваются исходники для сборки пакета</li><li><strong>pkgdir</strong> = ${startdir}/pkg/${pkgname} - сюда компилируется программа, используется только в функции package()</li></ul>Более подробное описание всех переменных и функций можно посмотреть в <a href="https://www.archlinux.org/pacman/PKGBUILD.5.html">man PKGBUILD</a> или <a href="https://wiki.archlinux.org/index.php/PKGBUILD_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)">archWiki</a>.
+Примерами же составления самого PKGBUILD-а могут служить рецепты пакетов из AUR, для этого достаточно <a href="https://aur.archlinux.org/packages/">зайти на страницу</a> и выбрать подобный пакет или просто клонировать пакет с АУР-а как было показано в начале.</ul><li>Проверка PKGBUILD:</li><pre><code>% namcap PKGBUILD
+PKGBUILD (pixiecore) W: Non standard variable &#39;validpgpkeys&#39; doesn&#39;t start with an underscore
+</code></pre>закомментируем в PKGBUILD переменную validpgpkeys и запускаем повторно, ошибка должна исчезнуть.
+<li>Локальная сборка и установка пакета:</li><pre><code>% makepkg -csrfi
+</code></pre><ul><li>-c удалить директорию сборки</li><li>-s установить недостающие зависимости</li><li>-r удалить их(-s) после установки</li><li>-f пересобрать существующий пакет, если он есть</li><li>-i установите пакет после успешной сборки</li></ul><strong>makepkg</strong> - утилита входящая в состав pacman для сборки пакетов.
+<pre><code>% sudo pacman -Rns pixiecore
+</code></pre>после успешной установки удаляем пакет, так как в скорости мы установим его через АУР.
+<li>Проверка локального пакета:</li><pre><code>% namcap pixiecore-16.10.01.1420-1-x86_64.pkg.tar.xz
+pixiecore E: Dependency glibc detected and not included (libraries [&#39;usr/lib/libc.so.6&#39;, &#39;usr/lib/libpthread.so.0&#39;] needed in files [&#39;usr/bin/pixiecore&#39;])
+</code></pre>На всякий случай проверим собранный локальный пакет даже если при сборке не было ошибок, здесь говорится что в зависимости нужно включить пакет glibc, хотя это довольно таки странно в свете того что данный пакет входит в группу &#39;base&#39;. В общем эту ошибку можно проигнорировать, возможно проблема в том что пакет namcap давно не обновляли.
+На заметку: пакеты и их зависимости входящие в группу <a href="https://www.archlinux.org/groups/x86_64/base/">base</a> и <a href="https://www.archlinux.org/groups/x86_64/base-devel/">base-devel</a> включать в зависимости ненужно.
+<li>Создание файла метаданных для AUR:</li><pre><code>% makepkg --printsrcinfo &gt; .SRCINFO</code></pre>данная команда проанализирует PKGBUILD и создаст на его основе скрытый файл метаданных .SRCINFO
+<li>Подготовка и отправка пакета в AUR:</li><pre><code>% git add PKGBUILD .SRCINFO
+% git commit -m &#39;Initial import&#39;</code></pre>добавляем файлы PKGBUILD и .SRCINFO в наш репозиторий, а затем фиксируем его делая коммит.
+Далее отправляем пакет в AUR:
+<pre><code>% git push origin master</code></pre>Если пакета в репозитори AUR еще нету то он будет создан при первом push.
+Не забываем также добавить ключевые слова через выб интерфейс для нашего пакета.
+<li>Установка пакета из AUR:</li><pre><code>% yaourt -S pixiecore
+</code></pre></ol>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-156988"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Kycok/">
+                <span class="post-username">Kycok</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/156988/">#</a>
+            6 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/b7/3e/b73e340446ad65d73a75ebec48fc70c8.png" alt="Kycok avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Kycok/topics/">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Kycok/posts/">
+                    1585
+                </a>
+            </div>
+            <div>
+                Участник с: 09 января 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            О. Полезное дело делаете!<br />По поводу контрольных сумм: на мой взгляд, удобнее пользовать <em>updpkgsums</em>
+            
+                
+                    <div class="post-signature">
+                        <a href="https://github.com/Kycko">GitHub</a>, <a href="https://wiki.archlinux.org/index.php/User:Kycok">ArchWiki</a>, <a href="https://aur.archlinux.org/account/Kycok">AUR</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-156995"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/red/">
+                <span class="post-username">red</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/156995/">#</a>
+            6 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/fd/eb/fdeb672af87b7c02419e9c58404908a5.png" alt="red avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/red/topics/">
+                    30
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/red/posts/">
+                    1517
+                </a>
+            </div>
+            <div>
+                Участник с: 31 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Kycok</em><br>По поводу контрольных сумм: на мой взгляд, удобнее пользовать updpkgsums</blockquote>да, действительно лучше использовать updpkgsums, изменил. Спасибо за подсказку.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-157041"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/malody/">
+                <span class="post-username">malody</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/157041/">#</a>
+            6 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/malody/topics/">
+                    39
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/malody/posts/">
+                    321
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Спасибо!<br />Теперь не только в теории но и на практике можно ознакомится со сборкой пакетов для AUR.
+            
+                
+                    <div class="post-signature">
+                        <a href="https://wiki.archlinux.org/index.php/ArchWiki_Translation_Team_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Русская команда переводчиков ArchWiki</a><br /><a href="https://wiki.archlinux.org/index.php/User:Vladimir_Shatalin">скромный вклад</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165235"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/pethead/">
+                <span class="post-username">pethead</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165235/">#</a>
+            6 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/7d/51/7d5160c56e2b5418e4c3c7e71875bc2a.png" alt="pethead avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/pethead/topics/">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/pethead/posts/">
+                    127
+                </a>
+            </div>
+            <div>
+                Участник с: 21 февраля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Как раз думал поиграться с pxe и как запилить cвой пакет в AUR. Added to Favorities.
+            
+                
+                    <div class="post-signature">
+                        This Must Be The Place I Waited Years To Leave
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/15255/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747ab45858549d9c',m:'CmKPmXcZs4KwhO1nTbHZV8EnUGKKVKb0k3RxrmmFtO0-1662671781-0-AbJU/SrA3c5LjfJ5TIQkBy0oRaqchgBDMDpkt43n9IjD9gnxZcpPzkiqYepUdArSfinl8J0Gbhns+6ryDY9IQpz+ZFAjM9awKxvI0NerLG9MgRYbhwz0LKSfcN2mw96nP7HM3+zaldC8ongmEC8igLs=',s:[0xcd3dba33ee,0x4d661244a8],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

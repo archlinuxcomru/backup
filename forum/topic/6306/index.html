@@ -1,0 +1,828 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Настройка DHCP-сервера
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Настройка DHCP-сервера</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Настройка DHCP-сервера</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61040"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/dneposeda/">
+                <span class="post-username">dneposeda</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61040/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/dneposeda/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/dneposeda/posts/">
+                    3
+                </a>
+            </div>
+            <div>
+                Участник с: 20 июня 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В настройке DHCP-сервера сложного нет.<br/>Я проделал следующие шаги:<br/><strong>1)</strong> Установил <em>pacman -S dhcp</em><br/><strong>2)</strong> Отредактировал фыйл <em>/etc/dhcpd.conf</em><br/><div class="code"><pre>ddns-update-style none;
+option domain-name "example.com";
+option domain-name-servers 192.168.10.1;
+default-lease-time 259200;
+max-lease-time 259200;
+authoritative;
+log-facility local7;
+subnet 192.168.10.0 netmask 255.255.255.0 {
+range 192.168.10.25 192.168.10.254;
+option domain-name-servers 192.168.10.1;
+option domain-name "example.com";
+option routers 192.168.10.1;
+option broadcast-address 192.168.10.255;
+default-lease-time 259200;
+max-lease-time 259200;
+}</pre></div><strong>3)</strong> сделал в автозапуск с системой, добавив в файл <em>/etc/rc.cong</em><br/><div class="code"><pre>DAEMONS=(syslog-ng network dhcpd netfs crond)</pre></div><br/>и тут возник вопрос.<br/><strong>Нам необходимо, чтобы DHCP сервер обрабатывает запросы только с  интерфейса eth0 (из внутренней сети), как это сделать??</strong><br/><br/>у кого какие мысли есть на это? поделитесь!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61041"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/gard/">
+                <span class="post-username">gard</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61041/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/5c/f5/5cf5a07c0739d7bc6ac7ac27f4f6a0be.png" alt="gard avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/gard/topics/">
+                    66
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/gard/posts/">
+                    1167
+                </a>
+            </div>
+            <div>
+                Участник с: 15 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Эмм.. я уже не помню, но в общем то он и вещается на интерфейс вроде бы.. Как то я делал на Убунте и выглядело ето так:<br/><blockquote>После этого в файле /etc/default/dhcp3-server необходимо было указать интерфейс eth1, на котором сервер будет работать. </blockquote>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61042"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/dneposeda/">
+                <span class="post-username">dneposeda</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61042/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/dneposeda/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/dneposeda/posts/">
+                    3
+                </a>
+            </div>
+            <div>
+                Участник с: 20 июня 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ага, в Убунту я тоже так делал.<br/>а вот в Арче нет этого файла! И найти не могу в каком файле надо прописать.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61043"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/amigo/">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61043/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/amigo/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/amigo/posts/">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <div class="code"><pre>pacman -Ql dhcpcd</pre></div>
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61044"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/dneposeda/">
+                <span class="post-username">dneposeda</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61044/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/dneposeda/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/dneposeda/posts/">
+                    3
+                </a>
+            </div>
+            <div>
+                Участник с: 20 июня 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Меня тут наткнули на это <a href="https://bugs.archlinux.org/task/9006">http://bugs.archlinux.org/task/9006</a><br/>Как я понял, надо в файле<em> /etc/conf.d/dhcp</em> что-то прописать, а что я не пойму ))<br/>содержимое моего файла <em> /etc/conf.d/dhcp</em><br/><div class="code"><pre>#
+# Arguments to be passed to the DHCP server daemon
+#
+DHCP_ARGS="-q"</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61045"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/wilful/">
+                <span class="post-username">wilful</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61045/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/wilful/topics/">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/wilful/posts/">
+                    312
+                </a>
+            </div>
+            <div>
+                Участник с: 24 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Amigo</em><br/><div class="code"><pre>pacman -Ql dhcpcd</pre></div></blockquote>Амиго, наверно имелся ввиду сервер все-таки. Мне кажется эта тайна хранится в стартовом скрипте dhcpd, за неимением онного, <a href="https://archlinux.org.ru/forum/viewtopic.php?f=16&amp;t=3224">вот</a> посмотрите.<br/><br/>И еще раз: &ldquo;Arch != Ubuntu&rdquo; Задолбало ж ужешь, пардон.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61046"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/amigo/">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61046/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/amigo/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/amigo/posts/">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>wilful</em><br/>Амиго, наверно имелся ввиду сервер все-таки</blockquote>Ах, прошу прощения. Читал по диагонали.
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61047"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/gard/">
+                <span class="post-username">gard</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61047/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/5c/f5/5cf5a07c0739d7bc6ac7ac27f4f6a0be.png" alt="gard avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/gard/topics/">
+                    66
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/gard/posts/">
+                    1167
+                </a>
+            </div>
+            <div>
+                Участник с: 15 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            а man dhcp/cd (пардон я не проверял, у меня его нету и сил нет ставить, ухожу спать)..<br/><br/>ps: или DHCP_ARGS=&ldquo;-q eth0&rdquo; ?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/6306/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747bbd6d596f9d8d',m:'PbMLvZ.sAlfaG_FSNs8EaG_t.AKsRLhvVa6lDgr8AmQ-1662682637-0-AZyJTOvpM6fe+WeT1nDw7WC9tHaH3nHtx5lh28P66b3MSVL8KCei3e4kAtYPCPFvNwzsSD6aBzcypJeQg1wSkBW27AkGHxQG2dLNq5cFbZNnsVDswtS74rTo6Z15dnFIjSluXnfrRYonPBkpxiYsD+8=',s:[0x4c671d7304,0x2060567608],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

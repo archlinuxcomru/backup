@@ -1,0 +1,672 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/21209/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:09:00 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Классические ошибки systemd/journal и надо ли их решать.
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/12/index.html">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Классические ошибки systemd/journal и надо ли их решать.</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Классические ошибки systemd/journal и надо ли их решать.</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-255196"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/fleef/index.html">
+                <span class="post-username">fleef</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/255196/index.html">#</a>
+            6 месяцев, 2 недели назад
+            
+                (отредактировано
+                
+                    6 месяцев, 2 недели назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/cd/5e/cd5e954d0e7ed1d80feb90094aae807c.png" alt="fleef avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/fleef/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/fleef/posts/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Участник с: 18 февраля 2022
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Доброго времени суток!<br /><br />Приспичило на днях посмотреть в journalctl и нашёл пару неприятных &quot;надписей&quot;:<br /><br />Вывод journalctl -p 3:<br /><blockquote>kernel: x86/cpu: SGX disabled by BIOS.<br />~<br />ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PCI0.SAT0.PRT4._GTF.DSSP], AE_NOT_FOUND (20210730/psargs-330)<br />~<br />ACPI Error: Aborting method \_SB.PCI0.SAT0.PRT4._GTF due to previous error (AE_NOT_FOUND) (20210730/psparse-529)<br />~<br />Error: Driver &#39;pcspkr&#39; is already registered, aborting&#8230;</blockquote><br />Вывод journalctl -p 2:<br /><blockquote>watchdog: watchdog0: watchdog did not stop!</blockquote><br />Форумчане, дайте знать если это что-то важное и ядро бьётся в конвульсиях моля добить =)<br /><br />P.S: Каждую строчку гуглил, где-то пишут что ничего страшного, другие бьют тревогу.<br />P.S2:<br />~ Kernel: 5.15.8-xanmod1-tt-1<br />~ CPU: i5-9400
+            
+                
+                    <div class="post-signature">
+                        я пони, у меня копыта, не могу и не хочУ
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-255198"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/255198/index.html">#</a>
+            6 месяцев, 2 недели назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ничего страшного нет, ACPI часто ошибки выдает .<br />А watchdog просто при выключении и перезагрузки не останавливается
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-255203"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/alien175/index.html">
+                <span class="post-username">alien175</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/255203/index.html">#</a>
+            6 месяцев, 2 недели назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/7f/ab/7fab65c5c273a7b44b8fb52fa493ff86.png" alt="alien175 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/alien175/topics/index.html">
+                    20
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/alien175/posts/index.html">
+                    169
+                </a>
+            </div>
+            <div>
+                Участник с: 27 декабря 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            acpi ругается на устаревшие таблицы. По факту, они не должны попадать в dmesg (ибо warning), но решили, что лучше отображать и сделать error.<br />у меня:<br /><pre><code> $: sudo dmesg| grep -i acpi
+[    0.000000] BIOS-e820: [mem 0x000000007f5b0000-0x000000007f5bffff] ACPI data
+[    0.000000] BIOS-e820: [mem 0x000000007f5c0000-0x000000007f5c2fff] ACPI NVS
+[    0.011826] ACPI: Early table checksum verification disabled
+[    0.011837] ACPI: RSDP 0x00000000000F7DA0 000024 (v02 PTLTD )
+[    0.011852] ACPI: XSDT 0x000000007F5B8DB7 00006C (v01 SECCSD LH43STAR 06040000  LTP 00000000)
+[    0.011873] ACPI: FACP 0x000000007F5BFC92 0000F4 (v03 INTEL           06040000 PTL  00000002)
+[    0.011895] ACPI: DSDT 0x000000007F5BA01F 005B7F (v01 INTEL  BEARG31A 06040000 MSFT 03000001)
+[    0.011911] ACPI: FACS 0x000000007F5C2FC0 000040
+[    0.011924] ACPI: FACS 0x000000007F5C2FC0 000040
+[    0.011937] ACPI: MCFG 0x000000007F5BFD86 00003C (v01 PTLTD    MCFG   06040000  LTP 00000000)
+[    0.011952] ACPI: HPET 0x000000007F5BFDC2 000038 (v01 PTLTD  HPETTBL  06040000  LTP 00000001)
+[    0.011968] ACPI: APIC 0x000000007F5BFDFA 000068 (v01 PTLTD  ? APIC   06040000  LTP 00000000)
+[    0.011983] ACPI: BOOT 0x000000007F5BFE62 000028 (v01 PTLTD  $SBFTBL$ 06040000  LTP 00000001)
+[    0.011998] ACPI: SLIC 0x000000007F5BFE8A 000176 (v01 SECCSD LH43STAR 06040000  LTP 00000000)
+[    0.012014] ACPI: SSDT 0x000000007F5B93BF 00025F (v01 PmRef  Cpu0Tst  00003000 INTL 20050624)
+[    0.012029] ACPI: SSDT 0x000000007F5B9319 0000A6 (v01 PmRef  Cpu1Tst  00003000 INTL 20050624)
+[    0.012045] ACPI: SSDT 0x000000007F5B8E23 0004F6 (v02 PmRef  CpuPm    00003000 INTL 20050624)
+[    0.012058] ACPI: Reserving FACP table memory at [mem 0x7f5bfc92-0x7f5bfd85]
+[    0.012064] ACPI: Reserving DSDT table memory at [mem 0x7f5ba01f-0x7f5bfb9d]
+[    0.012069] ACPI: Reserving FACS table memory at [mem 0x7f5c2fc0-0x7f5c2fff]
+[    0.012074] ACPI: Reserving FACS table memory at [mem 0x7f5c2fc0-0x7f5c2fff]
+[    0.012079] ACPI: Reserving MCFG table memory at [mem 0x7f5bfd86-0x7f5bfdc1]
+[    0.012084] ACPI: Reserving HPET table memory at [mem 0x7f5bfdc2-0x7f5bfdf9]
+[    0.012089] ACPI: Reserving APIC table memory at [mem 0x7f5bfdfa-0x7f5bfe61]
+[    0.012094] ACPI: Reserving BOOT table memory at [mem 0x7f5bfe62-0x7f5bfe89]
+[    0.012099] ACPI: Reserving SLIC table memory at [mem 0x7f5bfe8a-0x7f5bffff]
+[    0.012104] ACPI: Reserving SSDT table memory at [mem 0x7f5b93bf-0x7f5b961d]
+[    0.012108] ACPI: Reserving SSDT table memory at [mem 0x7f5b9319-0x7f5b93be]
+[    0.012114] ACPI: Reserving SSDT table memory at [mem 0x7f5b8e23-0x7f5b9318]
+[    0.035171] ACPI: PM-Timer IO Port: 0x1008
+[    0.035198] ACPI: LAPIC_NMI (acpi_id[0x00] high edge lint[0x1])
+[    0.035206] ACPI: LAPIC_NMI (acpi_id[0x01] high edge lint[0x1])
+[    0.035240] ACPI: INT_SRC_OVR (bus 0 bus_irq 0 global_irq 2 high edge)
+[    0.035248] ACPI: INT_SRC_OVR (bus 0 bus_irq 9 global_irq 9 high level)
+[    0.035261] ACPI: Using ACPI (MADT) for SMP configuration information
+[    0.035266] ACPI: HPET id: 0xffffffff base: 0xfed00000
+[    0.154210] ACPI: Core revision 20210930
+[    0.294759] ACPI: PM: Registering ACPI NVS region [mem 0x7f5c0000-0x7f5c2fff] (12288 bytes)
+[    0.298835] acpiphp: ACPI Hot Plug PCI Controller Driver version: 0.5
+[    0.309007] ACPI: Added _OSI(Module Device)
+[    0.309015] ACPI: Added _OSI(Processor Device)
+[    0.309019] ACPI: Added _OSI(3.0 _SCP Extensions)
+[    0.309022] ACPI: Added _OSI(Processor Aggregator Device)
+[    0.309027] ACPI: Added _OSI(Linux-Dell-Video)
+[    0.309031] ACPI: Added _OSI(Linux-Lenovo-NV-HDMI-Audio)
+[    0.309035] ACPI: Added _OSI(Linux-HPI-Hybrid-Graphics)
+[    0.325906] ACPI: 4 ACPI AML tables successfully acquired and loaded
+[    0.326030] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKD (20210930/dspkginit-438)
+[    0.326112] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKH (20210930/dspkginit-438)
+[    0.326142] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKD (20210930/dspkginit-438)
+[    0.326168] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKC (20210930/dspkginit-438)
+[    0.326194] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKA (20210930/dspkginit-438)
+[    0.326220] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKG (20210930/dspkginit-438)
+[    0.326246] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKA (20210930/dspkginit-438)
+[    0.326272] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKB (20210930/dspkginit-438)
+[    0.326297] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKC (20210930/dspkginit-438)
+[    0.326323] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKD (20210930/dspkginit-438)
+[    0.326349] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKA (20210930/dspkginit-438)
+[    0.326410] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKA (20210930/dspkginit-438)
+[    0.326439] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKB (20210930/dspkginit-438)
+[    0.326469] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKC (20210930/dspkginit-438)
+[    0.326497] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKD (20210930/dspkginit-438)
+[    0.326565] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKB (20210930/dspkginit-438)
+[    0.326598] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKC (20210930/dspkginit-438)
+[    0.326627] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKD (20210930/dspkginit-438)
+[    0.326655] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKA (20210930/dspkginit-438)
+[    0.326710] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKC (20210930/dspkginit-438)
+[    0.326741] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKD (20210930/dspkginit-438)
+[    0.326769] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKA (20210930/dspkginit-438)
+[    0.326797] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKB (20210930/dspkginit-438)
+[    0.326853] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKD (20210930/dspkginit-438)
+[    0.326883] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKA (20210930/dspkginit-438)
+[    0.326912] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKB (20210930/dspkginit-438)
+[    0.326941] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKC (20210930/dspkginit-438)
+[    0.326997] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKF (20210930/dspkginit-438)
+[    0.327032] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKG (20210930/dspkginit-438)
+[    0.327063] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKH (20210930/dspkginit-438)
+[    0.327091] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKE (20210930/dspkginit-438)
+[    0.327120] ACPI Error: AE_NOT_FOUND, While resolving a named reference package element - LNKE (20210930/dspkginit-438)
+[    0.334561] ACPI: Dynamic OEM Table Load:
+[    0.334587] ACPI: SSDT 0xFFFF8E3E4124EC00 000203 (v02 PmRef  Cpu0Ist  00003000 INTL 20050624)
+[    0.336686] ACPI: Dynamic OEM Table Load:
+[    0.336711] ACPI: SSDT 0xFFFF8E3E419A2800 0006A5 (v02 PmRef  Cpu0Cst  00003001 INTL 20050624)
+[    0.339971] ACPI: Dynamic OEM Table Load:
+[    0.339991] ACPI: SSDT 0xFFFF8E3E411C8100 0000D4 (v02 PmRef  Cpu1Ist  00003000 INTL 20050624)
+[    0.341442] ACPI: Dynamic OEM Table Load:
+[    0.341460] ACPI: SSDT 0xFFFF8E3E41802540 000085 (v02 PmRef  Cpu1Cst  00003000 INTL 20050624)
+[    0.343689] ACPI: EC: EC started
+[    0.343695] ACPI: EC: interrupt blocked
+[    0.346760] ACPI: EC: EC_CMD/EC_SC=0x66, EC_DATA=0x62
+[    0.346772] ACPI: \_SB_.PCI0.LPC0.H_EC: Boot DSDT EC used to handle transactions
+[    0.346778] ACPI: Interpreter enabled
+[    0.346850] ACPI: PM: (supports S0 S3 S4 S5)
+[    0.346855] ACPI: Using IOAPIC for interrupt routing
+[    0.346980] PCI: Using host bridge windows from ACPI; if necessary, use &quot;pci=nocrs&quot; and report a bug
+[    0.348056] ACPI: Enabled 10 GPEs in block 00 to 1F
+[    0.376513] ACPI: PCI Root Bridge [PCI0] (domain 0000 [bus 00-3f])
+[    0.376555] acpi PNP0A08:00: _OSC: OS supports [ExtendedConfig ASPM ClockPM Segments MSI EDR HPX-Type3]
+[    0.376898] ACPI BIOS Error (bug): Failure creating named object [\_SB.PCI0._OSC.CAPB], AE_ALREADY_EXISTS (20210930/dsfield-184)
+[    0.376938] ACPI Error: AE_ALREADY_EXISTS, CreateBufferField failure (20210930/dswload2-477)
+[    0.376967] ACPI Error: Aborting method \_SB.PCI0._OSC due to previous error (AE_ALREADY_EXISTS) (20210930/psparse-529)
+[    0.377017] acpi PNP0A08:00: _OSC: OS requested [PCIeHotplug SHPCHotplug PME AER PCIeCapability LTR DPC]
+[    0.377030] acpi PNP0A08:00: _OSC: platform willing to grant [PCIeHotplug SHPCHotplug PME AER PCIeCapability LTR DPC]
+[    0.377037] acpi PNP0A08:00: _OSC: platform retains control of PCIe features (AE_ALREADY_EXISTS)
+[    0.377076] acpi PNP0A08:00: [Firmware Info]: MMCONFIG for domain 0000 [bus 00-10] only partially covers this bridge
+[    0.394575] ACPI: PCI: Interrupt link LNKA configured for IRQ 11
+[    0.394902] ACPI: PCI: Interrupt link LNKB configured for IRQ 7
+[    0.395233] ACPI: PCI: Interrupt link LNKC configured for IRQ 3
+[    0.395582] ACPI: PCI: Interrupt link LNKD configured for IRQ 10
+[    0.395924] ACPI: PCI: Interrupt link LNKE configured for IRQ 0
+[    0.395931] ACPI: PCI: Interrupt link LNKE disabled
+[    0.396272] ACPI: PCI: Interrupt link LNKF configured for IRQ 0
+[    0.396279] ACPI: PCI: Interrupt link LNKF disabled
+[    0.396629] ACPI: PCI: Interrupt link LNKG configured for IRQ 4
+[    0.396967] ACPI: PCI: Interrupt link LNKH configured for IRQ 5
+[    0.398613] ACPI: EC: interrupt unblocked
+[    0.398621] ACPI: EC: event unblocked
+[    0.398658] ACPI: EC: 0 stale EC events cleared
+[    0.398658] ACPI: EC: EC_CMD/EC_SC=0x66, EC_DATA=0x62
+[    0.398658] ACPI: EC: GPE=0x11
+[    0.398658] ACPI: \_SB_.PCI0.LPC0.H_EC: Boot DSDT EC initialization complete
+[    0.398658] ACPI: \_SB_.PCI0.LPC0.H_EC: EC: Used to handle transactions and events
+[    0.399993] ACPI: bus type USB registered
+[    0.401210] PCI: Using ACPI for IRQ routing
+[    0.459569] pnp: PnP ACPI init
+[    0.463491] pnp: PnP ACPI: found 4 devices
+[    0.475255] clocksource: acpi_pm: mask: 0xffffff max_cycles: 0xffffff, max_idle_ns: 2085701024 ns
+[    0.529796] ACPI: AC: AC Adapter [ADP1] (on-line)
+[    0.530248] ACPI: button: Lid Switch [LID0]
+[    0.535508] ACPI: button: Power Button [PWRB]
+[    0.535890] ACPI: button: Sleep Button [SLPB]
+[    0.536341] ACPI: button: Power Button [PWRF]
+[    0.549612] ACPI: thermal: Thermal Zone [TZ00] (57 C)
+[    0.550505] ACPI: battery: Slot [BAT1] (battery absent)
+[    0.573193] ACPI: bus type drm_connector registered
+[    1.958381] ACPI: video: Video Device [IGD0] (multi-head: yes  rom: no  post: no)
+[    1.964071] acpi device:03: registered as cooling_device2
+[   19.977140] ACPI Warning: SystemIO range 0x0000000000001028-0x000000000000102F conflicts with OpRegion 0x0000000000001000-0x000000000000102F (\_SB.PCI0.LPC0.PMIO) (20210930/utaddress-204)
+[   19.977174] ACPI Warning: SystemIO range 0x0000000000001028-0x000000000000102F conflicts with OpRegion 0x0000000000001000-0x000000000000107F (\PMIO) (20210930/utaddress-204)
+[   19.977193] ACPI: OSL: Resource conflict; ACPI support missing from driver?
+[   19.977203] ACPI Warning: SystemIO range 0x0000000000001180-0x00000000000011AF conflicts with OpRegion 0x0000000000001180-0x00000000000011AF (\_SB.PCI0.LPC0.GPOX) (20210930/utaddress-204)
+[   19.977222] ACPI: OSL: Resource conflict; ACPI support missing from driver?</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-255215"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/255215/index.html">#</a>
+            6 месяцев, 2 недели назад
+            
+                (отредактировано
+                
+                    6 месяцев, 2 недели назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>fleef</em><br>Вывод journalctl -p 3:  …</blockquote>Согласно DOC  значение параметра --priority=3 означает вывод ошибок (<strong>error</strong>) … и логично предположить, что в идеале этот вывод должен быть пустым.<br />Но нужно различать случаи<br /><strong>1.</strong> Наличие ошибок в выводе непосрественно <u>сразу после загрузки системы</u> - этот вывод желательно иметь пустым<br /><pre><code> journalctl -b -p3 --no-pager
+-- No entries –</code></pre>Если вывод не пустой, то следует понять, что это за ошибка, чем она обусловлена, как влияет на работу системы и как ее можно устронить. Желательно смотреть этот вывод после каждого серъезного обновления системы.<br /><strong>2.</strong> Появление ошибок в выводе <u>в процессе работы системы</u> - вывод не посредственно сразу после загрузки системы может быть пустым, но ошибки могут возникнуть непосредственно в процессе работы системы. Это совершенно разные случаи.<br /><br />В части ошибки<br /><blockquote><em>fleef</em><br>Error: Driver &#39;pcspkr&#39; is already registered, aborting…</blockquote>В системе имеется модуль  pcspkr<br />modinfo pcspkr -n<br />/lib/modules/5.16.8-arch1-1/kernel/drivers/input/misc/pcspkr.ko.zst<br />но по какой-то причине этот модуль загружается снова - система и пишет, что модуль уже загружен и отменяет его загрузку --- нужно разбираться, если есть желание, что заставляет загружать этот модуль … на работу не сказывается.<br /><br />В части ошибки<br /><blockquote><em>fleef</em><br>kernel: x86/cpu: SGX disabled by BIOS.</blockquote>Можно предположить, что cpu имеет поддережку технологии SGX, но в BIOS она не активирована … вот об этом логи и говорят.<br />Эта поддержка в новых cpu вроде бы удалена - вызывает уязвимость.<br />Можно просто исключить загрузку этого встроенного модуля - прописать параметр ядра <strong>nosgx</strong><br /><br />В части ошибок ACPI - по идее этих ошибок в выводе  journalctl -b -p3 --no-pager быть не должно, как правило, ошибки ACPI имеют приоритет warning и выскакивают с уровня p4.<br />Насколько могу судить, эти ошибки связаны с жестким диском - и не плохо бы понять причину их появления …<br /><br />Хочешь понять суть плоблемы - больше гугли и читай ...<br /><br /><strong>EDIT</strong> - Дополнение в части ошибок ACPI - ошибки, насколько я понимаю, связаны с методом  <strong>_GTF</strong> - это метод ACPI, который используется для повторной инициализации диска.<br />Как пишут умные дяди<br /><pre><code> Ошибка связана с тем, что BOIS не имеет определенного метода _GTF. Это может быть обусловлено тем, что железо или не поддерживает команды ATA, которые инициализирует метод _GTF или разработчик BIOS не включил (не описал) их. … Если ваши диски SATA работают корректно без ошибок, скорее всего, это просто не требуется и не нужно беспокоиться об этом сообщении драйвера ядра.</code></pre>Исключить эти ошибки помогает, <u>но не всегда</u>, загрузка с параметром ядра <strong>libata.noacpi=1</strong>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index3b37.html?next=/forum/topic/21209/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/21209/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:09:00 GMT -->
+</html>

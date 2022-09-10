@@ -1,0 +1,1334 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/862/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:34:23 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Скрипт проверки целосности системы, кэш Pacman
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/6/index.html">Разработка</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/21/index.html">Разработки арчеводов</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Скрипт проверки целосности системы, кэш Pacman</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Скрипт проверки целосности системы, кэш Pacman</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8335"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/8335/index.html">#</a>
+            9 лет, 11 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 12 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            Так как в пакмене нет функций для проверки целосности системы, какие файлы изменились и изменились ли у них группы, владельцы и т.п.,  а умеет от только проверять отсутствие файлов, то решил исправить положение.<br /><br />Данный скрипт служит для поиска и вывода списка новых файлов которые отсутствуют в пакетах и появились в процессе жизни системы. Так же скрипт умеет сравнивать файлы в пакетах и в системе, выводя список измененных.<br /><br />Для полноценной проверки, в кэше должны присутствовать все установленные пакеты!!!<br /><br />Полезно для контролля целостности системы и поиска &quot;мусора&quot;. А так же для частичного бекапа системы.<br /><br />Использует библиотечку <strong>functions</strong> от сюда <a href="../../viewtopic881e.html?f=29&amp;t=9957#p89236">viewtopic.php?f=29&amp;t=9957#p89236</a><br /><br /><strong>pacman-files-list</strong> - скрипт выводящий списки файлов<br /><pre><code>
+#!/bin/bash
+#
+#   pacman-files-list (pacman-save-sys)
+#
+#   Copyright (c) 2012 ArchAnTavr &lt;archlinux@antavr.ru&gt;
+#   <a href="http://archlinux.antavr.ru/">http://archlinux.antavr.ru</a>
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.
+#
+# Имя текущего скрипта
+SCRNAME=$(basename &quot;$BASH_SOURCE&quot;)
+# Путь к папке со скриптом
+SCRDIR=$(dirname &quot;$BASH_SOURCE&quot;)
+source &quot;$SCRDIR/functions&quot;
+# Переключатели параметров
+CACHE=0
+# Функция вывода помощи
+echo_help()
+{
+  echo_help1
+  echo -e &quot;\t${BLDWHT}-c${TXTRST}
+\t\t$(gettext &#39;вывести файлы которые отличаются от файлов из пакетов в кэше&#39;)
+\t\t\t$(gettext &#39;по умолчанию:&#39;) $(gettext &#39;новые файлы в системе&#39;)\n&quot; &gt;&amp;2
+}
+
+pdisowned()
+{
+# Временный каталог
+  local TEMPDIR=$(mktemp -d)
+# Удалять при выходе
+  trap &quot;rm -rf $TEMPDIR&quot; EXIT RETURN
+
+# Временные файлы для сохранения списков файлов
+  local DB=&quot;$TEMPDIR/db&quot;
+  local FS=&quot;$TEMPDIR/fs&quot;
+
+# Список системных папок, которые могут быть примонтированны
+# так как поиск ведется только в пределах раздела
+  local PATHS=&#39;/ /boot /usr /usr/local&#39;
+  local P
+# Получаем список установленных файлов
+  echo -e &quot;${BLDYLW}$(gettext &#39;получаю список файлов&#39;), pacman -Qlq$PACMANOPT${TXTRST}&quot; &gt;&amp;2
+  eval &quot;pacman -Qlq$PACMANOPT&quot; \
+    | sort -u \
+    &gt; &quot;$DB&quot;
+# Получаем список файлов в системе
+  for P in $PATHS
+  do
+    echo -e &quot;${BLDYLW}$(gettext &#39;проверяю раздел&#39;), findmnt $PROOT$P${TXTRST}&quot; &gt;&amp;2
+    if [ &quot;$(findmnt &quot;$PROOT$P&quot;)&quot; ]
+    then
+      echo -e &quot;${BLDYLW}$(gettext &#39;получаю список файлов&#39;), find $PROOT$P${TXTRST}&quot; &gt;&amp;2
+      find &quot;$PROOT$P&quot; \
+        -mount \
+        ! -path &quot;*/tmp/*&quot; \
+        ! -path &quot;*/lost+found/*&quot; \
+        ! -name &#39;lost+found&#39; \
+        ! -path &quot;$PROOT/home/*&quot; \
+        ! -path &quot;$PROOT/root/*&quot; \
+        \( -type d -printf &#39;%p/\n&#39; -o -print \)
+    fi
+  done \
+    | sort -u \
+    | grep -v &#39;//$&#39; \
+    &gt; &quot;$FS&quot;
+# Выбираем список файлов которых нет в пакетах
+  echo -e &quot;${BLDYLW}$(gettext &#39;выбираю файлы которых нет в пакетах&#39;)${TXTRST}&quot; &gt;&amp;2
+  if [ &quot;$PROOT&quot; ]
+  then
+    PROOT=$(echo &quot;$PROOT&quot; | sed &#39;s/\//\\\//g&#39;)
+    comm -23 &quot;$FS&quot; &quot;$DB&quot; \
+      | sed s/^&quot;$PROOT&quot;//
+  else
+    comm -23 &quot;$FS&quot; &quot;$DB&quot;
+  fi
+}
+
+modified ()
+{
+# Временный файл
+  local TEMPFILE=$(mktemp)
+# Удалять при выходе
+  trap &quot;rm -f $TEMPFILE&quot; EXIT RETURN
+  local PKG
+  local OUTSTR
+  local LINE
+
+  while read LINE
+  do
+    echo -e &quot;${BLDYLW}$(gettext &#39;Проверяю пакет &#39;)$LINE${TXTRST}&quot; &gt;&amp;2
+    eval &quot;LINE=($LINE)&quot;
+    PKG=$(find &quot;$PROOT$PACMANCACHE/${LINE[0]}-${LINE[1]}&quot;-*.pkg.tar.[gx]z)
+    if [ &quot;$PKG&quot; ]
+    then
+      OUTSTR=$(LC_ALL=en tar -ad --format=pax -C &quot;$PACMANROOT&quot; --exclude=&#39;.PKGINFO&#39; --exclude=&#39;.INSTALL&#39; --exclude=&#39;.CHANGELOG&#39; -f &quot;$PKG&quot;)
+      if [[ $? -ne 0 ]]
+      then
+        OUTSTR=$(echo &quot;$OUTSTR&quot; | grep -v &#39;Mod time differs&#39;)
+        if [ &quot;$OUTSTR&quot; ]
+        then
+          echo &quot;&gt;&gt;&gt; $PKG&quot;
+          echo &#39;&#39;
+          echo &quot;$OUTSTR&quot; | sed &#39;s/^/\//g&#39;
+          echo &#39;&#39;
+        fi
+      fi
+    else
+      echo -e &quot;${BLDRED}$(gettext &#39;не найден в кэше, пропускаю&#39;) $LINE${TXTRST}&quot; &gt;&amp;2
+    fi
+  done
+}
+# Обработка параметров командной строки
+while getopts hp:r:b:e:c OPTION
+do
+  case $OPTION in
+    h|\?|p|r|b|e)
+        choption &quot;$OPTION&quot; &quot;$OPTARG&quot;
+        ;;
+    c)
+        CACHE=1
+        ;;
+  esac
+done
+setoption
+# Если нет root привилегий вывести предупреждение
+if [[ $EUID -ne 0 ]]
+then
+  echo -e &quot;${BLDRED}$(gettext &#39;Для корректной работы скрипта у Вас должны быть root привилегии!!!&#39;)${TXTRST}&quot; &gt;&amp;2
+fi
+# Выполняем
+if [[ $CACHE -ne 0 ]]
+then
+  echo -e &quot;${BLDYLW}$(gettext &#39;получаю список пакетов&#39;), pacman -Q$PACMANOPT${TXTRST}&quot; &gt;&amp;2
+  eval &quot;pacman -Q$PACMANOPT&quot; | modified
+else
+  pdisowned
+fi
+
+</code></pre><br />Пример использования<br /><pre><code># Список новых файлов в системе
+bash pacman-files-list &gt; files-new.list
+
+# Списки измененных файлов
+bash pacman-files-list -c &gt; files-modified.list
+</code></pre>
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8336"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/hascee/index.html">
+                <span class="post-username">hascee</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/8336/index.html">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/hascee/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/hascee/posts/index.html">
+                    13
+                </a>
+            </div>
+            <div>
+                Участник с: 09 апреля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            (из <a href="../../viewtopic63c1.html?f=6&amp;t=10086">viewtopic.php?f=6&amp;t=10086</a> )<br/>Попробовал использовать скрипт, но некоторые пакеты в кэше пакмана почищены , но  и за этого ли  сыпятся ошибки вроде :<br/><br/><div class="code"><pre>Проверяю пакет systemd 192-1
+find: `//systemd-192-1-*.pkg.tar.[gx]z': Нет такого файла или каталога
+не найден в кэше, пропускаю systemd
+Проверяю пакет sysvinit 2.88-8
+find: `//sysvinit-2.88-8-*.pkg.tar.[gx]z': Нет такого файла или каталога
+не найден в кэше, пропускаю sysvinit
+Проверяю пакет sysvinit-tools 2.88-8
+find: `//sysvinit-tools-2.88-8-*.pkg.tar.[gx]z': Нет такого файла или каталога
+не найден в кэше, пропускаю sysvinit-tools
+Проверяю пакет taglib 1.8-1
+find: `//taglib-1.8-1-*.pkg.tar.[gx]z': Нет такого файла или каталога
+не найден в кэше, пропускаю taglib
+Проверяю пакет taglib-extras 1.0.1-2
+find: `//taglib-extras-1.0.1-2-*.pkg.tar.[gx]z': Нет такого файла или каталога
+не найден в кэше, пропускаю taglib-extras
+Проверяю пакет talloc 2.0.7-1
+find: `//talloc-2.0.7-1-*.pkg.tar.[gx]z': Нет такого файла или каталога
+не найден в кэше, пропускаю talloc
+Проверяю пакет tar 1.26-2
+find: `//tar-1.26-2-*.pkg.tar.[gx]z': Нет такого файла или каталога</pre></div><br/>Фитч реквест : автоматическая докачка ненайденых в кэше пакетов; возможность поиска пакетов в других местах.<br/><br/><br/>Необходимы ли скрипту рут права, может для некоторых ключей их можно смягчить (например -с)?<br/><br/>ps <br/>возможно скажу глупость, но нельзя получить необходимую информацию о файлах пакета , не скачивая его?<br/>(из базы пакмана, из <a href="http://packages.archlinux.org/">packages.archlinux.org</a>)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8337"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/8337/index.html">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Hascee</em><br/>Фитч реквест : автоматическая докачка ненайденых в кэше пакетов; возможность поиска пакетов в других местах.</blockquote>Этот скрипт работает только с тем что уже есть в кэше.<br/>Докачку можно сделать, <u>но в другом скрипте</u>, например список недостающих пакетов в кэше выводит вот этот скрипт <a href="../../viewtopic881e.html?f=29&amp;t=9957#p89236">viewtopic.php?f=29&amp;t=9957#p89236</a> , а скормить списки на загрузку пакмену и йогурту минутное дело...<br/><br/>Просто не все пакеты могут быть установлены из реп.<br/>Например локально установленные пакеты командой <strong>pacman -U &lt;пакет&gt;</strong> вообще не попадают в кэш, их только ручками нужно туда копировать...<br/>А чтобы собранные из <strong>AUR</strong> с помощью <strong>yaourt</strong> пакеты в кэш отправлялись нужно  соответственно настроить <strong>yaourtrc</strong> и <strong>makepkg.conf</strong><br/><br/><blockquote><em>Hascee</em><br/>Необходимы ли скрипту рут права, может для некоторых ключей их можно смягчить (например -с)?</blockquote>Частично необходимы, в некоторые папки без рут прав не пустит, соответственно и не проверятся там файлы... Хотя можно сделать просто вывод предупреждения типа - "Сюда меня не пустили, пропускаю"<br/><br/><blockquote><em>Hascee</em><br/>нельзя получить необходимую информацию о файлах пакета , не скачивая его?<br/>(из базы пакмана, из packages.archlinux.org)<br/></blockquote>В базе пакмена только имена файлов и больше ничего (огромное упущение), могли хотя бы хеш файла, группу, пользователя и доп атрибуты в базу записывать. Проще было проверить систему на несоответствия...
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8338"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/8338/index.html">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            Изменил, теперь при запуске без привилегий root, в начале будет выводится сообщение, а куда <strong>tar</strong> не пустят он сам выведет предупреждение.
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8339"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/8339/index.html">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Hascee</em><br/>find: `//systemd-192-1-*.pkg.tar.z': Нет такого файла или каталога</blockquote>Исправил и это, была ошибка удаления последнего слеша из пути&#8230;<br/>Нужно загрузить исправленную версию <strong>functions</strong> от сюда <a href="../../viewtopic121f.html?f=29&amp;t=9957&amp;p=89236#p89236">viewtopic.php?f=29&amp;t=9957&amp;p=89236#p89236</a> 
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8340"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/hascee/index.html">
+                <span class="post-username">hascee</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/8340/index.html">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/hascee/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/hascee/posts/index.html">
+                    13
+                </a>
+            </div>
+            <div>
+                Участник с: 09 апреля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            использую <br/><div class="code"><pre>(sudo) bash  pacman-pkg-list -с </pre></div><br/>при  этом скрипт ничего не выводит (только две системные строчки ) и завершает свою работу<br/><br/>Однако при использовании <br/><div class="code"><pre>sudo pacman-files-list -c &gt; files.list </pre></div>некоторые пакеты скрипт не находит<br/><br/><div class="code"><pre>Проверяю пакет zip 3.0-3
+find: `/var/cache/pacman/pkg/zip-3.0-3-*.pkg.tar.[gx]z': Нет такого файла или каталога
+не найден в кэше, пропускаю zip
+Проверяю пакет zlib 1.2.7-1
+find: `/var/cache/pacman/pkg/zlib-1.2.7-1-*.pkg.tar.[gx]z': Нет такого файла или каталога
+не найден в кэше, пропускаю zlib
+Проверяю пакет zsh 5.0.0-2
+tar: Ignoring unknown extended header keyword `SCHILY.fflags'</pre></div><br/> + сначала иногда ругается <br/><div class="code"><pre>
+Проверяю пакет amarok 2.6.0-1
+tar: Ignoring unknown extended header keyword `SCHILY.fflags'
+tar: Ignoring unknown extended header keyword `SCHILY.fflags'
+tar: Ignoring unknown extended header keyword `SCHILY.fflags'</pre></div>а потом и вовсе выдает километры вышеуказанных строчек <br/><br/>содержание файла changed list <br/><div class="code"><pre>cat changed.list 
+&gt;&gt;&gt; /var/cache/pacman/pkg/filesystem-2012.8-1-any.pkg.tar.xz
+/etc/fstab: Size differs
+/etc/group: Size differs
+/etc/hosts: Size differs
+/etc/passwd: Size differs
+/etc/resolv.conf: Size differs
+/etc/shells: Size differs
+/etc/gshadow: Size differs
+/etc/shadow: Size differs
+&gt;&gt;&gt; /var/cache/pacman/pkg/flashplugin-11.2.202.238-1-i686.pkg.tar.xz
+/etc/adobe/mms.cfg: Size differs
+&gt;&gt;&gt; /var/cache/pacman/pkg/glibc-2.16.0-4-i686.pkg.tar.xz
+/etc/locale.gen: Size differs
+&gt;&gt;&gt; /var/cache/pacman/pkg/initscripts-2012.09.1-1-any.pkg.tar.xz
+/etc/inittab: Contents differ
+/etc/rc.conf: Size differs
+&gt;&gt;&gt; /var/cache/pacman/pkg/linux-3.5.4-1-i686.pkg.tar.xz
+/usr/lib/modules/3.5.4-1-ARCH/modules.symbols: Size differs
+/usr/lib/modules/3.5.4-1-ARCH/modules.symbols.bin: Size differs
+/usr/lib/modules/3.5.4-1-ARCH/modules.dep.bin: Size differs
+/usr/lib/modules/3.5.4-1-ARCH/modules.alias.bin: Contents differ
+/usr/lib/modules/3.5.4-1-ARCH/modules.dep: Size differs
+&gt;&gt;&gt; /var/cache/pacman/pkg/lxde-common-0.5.5-2-any.pkg.tar.xz
+/etc/xdg/lxsession/LXDE/autostart: Size differs
+&gt;&gt;&gt; /var/cache/pacman/pkg/lxdm-0.4.1-15-i686.pkg.tar.xz
+                                                                                                                                     
+/etc/lxdm/lxdm.conf: Mode differs                                                                                                    
+/etc/lxdm/lxdm.conf: Gid differs                                                                                                     
+                                                                                                                                     
+&gt;&gt;&gt; /var/cache/pacman/pkg/mc-4.8.6-1-i686.pkg.tar.xz                                                                                 
+                                                                                                                                     
+/etc/mc/filehighlight.ini: Size differs                                                                                              
+/etc/mc/edit.indent.rc: Mode differs                                                                                                 
+                                                                                                                                     
+&gt;&gt;&gt; /var/cache/pacman/pkg/mysql-5.5.28-1-i686.pkg.tar.xz                                                                             
+                                                                                                                                     
+/etc/mysql/my.cnf: Uid differs                                                                                                       
+/etc/mysql/my.cnf: Gid differs                                                                                                       
+/etc/mysql/my.cnf: Size differs                                                                                                      
+                                                                                                                                     
+&gt;&gt;&gt; /var/cache/pacman/pkg/pacman-4.0.3-3-i686.pkg.tar.xz                                                                             
+                                                                                                                                     
+/etc/pacman.conf: Size differs                                                                                                       
+                                                                                                                                     
+&gt;&gt;&gt; /var/cache/pacman/pkg/perl-test-pod-1.45-1-any.pkg.tar.xz                                                                        
+                                                                                                                                     
+/usr/share/man/man3/Test\:\:Pod.3pm.gz: Mode differs                                                                                 
+/usr/share/perl5/vendor_perl/Test/Pod.pm: Mode differs                                                                               
+                                                                                                                                     
+&gt;&gt;&gt; /var/cache/pacman/pkg/perl-yaml-syck-1.20-2-i686.pkg.tar.xz                                                                      
+                                                                                                                                     
+/usr/lib/perl5/vendor_perl/YAML/Syck.pm: Mode differs                                                                                
+/usr/lib/perl5/vendor_perl/YAML/Loader/Syck.pm: Mode differs                                                                         
+/usr/lib/perl5/vendor_perl/YAML/Dumper/Syck.pm: Mode differs
+/usr/lib/perl5/vendor_perl/JSON/Syck.pm: Mode differs
+/usr/lib/perl5/vendor_perl/auto/YAML/Syck/Syck.so: Mode differs
+/usr/lib/perl5/vendor_perl/auto/YAML/Syck/Syck.bs: Mode differs
+/usr/share/man/man3/JSON\:\:Syck.3pm.gz: Mode differs
+/usr/share/man/man3/YAML\:\:Syck.3pm.gz: Mode differs
+&gt;&gt;&gt; /var/cache/pacman/pkg/prelink-20111012-1-i686.pkg.tar.xz
+/etc/prelink.conf: Size differs
+&gt;&gt;&gt; /var/cache/pacman/pkg/sudo-1.8.6.p3-1-i686.pkg.tar.xz
+/etc/sudoers: Size differs
+&gt;&gt;&gt; /var/cache/pacman/pkg/tzdata-2012f-1-any.pkg.tar.xz
+/usr/share/zoneinfo/iso3166.tab: Mode differs
+/usr/share/zoneinfo/zone.tab: Mode differs
+&gt;&gt;&gt; /var/cache/pacman/pkg/vlc-2.0.3-4-i686.pkg.tar.xz
+/usr/lib/vlc/plugins/plugins.dat: Size differs</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8341"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/8341/index.html">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Hascee</em><br/>использую<br/>Код: Выделить всё<br/>    (sudo) bash  pacman-pkg-list -с <br/>при этом скрипт ничего не выводит (только две системные строчки ) и завершает свою работу</blockquote>Тут вместо русской <strong>&ldquo;-с&rdquo;</strong> нужно использовать английскую!!!<br/><blockquote><em>Hascee</em><br/>некоторые пакеты скрипт не находит</blockquote>Скрипт правильно не находит пакеты, так как их НЕТ в кэше.<br/><br/><blockquote><em>Hascee</em><br/>+ сначала иногда ругается<br/>Проверяю пакет amarok 2.6.0-1<br/>tar: Ignoring unknown extended header keyword `SCHILY.fflags'<br/></blockquote>Это предупреждение связано с разными версиями TAR-а. Ничего в нем страшного нет. Сначала хотел подавить эти сообщения, но потом решил что лучше их выводить, если вывод скрипта перенаправляется в файл они все равно туда не попадут, потому что идут на стандартный поток ошибок (stderr)<br/><br/><blockquote><em>Hascee</em><br/>содержание файла changed list </blockquote>Правильное содержание.<br/>Тут указано в каком пакете и какие файлы изменились и что в них изменилось<br/><br/><strong>&gt;&gt;&gt; /var/cache/pacman/pkg/filesystem-2012.8-1-any.pkg.tar.xz</strong> (расположение пакета)<br/><strong>/etc/fstab: <span style="color:#ff0000">Size differs</span></strong> (тут сказано что размер файла изменился)<br/><strong>/etc/inittab: <span style="color:#ff0000">Contents differ</span></strong> (тут что данные в файле изменились)<br/><strong>/etc/lxdm/lxdm.conf: <span style="color:#ff0000">Gid differs</span></strong> (изменилась группа)<br/><strong>/etc/mysql/my.cnf: <span style="color:#ff0000">Uid differs</span></strong> (изменился пользователь)<br/><strong>/etc/mc/edit.indent.rc: <span style="color:#ff0000">Mode differs</span></strong> (изменились права)<br/><br/>Все правильно.
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8342"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/hascee/index.html">
+                <span class="post-username">hascee</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/8342/index.html">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/hascee/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/hascee/posts/index.html">
+                    13
+                </a>
+            </div>
+            <div>
+                Участник с: 09 апреля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>Тут вместо русской &ldquo;-с&rdquo; нужно использовать английскую!!!</blockquote>Извиняюсь, на форуме сработал xneur , но когда в терминале ввожу :<br/><div class="code"><pre>sudo bash pacman-pkg-list -c  
+[sudo] password for hascee: 
+получаю список пакетов, pacman -Qme
+проверяю существование пакетов в кэше</pre></div>&#8230; И это все что получилось (если я правильно понимаю, то на этом месте должен быть список пакетов , которых нет в кэше , но таковые присутствуют в системе!)<br/>стало быть у меня все пакеты присутствуют, однако:<br/> <br/><blockquote>Скрипт правильно не находит пакеты, так как их НЕТ в кэше.</blockquote><br/>выходит у меня в кэше по одним данным есть пакет amarok , по другим - он отсутствует.<br/><br/>Значит либо pacman-<strong>files</strong>-list -c выборочно не видит пакеты  из кэша, либо (что более вероятно) pacman-<strong>pkg</strong>-list -c работает неверно
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8343"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/8343/index.html">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <strong>pacman-pkg-list -c</strong>  проверяет только явно установленные пакеты, может amarok был установлен как зависимость к другому пакету<br/><br/>попробуй выполнить <strong>pacman-pkg-list -cd</strong>
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8344"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/hascee/index.html">
+                <span class="post-username">hascee</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/8344/index.html">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/hascee/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/hascee/posts/index.html">
+                    13
+                </a>
+            </div>
+            <div>
+                Участник с: 09 апреля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            сейчас проверю - явно поставлю и удалю из кэша<br/><br/>фитчреквест: <br/>Имхо, было бы логично еще добавить функциональность нахождения и вывода новых версий конфигов в системе (.pacnew).<br/>Часто после обновления системы бывает необходимо проверить версии конфигов на актуальность
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index161e.html?next=/forum/topic/862/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/862/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:34:28 GMT -->
+</html>

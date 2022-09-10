@@ -1,0 +1,628 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/734/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:29:20 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        NVidia CUDA. Настройка среды разработки на базе Arch Linux
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/6/index.html">Разработка</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/19/index.html">Уголок разработчика</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>NVidia CUDA. Настройка среды разработки на базе Arch Linux</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>NVidia CUDA. Настройка среды разработки на базе Arch Linux</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6937"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/6937/index.html">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <img src="http://ic.pics.livejournal.com/maisvendoo/50979713/11208/11208_original.jpg"></img><br/><br/>Compute Unified Device Architecture, дословно – унифицированная вычислительная архитектура устройств – архитектура (совокупность программных и аппаратных средств), позволяющая производить на GPU вычисления общего назначения, при этом GPU фактически выступает в роли мощного сопроцессора.<br/><br/>Эта технология заинтересовала меня для применения при разработке вычислительного комплекса моделирования движения тяжелых грузовых поездов. Изначально проект развивался на базе OC Windows 7 Ultimate и MS Visual Studio 2010 в качестве средства разработки.<br/><br/>Однако желание избавить проект от использования проприетарного ПО (мало доступного в академической среде, и доставаемого сами знаете как&#8230;) подвигла меня на поиск путей создания бесплатной платформы разработки, благо NVidia предоставляет Toolkit и SDK безвозмездно. Кстати вышел резил-кандидат CUDA 5.0 со специализированной средой разработки, но доступный для Windows, Mac OS и популярных дистрибутивов Linux, к коим арч не совсем относится.<br/><br/>Тем не менее засучив рукава я приступил к настройке своего арча для работы с CUDA. И, о чудо, драйвера и тулкиты оказались доступны в официальных репозиториях арча! Радостно мяукнув приступил к&#8230;<br/><br/>1. Установка CUDA SDK и Toolkit<br/><br/>Если у Вас не установлены средства разработки на C/C++, то их надо установить<br/><br/># pacman -S gcc glibc make<br/><br/>Ставим драйвера на видеокарту, если они у Вас ещё не установлены<br/><br/># pacman -S nvidia<br/><br/>Затем<br/><br/># pacman -S cuda-sdk cuda-toolkit<br/><br/>Собственно и всё, необходимый набор инструментария у вас уже имеется. Лежит все это богатство по адресу /opt/cuda-sdk/ и /opt/cuda-toolkit/. Мне лично было интересно проверить работоспособность CUDA под линуксом на моей видеокарте (GForce 580 GTX) поэтому я сначала собрал все примеры из SDK. Делаем это так<br/><br/>$ cd /opt/cuda-sdk/C<br/><br/>переходим в каталог с исходниками примеров. Собираем их командой<br/><br/># make<br/><br/>Теперь переходим в /opt/cuda-sdk/C/bin/linux/release/ и любуемся примерами<br/><br/><a href="http://s2.ipicture.ru/Gallery/Viewfull/13750097.html"><img src="http://s2.ipicture.ru/uploads/20121011/thumbs/835omfhr.jpg"></img></a><br/><br/>Сразу предупреждаю, большинство примеров там чисто вычислительные без визуализации, так что не удивляйтесь если сразу не найдете именно этот - smokeParticles. Что ж, полюбовались, идем дальше<br/><br/>2. Выбор среды разработки. Настройка Netbeans 7.2 для работы с CUDA<br/><br/>Честно говоря сначала мой выбор пал на Eclipse IDE, поскольку именно в этой среде я занимался разработкой icq-клиента на Java, привык к ней основательно, да и официальная IDE, релиз коей не за горами основывается именно на эклипсе.<br/><br/>Однако тут меня ждало разочарование - найти толкового описания настройки Eclipse Juno для работы с CUDA я не нашел, предыдущие версии ставить не захотел, а разница в окнах настройки у разных версий эклипса очень ощутимая. Попрыгав с бубном я решил обратить свой взор к Netbeans от &ldquo;кровавого&rdquo; Oralce<br/><br/># pacman -S netbeans<br/><br/>Запускаем Netbeans (Все приложения -&gt; Разработка -&gt; Netbeans - это в &ldquo;кедах&rdquo;).<br/><br/>Теперь необходимо настроить среду на сборку CUDA-проектов. Для их сборки модулей содержащих код работающий на GPU (файлы с расширением *.cu) используется компилятор nvcc, входящие в состав CUDA Toolkit. По сути он является оберткой над gcc - код GPU собирает сам, код CPU передает на съедение gcc.<br/><br/>Изначально Netbeans не настроен на работу с конкретным языком программирования, поэтому идем в пункт меню &ldquo;Сервис -&gt; Подключаемые модули -&gt; Установленные&rdquo;, в котором выбираем модуль C/C++ и жмем &ldquo;Активировать&rdquo;<br/><br/><a href="http://www.picshare.ru/view/334898/"><img src="http://www.picshare.ru/uploads/121011/bCF2Xp9BPR.jpg"></img></a><br/><br/>Перезапускаем среду, идем в &ldquo;Сервис -&gt; Параметры&rdquo;. В появившемся окне выбираем C/C++ и на нескольких вкладках последовательно задаем параметры.<br/><br/>В писке &ldquo;Набор средств&rdquo; жмем &ldquo;Добавить&rdquo;. Задаем базовый каталог - тот в котором будут хранится ваши проекты, семейство набора средств (я поставил GNU) имя набора средств CUDA (на скрине CUDA1, ибо у меня CUDA уже есть, а для иллюстрации удалять не хотелось)<br/><br/><a href="http://s2.ipicture.ru/Gallery/Viewfull/13750133.html"><img src="http://s2.ipicture.ru/uploads/20121011/AXaqjB1T.jpg"></img></a><br/><br/>Задаем пути к компилятору C/C++<br/><br/><a href="http://www.picshare.ru/view/334900/"><img src="http://www.picshare.ru/uploads/121011/x445N42XxH.jpg"></img></a><br/><br/>Задаем дополнительные каталоги заголовочных файлов для компиляторов C и C++<br/><br/><a href="http://www.picshare.ru/view/334901/"><img src="http://www.picshare.ru/uploads/121011/Uk34K57Cyd.jpg"></img></a><br/><br/>Добавить расширение *.cu в список поддерживаемых расширений<br/><br/><a href="http://www.picshare.ru/view/334905/"><img src="http://www.picshare.ru/uploads/121011/88gKwjjzBJ.jpg"></img></a><br/><a href="http://www.picshare.ru/view/334906/"><img src="http://www.picshare.ru/uploads/121011/Y5q4UUBVp7.jpg"></img></a><br/><br/>В принципе всё готово для создания проектов с использованием CUDA. Однако опционально можно настроить подсветку синтаксиса в Netbeans, вернее отключить некоторые настройки &ldquo;Сервис -&gt; Параметры -&gt; Редактор -&gt; Выделение&rdquo;. Выбираем язык &ldquo;Исходные файлы на C/C++&rdquo; и снимаем галочки &ldquo;Выделить ошибки синтаксиса&rdquo;, &ldquo;Выделить неразрешенные файлы include&rdquo; и &ldquo;Выделить неразрешенные идентификаторы&rdquo;.<br/><br/><a href="http://www.picshare.ru/view/334913/"><img src="http://www.picshare.ru/uploads/121011/86Tiug0fx0.jpg"></img></a><br/><br/>Для чего это делаеть? Дело в том, что разработка для CUDA ведется не на С/С++ а на его расширении CUDA C, содержащем ключевые слова и идентификаторы не входящие в стандарт. Редактор безбожно покрывается красными волнистыми линиями подчеркивания &ldquo;неправильных слов&rdquo; и пестрит иконками восклицательных знаков ошибок, хотя проект отлично собирается и выполняется. Такая настройка избавит Вас от такого раздражителя, а ошибки компиляции всё равно будут подсвечиваться в исходном коде при щелчке по сообщению об ошибке в логе компиляции.<br/><br/>Теперь все готово для создания первого проекта. Идем в меню &ldquo;Файл -&gt; Создать проект&rdquo;. В категориях выбираем C/C++, в проектах &ldquo;Приложение С/С++&rdquo;. Жмем &ldquo;Далее&rdquo;.<br/><br/><a href="http://www.picshare.ru/view/334914/"><img src="http://www.picshare.ru/uploads/121011/GN3827iLXx.jpg"></img></a><br/><br/>Мы будем создавать пустой проект, поэтому в настройках снимаем галку &ldquo;Создать главный файл проекта&rdquo;, задаем имя проекта hello_CUDA, выбираем набор средств &ldquo;CUDA (Набор компиляторв GNU)&rdquo;<br/><br/><a href="http://www.picshare.ru/view/334915/"><img src="http://www.picshare.ru/uploads/121011/vxY2n0e9r9.jpg"></img></a><br/><br/>Жмем готово, и видим появившееся слева дерево проекта, которое пока ничего не содержит.<br/><br/><a href="http://www.picshare.ru/view/334917/"><img src="http://www.picshare.ru/uploads/121011/IGTcE50wg8.jpg"></img></a><br/><br/>Щелкаем правой клавишей по папке &ldquo;Исходные файлы&rdquo; и в меню выбираем &ldquo;Новый -&gt; Исходный файл на языке C++&rdquo;. В появившемся окне задаем имя и расширение файла *.cu. Жмем &ldquo;Готово&rdquo; и переходим в редактор кода, в котором набираем такой текст<br/><br/><div class="code"><pre>
+#include  &lt;cuda.h&gt;
+#include  &lt;stdio.h&gt;
+__host__ int main(void)
+{
+    printf("Hello! I can work with NVidia CUDA :)\n");   
+    return 0;
+}</pre></div><br/><br/>Далее щелкаем правой кнопкой по имени проекта в дереве и в меню выбираем &ldquo;Свойства&rdquo;. В открывшемся окне выбираем вкладку &ldquo;Собрать&rdquo; и снимаем галочку &ldquo;Включить проверку зависимостей&rdquo;<br/><br/><a href="http://www.picshare.ru/view/334918/"><img src="http://www.picshare.ru/uploads/121011/V7mLBp2UZ0.jpg"></img></a><br/><br/>После этого жмем F11 - собираем проект. Сообщение<br/><br/><div class="code"><pre>
+"/usr/bin/make" -f nbproject/Makefile-Debug.mk QMAKE= SUBPROJECTS= .build-conf
+make[1]: Вход в каталог `/home/maisvendoo/netbeans/hello_CUDA'
+"/usr/bin/make"  -f nbproject/Makefile-Debug.mk dist/Debug/CUDA-Linux-x86/hello_cuda
+make[2]: Вход в каталог `/home/maisvendoo/netbeans/hello_CUDA'
+mkdir -p build/Debug/CUDA-Linux-x86/_ext/1706347718
+nvcc    -c -g -o build/Debug/CUDA-Linux-x86/_ext/1706347718/hello.o /home/maisvendoo/netbeans/hello_CUDA/hello.cu
+mkdir -p dist/Debug/CUDA-Linux-x86
+nvcc     -o dist/Debug/CUDA-Linux-x86/hello_cuda build/Debug/CUDA-Linux-x86/_ext/1706347718/hello.o  
+make[2]: Выход из каталога `/home/maisvendoo/netbeans/hello_CUDA'
+make[1]: Выход из каталога `/home/maisvendoo/netbeans/hello_CUDA'
+СОБРАТЬ SUCCESSFUL (общее время: 2s)</pre></div><br/>означает что проект успешно собран. Жмем F6 для запуска.<br/><br/><div class="code"><pre>
+Hello! I can work with NVidia CUDA :)
+ВЫПОЛНЕНИЕ SUCCESSFUL (общее время: 45ms)</pre></div><br/>Данный код выполнялся конечно на CPU, о чем говорит директива __host__ в описании функции main(). Так что данный пример иллюстрирует лишь пригодность Netbeans в качестве IDE для разработки для NVidia CUDA. Дальнейшее впереди&#8230; :)<br/><br/>Удачного cud-инга! ;)
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6938"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sleepycat/index.html">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/6938/index.html">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sleepycat/topics/index.html">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sleepycat/posts/index.html">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            спасибо скопировал, одно но , в описании идет аналогия с мощным процессором, тут мягко говоря притянуто за уши. Да эта фабрика с китайцами быстро пошьет тебе кеды, но вот сбока пылесоса или ракетного двигателя от увеличения &ldquo;массы&rdquo; китайцев быстрее не пойдет, но это все к теме не шибко. Давно хотел посмотреть на реализацию на линуксах, но все руки не доходят. благодарен за расшаривание опыта, (еще и на арче сразу) .
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6939"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/domov0y/index.html">
+                <span class="post-username">domov0y</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/6939/index.html">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/domov0y/topics/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/domov0y/posts/index.html">
+                    819
+                </a>
+            </div>
+            <div>
+                Участник с: 09 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            sleepycat, Я наивно полагал что все знают присказку &ldquo;одна женщина может выносить ребенка в течении девяти месяцев, но это не означает что  девять женщин справятся с этим за один месяц&rdquo;
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с вами знание ip адреса
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6940"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sleepycat/index.html">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/6940/index.html">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sleepycat/topics/index.html">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sleepycat/posts/index.html">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            я просто когда прочел на свою голову текста на вопрос &ldquo;о, что это за новый лейбл на коробке гр. карт &rdquo;cuda&ldquo;&rdquo; подумал по наивности, что это все равно, что поставить на мать второй процессор. И вроде в игре есть видео , а в жизни вторая голова у моего капутера. Слаба богу я не успел собрать сумму на хорошую видюху как в очередной статье один добрый человек расставил точки над И. Оттуда я и взял себе на вооружения пример с китайской фабрикой(не мои перлы), но теперь у меня будет две словесной аналогии. Как говорил один из моих шефов &ldquo;я как бы знал, но как бы не смог вспомнить&rdquo; )))
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6941"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/6941/index.html">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В задачах которые хорошо распараллеливаются (например решение СЛАУ) CUDA реально дает прирост производительности.  Проверял на той же задаче с поездом расчет ускорений для 2 и 200 вагонов занимает одинаковое время&#8230; Только там возникли другие проблемы с реализацией, которые надо решать&#8230;<br/><br/>Приятно удивило наличие всего необходимого ПО в репозиториях арча. В той же винде с установкой куды и настройкой среды надо повозится
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index3b98.html?next=/forum/topic/734/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/734/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:29:20 GMT -->
+</html>

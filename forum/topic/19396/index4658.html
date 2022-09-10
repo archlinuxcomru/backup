@@ -1,0 +1,1135 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        поясните за notify-send &amp; xfce4-notifyd
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>поясните за notify-send &amp; xfce4-notifyd</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>поясните за notify-send &amp; xfce4-notifyd</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219723"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Aivar/">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/219723/">#</a>
+            3 года, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Aivar/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Aivar/posts/">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>grayich</em><br>похоже щас всё через dbus идёт</blockquote>Не похоже, а так и есть.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219724"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/grayich/">
+                <span class="post-username">grayich</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/219724/">#</a>
+            3 года, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/grayich/topics/">
+                    216
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/grayich/posts/">
+                    1984
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br>а при чём тут notify-send</blockquote> при том, что тема про неё ваще-то.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219727"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/219727/">#</a>
+            3 года, 1 месяц назад
+            
+                (отредактировано
+                
+                    3 года, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>grayich</em><br>при том, что тема про неё ваще-то.</blockquote>извините, но notify-send сам по себе ничего никуда не выводит.
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219732"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/grayich/">
+                <span class="post-username">grayich</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/219732/">#</a>
+            3 года, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/grayich/topics/">
+                    216
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/grayich/posts/">
+                    1984
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            вообщем notify-send мёртв и альтернативы по сути тоже и всем пофик<br />нужно пользоваться более низкоуровневыми методами?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219733"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/219733/">#</a>
+            3 года, 1 месяц назад
+            
+                (отредактировано
+                
+                    3 года, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>grayich</em><br>вообщем notify-send мёртв</blockquote>нет, всё норм периодически обновляется.<br /><br />если вы не в состоянии разобраться со своим менеджером уведомлений.<br />попробуйте так, должно работать в не зависимости от него.<br /><pre><code>$ notify-send &#39;volume: $var&#39; -h string:x-canonical-private-synchronous:name</code></pre>
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219734"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/grayich/">
+                <span class="post-username">grayich</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/219734/">#</a>
+            3 года, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/grayich/topics/">
+                    216
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/grayich/posts/">
+                    1984
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br>должно работать</blockquote> не должно и не работает
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219735"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/219735/">#</a>
+            3 года, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>grayich</em><br>не должно и не работает</blockquote>ну значит, вы какой-то не интересный используете(((
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219736"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Aivar/">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/219736/">#</a>
+            3 года, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Aivar/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Aivar/posts/">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>grayich</em><br>не должно и не работает</blockquote>Должно и давно работает:<br /><pre><code>a=`amixer -Mc 0 sset Master $1 | egrep -o &#39;[0-9]{1,3}%&#39; | tr -d %`
+notify-send -h int:value:$a ALSA &quot;Master volume: &quot;</code></pre>Привязано к хоткеям, в первом позиционном параметре - изменение громкости микшера: 1-, 1+, 3-, 3+ и т.д.<br /><br /><blockquote><em>grayich</em><br>нужно пользоваться более низкоуровневыми методами?</blockquote>А это всегда пожалуйста. Про dzen2 уже говорили.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219741"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vs220/">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/219741/">#</a>
+            3 года, 1 месяц назад
+            
+                (отредактировано
+                
+                    3 года, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vs220/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vs220/posts/">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>grayich</em><br>не должно и не работает</blockquote>Раньше xfce4-notifyd этого и не умел, может поправили а может и нет<br />Проверьте на  <a href="https://aur.archlinux.org/packages/?O=0&K=notify-osd-customizable">https://aur.archlinux.org/packages/?O=0&K=notify-osd-customizable</a> у меня он нормально работает.<br />скрипт для регулировки громкости<br />путь до скрипта up или down mute<br /><pre><code>#!/bin/sh
+# created by abarilla
+usage=&quot;usage: $0 -c {up|down|mute} [-i increment] [-m mixer]&quot;
+command=
+increment=5%
+mixer=Master
+while getopts i:m:h o
+do case &quot;$o&quot; in
+    i) increment=$OPTARG;;
+    m) mixer=$OPTARG;;
+    h) echo &quot;$usage&quot;; exit 0;;
+    ?) echo &quot;$usage&quot;; exit 0;;
+esac
+done
+shift $(($OPTIND - 1))
+command=$1
+if [ &quot;$command&quot; = &quot;&quot; ]; then
+    echo &quot;usage: $0 {up|down|mute} [increment]&quot;
+    exit 0;
+fi
+display_volume=0
+if [ &quot;$command&quot; = &quot;up&quot; ]; then
+    display_volume=$(amixer set $mixer $increment+ unmute | grep -m 1 &quot;%]&quot; | cut -d &quot;[&quot; -f2|cut -d &quot;%&quot; -f1)
+fi
+if [ &quot;$command&quot; = &quot;down&quot; ]; then
+    display_volume=$(amixer set $mixer $increment- unmute | grep -m 1 &quot;%]&quot; | cut -d &quot;[&quot; -f2|cut -d &quot;%&quot; -f1)
+fi
+icon_name=&quot;&quot;
+if [ &quot;$command&quot; = &quot;mute&quot; ]; then
+    if amixer get Master | grep &quot;\[on\]&quot;; then
+        display_volume=0
+        icon_name=&quot;notification-audio-volume-muted&quot;
+        amixer set $mixer mute
+    else
+        display_volume=$(amixer set $mixer unmute | grep -m 1 &quot;%]&quot; | cut -d &quot;[&quot; -f2|cut -d &quot;%&quot; -f1)
+    fi
+fi
+if [ &quot;$icon_name&quot; = &quot;&quot; ]; then
+    if [ &quot;$display_volume&quot; = &quot;0&quot; ]; then
+        icon_name=&quot;notification-audio-volume-off&quot;
+    else
+        if [ &quot;$display_volume&quot; -lt &quot;33&quot; ]; then
+            icon_name=&quot;notification-audio-volume-low&quot;
+        else
+            if [ &quot;$display_volume&quot; -lt &quot;67&quot; ]; then
+                icon_name=&quot;notification-audio-volume-medium&quot;
+            else
+                icon_name=&quot;notification-audio-volume-high&quot;
+            fi
+        fi
+    fi
+fi
+notify-send &quot; &quot; -i $icon_name -h int:value:$display_volume -h string:synchronous:volume</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219742"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/grayich/">
+                <span class="post-username">grayich</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/219742/">#</a>
+            3 года, 1 месяц назад
+            
+                (отредактировано
+                
+                    3 года, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/grayich/topics/">
+                    216
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/grayich/posts/">
+                    1984
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            здаётся мне, что мы каждый о своём говорим ))<br /><br />с <strong>xfce4-notifyd</strong> всё впорядке<br />для примера вот этот скриптик отрабатывает нормально и не плодит балоны<br /><br /><pre><code>#!/usr/bin/env python3
+
+import gi
+gi.require_version(&quot;Notify&quot;, &quot;0.7&quot;)
+from gi.repository import Notify
+import time
+
+Notify.init(&quot;test&quot;)
+notification = Notify.Notification.new(&quot;test&quot;)
+
+for i in reversed(range(11)):
+	notification.update(str(i))
+	notification.show()
+	time.sleep(1)
+</code></pre><br />проблема именно в обёртке-посылателе notify-send<br />впринципе можно на него забить, но с dbus пока не разберусь, непонятно как-то<br /><br /><pre><code>gdbus call --session --dest org.freedesktop.Notifications --object-path /org/freedesktop/Notifications --method org.freedesktop.Notifications.Notify &#39;appname&#39; 0 dialog-information &quot;Title&quot; &quot;Message&quot; \[\] {} 5000</code></pre>выводит месадж и возвращает id сессии, но как опять написать в эту сессию, непонятно
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/19396/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747ae11d58490058',m:'HZR6L1ks2am5PPCfgdw31LiJJUrQZMsIjGij_yEC37Y-1662673612-0-AQuvPUaJW2jG+dZcmW7xUaEORc73Y2daOJBrT2K5pw1GdeorWKDS4FmHzY2DKGcoxaxCfbLVtDn7f0pNDze3zSIQ8hEkKuYQHvULtqIZqbVqSlOzQpSM50wFMZ6EQwKzdAstj/yyPlVRjYTsBcko+4c=',s:[0x183588e6a9,0x39bb9af59b],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

@@ -1,0 +1,365 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Настройка DHCP через dnsmasq
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Настройка DHCP через dnsmasq</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Настройка DHCP через dnsmasq</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195827"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/irzhyk/">
+                <span class="post-username">irzhyk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195827/">#</a>
+            4 года, 11 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 11 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/61/32/6132c3412dd1571c1d6a3bb5b7eff4de.png" alt="irzhyk avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/irzhyk/topics/">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/irzhyk/posts/">
+                    78
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Привет. Подскажите пожалуйста пару моментов по настройке сети.<br /><br />Есть ПК с 2 Lan(встроенная enp4s0 и PCI enp3s0), на enp4s0 - внешняя сеть, DHCP, на enp3s0 - внутренняя, статика<br />Сеть поднимал через systemd-networkd<br />    /etc/systemd/network/enp3s0-lan.network<br />        [Match]<br />        Name=enp3s0<br /><br />        [Network]<br />        192.168.1.1/24<br />        Gateway=192.168.1.1<br /><br />    /etc/systemd/network/enp4s0-inet.network<br />        [Match]<br />        Name=enp4s0<br /><br />        [Network]<br />        DHCP=ipv4<br /><br />systemctl start/enable systemd-networkd systemd-resolved<br /><br />Вопрос 1: при настройке через netctl можно было указать параметр &quot;SkipNoCarrier=yes&quot; для поднятия соединение без подключенного линка, как указать подобный параметр при настройке через systemd-networkd?<br /><br />На интерфейсе enp3s0 необходимо поднять DHCP-сервер. Установил dnsmasq.<br />    /etc/dnsmasq.conf<br />        interface=enp3s0<br />        bind-interfaces<br />        dhcp-range=192.168.1.2,192.168.1.10,12h<br /><br />systemctl start/enable dnsmasq<br /><br />Вопрос 2: Без dnsmasq, при подключении кросс-кабелем и присвоении вручную на другом ПК ip 192.168.2.2 - машины друг друга пингуют, при старте dnsmasq - вторая машина не получает по DHCP ip адрес. Раньше я поднимал сеть через netctl - все работало.<br /><br />Вопрос 3: Если мне нужно через интерфейс enp3s0 видеть ПК не только по ip, но и по имени - в какую сторону копать?(resolv.conf?)<br /><br />UPD:<br />По вопросу 2: Решил, невнимательно настраивал dnsmasq.conf, неправильно указал опцию tftp-root.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195905"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/irzhyk/">
+                <span class="post-username">irzhyk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195905/">#</a>
+            4 года, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/61/32/6132c3412dd1571c1d6a3bb5b7eff4de.png" alt="irzhyk avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/irzhyk/topics/">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/irzhyk/posts/">
+                    78
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Нашел такую опцию:<br /> &quot;The [Network]<br />          section gained a new boolean setting ConfigureWithoutCarrier= that<br />          tells systemd-networkd to ignore link sensing when configuring the<br />device. &quot;<br /><br />Только не могу найти информацию как включить: &quot;ConfigureWithoutCarrier=yes&quot; - не работает. Без линка не поднимается сервис dnsmasq.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/17882/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747bb3a389379d58',m:'pHQib1h7ykdlbN9wIf.49pqF__Ygbm92yFitmoslUqk-1662682235-0-Ad7oyYE1x46Y+v1OwGUIj73mVEpgCgT9fTmw1a4nmkmxFg5HYjuhgkLjJAnIhC2/ETjkVLUvmpNvuh4XmWlrmvsbk3FA1vA14Hou6TTVaBaNXRfOPaJDllZHHanqpJVQ6AAh8EDnVlRmnF6ISxiAxY0=',s:[0xe17895f1f8,0xf6474e23e6],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

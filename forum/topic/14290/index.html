@@ -1,0 +1,448 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/14290/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 10:37:31 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [thx, решено] Монтирование USB с ФС ext4 и правами записи для пользователя
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/9/index.html">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[thx, решено] Монтирование USB с ФС ext4 и правами записи для пользователя</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[thx, решено] Монтирование USB с ФС ext4 и правами записи для пользователя</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-145381"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Templainer/index.html">
+                <span class="post-username">Templainer</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/145381/index.html">#</a>
+            7 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Templainer/topics/index.html">
+                    36
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Templainer/posts/index.html">
+                    127
+                </a>
+            </div>
+            <div>
+                Участник с: 25 апреля 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Не получается монтировать с опциями umask,uid,gid. Выдает:<br /><blockquote><br>EXT4-fs (sdb1): Unrecognized mount option &quot;gid=100&quot; or missing value</blockquote>Прочитанное на просторах не помогло. Понял только, что не канает это по отношению к ext4.<br />Пробовал в /etc/fstab добавлять /dev/sdb1 c опциями как у /dev/sda (дефолт после установки арча), но не помогло. Выдает:<br /><blockquote><br>[    4.497092] sd 6:0:0:0: [sdb1] 30761856 512-byte logical blocks: (15.7 GB/14.6 GiB)<br />[    4.497917] sd 6:0:0:0: [sdb1] Write Protect is off<br />[    4.497923] sd 6:0:0:0: [sdb1] Mode Sense: 43 00 00 00<br />[    4.498664] sd 6:0:0:0: [sdb1] No Caching mode page found<br />[    4.498770] sd 6:0:0:0: [sdb1] Assuming drive cache: write through<br />[    4.502921]  sdb1: unknown partition table<br />[    4.505441] sd 6:0:0:0: [sdb1] Attached SCSI removable disk<br />[    5.737861] systemd[1]: Expecting device dev-sdb1.device...<br />[   10.941463]  sdb1: unknown partition table<br />[   11.008345] EXT4-fs (sdb1): mounted filesystem with ordered data mode. Opts: data=ordered</blockquote>И fsck прогонял, в disk пользователя добавлял, с правами баловался, c опциями к mount игрался. В общем, чего только не делал, да только все не то, что надо или не так, как надо.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-145383"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/32reg/index.html">
+                <span class="post-username">32reg</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/145383/index.html">#</a>
+            7 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/32reg/topics/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/32reg/posts/index.html">
+                    526
+                </a>
+            </div>
+            <div>
+                Участник с: 17 мая 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Templainer</strong>, тоже одно время пытался настроить такое монтирование, но потом, просто сделал себя владельцем папки в которую монтируется флешка и все.<br />Но тема интересна, подпишусь
+            
+                
+                    <div class="post-signature">
+                        <a href="http://linux32.ru/">www.linux32.ru</a> - новости и статьи о Linux
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-145386"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/145386/index.html">#</a>
+            7 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Templainer</strong>, как правило, линуксовые и прочие юниксовые ФС, нормально поддерживающие права доступа, не имеют костылей в принудительным их назначением при монтировании :)<br /><br />Другими словами, ext4 просто не поддерживает тех опций, которые вы пытаетесь ей приписать, о чём вам им сообщает: <blockquote><em>Templainer</em><br><pre><code>EXT4-fs (sdb1): Unrecognized mount option &quot;gid=100&quot; or missing value</code></pre></blockquote><br />Вместо этого, вам нужно ПОСЛЕ монтирования флешки сделать себя владельцем её каталога командой <strong>chown</strong>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index6e4f-2.html?next=/forum/topic/14290/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'746644600f249d9f',m:'aJDkjMkfp_BW8BFr4JvBL7ztrSuHP.fXEn88Bp3R4vg-1662457477-0-ASB1ai2CJWob3KgZErsEnbDtXWhfkL5HEBDo+Wuw391XZb0KqQ5nl2iBZNOcdZ/zyzldLkr0aJCRzaei8wzi7Idkd1VHOON4Scijl8Xb48hGdkZJAbG6Ltw2ug+w0xTyH5qOgsRGcTXkAtFfx+YktuE=',s:[0x7cad38cb57,0x3bd442f2e1],u:'/cdn-cgi/challenge-platform/h/b'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../cdn-cgi/challenge-platform/h/b/scripts/alpha/invisible5615.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/14290/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 10:37:31 GMT -->
+</html>

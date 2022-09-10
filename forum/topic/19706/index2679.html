@@ -1,0 +1,1144 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19706/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:53:46 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        i2c шина - ddcutil не работает, ddccontrol изменяет регистры монитора
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/12/index.html">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>i2c шина - ddcutil не работает, ddccontrol изменяет регистры монитора</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>i2c шина - ddcutil не работает, ddccontrol изменяет регистры монитора</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-225581"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Dobrov/index.html">
+                <span class="post-username">Dobrov</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/225581/index.html">#</a>
+            2 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Dobrov/topics/index.html">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Dobrov/posts/index.html">
+                    142
+                </a>
+            </div>
+            <div>
+                Участник с: 03 ноября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Хотелось бы менять яркость и другие режимы монитора утилитой ddcutil, но <strong>почему работает только ddccontrol?</strong><br /><br /><strong>sudo ddcutil detect</strong><br />(i2c_set_addr) Error in ioctl(I2C_SLAVE), errno=EBUSY(16): Device or resource busy<br />(i2c_set_addr                  ) addr = 0x50. Returning EBUSY(-16): Device or resource busy<br />No displays found<br /><br /><strong>ddccontrol -p # поиск доступных мониторов</strong><br />radeon_open: mmap failed: Invalid argument<br /> - Устройство: dev:/dev/i2c-7 DDC/CI: Да VESA standard monitor<br />   Тип входа: Цифровой<br /><br /><strong>$groups</strong><br />    wheel i2c sys tty dbus polkitd usbmux git video storage render lp input disk adm users<br /><br />монитор: ASUS VS239NV 03.2015<br />видео: Radeon RX 550 Series GCN 1.3 RV370 (hari) (Polaris 12, DRM 3.19.0, LLVM 6.0.0)<br /><br />ddccontrol работает, но считывание/запись регисторов происходит медленно, <strong>как вместо ddccontrol использовать ddcutil?</strong><br />система обновлена. установка ddcci-driver-linux-dkms не помогла, результат тот же.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-225584"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/225584/index.html">#</a>
+            2 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <a href="https://www.ddcutil.com/adl/">https://www.ddcutil.com/adl/</a>
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-225590"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/225590/index.html">#</a>
+            2 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Dobrov</em><br>Хотелось бы менять яркость и другие режимы монитора утилитой ddcutil</blockquote>Интересно узнать, чем же этот способ лучше других ???
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-225594"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/225594/index.html">#</a>
+            2 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Странно то, что ddcutil вообще ничего не видит - возможно проблемы связаны с видеодрайвером, возможно проблемы с протоколом I2C (как пишут это ненадежный протокол и более 75% времени тратится на тайм-ауты, то есть требуется несколько повторных попыток - это даже специфицировано).<br />Но ddcutil имеет много разных опций, пробуй, например<br />- при BUSY рекомендуют опции: --force, --force-slave-address<br />- увеличить количество попыток: --maxtries<br />- увеличение логирования: ddcutil detect --verbose<br />- полный просмотр всего и вся: ddcutil environment --verbose<br />Посмотри вывод journalctl -b | grep i2c<br /><br /><strong>PS</strong> - и предоложу, что возможно используется ноутбук, к которому подключается внешний монитор - если так, то в этом случае есть свои нюансы.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-225595"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/225595/index.html">#</a>
+            2 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>ничего не видит -</blockquote>почему не видит? написано что устройство занято.
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-225597"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/225597/index.html">#</a>
+            2 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br>почему не видит? написано что устройство занято.</blockquote>Вот и не понятно - чем занято? - потому и выразился, что не видит (хотя, конечно, <u>не видит</u> тут не подходит)<br />Встречалось такое в одном описании - грешили на видеодрайвер или на ноутбук с подключенным к нему внешним монитором - подробности не помню.<br />Думаю должно немного прояснить если посмотреть выводы - ddcutil detect --verbose и ddcutil environment --verbose
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-225599"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/225599/index.html">#</a>
+            2 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br><a href="https://www.ddcutil.com/adl/">https://www.ddcutil.com/adl/</a></blockquote>Только сейчас обратил на это внимание ... и да, похоже так оно и есть ...<br /><strong>AMD PRORIETARY DRIVER</strong><br /><pre><code>AMD’s proprietary video driver fglrx does not expose the I2C bus. Instead, it provides access to the bus through the AMD Display Library, aka ADL. Owing to copyright restrictions, the ADL header files are not distributed with the ddcutil source. Additional steps are required to build ddcutil with fglrx support.
+To see if your copy of ddcutil was built with fglrx support, issue the command: ddcutil --version
+ADL identifies monitors using an adapter-number/display-number pair. To select a monitor using these numbers, specify the --adl option with a period separating the adapter-number and display-number, e.g. --adl 0.1</code></pre>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-225601"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Dobrov/index.html">
+                <span class="post-username">Dobrov</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/225601/index.html">#</a>
+            2 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Dobrov/topics/index.html">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Dobrov/posts/index.html">
+                    142
+                </a>
+            </div>
+            <div>
+                Участник с: 03 ноября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br><blockquote><em>Dobrov</em><br>Хотелось бы менять яркость и другие режимы монитора утилитой ddcutil</blockquote>Интересно узнать, чем же этот способ лучше других ???</blockquote>Сделал скрипт изменения яркости по Hotkeys, пока только для ddccontrol, но хотел бы проверять, что установлено у пользователя: ddcutil или ddccontrol.<br /><br /><blockquote><em>vasek</em><br><blockquote><em>indeviral</em><br><a href="https://www.ddcutil.com/adl/">https://www.ddcutil.com/adl/</a></blockquote><strong>AMD PRORIETARY DRIVER</strong></blockquote>amdgpu-pro не использую. у меня драйвер стандартный на обычной рабочей станции. Спасибо, с ключом --force-slave-address яркость меняется:<br /><pre><code>ddcutil --force-slave-address setvcp 10 75</code></pre>но с ошибками:<br /><pre><code>(i2c_set_addr) Error in ioctl(I2C_SLAVE), errno=EBUSY(16): Device or resource busy
+(i2c_set_addr                  ) Retrying using IOCTL op I2C_SLAVE_FORCE for address 0x50
+(i2c_set_addr                  ) addr = 0x50. Returning OK(0): success</code></pre><strong>sudo ddcutil &ndash;force-slave-address detect</strong> вот выжимки из лога:<br /><pre><code>Found connector: card1-DVI-D-1
+    /sys/class/drm/card1/card1-DVI-D-1/status: connected
+
+Summary of udev I2C devices
+   i2c-dev     i2c-8      AMDGPU DM i2c hw bus 2              /devices/pci0000:00/0000:00:01.0/0000:01:00.0/i2c-8/i2c-dev/i2c-8
+
+Examining /sys/bus/i2c/devices...
+   /sys/bus/i2c/devices/i2c-3/name:   i915 gmbus dpd
+   /sys/bus/i2c/devices/i2c-1/name:   i915 gmbus dpc
+   /sys/bus/i2c/devices/i2c-8/name:   AMDGPU DM i2c hw bus 2
+   /sys/bus/i2c/devices/i2c-6/name:   dmdc
+   /sys/bus/i2c/devices/0-0053/name:  eeprom
+
+   Bus /dev/i2c-8 found:   true
+   Bus /dev/i2c-8 probed:  true
+   Bus accessible:          true
+   Bus is eDP:              false
+   Valid bus name checked:  true
+   I2C bus has valid name:  true
+   Address 0x50 present:    false
+
+   Examining device /dev/i2c-8...
+      Functionality: I2C_FUNC_I2C, I2C_FUNC_SMBUS_PEC, I2C_FUNC_SMBUS_QUICK,
+                     I2C_FUNC_SMBUS_READ_BYTE, I2C_FUNC_SMBUS_WRITE_BYTE,
+                     I2C_FUNC_SMBUS_READ_BYTE_DATA, I2C_FUNC_SMBUS_WRITE_BYTE_DATA,
+                     I2C_FUNC_SMBUS_READ_WORD_DATA, I2C_FUNC_SMBUS_WRITE_WORD_DATA,
+                     I2C_FUNC_SMBUS_PROC_CALL, I2C_FUNC_SMBUS_WRITE_BLOCK_DATA,
+                     I2C_FUNC_SMBUS_READ_I2C_BLOCK, I2C_FUNC_SMBUS_WRITE_I2C_BLOCK
+(i2c_set_addr                  ) addr = 0x50. Returning EBUSY(-16): Device or resource busy
+      Unable to read EDID, psc=EBUSY(-16): Device or resource busy
+
+      Trying simple VCP read of feature 0x10...
+      read() returned 6e 88 88 02 00 10 00 00 64 00 4b
+      Attempt 1 to read feature failed. status = DDCRC_DDC_DATA(-3001): DDC data error.  Retrying...
+      read() returned 6e 88 02 00 10 00 00 64 00 4b 8b
+      Attempt 2 to read feature succeeded.
+      DDC communication succeeded
+
+   ***One Device ***
+   path: /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/i2c-8/i2c-dev/i2c-8
+   Device Node Path: /dev/i2c-8
+      struct udev_device at: 0x55f05f7c9780
+         devpath:   /devices/pci0000:00/0000:00:01.0/0000:01:00.0/i2c-8/i2c-dev/i2c-8
+         subsystem: i2c-dev
+         devtype:   (null)
+         syspath:   /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/i2c-8/i2c-dev/i2c-8
+         sysname:   i2c-8
+         sysnum:    8
+         devnode:   /dev/i2c-8
+         Properties:
+            DEVNAME -&gt; /dev/i2c-8
+            DEVPATH -&gt; /devices/pci0000:00/0000:00:01.0/0000:01:00.0/i2c-8/i2c-dev/i2c-8
+            MAJOR -&gt; 89
+            MINOR -&gt; 8
+            SUBSYSTEM -&gt; i2c-dev
+         Sysattrs:
+            dev -&gt; 89:8
+            device -&gt; (null)
+            name -&gt; AMDGPU DM i2c hw bus 2
+            subsystem -&gt; i2c-dev
+            uevent -&gt; MAJOR=89
+                      MINOR=8
+                      DEVNAME=i2c-8</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-225602"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/225602/index.html">#</a>
+            2 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Dobrov</em><br>яркость меняется: ….. но с ошибками</blockquote>Как уже писал, ddcutil частенько не считывает с 1-го раза (основная причина - видеодрайвер).<br />В твоем случае не считывается с 1-го раза еще и EDID монитора - не верно считываются определенные байты и происходит не совпадение контрольной суммы (error DDCRC_EDID)<br /><blockquote><em>Dobrov</em><br>sudo ddcutil –force-slave-address detect вот выжимки из лога:<br />Unable to read EDID<br />Trying simple VCP read of feature 0x10&#8230;<br />read() returned 6e 88 88 02 00 10 00 00 64 00 4b<br />Attempt 1 to read feature failed. status = DDCRC_DDC_DATA(-3001): DDC data error.  Retrying&#8230;<br />read() returned 6e 88 02 00 10 00 00 64 00 4b 8b<br />Attempt 2 to read feature succeeded.</blockquote>Хотя довольно странно - как это байты не верно считываются? - точнее, то считываются, то не считывааются??? Обычно если уж не считываются верно, то всегда. Нужно с этим конкретно разбираться.<br />Но если это не влияет на изменение яркости, то можно и забить.<br />И все-таки, имхо, лучше не использовать эти глючные утилиты. Есть же другие способы изменения яркости без этих сложных утилит.<br /><br /><strong>PS</strong> - и все-таки не понятна фраза<br /><blockquote><em>Dobrov</em><br>amdgpu-pro не использую. у меня драйвер стандартный на обычной рабочей станции.</blockquote>так как в логах видим amdgpu - а вот как это влияет на ddcutil, ничего сказать не могу.<br /><blockquote><em>Dobrov</em><br>i2c-dev i2c-8 AMDGPU DM i2c hw bus 2 /devices/pci0000:00/0000:00:01.0/0000:01:00.0/i2c-8/i2c-dev/i2c-8</blockquote>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-225603"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Dobrov/index.html">
+                <span class="post-username">Dobrov</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/225603/index.html">#</a>
+            2 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Dobrov/topics/index.html">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Dobrov/posts/index.html">
+                    142
+                </a>
+            </div>
+            <div>
+                Участник с: 03 ноября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>не понятна фраза<blockquote><em>Dobrov</em><br>amdgpu-pro не использую. у меня драйвер стандартный на обычной рабочей станции.</blockquote></blockquote>xf86-video-amdgpu - это и есть открытый драйвер АДМ, а проприетарный это amdgpu-pro<br /><br /><blockquote><em>vasek</em><br>лучше не использовать эти глючные утилиты. Есть же другие способы изменения яркости без этих сложных утилит.</blockquote>Изменение регистров (яркость, пресеты, переключение входов и прочее) работает, но иногда не с первого раза…<br />Какие: «другие способы изменения яркости»? (исключая вариант тянуться к кнопкам монитора)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexfcc1.html?next=/forum/topic/19706/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19706/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:53:46 GMT -->
+</html>

@@ -1,0 +1,624 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Не поднимается сеть при старте (systemd)
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Не поднимается сеть при старте (systemd)</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Не поднимается сеть при старте (systemd)</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-100816"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/aivs/">
+                <span class="post-username">aivs</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/100816/">#</a>
+            9 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/aivs/topics/">
+                    62
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/aivs/posts/">
+                    261
+                </a>
+            </div>
+            <div>
+                Участник с: 31 октября 2006
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Начисто установил свежую систему, там systemd.<br/>Создал файлики:<br/><strong>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e0928f8f94a081928388938592968592">[email&#160;protected]</a> Z-Way]# cat /etc/conf.d/network </strong><br/><div class="code"><pre>interface=eth0
+address=192.168.1.108
+netmask=24
+gateway=192.168.1.1
+broadcast=192.168.1.255</pre></div><br/><strong>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f3819c9c87b39281909b809681859681">[email&#160;protected]</a> Z-Way]# cat /etc/systemd/system/network.service </strong><br/><div class="code"><pre>[Unit]
+Description=Network Connectivity
+Wants=network.target
+Before=network.target
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+EnvironmentFile=/etc/conf.d/network
+ExecStart=/sbin/ip link set dev ${interface} up
+ExecStart=/sbin/ip addr add ${address}/${netmask} broadcast ${broadcast} dev ${interface}
+ExecStart=/sbin/ip route add default via ${gateway}
+ExecStop=/sbin/ip addr flush dev ${interface}
+ExecStop=/sbin/ip link set dev ${interface} down
+[Install]
+WantedBy=multi-user.target</pre></div><br/>Добавил network в автозагрузку<br/><strong>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d1a3bebea591b0a3b2b9a2b4a3a7b4a3">[email&#160;protected]</a> Z-Way]# systemctl enable network</strong><br/><br/>Перезагружаюсь, сети нет, проверяю<br/><strong>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="40322f2f340021322328332532362532">[email&#160;protected]</a> Z-Way]# ip addr</strong><br/><div class="code"><pre>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever</pre></div><br/>Смотрю почему не выполнилась настройка сети:<br/><strong>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7d0f1212093d1c0f1e150e180f">[email&#160;protected]</a>ver ~]# systemctl status network</strong><br/><div class="code"><pre>network.service - Network Connectivity
+          Loaded: loaded (/etc/systemd/system/network.service; enabled)
+          Active: failed (Result: exit-code) since Fri 2013-02-01 14:36:00 MSK; 3min 26s ago
+         Process: 140 ExecStart=/sbin/ip link set dev ${interface} up (code=exited, status=1/FAILURE)</pre></div><br/>пробую вручную запустить<br/><strong>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a3d1ccccd7e3c2d1c0cbd0c6d1d5c6d1">[email&#160;protected]</a> ~]# systemctl start network</strong><br/><div class="code"><pre>network.service - Network Connectivity
+          Loaded: loaded (/etc/systemd/system/network.service; enabled)
+          Active: active (exited) since Fri 2013-02-01 14:39:50 MSK; 7s ago
+         Process: 229 ExecStart=/sbin/ip route add default via ${gateway} (code=exited, status=0/SUCCESS)
+         Process: 227 ExecStart=/sbin/ip addr add ${address}/${netmask} broadcast ${broadcast} dev ${interface} (code=exited, status=0/SUCCESS)
+         Process: 225 ExecStart=/sbin/ip link set dev ${interface} up (code=exited, status=0/SUCCESS)</pre></div>проверяю доступные интерфейсы<br/><strong>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bbc9d4d4cffbdac9d8d3c8dec9cddec9">[email&#160;protected]</a> ~]# ip addr</strong><br/><div class="code"><pre>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether e0:cb:4e:e7:b0:52 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.108/24 brd 192.168.1.255 scope global eth0
+    inet6 fe80::e2cb:4eff:fee7:b052/64 scope link
+       valid_lft forever preferred_lft forever</pre></div>Все нормально работает, единственное dns сервера в resolf.conf не прописались, ну это я и вручную сделать могу.<br/>Почему если вручную стартовать, то сеть поднимается, а при загрузке нет? что я забыл?<br/>Такое ощущение, что сеть стартует до того как подгрузились драйвера на сетевуху, других объяснений не вижу
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-100818"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/100818/">#</a>
+            9 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Скорей всего – да, не успевает загрузиться драйвер. Возможно, там какое-то заковыристое firmware, которое долго грузится.<br/>Для уверенности было бы неплохо посмотреть то же самое место в логе, который даёт <strong>journalctl -b</strong> , там скорей всего будет видно.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-100820"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/aivs/">
+                <span class="post-username">aivs</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/100820/">#</a>
+            9 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/aivs/topics/">
+                    62
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/aivs/posts/">
+                    261
+                </a>
+            </div>
+            <div>
+                Участник с: 31 октября 2006
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Хотел перезагрузиться чтобы лог показать, но сеть поднялась в этот раз, видимо сказалось, что установил несколько новых сервисов, которые затормозили загрузку системы и дали драйверу прогрузиться.<br/>Зато обнаружил что еще один драйвер не грузится USB-&gt;COM pl2303, хотя он в системе есть.<br/>С загрузкой модулей разобрался<br/><div class="code"><pre>/etc/modules-load.d/virtio-net.conf
+# Load virtio-net.ko at boot
+virtio-net</pre></div><br/>С этим systemd все как-то запутано стало, раньше как удобно было когда все настройки в одном файле.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-100955"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/aivs/">
+                <span class="post-username">aivs</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/100955/">#</a>
+            9 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/aivs/topics/">
+                    62
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/aivs/posts/">
+                    261
+                </a>
+            </div>
+            <div>
+                Участник с: 31 октября 2006
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <a href="https://wiki.archlinux.org/index.php/Systemd_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29#.D0.94.D0.B8.D0.BD.D0.B0.D0.BC.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.BE.D0.B5_.D0.BF.D0.BE.D0.B4.D0.BA.D0.BB.D1.8E.D1.87.D0.B5.D0.BD.D0.B8.D0.B5_.28DHCP.29_.D1.81_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5.D0.BC_dhcpcd">https://wiki.archlinux.org/index.php/Systemd</a><br/>Иногда сервис dhcpd запускается до загрузки модуля вашей сетевой карты (FS#30235), в этом случае вручную добавьте вашу сетевую карту в конфигурационный файл /etc/modules-load.d/*.conf. Например, для карты Realtek необходима загрузка модуля r8169, поэтому создайте такой конфигурационный файл:<br/><strong>/etc/modules-load.d/realtek.conf</strong><br/><div class="code"><pre>r8169</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-100960"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/100960/">#</a>
+            9 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            Лучше добавить в сервис инструкции что бы сервис выполнялся после отработки удава, соответственно все модули будут уже загружены.<br/>А прописывать модули вручную каменный век )))
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/10935/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747ca2626c4c1660',m:'ioRNemTvs4QTBA1CVYyqkr0zUiqFPrSG0SgKVdqf9fw-1662692014-0-AckrP8/Rm6h0VSgWyiS2BKqvbofRWQL53gbyEnN6ZTDzrsvmvTXEeFSVLBCO22Vb6U8nN2Tm5TU8nIESspU5CoocDVtEmucegPuaAhHbRFehRW0lSRMptsq51pGudqpC9lzTvaTZy5eVbPUzeq8apTA=',s:[0x811ea3eecd,0xa79cca1c88],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

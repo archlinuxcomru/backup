@@ -1,0 +1,1116 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [Решено]jre java runtime и циклическая зависимость.
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[Решено]jre java runtime и циклическая зависимость.</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[Решено]jre java runtime и циклическая зависимость.</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221787"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Bendalf/">
+                <span class="post-username">Bendalf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221787/">#</a>
+            2 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/15/c6/15c6c33661cb538069a2e3f373747a78.png" alt="Bendalf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Bendalf/topics/">
+                    36
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Bendalf/posts/">
+                    395
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вопрос по теме решился. см страницу 3.<br />C  последствиями в виде чем-то занятого места на  /   разобрались.<br /><br />Осталось победить elinks , чтобы он подхватил установленную java runtime<br /><br />Началось с<br />настроить mutt на работу c <a href="https://support.google.com/mail/answer/7126229?hl=ru">gmail. по imap</a><br />пришло оповещение безопасности. капчу потребовали.<br /><br />elinks ом открыл страницу с капчей. она на java .<br /><a href="https://accounts.google.com/DisplayUnlockCaptcha">https://accounts.google.com/DisplayUnlockCaptcha</a><br />облом.<br /><a href="https://www.cnx-software.com/2014/02/09/building-elinks-text-based-web-browser-with-some-sort-of-javascript-support/">как пересобрать elinks с java я в курсе.</a><br />знаю что java выпилили из elinks пару лет назад.<br /><br />1. <a href="https://www.archlinux.org/packages/?sort=&amp;q=jre&amp;maintainer=&amp;flagged=Not+Flagged">брал пакманом по информации отсюда версию 10</a><br />    Сначала я pacman -syu имя_пакета<br />2. Ошибка. обнаружена циклическая зависимость freetype2-hurfbuzz . если продолжить ставится куча пакетов, которые уже стоят.<br />   сообщений про freetype на несколько экранов --- &quot;* <strong>уже существует в файловой системе</strong>&quot;<br />   и в конце - пакеты не были обновлены.<br />   прогресс не видел. экран закопало ошибками упомянутыми чуть выше.<br />3. попробовал установить hurfbuzz или freetype2 первыми.<br />   Ошибка. обнаружена циклическая зависимость freetype2-hurfbuzz . если продолжить ставится куча пакетов, которые уже стоят.<br />4. попробовал версию 7. циклической нету. но<br />    на несколько экранов --- &quot;* <strong>уже существует в файловой системе</strong>&quot;<br />   и в конце - пакеты не были обновлены.<br />5. pacman -Qi jre10-openjdk   -----  и другие пакеты jre не найдены.<br />   <pre><code> archlinux-java status
+archlinux-java  canbe found /extra/java-runtime-common.....  /usr/bin/archlinux-java</code></pre>6. Скриншоты прилагаю <a href="https://cloud.mail.ru/public/vsJZ/3Huj6YCK7">Папка с онлайн просмотром</a><br /><strong>Кто в курсе пожалуйста подскажите решение</strong>.<br /><br />Я чайник. Прошу не судите строго.<br /><strong>Гуглить я пробовал. Темы все старые про ява 7.</strong><br />Это срочняк. Потому-что весь интернет на java .
+            
+                
+                    <div class="post-signature">
+                        С уважением, .
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221789"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/redix/">
+                <span class="post-username">redix</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221789/">#</a>
+            2 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/85/25/8525b8b3d838c29f000f57cb18c9307a.png" alt="redix avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/redix/topics/">
+                    34
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/redix/posts/">
+                    3433
+                </a>
+            </div>
+            <div>
+                Участник с: 11 марта 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вот скажите, ахтунг здесь при чем? От того что вы напишете десять ахтунгов, быстрей не будет. Тут слепых нет вообще то.
+            
+                
+                    <div class="post-signature">
+                        In Tux We Trust
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221791"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vinc/">
+                <span class="post-username">vinc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221791/">#</a>
+            2 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vinc/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vinc/posts/">
+                    180
+                </a>
+            </div>
+            <div>
+                Участник с: 13 июня 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Bendalf,<br />1) Циклическая зависимость тут, скорее всего, не при чем - pacman сам разруливает такие ситуации.<br />2) Устанавливайте с ключем pacman --needed, чтобы не ставить по сто раз одно и то же.<br />3) Напишите не свой рассказ &quot;на тему&quot;, а команду и ее вывод. Пользуйтесь тегом Код.<br />4) Надеюсь, перед установкой нового пакета Вы не забыли обновить систему: pacman -Syu<br /><br /><strong>Update.</strong> Посмотрел скриншот. Почему Вы устанавливаете пакеты с ключом -Sy, а не -Syu?<br />У вас система остается не обновленной, мало ли какой пакет за это время устарел.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221792"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/red/">
+                <span class="post-username">red</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221792/">#</a>
+            2 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/fd/eb/fdeb672af87b7c02419e9c58404908a5.png" alt="red avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/red/topics/">
+                    30
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/red/posts/">
+                    1517
+                </a>
+            </div>
+            <div>
+                Участник с: 31 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Bendalf</em><br>НЕ ясно jre установилась или нет.</blockquote>команда<br /><pre><code>archlinux-java status</code></pre>покажет что и какие версии установлены (<a href="https://wiki.archlinux.org/index.php/Java#Switching_between_JVM">смотри archwiki java</a>)<br />а если конкретно по пакету то:<br /><pre><code>pacman -Qi jre10-openjdk</code></pre>если пакет установлен на локальной машине то выведет по нему информацию<br /><br />п.с.<br />и да, <strong>vinc</strong> верно говорит, всегда желательно перед установкой пакета  не только синхронизировать(-Sy)  базы но и обновить(-Su) полностью систему по этим синхронизированным базам
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221796"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Bendalf/">
+                <span class="post-username">Bendalf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221796/">#</a>
+            2 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/15/c6/15c6c33661cb538069a2e3f373747a78.png" alt="Bendalf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Bendalf/topics/">
+                    36
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Bendalf/posts/">
+                    395
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vinc</em><br>Почему Вы устанавливаете пакеты с ключом -Sy, а не -Syu?</blockquote>после того как не получилось с -Syu , я попробовал другие опции.<br />pacman --needed   тоже попробовал.<br />скриншоты там же.<br />если кратко - результаты теже
+            
+                
+                    <div class="post-signature">
+                        С уважением, .
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221798"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vinc/">
+                <span class="post-username">vinc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221798/">#</a>
+            2 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vinc/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vinc/posts/">
+                    180
+                </a>
+            </div>
+            <div>
+                Участник с: 13 июня 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Bendalf, а вообще система обновляется?<br />Команда pacman -Syu что выдает?<br />Похоже, Вы упорно ставите новый пакет, а система остается необновленной.<br />Решите сначала одну проблему, а потом переходите к другой.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221799"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Bendalf/">
+                <span class="post-username">Bendalf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221799/">#</a>
+            2 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/15/c6/15c6c33661cb538069a2e3f373747a78.png" alt="Bendalf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Bendalf/topics/">
+                    36
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Bendalf/posts/">
+                    395
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            elinks ом открыл страницу с капчей. она на java .<br />облом. не выйдет настроить mutt на работу c gmail.<br />gmail блокирует доступ.<br />как пересобрать elinks с java я в курсе.<br />    знаю что java выпилили из elinks пару лет назад.
+            
+                
+                    <div class="post-signature">
+                        С уважением, .
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221800"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Bendalf/">
+                <span class="post-username">Bendalf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221800/">#</a>
+            2 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/15/c6/15c6c33661cb538069a2e3f373747a78.png" alt="Bendalf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Bendalf/topics/">
+                    36
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Bendalf/posts/">
+                    395
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vinc</em><br>pacman -Syu что выдает?</blockquote>    обновление базы данных<br />core Не устарел.<br />extra   Показывает прогресс.          100%<br />commun ty  Показывает прогресс.  100%<br />запускается полное обновление<br />        делать больше нечего.<br /><br />Скрин стоит выложить ?
+            
+                
+                    <div class="post-signature">
+                        С уважением, .
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221802"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vinc/">
+                <span class="post-username">vinc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221802/">#</a>
+            2 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vinc/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vinc/posts/">
+                    180
+                </a>
+            </div>
+            <div>
+                Участник с: 13 июня 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Bendalf</em><br>запускается полное обновление<br />делать больше нечего.</blockquote>Не понятно тогда, почему такое количество пакетов на скриншоте.<br />А почему устанавливаете jre10-openjdk-headless, а не jre10-openjdk?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221803"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/redix/">
+                <span class="post-username">redix</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221803/">#</a>
+            2 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/85/25/8525b8b3d838c29f000f57cb18c9307a.png" alt="redix avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/redix/topics/">
+                    34
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/redix/posts/">
+                    3433
+                </a>
+            </div>
+            <div>
+                Участник с: 11 марта 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Bendalf</em><br>gmail блокирует доступ</blockquote>Знакомая картина, гугл относит практически все почтовые клиенты к так называемым &quot;недоверенным приложениям&quot;. Это можно  настроить в своем гугло аккаунте, но это тот еще квест. Давно плюнул на это и юзаю г-мыло при помощи расширения.
+            
+                
+                    <div class="post-signature">
+                        In Tux We Trust
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/19524/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b7f573d839d8d',m:'W4DCGpQTI8yOZHwz6g55hQAyXMhylhSHaKo2nvmHIng-1662680095-0-ASRPyQHw/FIBEuZgK9+5EbfLRMqQuJP94UwjnLm1eNS0jyd8NvAo1leqEXhNsVprERcIKZ77JfB8Iy64ZNWhdNBx0mY0iUAEEy6ubs/+GoJJs6+Rl+JI/GFPhBpDD5Eaemf6Q2A6MzRACTDLFBGxwk8=',s:[0x7587135812,0x50ed5128a8],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

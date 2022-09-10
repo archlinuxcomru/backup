@@ -1,0 +1,1194 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Спонтанный Suspend через 10 секунд после загрузки ядра
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Спонтанный Suspend через 10 секунд после загрузки ядра</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Спонтанный Suspend через 10 секунд после загрузки ядра</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=3" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=4">4 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=5" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199963"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199963/">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Я иногда смотрю наличие евентов</blockquote>если всё исправно то невопрос<br />а вот если надо посмотреть что именно нажимается<br /><br />p.s. не всё верно...
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199964"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vs220/">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199964/">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vs220/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vs220/posts/">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br>используйте xev.</blockquote>Он у вас показывает крышку?<br />В консоли можно еще evtest использовать<br /><pre><code>pacman -S evtest
+sudo evtest /dev/input/event№</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199965"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199965/">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vs220</em><br>Он у вас показывает крышку?</blockquote>должен, она там в Fn где-то будет.
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199966"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Werd/">
+                <span class="post-username">Werd</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199966/">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Werd/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Werd/posts/">
+                    204
+                </a>
+            </div>
+            <div>
+                Участник с: 15 августа 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <pre><code>$ dmesg | grep 0000:00:1d.0
+[    0.886926] pci 0000:00:1d.0: [8086:1c26] type 00 class 0x0c0320
+[    0.886945] pci 0000:00:1d.0: reg 0x10: [mem 0xf2409000-0xf24093ff]
+[    0.887032] pci 0000:00:1d.0: PME# supported from D0 D3hot D3cold
+[    0.887085] pci 0000:00:1d.0: System wakeup disabled by ACPI
+[    1.414283] ehci-pci 0000:00:1d.0: EHCI Host Controller
+[    1.414289] ehci-pci 0000:00:1d.0: new USB bus registered, assigned bus number 4
+[    1.414309] ehci-pci 0000:00:1d.0: debug port 2
+[    1.418233] ehci-pci 0000:00:1d.0: cache line size of 64 is not supported
+[    1.418243] ehci-pci 0000:00:1d.0: irq 23, io mem 0xf2409000
+[    1.429815] ehci-pci 0000:00:1d.0: USB 2.0 started, EHCI 1.00
+[24975.792412] ehci-pci 0000:00:1d.0: System wakeup enabled by ACPI
+[24976.127802] ehci-pci 0000:00:1d.0: System wakeup disabled by ACPI
+[26074.354899] ehci-pci 0000:00:1d.0: System wakeup enabled by ACPI
+[26074.678824] ehci-pci 0000:00:1d.0: System wakeup disabled by ACPI</code></pre><br /><pre><code>$ dmesg | grep 0000:04:00.0
+[    0.916978] pci 0000:04:00.0: [1033:0194] type 00 class 0x0c0330
+[    0.917013] pci 0000:04:00.0: reg 0x10: [mem 0xf2200000-0xf2201fff 64bit]
+[    0.917165] pci 0000:04:00.0: PME# supported from D0 D3hot D3cold
+[    0.917212] pci 0000:04:00.0: System wakeup disabled by ACPI
+[    1.413511] xhci_hcd 0000:04:00.0: xHCI Host Controller
+[    1.413517] xhci_hcd 0000:04:00.0: new USB bus registered, assigned bus number 2
+[    1.413699] xhci_hcd 0000:04:00.0: hcc params 0x014042cb hci version 0x96 quirks 0x00000004
+[    1.414277] xhci_hcd 0000:04:00.0: xHCI Host Controller
+[    1.414282] xhci_hcd 0000:04:00.0: new USB bus registered, assigned bus number 3
+[24975.792312] xhci_hcd 0000:04:00.0: System wakeup enabled by ACPI
+[24976.127659] xhci_hcd 0000:04:00.0: System wakeup disabled by ACPI
+[24976.207446] xhci_hcd 0000:04:00.0: port 0 resume PLC timeout
+[26074.354806] xhci_hcd 0000:04:00.0: System wakeup enabled by ACPI
+[26074.679677] xhci_hcd 0000:04:00.0: System wakeup disabled by ACPI</code></pre><br /><pre><code>$ dmesg | grep 0000:00:1a.0
+[    0.885747] pci 0000:00:1a.0: [8086:1c2d] type 00 class 0x0c0320
+[    0.885766] pci 0000:00:1a.0: reg 0x10: [mem 0xf240a000-0xf240a3ff]
+[    0.885853] pci 0000:00:1a.0: PME# supported from D0 D3hot D3cold
+[    0.885906] pci 0000:00:1a.0: System wakeup disabled by ACPI
+[    1.395553] ehci-pci 0000:00:1a.0: EHCI Host Controller
+[    1.395565] ehci-pci 0000:00:1a.0: new USB bus registered, assigned bus number 1
+[    1.395577] ehci-pci 0000:00:1a.0: debug port 2
+[    1.399496] ehci-pci 0000:00:1a.0: cache line size of 64 is not supported
+[    1.399513] ehci-pci 0000:00:1a.0: irq 16, io mem 0xf240a000
+[    1.413081] ehci-pci 0000:00:1a.0: USB 2.0 started, EHCI 1.00
+[   14.465940] input: Laptop_Integrated_Webcam_2HDM as /devices/pci0000:00/0000:00:1a.0/usb1/1-1/1-1.4/1-1.4:1.0/input/input16
+[24975.792714] ehci-pci 0000:00:1a.0: System wakeup enabled by ACPI
+[24976.126816] ehci-pci 0000:00:1a.0: System wakeup disabled by ACPI
+[26074.355233] ehci-pci 0000:00:1a.0: System wakeup enabled by ACPI
+[26074.679912] ehci-pci 0000:00:1a.0: System wakeup disabled by ACPI
+</code></pre><br /><blockquote>В биосе нет настроек на пробуждение? Можно было бы поставить на клавиатуру</blockquote><br />Вот это не знаю, надо глянуть..<br /><br /><strong>xev у меня евенты с крышки не показывает&#8230; =/</strong>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199967"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199967/">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Werd</em><br>xev у меня евенты с крышки не показывает…</blockquote>а остальные fn показывает? Возможно окружение будет их перехватывать если на них что то установлено.<br /><br />а вообще какая разница((<br />палецем в небо, вы пробовали lts и вырубить дискретную графику в bios?
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199968"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vs220/">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199968/">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vs220/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vs220/posts/">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Werd</em><br>0000:00:1d.0<br />0000:04:00.0</blockquote>input не видно скорее всего USB а мышка или клаваUSB не подключены<br />Так что пробуждаться может по крышке и сети<br />0000:00:1a.0 камера не понятно почему в wakeup<br />Смотрите в биосе что можно включить на пробуждение.<br /><blockquote><em>Werd</em><br>xev у меня евенты с крышки не показывает</blockquote>по идеи и не должен можно еще evtest глянуть для интереса
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199969"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199969/">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Насколько я понял разбудить можно каким-нибудь USB 2.0 устройством (но вот каким? чтобы было удобно) - потренироваться можно на мышке.<br />И еще не понятное устройство<br /><blockquote><em>Werd</em><br>HDEF S3 *disabled pci:0000:00:1b.0</blockquote>А вообще ни одного подходящего устройства в wakeup я не вижу. У меня и того хуже (нет даже ни одного usb порта для S-3, S-4)
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199970"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199970/">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vs220</em><br>0000:00:1a.0 камера не понятно почему в wakeup</blockquote>Как я это понимаю - в wakeup показаны 0000:00:1a и pci:0000:00:1d.0 — грубо говоря это порты/хабы, а все что к ним будет подключено и будет иметь свой файл wakeup, то же может будить (при условии, что в wakeup это устройство будет иметь S-State не ниже S3) .<br />Привожу мой случай, с mouse<br /><pre><code>[    1.943077] input:  USB OPTICAL MOUSE as /devices/pci0000:00/0000:00:1d.0/usb4/4-1/4-1.2/4-1.2:1.0/0003:0000:0538.0001/input/input5</code></pre><strong>cat /sys/devices/pci0000:00/0000:00:1d.0/usb4/4-1/4-1.2/power/wakeup</strong><br /><strong>disabled</strong>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199971"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vs220/">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199971/">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vs220/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vs220/posts/">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>нет даже ни одного usb порта для S-3<br />cat /sys/devices/pci0000:00/0000:00:1d.0/usb4/4-1/4-1.2/power/wakeup<br />disabled</blockquote>Включить можно правилом udev <a href="https://wiki.archlinux.org/index.php/Udev#Waking_from_suspend_with_USB_device">https://wiki.archlinux.org/index.php/Udev#Waking_from_suspend_with_USB_device</a> если поддерживается конечно<br />В биосе про пробуждение ничего нет?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199972"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199972/">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vs220</em><br>Включить можно правилом udev <a href="https://wiki.archlinux.org/index.php/Udev#Waking_from_suspend_with_USB_device">https://wiki.archlinux.org/index.php/Udev#Waking_from_suspend_with_USB_device</a> если поддерживается конечно<br />В биосе про пробуждение ничего нет?</blockquote>Это включает только подключенные устройства к Device, указанному в wakeup, например, как EHC1, но S-State у EHC1 должно быть не ниже S3.<br />Это я и описал в предыдущем посту, но видно плохо описал.<br />А информация в wakeup, зависит от материнки и заносится туда из таблицы DSDT, а потому наименования Devices в этой таблице 4-х символьные (EHC1, RP03 ... ) и, если не ошибаюсь, то это последняя часть имени (забыл как это точно называется). А потому изменить ничего нельзя.<br />А современные BIOS ноутбуков очень не информационные и в части ACPI ничего там не изменишь.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=3" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=4">4 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=5" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/18154/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b7c6fea0d3a95',m:'54kmF0GYJuDd4fWW_Izc4pkYtb1boT5MU2PFib1AH9c-1662679974-0-AWnjNJq/LAPjXkR09T+1Rw48C/Yup0qVE3a4l6tpdkLMxSArrSbOKObR4y2n157PZyeH4hTMSpmyEXfW8lU/E6XEwhdV67yb8Osk5Mdi+rKmKFrvtFwf4+ASNbEPthdU2DZsRazIX0cnf2o6Omu96No=',s:[0xe7666c4f74,0x53243c168e],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

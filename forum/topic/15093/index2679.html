@@ -1,0 +1,1090 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Systemd UEFI и обновления ядра
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/23/">Демоны и загрузка системы</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Systemd UEFI и обновления ядра</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Systemd UEFI и обновления ядра</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-154815"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/DeadMetaler/">
+                <span class="post-username">DeadMetaler</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/154815/">#</a>
+            7 лет назад
+            
+                (отредактировано
+                
+                    7 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/fd/8bfdb52feaf4a48d730108419ad7b6a2.png" alt="DeadMetaler avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/DeadMetaler/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/DeadMetaler/posts/">
+                    166
+                </a>
+            </div>
+            <div>
+                Участник с: 11 августа 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Короче настроена загрузка у меня через bootctl. Я так понимаю это почти тоже самое, что и EFI Stub.<br /><br />Но загрузка не шла пока я не положил <strong>initramfs-linux.img</strong> и <strong>vmlinuz-linux</strong> непосредственно в сам раздел esp. Теперь при обновлении ядра нужно вручную обновлять его копировав из /boot в esp.<br />Уже запутался читая мануалы, но вроде при таком способе оно и должно грузить ядро только с esp, а с других разделов не умеет.<br />Может я что-то не так настроил? Или можно как-то сделать автоматическое копирование ядра в раздел esp при обновлении?<br /><br />Вот так выглядит конфиг efi/loader/entries/arch.conf<br /><pre><code>title	Arch Linux
+linux	/vmlinuz-linux-ck
+initrd	 /initramfs-linux-ck.img
+options	root=/dev/sda3 rw</code></pre><br />Ах да. Раздел esp вообще не монтируется при загрузке.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-154816"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/giz/">
+                <span class="post-username">giz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/154816/">#</a>
+            7 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/giz/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/giz/posts/">
+                    16
+                </a>
+            </div>
+            <div>
+                Участник с: 22 марта 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Мало информации,что за раздел у тебя такой esp и где он у тебя находится? Для чего ты его вообще делал,если раздела /boot вполне достаточно. Как ты устанавливал bootctl (какой командой).
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-154817"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/DeadMetaler/">
+                <span class="post-username">DeadMetaler</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/154817/">#</a>
+            7 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/fd/8bfdb52feaf4a48d730108419ad7b6a2.png" alt="DeadMetaler avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/DeadMetaler/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/DeadMetaler/posts/">
+                    166
+                </a>
+            </div>
+            <div>
+                Участник с: 11 августа 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            esp - это efi раздел<br />У меня он находится на /dev/sda4  fat32  100мб<br />Делал его, так как загрузка через UEFI происходит.<br /><br />Как ставил загрузчик я уже точно не вспомню.<br /><br /><a href="https://wiki.archlinux.org/index.php/Beginners'_guide#UEFI_motherboards">https://wiki.archlinux.org/index.php/Beginners'_guide#UEFI_motherboards</a><br />Вроде по этому мануалу.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-154819"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/giz/">
+                <span class="post-username">giz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/154819/">#</a>
+            7 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/giz/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/giz/posts/">
+                    16
+                </a>
+            </div>
+            <div>
+                Участник с: 22 марта 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            efi раздел ненужен,тебе нужно было лишь создать раздел boot и отформатировать его в fat32,и уже в boot и ставить загрузчик. набери lsblk -f в консоли и кинь сюда инфу,что бы хоть понять как  у тебя разделы устроены
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-154822"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/4iFF/">
+                <span class="post-username">4iFF</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/154822/">#</a>
+            7 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f3/43/f3435b087f7afe7a1d0d2e0369096278.png" alt="4iFF avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/4iFF/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/4iFF/posts/">
+                    103
+                </a>
+            </div>
+            <div>
+                Участник с: 22 апреля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>DeadMetaler</strong>, имею плату с EFI (вроде как). Ставил арч как будто его нету, все ок (три раздела, /, /boot, /home, инструкции для UEFI\EFI в мануале игнорил). Вроде как UEFI\EFI отключить в биосе можно. Или что-то напутал?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-154823"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/DeadMetaler/">
+                <span class="post-username">DeadMetaler</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/154823/">#</a>
+            7 лет назад
+            
+                (отредактировано
+                
+                    7 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/fd/8bfdb52feaf4a48d730108419ad7b6a2.png" alt="DeadMetaler avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/DeadMetaler/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/DeadMetaler/posts/">
+                    166
+                </a>
+            </div>
+            <div>
+                Участник с: 11 августа 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <pre><code>NAME   FSTYPE LABEL      UUID                                 MOUNTPOINT
+sda
+├─sda1 ext4              961f2944-7377-4045-a172-667ce2c93fb2
+├─sda2 ext4   Home       6439e2da-8067-4944-9779-6fa50ebc08d3
+├─sda3 ext4   Arch Linux a331b663-01f8-46a7-9ddc-8e35868782fa /
+├─sda4 vfat              9D8A-BD43
+├─sda5 vfat   Clonezilla 5D66-BE4A
+└─sda6 ext4              6fa11183-5b09-4837-811e-724292a515e8
+sdb
+└─sdb1 btrfs  Extended   5be3fe1d-5457-4ffd-84b9-a16a2baa3cb0 /extended</code></pre><br />Тут еще дело в том, что Арч я ставил второй системой к Убунту. То есть efi раздел был нужен для убунту.<br /><br />UEFI отключать не нужно мне, ибо удобнее и безопаснее ставить несколько систем. У каждой свой загрузчик, а не один на всех.<br /><br />Еще почитав, я понял, что в systemd встроили gummiboot и по сути я его и настраиваю. Даже команды такие же.<br />Видимо в мануалах под /boot  и понимается отдельный раздел /boot, а не efi раздел примонтированный в /boot как я полагал.<br />Надо попробовать сделать отдельный раздел. Хотя можно же в fstab прописать efi раздел, чтоб подключался как /boot?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-154824"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sirocco/">
+                <span class="post-username">sirocco</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/154824/">#</a>
+            7 лет назад
+            
+                (отредактировано
+                
+                    7 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sirocco/topics/">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sirocco/posts/">
+                    2501
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>DeadMetaler</em><br>Видимо в мануалах под /boot и понимается отдельный раздел /boot, а не efi раздел примонтированный в /boot как я полагал.</blockquote>Нет.<br /><blockquote>systemd-boot (bootctl(1), systemd-efi-boot-generator(8)) assumes that your EFI System Partition is mounted on /boot.</blockquote><br />systemd автоматически монтирует  efi раздел с gdisk type EF00 как /boot<br /><br />Как это сделано у меня:<br /><br /><pre><code> # fdisk -l /dev/sda
+Disk /dev/sda: 465,8 GiB, 500107862016 bytes, 976773168 sectors
+Единицы: sectors по 1 * 512 = 512 байт
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Тип метки диска: gpt
+Идентификатор диска: 282E70B1-0980-4322-AD88-0C54427DF5AA
+
+Устр-во     Start Конец Секторы   Size Тип
+/dev/sda1    2048    411647    409600   200M EFI System
+/dev/sda2  411648 976773134 976361487 465,6G Linux filesystem
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-154825"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/DeadMetaler/">
+                <span class="post-username">DeadMetaler</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/154825/">#</a>
+            7 лет назад
+            
+                (отредактировано
+                
+                    7 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/fd/8bfdb52feaf4a48d730108419ad7b6a2.png" alt="DeadMetaler avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/DeadMetaler/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/DeadMetaler/posts/">
+                    166
+                </a>
+            </div>
+            <div>
+                Участник с: 11 августа 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Сейчас я прописал в fstab монтировать efi раздел как /boot, для верности очистил /boot и переставил ядро. Работает. Правильно сделал вроде?<br /><br />Такой вариант мне нравится.<br />А то grub надоел зависаниями на обновлении конфига.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-154826"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/daggerfall/">
+                <span class="post-username">daggerfall</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/154826/">#</a>
+            7 лет назад
+            
+                (отредактировано
+                
+                    7 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/e7/0b/e70b1c52b00ea4218426652cc094a0d0.png" alt="daggerfall avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/daggerfall/topics/">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/daggerfall/posts/">
+                    35
+                </a>
+            </div>
+            <div>
+                Участник с: 05 сентября 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>systemd автоматически монтирует efi раздел с gdisk type EF00 как /boot</blockquote>Даже если не монтирует, genfstab автоматом добавляет<br /><pre><code># /dev/sda1
+UUID=         /boot/efi       vfat            rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro    0 2</code></pre>а вообще в /boot/efi монтируется.<br />хз чем вам граб насолил, может быть неправильно ставите? Я когда устанавливал обратил внимание что в вики (англ.) каша в этом разделе, в итоге сделал так<br />grub-install (EFI создан в gdisk и тип ef00 и уже смонтирован в /mnt/boot/efi)<br />а затем<br />grub-install --efi-directory=/boot/efi --boot-directory=/boot/efi/EFI --bootloader-id=grub<br /><br /><blockquote>В этом примере загрузочный раздел EFI с каталогом EFI/ заранее смонтирован в /boot/efi, а ID загрузчика полностью совпадает с именем каталога &quot;grub&quot;. Поэтому и образ, и файлы загрузчика будут установлены в один и тот же каталог EFI/grub/ на загрузочном разделе. Соответственно, в этом случае стартовый образ будет установлен в /boot/efi/EFI/grub/grubx64.efi, конфиг загрузчика должен быть в /boot/efi/EFI/grub/grub.cfg, а модули в каталоге /boot/efi/EFI/grub/x86_64-efi/</blockquote>grub-mkconfig<br />grub-mkconfig -o  /boot/efi/EFI/grub/grub.cfg<br /><br />еще как вариант, предположу что у вас в биосе неверные настройки, поэтому виснет
+            
+                
+                    <div class="post-signature">
+                        Gentoo | ArchLinux | servers and work PC<br />W 7 - everyday usage all PC&#39;s<br />W 8.1 - Lenovo IdeaPad G500 - i3 3110, R8570M<br />spirevillage.blogspot.com
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-154827"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/giz/">
+                <span class="post-username">giz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/154827/">#</a>
+            7 лет назад
+            
+                (отредактировано
+                
+                    7 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/giz/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/giz/posts/">
+                    16
+                </a>
+            </div>
+            <div>
+                Участник с: 22 марта 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            работает ли теперь убунта у тебя?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/15093/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747af7c138019d40',m:'o9zxiP8pcF1KGRlQoJq8_wyG4xdDP2ynRvfvJ1KxrRA-1662674541-0-AQYTS2al7jdYVnpUFM+LyGle8HHujjw5s8HUG6OvUgNRugBUyZX/FQZMgw3uglUodPueLkG54U7P4XwiFZI2CAmV6Hwpw+YO4tkyFyLlG85eFrSCBHzUIAulvKI1nycVRd7CZKetpmX9ceEE68r55bM=',s:[0x7587135812,0x1219c5ec17],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

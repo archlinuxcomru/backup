@@ -1,0 +1,778 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        linux-hardened и обороты кулера
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>linux-hardened и обороты кулера</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>linux-hardened и обороты кулера</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-233725"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kiridod/">
+                <span class="post-username">kiridod</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/233725/">#</a>
+            2 года, 1 месяц назад
+            
+                (отредактировано
+                
+                    2 года, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kiridod/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kiridod/posts/">
+                    36
+                </a>
+            </div>
+            <div>
+                Участник с: 01 августа 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            При использовании linux-hardened кулер превращается в вертолетный винт и идет на взлет. Установлено ядро + заголовки.<br /><strong> sudo pacman -Q linux-hardened linux-hardened-headers</strong><pre><code>linux-hardened 5.7.11.a-1
+linux-hardened-headers 5.7.11.a-1</code></pre> Это нормальное поведение для этого ядра? Как это исправить?<br /><br />PS. В ноуте имеется гибридная графика intel+nvidia(проприетарные драйвера для nvidia версии 390xx), также настроен bumblebee, но nvidia не используется вообще. В биосе нет настройки для ее полного выключения.<br /><br /><strong>UPD.</strong><br /><br />Вывод <strong>sensors</strong> с linux 5.7.12.arch1-1 <pre><code>asus-isa-0000
+Adapter: ISA adapter
+cpu_fan:     2100 RPM
+temp1:        +46.0°C
+
+acpitz-acpi-0
+Adapter: ACPI interface
+temp1:        +46.0°C  (crit = +108.0°C)
+
+coretemp-isa-0000
+Adapter: ISA adapter
+Package id 0:  +49.0°C  (high = +87.0°C, crit = +105.0°C)
+Core 0:        +49.0°C  (high = +87.0°C, crit = +105.0°C)
+Core 1:        +47.0°C  (high = +87.0°C, crit = +105.0°C)
+</code></pre><br />На 5.7.11.a-1-hardened <pre><code>asus-isa-0000
+Adapter: ISA adapter
+cpu_fan:     2900 RPM
+temp1:        +49.0°C
+
+acpitz-acpi-0
+Adapter: ACPI interface
+temp1:        +49.0°C  (crit = +108.0°C)
+
+coretemp-isa-0000
+Adapter: ISA adapter
+Package id 0:  +49.0°C  (high = +87.0°C, crit = +105.0°C)
+Core 0:        +49.0°C  (high = +87.0°C, crit = +105.0°C)
+Core 1:        +49.0°C  (high = +87.0°C, crit = +105.0°C)
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-233726"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/233726/">#</a>
+            2 года, 1 месяц назад
+            
+                (отредактировано
+                
+                    2 года, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>kiridod</em><br>Это нормальное поведение для этого ядра?</blockquote>На это можешь ответить только сам ... никто же не знает, как ведет обычное ядро? ... какие процессы грузят cpu?<br /><br /><strong>PS</strong> - и, как правило, безопасность в большей степени определяется не используемым специальным ядром ...<br /><br /><strong>EDIT 1</strong> - ну и чисто практически и теоретически, если рассматривать быстодействие системы - hardened ядро процента на 3 медленнее, обычного. А быстродействие и нагрузка понятия связанные, но, конечно, все зависит от многих факторов.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-233727"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vs220/">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/233727/">#</a>
+            2 года, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vs220/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vs220/posts/">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>kiridod</em><br>проприетарные драйвера для nvidia версии 390xx</blockquote>Еще проверить что версия (nvidia-390xx-dkms) под hardened ядро собрана, а не стоят просто nvidia-390xx
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-233729"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kiridod/">
+                <span class="post-username">kiridod</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/233729/">#</a>
+            2 года, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kiridod/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kiridod/posts/">
+                    36
+                </a>
+            </div>
+            <div>
+                Участник с: 01 августа 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Да, стоит именно dkms версия.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-233730"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vs220/">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/233730/">#</a>
+            2 года, 1 месяц назад
+            
+                (отредактировано
+                
+                    2 года, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vs220/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vs220/posts/">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>kiridod</em><br>стоит именно dkms версия</blockquote>Модули нормально без ошибок собрались? Без linux-hardened-headers например не соберутся<br />Нагрузку еще проверить<br />htop<br />nvtop
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-233731"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kiridod/">
+                <span class="post-username">kiridod</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/233731/">#</a>
+            2 года, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kiridod/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kiridod/posts/">
+                    36
+                </a>
+            </div>
+            <div>
+                Участник с: 01 августа 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ошибок не было. Заголовки для этого ядра установлены. Нагрузка около 5% на каждое ядро после загрузки. Аномальной активности нет, но вентилятор рандомно подхватывает значения. После запуска было 3200 оборотов, спустя пару минут сбросило до 2900, сейчас прошло минут 20, но обороты не падают...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-233732"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/233732/">#</a>
+            2 года, 1 месяц назад
+            
+                (отредактировано
+                
+                    2 года, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>kiridod</strong>, повторюсь - чтобы обсуждать и искать возможную причину, нужно сравнение с нормальным ядром - там картина такая же или этого не наблюдается?<br /><br /><strong>EDIT 1</strong> - не заметил, что сделал дополнение ...<br /><u>linux 5.7.12.arch1-1</u><br /><blockquote><em>kiridod</em><br>cpu_fan: 2100 RPM<br />temp1: +46.0°C</blockquote><br /><u>5.7.11.a-1-hardened</u><br /><blockquote><em>kiridod</em><br>cpu_fan: 2900 RPM<br />temp1: +49.0°C</blockquote><br />Как и предполагал выше на ядре hardened нагрузка выше. И то что<br /><blockquote><em>kiridod</em><br>спустя пару минут сбросило до 2900, сейчас прошло минут 20, но обороты не падают&#8230;</blockquote>закономерно - весьма вероятно, что эта ступенька 2900 RPM так и будет держаться, потому что так прописано в ACPI (ступеньки fan обусловлены/определены температурой) - эти ступеньки можно определить/узнать или простым анализом или смотреть таблицу DSDT
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/20134/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b5ca61df19d3d',m:'x2nlkc2hTAfZMjT7gNbRisSOgjSC8_Kgpykv.foQe9M-1662678672-0-AX++tY0byWR9VsqE6zAFyW6YLqPOB8EsNV57q3zijFZluV9Z3/OcNBPBz1uiIU5OFGP3Biuwnwnzz1kXknGnQVugOOTfsd9+Ng402ZrfHvN6AYouMOF2hBTXC+XhusB3MNneoLRPBdrOvqSEeTLnrlI=',s:[0x192014e9d0,0x49e30db188],u:'/cdn-cgi/challenge-platform/h/g'};var _cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/cb/invisible.js?cb=747b5ca61df19d3d',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

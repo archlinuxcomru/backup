@@ -1,0 +1,580 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/3258/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 09 Sep 2022 03:13:16 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Arch cifs gvfs и автомонтирование
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/9/index.html">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Arch cifs gvfs и автомонтирование</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Arch cifs gvfs и автомонтирование</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-33239"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sivsoft/index.html">
+                <span class="post-username">sivsoft</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/33239/index.html">#</a>
+            10 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sivsoft/topics/index.html">
+                    36
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sivsoft/posts/index.html">
+                    221
+                </a>
+            </div>
+            <div>
+                Участник с: 26 апреля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Доброго времени суток!<br/>Сделал новый образ для установки арча в своей сетке. LXDE, все новое. Но не пойму проблемы, которая возникла.<br/>В общем хотелось автомонтирование сделать. Вроде что-то типа его сделал. В закладках pcmanfm стоит ссылка при отключении сетевой шары подключиться не может, когда опять появляется все работает без перемонтирования.<br/>1. Однако требует каждые N-минут пароль. Где его сохранить не знаю. Стоит gvfs-smb и через smb ссылка идет.<br/>2. Достало это в итоге - не смог найти в нете - везде подключение без пароля. Решил вернуться на проверенный способ с cifs. И о горе, он не работает. Строка в fstab абсолютна правильна - везде работает:<br/><div class="code"><pre>//server/pub /media/smb/pub cifs user=USER,password=PASS,iocharset=utf8,file_mode=0666,dir_mode=0777,_netdev 0 0</pre></div>Ругани никакой при загрузке. В pcmanfm ссылка появляется. Однако монтирования при загрузке не происходит. Кликаешь по ссылке в pcmanfm возникает ругань, что нет прав у пользователя на выполнение mount, должен root делать. В принципе все логично, но вот почему не монтирует реально при загрузке не понятно. Также команда:<br/><div class="code"><pre>mount.cifs //server/pub /media/smb/pub -o user=USER,password=PASS,iocharset=utf8</pre></div>успешно выполняется и монтирование происходит без проблем, а вот из fstab нет.<br/><br/>Помогите плиз решить хоть какую-нить из этих проблем. А позже можно разобраться и с другой.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-33240"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/herolover/index.html">
+                <span class="post-username">herolover</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/33240/index.html">#</a>
+            10 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/herolover/topics/index.html">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/herolover/posts/index.html">
+                    14
+                </a>
+            </div>
+            <div>
+                Участник с: 03 мая 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Может быть добавить опцию auto в fstab файл?<br/>Ну и еще, у меня, например, идет запуск netfs после установки соединения networkmanager-ом.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-33241"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sivsoft/index.html">
+                <span class="post-username">sivsoft</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/33241/index.html">#</a>
+            10 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sivsoft/topics/index.html">
+                    36
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sivsoft/posts/index.html">
+                    221
+                </a>
+            </div>
+            <div>
+                Участник с: 26 апреля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В принципе да - уже немного разобрался - для cifs нужно добавить netfs после netmanager, у меня получается такая строка:<br/><div class="code"><pre>//server/pub /media/smb/pub cifs users,noauto,noatime,user=USER,password=PASS,ip=192.XXX.XX.XX,iocharset=utf8,file_mode=0666,dir_mode=0777,_netdev 0 0</pre></div>Но все равно коряво работает.<br/>1. Он монтируется по кнопке в pcmanfm сбоку появляется pub, но после первого монтирования, второй клик приводит к ошибке, он опять пытается монтировать, а не зайти на ресурс, т.е. поведение от монтирования той же флешки кардинально отличается. Как сделать также как и с флешкой? Т.е. кликнул - смонтировалась и зашла на ресурс и дальнейшие клики только приводят опять к заходу на ресурс, а по правой кнопке мыши можно отмонтировать.<br/>2. Все-таки если не получится с cifs вариант со строчкой smb хороший. Но как прописать имя и пароль на соединение?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-33242"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sivsoft/index.html">
+                <span class="post-username">sivsoft</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/33242/index.html">#</a>
+            10 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sivsoft/topics/index.html">
+                    36
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sivsoft/posts/index.html">
+                    221
+                </a>
+            </div>
+            <div>
+                Участник с: 26 апреля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Неужели никто не знает? Или все руками монтируют?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-33243"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sivsoft/index.html">
+                <span class="post-username">sivsoft</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/33243/index.html">#</a>
+            10 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sivsoft/topics/index.html">
+                    36
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sivsoft/posts/index.html">
+                    221
+                </a>
+            </div>
+            <div>
+                Участник с: 26 апреля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В общем решение оказалось очень простое и без всяких страшных и почему-то глючащих smbnetfs и smb который пароли не поддерживает и всяких других страшных скриптов, утилит модулей и т.д.<br/>1. В /etc/fstab вставляем:<br/><div class="code"><pre>//192.XXX.XX.XX/pub /mnt/smb/pub cifs user=USER,password=PASS,iocharset=utf8,file_mode=0666,dir_mode=0777,_netdev 0 0</pre></div>Обратить внимание - именно в папку /mnt, а не в /media как я раньше пытался засунуть, потому как на media реакция идет созданием очередной точки монтирования в списке слева в pcmanfm, которая пока работает странновато - описывал выше. А на /mnt реакции никакой не следует.<br/>2. Добавляем в DAEMONS сервис netfs. Только ставить его желательно после сервиса network.<br/>3. Просто добавляем закладку на /mnt/smb/pub.<br/>Все больше ничего не надо делать. Никаких хитрых прав, скриптов, утилит, тысячестрочных конфигов - ничего&#8230;<br/><br/>Если сети не стало вешается точно также как и проводник в Винде. Как только появляется сразу опять работает.<br/>Один минус вешается весь pcmanfm зачастую, не знаю наверное недопил в LXDE. А так все замечательно.<br/>Сей способ рекомендую к применению. :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexa52d.html?next=/forum/topic/3258/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'74749a713c0e8edd',m:'rEJKxXVHPBZqMwbDdKNyUIqTE0S9AOs3dIdl6FQ.wdw-1662607803-0-AcwQ5iuArdxu+MoVtZTJuJZI+SrB0hFLzGPjiado2VbAkSjsqEDVh+RO4MXRaSEo8v3qucEBxWX2R8bbBpxVhSD/e7m1u548cv27Qq9dA3JCbmsrN4pOJ/Q5EL89NM34C6cCc2UXVHfnb20gvdH7+GQ=',s:[0x39754b3d13,0x6933f34069],u:'/cdn-cgi/challenge-platform/h/b'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../cdn-cgi/challenge-platform/h/b/scripts/alpha/invisible5615.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/3258/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 09 Sep 2022 03:13:16 GMT -->
+</html>

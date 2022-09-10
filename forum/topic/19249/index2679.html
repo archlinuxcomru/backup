@@ -1,0 +1,1145 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19249/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:10:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        HOWTO Динамическое управление вентиляторами nvidia карт ( nvidia dynamic fan control )
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/8/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/25/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>HOWTO Динамическое управление вентиляторами nvidia карт ( nvidia dynamic fan control )</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>HOWTO Динамическое управление вентиляторами nvidia карт ( nvidia dynamic fan control )</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-217269"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/217269/index.html">#</a>
+            3 года, 3 месяца назад
+            
+                (отредактировано
+                
+                    1 год, 4 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Небольшая инструкция по динамическому управлению  вентиляторами nvidia карт, если по какой то причине не устраивают заводские установки<br /><br />Включаем ручное регулирование вентиляторами<br /><a href="https://wiki.archlinux.org/index.php/NVIDIA/Tips_and_tricks#Enabling_overclocking">https://wiki.archlinux.org/index.php/NVIDIA/Tips_and_tricks#Enabling_overclocking</a><br />надо добавить   Option   &quot;Coolbits&quot; &quot;4&quot; в ваш xorg.conf и перезагрузиться<br />пример<br /><pre><code>....Section &quot;Screen&quot;
+    Identifier     &quot;Screen0&quot;
+    Device         &quot;Device0&quot;
+    Monitor        &quot;Monitor0&quot;
+    DefaultDepth    24
+    Option         &quot;Stereo&quot; &quot;0&quot;
+    Option         &quot;metamodes&quot; &quot;1920x1080_60 +0+0&quot;
+    Option         &quot;SLI&quot; &quot;Off&quot;
+    Option         &quot;MultiGPU&quot; &quot;Off&quot;
+    Option         &quot;BaseMosaic&quot; &quot;off&quot;
+    Option         &quot;TripleBuffer&quot; &quot;True&quot;
+    Option         &quot;Coolbits&quot; &quot;4&quot;
+    SubSection     &quot;Display&quot;
+        Depth       24
+    EndSubSection</code></pre><br />Устанавливаем утилиту контроля<br /><a href="https://github.com/foucault/nvfancontrol">https://github.com/foucault/nvfancontrol</a><br /><a href="https://aur.archlinux.org/packages/nvfancontrol">https://aur.archlinux.org/packages/nvfancontrol</a><br /><pre><code>yay -S nvfancontrol</code></pre><br />создаем конфиг ~/.config/nvfancontrol.conf<br />с нужными вам параметрами (первая колонка температура  вторая  скорость вентилятора в процентах)<br />пример<br /><pre><code>30    30
+40    40
+50    50
+60    60
+70    70
+80    80
+85    100
+90    100</code></pre><br />Проверяем работу<br /><pre><code>/usr/bin/nvfancontrol -l0 -fd</code></pre><br />Для нагрузи карточки можно поставить gputest<br /><pre><code>yay -S gputest</code></pre>запуск стресс теста<br />пример<br /><pre><code>gputest /test=fur /width=1024 /height=640</code></pre><br />Подобрать нужные обороты удобно в nvidia-settings<br /><br />Что бы утилита стартовала при старте системы можно создать сервис системд<br />создать  ~/.config/systemd/user/nvfancontrol.service<br />с содержанием<br /><pre><code>[Unit]
+Description=&quot;dynamic fan control&quot;
+After=graphical.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/nvfancontrol -l0 -f
+
+[Install]
+WantedBy=default.target</code></pre><br />UPD со временем сервис чуть изменил<br /><pre><code>[Unit]
+Description=&quot;NVIDIA Dynamic fan control&quot;
+
+After=graphical.target multi-user.target
+[Service]
+Type=simple
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/oleg/.Xauthority
+Environment=XDG_CONFIG_HOME=/home/oleg/.config
+Environment=XDG_VTNR=1
+ExecStartPre=/bin/sleep 50
+ExecStart=/usr/bin/nvfancontrol -l0 -f
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=default.target</code></pre>Затем включить, стартовать и проверить  сервис<br /><pre><code>systemctl --user enable nvfancontrol.service
+systemctl --user start nvfancontrol.service
+systemctl --user status nvfancontrol.service</code></pre><br />Проверял на msi gtx 560ti  на которой штатные вентиляторы заменены на вентиляторы от интеловских кулеров процессорных<br />работает хорошо, ресурсов практически не потребляет (31м оперативки)<br /><br />Дополняйте кто чем пользуется
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-217272"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/217272/index.html">#</a>
+            3 года, 3 месяца назад
+            
+                (отредактировано
+                
+                    3 года, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Предлагаю перенести в блоги.<br />Я поклонник Intel и редко приходится управлять вентилятором, а если и приходится, то управляю на прямую, через регистры.<br />А потому вопрос - есть ли что то похожее, <u>такое же простое</u>, для динамического управления на Intel?<br />Можно, конечно, использовать неплохую утилиту <strong>NBFC</strong> (NoteBook FanControl), основанную также на управлении на прямую, через регистры, но сложновато по сравнению с данным способом для nvidia.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-217273"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/217273/index.html">#</a>
+            3 года, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>для динамического</blockquote>То есть надо менять кривую регулировки? Простое задание температуры включения и включения на максимум через pwmconfig не подходит?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-217274"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/217274/index.html">#</a>
+            3 года, 3 месяца назад
+            
+                (отредактировано
+                
+                    3 года, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vs220</em><br>То есть надо менять кривую регулировки? Простое задание температуры включения и включения на максимум через pwmconfig не подходит?</blockquote>Вообщем то есть тоже простой способ, <u>совсем забыл</u> - без использования всяких утилит - пишется скрипт, в котором сам назначаешь температуры, при достижении которых следует установить соответствующую мощность вентилятора (правда мощность устанавливается посредством записи соответствующих значений в регистры). Правда, не всем подойдет - придется осваивать непривычную область.<br /><br /><strong>PS</strong> - утилита <strong>NBFC</strong> практически делает то же самое (есть в AUR), но запустить ее тоже не совсем просто. А вот <strong>pwmconfig</strong> не везде работает ...
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-217275"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/217275/index.html">#</a>
+            3 года, 3 месяца назад
+            
+                (отредактировано
+                
+                    3 года, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ВИНОВАТ - опять подвела невмимательность - только сейчас дошло, у меня же встроенная Intel и описывал совсем другой вентилятор ... cpu<br /><br /><strong>EDIT 1</strong> - хотя стало даже интересно - как идет управление вентилятором видеокарты? - через контроллер? - а значит через регистры? Если да, то остается только найти их и научится управлять, что, конечно, не так то и просто.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-217280"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/217280/index.html">#</a>
+            3 года, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>как идет управление</blockquote>nvfancontrol использует libxnvctrl а тот nvidia-utils
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-217281"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Aivar/index.html">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/217281/index.html">#</a>
+            3 года, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Aivar/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Aivar/posts/index.html">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vs220</em><br>Дополняйте кто чем пользуется</blockquote>Аппаратно: видеокарта с пассивным охлаждением, кулер прикрепил сам. ;) Запитан как вентилятор шасси.<br />Програмно: скрипт, плавно меняя обороты, старается удерживать температуру в пределах 35°С. Более низкая - выключает, критическая запускает кулер на максимум. С процессором так же, только температуры повыше.<br />Работает уже года три, за это время алгоритм не менял.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-217282"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/217282/index.html">#</a>
+            3 года, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Aivar</em><br>Програмно: скрипт</blockquote>Чем меняются обороты?
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-217283"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Aivar/index.html">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/217283/index.html">#</a>
+            3 года, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Aivar/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Aivar/posts/index.html">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <pre><code>/sys/class/hwmon/hwmon1/device/pwm*</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-217284"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/217284/index.html">#</a>
+            3 года, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Aivar</em><br>/sys/class/hwmon/hwmon1/device/pwm*</blockquote>не обижайся за тупой вопрос, но что то не соображу (а копаться долго лень) - откуда появляется <strong>pwm*</strong> - от какой то утилиты?
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index28b7.html?next=/forum/topic/19249/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19249/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:10:21 GMT -->
+</html>

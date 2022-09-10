@@ -1,0 +1,1175 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/13423/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:33:08 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Журналирование в systemd
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/8/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/25/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Журналирование в systemd</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Журналирование в systemd</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-134921"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/red/index.html">
+                <span class="post-username">red</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/134921/index.html">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/fd/eb/fdeb672af87b7c02419e9c58404908a5.png" alt="red avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/red/topics/index.html">
+                    30
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/red/posts/index.html">
+                    1517
+                </a>
+            </div>
+            <div>
+                Участник с: 31 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            1. Доступ к журналу<br />2. Чтение журнала<br />2.1 Просмотр логов по сети<br />3. Запись в журнал<br />4. Поиск информации в журнале<br />5. Примеры ведения лога в скрипте<br />(<em>это не подробное руководство, здесь лишь описаны некоторые основные аспекты использования журнала в systemd</em>)<br /><br /><strong><em>1. Доступ к журналу</em></strong><br />для доступа к журналу пользователь должен входить в одну из трёх групп: wheel, adm или systemd-journal.<br />Добавить пользователя в группу:<br /><pre><code>gpasswd -a $USER wheel</code></pre><em>Чтобы посмотреть группы в которые входит пользователь наберите <strong>groups $USER</strong></em><br />Также журнал доступен из под рута напрямую(su) либо косвенно(через sudo).<br />Файлы журнала располагаются по адресу:<br /><em>/<strong>var</strong>/log/journal/...</em> - находиться на жёстком диске, при удалении этой папки логи после перезагрузки пушиться в /run/log/journal/<br />вместо перезагрузки можно перезапустить сервис<br /><pre><code>systemctl restart systemd-journald</code></pre>либо<br /><em>/<strong>run</strong>/log/journal/...</em> - находиться в оперативной памяти, как следствие полностью стирается после каждой перезагрузки компа.<br /><br />Хочу заметить что иногда может возникнуть проблема с доступом к журналу из за того что все или часть файлов в папке с логами принадлежит группе root вместо группы systemd-journal.<br />Чтобы исправить это меняем группу:<br /><pre><code>chown -Rf root:systemd-journal /{var,run}/log/journal</code></pre><br />Один из способов копирования логов с удалённого хоста имея ssh-доступ в текущую папку:<br /><pre><code>scp -r user@remote.host:/var/log/journal .</code></pre>естественно вместо user@remote.host ставим нужные данные<br /><br /><strong>2. Чтение журнала</strong><br />Так как логи у нас хранятся в бинарном виде то для просмотра нужна утилита из состава systemd - <strong>journalctl</strong>.<br />Вывод последних 20-и (по умолчанию 10) сообщений из журнала:<br /><pre><code>journalctl -n 20</code></pre>Отслеживания логов в реальном времени, предварительно также выводит последние 10 сообщений:<br /><pre><code>journalctl -f</code></pre>Вывод всех сообщений с момента одной из последних загрузок:<br /><pre><code>journalctl -b    # последняя загрузка
+journalctl -b -1    # предыдущая загрузка
+...
+journalctl -b -N    # N-я загрузка считаю от последней
+</code></pre>Также при выводе можно указать приоритет выводимых сообщений (про виды приоритетов написано ниже):<br /><pre><code>journalctl -b -p 3    # выведет сообщения с последней загрузки приоритеты которых 3 и выше(2,1,0)</code></pre>Показывает все сообщения определённого процесса:<br /><pre><code>journalctl _PID=N # где N номер процесса</code></pre>Просмотр всех метаданных указанного процесса:<br /><pre><code>journalctl -o verbose _PID=N # где N номер процесса</code></pre>Чтобы прочитать файлы журнала находящиеся не в стандартной директории (к примеру, скопировали логи с другого компа):<br /><pre><code>journalctl -D путь/к/папке/с/логами</code></pre>более подробно можно глянуть в ArchWiki <a href="https://wiki.archlinux.org/index.php/Systemd#Journal">Journal</a><br /><br /><strong>2.1 Просмотр логов по сети</strong><br />Устанавливаем лёгкий HTTP сервер:<br /><pre><code>pacman -S libmicrohttpd</code></pre>Создаём системного пользователя systemd-journal-gateway:<br /><pre><code>useradd --system systemd-journal-gateway</code></pre>Запускаем:<br /><pre><code>systemctl start systemd-journal-gatewayd.socket</code></pre>Проверяем:<br /><pre><code>curl &#39;<a href="http://127.0.0.1:19531/entries?boot">http://127.0.0.1:19531/entries?boot</a>&#39;</code></pre>или в адресной строке браузера:<br /><blockquote><br><a href="http://127.0.0.1:19531/">http://127.0.0.1:19531/</a><br /><a href="http://127.0.0.1:19531/entries?boot">http://127.0.0.1:19531/entries?boot</a></blockquote><br />Более подробно можно почитать <a href="http://bneijt.nl/blog/post/trying-out-systemd-journal-gatewayd/">тут</a> и <a href="http://www.freedesktop.org/software/systemd/man/systemd-journal-gatewayd.service.html">тут</a><br /><br /><strong>3. Запись в журнал</strong><br />Для записи в журнал используется утилита входящая в состав systemd - <strong>systemd-cat</strong>.<br />(можно также использовать и logger утилита входящая в пакет util-linux, но здесь речь будет идти не о ней)<br />Самый простой способ записи в журнал:<br /><pre><code>systemd-cat echo &quot;Текст сообщения&quot;</code></pre>Смотрим:<br /><pre><code>% journalctl -f
+апр 18 01:14:13 arch1 echo[4822]: Текст сообщения</code></pre><br />Теперь немного подробнее.<br /><pre><code>                                                        # Приоритет сообщения
+systemd-cat -p 0 -t &quot;Test&quot; echo &quot;0 - emerg&quot;             # экстренный
+systemd-cat -p 1 -t &quot;Test&quot; echo &quot;1 - alert&quot;             # тревога
+systemd-cat -p 2 -t &quot;Test&quot; echo &quot;2 - crit&quot;              # критический
+systemd-cat -p 3 -t &quot;Test&quot; echo &quot;3 - err&quot;               # ошибка
+systemd-cat -p 4 -t &quot;Test&quot; echo &quot;4 - warning&quot;           # предупреждение
+systemd-cat -p 5 -t &quot;Test&quot; echo &quot;5 - notice&quot;            # уведомление
+systemd-cat -p 6 -t &quot;Test&quot; echo &quot;6 - info (defaults)&quot;   # информация
+systemd-cat -p 7 -t &quot;Test&quot; echo &quot;7 - debug&quot;             # отладка</code></pre>-p - указывается приоритет, либо словом либо цифрой, по умолчанию - 6 (информационный).<br />-t - указывается идентификатор сообщения, можно использовать потом для фильтрации нужной информации.<br />После ввода через консоль или скриптом в журнал попадут сообщения:<br /><blockquote><br>% journalctl -f<br />апр 18 01:23:52 arch1 Test[5052]: <strong><span style="color:red;">0 - emerg</span></strong><br />апр 18 01:23:52 arch1 Test[5053]: <strong><span style="color:red;">1 - alert</span></strong><br />апр 18 01:23:52 arch1 Test[5054]: <strong><span style="color:red;">2 - crit</span></strong><br />апр 18 01:23:52 arch1 Test[5055]: <strong><span style="color:red;">3 - err</span></strong><br />апр 18 01:23:52 arch1 Test[5056]: <strong>4 - warning</strong><br />апр 18 01:23:52 arch1 Test[5057]: <strong>5 - notice</strong><br />апр 18 01:23:52 arch1 Test[5058]: 6 - info (defaults)<br />апр 18 01:23:52 arch1 Test[5059]: 7 - debug</blockquote>При появлении экстренного (0 - emerg) сообщения в журнале, информация о нём передаётся на все запущенные терминалы компьютера:<br /><pre><code>Broadcast message from systemd-journald@arch1 (Thu 2014-04-18 01:23:52 UTC):
+
+Test[5052]: 0 - emerg</code></pre>Ещё кое что о приоритетах в systemd: заметил что если в подряд записывать сообщения в журнал с высоким приоритетом(2,1,0) то эти сообщения могут не попасть в него ну или как минимум могут возникнуть проблемы с их выводом на экран. Проблема решается установкой секундной паузы между записями(sleep 1). Также заметил что при высоких приоритетах(2,1,0) нецелесообразно использовать многострочные записи в журнал, так как информация урезается до первой строки:<br /><pre><code>systemd-cat -p 2 -t Test cat &lt;&lt;EOF
+1
+2
+EOF</code></pre>выведет только единицу:<br /><blockquote><br>% journalctl -f<br />май 12 23:00:53 arch1 Test[16905]: <strong><span style="color:red;">1</span></strong></blockquote><br />Для записи в журнал можно использовать также и конвейер, но это чревато потерей потока ошибок (stdrr):<br /><pre><code>% { echo &quot;ok&quot; 1&gt;&amp;1; echo &quot;err&quot; 1&gt;&amp;2; } | systemd-cat
+err</code></pre>поток ошибок выводиться на консоль, а поток вывода перенаправляется в журнал<br /><pre><code>% journalctl -f
+апр 18 01:53:41 arch1 cat[2865]: ok</code></pre><br />Чтобы перенаправлять в канал помимо стандартного потока вывода ещё и поток ошибок нужно использовать конструкцию &quot;|&amp;&quot;:<br /><pre><code>% { echo &quot;ok&quot; 1&gt;&amp;1; echo &quot;err&quot; 1&gt;&amp;2; } |&amp; systemd-cat</code></pre><pre><code>% journalctl -f
+апр 18 01:54:41 arch1 cat[2870]: ok
+апр 18 01:54:41 arch1 cat[2870]: err</code></pre>Либо вообще можно поменять потоки местами:<br /><pre><code>% { {echo &quot;ok&quot; 1&gt;&amp;1; echo &quot;err&quot; 1&gt;&amp;2;} 3&gt;&amp;1 1&gt;&amp;2 2&gt;&amp;3; } | systemd-cat
+ok</code></pre>поток ошибок попадёт в журнал, а стандартный поток вывода на консоль<br /><pre><code>% journalctl -f
+апр 18 01:55:41 arch1 cat[2875]: err</code></pre><a href="http://www.freedesktop.org/software/systemd/man/systemd-cat.html">man systemd-cat</a><br /><br /><strong>4. Поиск информации в журнале</strong><br /><pre><code>journalctl SYSLOG_IDENTIFIER=Test</code></pre>выводит все сообщения имеющие идентификатор сообщения Test. (из примера выше про приоритеты сообщений)<br />Это и многое другое <a href="http://www.freedesktop.org/software/systemd/man/journalctl.html">1</a>, <a href="http://www.freedesktop.org/software/systemd/man/systemd.journal-fields.html">2</a><br />Помимо встроенных средств фильтрации можно использовать и стандартные:<br /><pre><code>journalctl | grep Test</code></pre>Также будет полезно полистать русский перевод <a href="http://www2.kangran.su/~nnz/pub/s4a/s4a_latest.pdf">systemd для администраторов</a><br /><br /><strong>5. Примеры ведения лога в скрипте</strong><br /><u>Пример 1.</u><br />создадим скрипт test1.sh<br /><pre><code>#!/usr/bin/env zsh
+
+echo &quot;ok&quot;	     # команда выполнится с успехом
+code=$?
+echo Код завершения = $code
+if [ &quot;$code&quot; = &quot;0&quot; ]
+        then  systemd-cat -t &quot;Test1&quot; echo &quot;Команда 1 выполнилась успешно&quot;
+        else  systemd-cat -p 3 -t &quot;Test1&quot; echo &quot;Команда 1 завершилась с ошибкой&quot;
+fi
+
+blabla 	             # такой команды нету, поэтому на консоль будет выведена ошибка
+code=$?
+echo Код завершения = $code
+# код ниже аналогичен коду выше что заключён в if...fi
+[ &quot;$code&quot; = &quot;0&quot; ] &amp;&amp;  systemd-cat -t &quot;Test1&quot; echo &quot;Команда 2 завершилась успешно&quot; || systemd-cat -p 3 -t &quot;Test1&quot; echo &quot;Команда 2 завершилась с ошибкой&quot;
+</code></pre><br />Вывод в консоли где запускали нашу программу:<br /><pre><code>% ./test1.sh
+ok
+Код завершения = 0
+zsh: command not found: blabla
+Код завершения = 127</code></pre><br />Для наглядности можно отслеживать журнал в реальном времени по нужному нам маркеру, для этого запустим отдельную консоль и введём команду:<br /><blockquote><br>% journalctl -f SYSLOG_IDENTIFIER=Test1<br />апр 20 22:33:26 arch1 Test1[5738]: Команда 1 завершилась успешно<br />апр 20 22:33:26 arch1 Test1[5740]: <strong><span style="color:red;">Команда 2 завершилась с ошибкой</span></strong></blockquote><br />Некоторые пояснения. Каждая команда в языке линукс возвращает так называемый код завершения. Этот код в большинстве случаев при успешном завершении программы возвращает цифру 0, при неудаче возвращает число отличное от нуля.<br />$? - это специальный параметр который хранит код завершения последний команды.<br />Подробнее о кодах завершения <a href="http://www.opennet.ru/docs/RUS/bash_scripting_guide/c2105.html">тут</a> и <a href="http://www.opennet.ru/docs/RUS/bash_scripting_guide/a14876.html#EXITCODESREF">тут</a>.<br /><br /><u>Пример 2.</u><br />Пример ф-и обёртки над systemd-cat.<br />Данная функция:<br />- обрабатывает код завершения команды<br />- при успешном или нет выполнении команды делать запись об этом в журнал<br />- также при ошибке поток ошибок направляется в журнал, а на стандартный вывод выводится предупреждение об ошибке<br />- направляет дополнительную (поясняющую) запись в журнал со стандартного потока вывода<br /><br />Работа с функцией будет выглядеть примерно так:<br /><pre><code>echo &quot;пояснение к записи в журнал&quot; | [наша ф-я обработчик] [команда]</code></pre><br /><pre><code>
+#!/usr/bin/env zsh
+
+sName=&quot;${0}&quot; # Имя скрипта
+
+# Массив с собственным описанием кодов завершения
+ERROR[10]=&quot;Неверно введены данные&quot;
+ERROR[99]=&quot;Операция завершилась с критической ошибкой&quot;
+# ...
+ERROR[999]=&quot;Ошибка&quot; # описание всех остальных ошибок не входящие в ошибки описанные выше
+ERROR[1000]=&quot;Операция прошла успешно&quot; # описание при отсутствии ошибки($?=0)
+
+msg() {
+	read sqarime    # пояснение к записи в журнал (можно также использовать и для отслеживания этапов выполнения программы)
+	commanda=&quot;${@}&quot; # команда которую обрабатываем
+	error=`eval &quot;${commanda}&quot; 2&gt;&amp;1 1&gt;$TTY` # хранит поток ошибок, а поток вывода(&amp;1) отобразиться на консоле $TTY
+	code=&quot;${?}&quot;     # код завершения
+	ID=&quot;Test2&quot;      # Метка в журнале
+
+	case &quot;${code}&quot; in
+		0 ) systemd-cat -p 6 -t $ID echo &quot;[  OK  ]  ${sqarime}: ${sName}: ${commanda}: ${ERROR[1000]}&quot;;;
+		10) systemd-cat -p 4 -t $ID cat &lt;&lt;EOF
+			[ FAIL ]  ${sqarime}: ${sName}: ${commanda}
+			|         Код=${code}: ${ERROR[${code}]}
+			|         ERROR: ${error}
+EOF
+			echo &quot;Ошибка в ф-и ${commanda}! Проверьте журнал&quot;;;
+		99) systemd-cat -p 3 -t $ID cat &lt;&lt;EOF
+			[ FAIL ]  ${sqarime}: ${sName}: ${commanda}
+			|         Код=${code}: ${ERROR[${code}]}
+			|         ERROR: ${error}
+EOF
+			echo &quot;Критическая ошибка в ф-и ${commanda}! Проверьте журнал&quot;
+			exit ${code};;
+		* ) systemd-cat -p 4 -t $ID cat &lt;&lt;EOF
+			[ FAIL ]  ${sqarime}: ${sName}: ${commanda}
+			|         Код=${code}: ${ERROR[999]}
+			|         ERROR: ${error}
+EOF
+			echo &quot;Ошибка в ф-и ${commanda}! Проверьте журнал&quot;;;
+	esac
+	return ${code}
+}
+
+fn1() { # Тестовая ф-я 1
+	echo &quot;Отработала функция $0&quot;
+	return 0
+}
+
+fn2() { # Тестовая ф-я 2
+	echo &quot;Отработала функция $0&quot;
+	echo &quot;Критическая ошибка&quot; &gt;&amp;2
+	return 99
+}
+
+echo &quot;Работа команды blabla&quot;    |msg blabla
+echo &quot;Вывод текущей даты&quot;       |msg date -I
+echo &quot;Работа функции fn1()&quot;     |msg fn1
+echo &quot;Работа функции fn2()&quot;     |msg fn2
+echo &quot;Эта надпись не должна вывестись на экран&quot;
+</code></pre><br /><blockquote><br>% ./test2.sh<br />Ошибка в ф-и blabla! Проверьте журнал<br />2014-05-14<br />Отработала функция fn1<br />Отработала функция fn2<br />Критическая ошибка в ф-и fn2! Проверьте журнал</blockquote><br /><blockquote><br>% journalctl -f SYSLOG_IDENTIFIER=Test2<br />май 14 21:29:28 arch1 Test2[12186]: <strong>[ FAIL ]  Работа команды blabla: ./test2.sh: blabla</strong><br />май 14 21:29:28 arch1 Test2[12186]: <strong>|.........Код=127: Ошибка</strong><br />май 14 21:29:28 arch1 Test2[12186]: <strong>|.........ERROR: (eval):1: command not found: blabla</strong><br />май 14 21:29:28 arch1 Test2[12190]: [  OK  ]  Вывод текущей даты: ./test2.sh: Операция прошла успешно: date -I<br />май 14 21:29:28 arch1 Test2[12193]: [  OK  ]  Работа функции fn1(): ./test2.sh: Операция прошла успешно: fn1<br />май 14 21:29:28 arch1 Test2[12196]: <strong><span style="color:red;">[ FAIL ]  Работа функции fn2(): ./test2.sh: fn2</span></strong><br />май 14 21:29:28 arch1 Test2[12196]: <strong><span style="color:red;">|.........Код=99: Операция завершилась с критической ошибкой</span></strong><br />май 14 21:29:28 arch1 Test2[12196]: <strong><span style="color:red;">|.........ERROR: Критическая ошибка</span></strong></blockquote>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-135038"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/tchgefest/index.html">
+                <span class="post-username">tchgefest</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/135038/index.html">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/tchgefest/topics/index.html">
+                    51
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/tchgefest/posts/index.html">
+                    1505
+                </a>
+            </div>
+            <div>
+                Участник с: 20 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <pre><code>journalctl SYSLOG_IDENTIFIER=TEST</code></pre>Вот выдает <u>journalctl SYSLOG_IDENTIFIER=TEST<br />-- Logs begin at Сб 2014-04-19 15:03:33 , end at Вс 2014-04-20 20:06:38<br /></u> И что я должен увидеть.Вы уж напишите,для такого как я,кто не читает wiki и не использует переводчик.Что значит параметр <strong>SYSLOG_IDENTIFIER</strong> в wiki это написано так......,а для чего я должен запускать так<strong>journalctl SYSLOG_IDENTIFIER=TEST</strong>,что я увижу?Легче было спросить,как вы используете <strong>journalctl</strong> и какие параметры применяете,а потом систематизировать вот и все.Спасибо.
+            
+                
+                    <div class="post-signature">
+                        Последний крик моды - эхо 30-летней давности.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-135053"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/red/index.html">
+                <span class="post-username">red</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/135053/index.html">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/fd/eb/fdeb672af87b7c02419e9c58404908a5.png" alt="red avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/red/topics/index.html">
+                    30
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/red/posts/index.html">
+                    1517
+                </a>
+            </div>
+            <div>
+                Участник с: 31 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>tchgefest</em><br>а для чего я должен запускать так journalctl SYSLOG_IDENTIFIER=TEST,что я увижу?</blockquote><blockquote><em>tchgefest</em><br>Что значит параметр SYSLOG_IDENTIFIER</blockquote><br /><blockquote><em>red</em><br><pre><code>journalctl SYSLOG_IDENTIFIER=TEST</code></pre>выводит все сообщения имеющие <strong>идентификатор сообщения</strong> TEST.</blockquote><blockquote><em>red</em><br>-t - указывается <strong>идентификатор сообщения</strong>, можно использовать потом <strong>для фильтрации нужной информации</strong>.</blockquote>также там после описания параметра -t чуть ниже показан сам вывод, вот такой же вывод у вас должен получиться если бы вместо прочтения попробовали ввести пример где рассказывалось про приоритеты сообщений.<br /><br />если чуть подробнее то поле SYSLOG_IDENTIFIER - это идентификатор хранящий маркер вашего сообщения который вы даёте ему при отправке его в журнал посредством параметра -t в утилите systemd-cat (к примеру вот так: <strong>systemd-cat -t &quot;TEST&quot; echo &quot;Текст сообщения&quot;</strong>). По этому маркеру можно легко найти ваше сообщение или сообщения.<br />Используя grep при поиске ключевого слова(маркера) можно тоже вывести все сообщения с ним, но это также может вывести и сообщения которые не содержат в своём идентификаторе нашего маркера, а похожее словосочетание может просто встретиться в теле самого сообщения.<br />то есть используя  SYSLOG_IDENTIFIER мы ведём поиск <strong>только</strong> по полям где находятся маркеры сообщений, а используя grep мы ведём поиск по всем полям, в том числе и по маркерам.<br /><br /><blockquote><em>tchgefest</em><br>Легче было спросить,как вы используете journalctl и какие параметры применяете,а потом систематизировать вот и все.</blockquote>Журналирование пока в процессе изучения, по сути оно мне понадобилось при написании программы для которой нужно вести логи. Для решения данной задачи решил воспользоваться средствами systemd.<br /><br />Статью скорее всего я ещё буду дополнять и подправлять, так что если по написанному тексту есть вопросы, задавайте, с радостью отвечу.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-135166"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/tchgefest/index.html">
+                <span class="post-username">tchgefest</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/135166/index.html">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/tchgefest/topics/index.html">
+                    51
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/tchgefest/posts/index.html">
+                    1505
+                </a>
+            </div>
+            <div>
+                Участник с: 20 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Самое главное забыли<br /><pre><code>journalctl --boot</code></pre>
+            
+                
+                    <div class="post-signature">
+                        Последний крик моды - эхо 30-летней давности.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-135180"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/red/index.html">
+                <span class="post-username">red</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/135180/index.html">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/fd/eb/fdeb672af87b7c02419e9c58404908a5.png" alt="red avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/red/topics/index.html">
+                    30
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/red/posts/index.html">
+                    1517
+                </a>
+            </div>
+            <div>
+                Участник с: 31 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>tchgefest</em><br>Самое главное забыли<br /><pre><code>journalctl --boot</code></pre></blockquote>ок, добавил
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-148504"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/pethead/index.html">
+                <span class="post-username">pethead</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/148504/index.html">#</a>
+            7 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/7d/51/7d5160c56e2b5418e4c3c7e71875bc2a.png" alt="pethead avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/pethead/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/pethead/posts/index.html">
+                    127
+                </a>
+            </div>
+            <div>
+                Участник с: 21 февраля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            1. А чем журнал загрузки systemd отличается от dmesg?<br />
+            
+                
+                    <div class="post-signature">
+                        This Must Be The Place I Waited Years To Leave
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-148509"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Aivar/index.html">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/148509/index.html">#</a>
+            7 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Aivar/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Aivar/posts/index.html">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>pethead</strong>, сравните - увидите. )<br />dmesg - лог сообщений ядра, многое из него дублируется в лог systemd, но если вам удобнее первое - не вопрос.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-148513"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/pethead/index.html">
+                <span class="post-username">pethead</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/148513/index.html">#</a>
+            7 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/7d/51/7d5160c56e2b5418e4c3c7e71875bc2a.png" alt="pethead avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/pethead/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/pethead/posts/index.html">
+                    127
+                </a>
+            </div>
+            <div>
+                Участник с: 21 февраля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Aivar</em><br><strong>pethead</strong>, многое из него дублируется в лог systemd,</blockquote>Я ведь не праздно спрашивал, а принципиально.<br />Что значит &quot;многое&quot;, и где остальное, и почему нужно дублирование.<br />если бы он вбирал в себя весь лог ядра + свое тогда понятно, а то &quot;многое&quot;. Слишком неоднозначно.<br /><br />Сравнил. Весь лог ядра в этом журнале только время реальное а не от старта системы + вперемежку с логами самого демона.<br /><br />Вопрос такой. А где посмотреть лог который на экран выводится если нет флага quiet? Там еще выводится Welcome to ArchLinux. :)<br />Или как его сделать чтоб тоже в файл кидался, если нет в файле.
+            
+                
+                    <div class="post-signature">
+                        This Must Be The Place I Waited Years To Leave
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-148516"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Aivar/index.html">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/148516/index.html">#</a>
+            7 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Aivar/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Aivar/posts/index.html">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>pethead</em><br>А где посмотреть лог который на экран выводится если нет флага quiet?</blockquote>В таком же виде - нигде. Считайте, что сообщения &quot;не молчаливой&quot; загрузки - это интерпретация journalctl -b.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-148517"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/pethead/index.html">
+                <span class="post-username">pethead</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/148517/index.html">#</a>
+            7 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/7d/51/7d5160c56e2b5418e4c3c7e71875bc2a.png" alt="pethead avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/pethead/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/pethead/posts/index.html">
+                    127
+                </a>
+            </div>
+            <div>
+                Участник с: 21 февраля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Тогда перефразирую  где подправить &quot;Welcome to Arch Linux!&quot; на свое? :)<br />Нашел<br /><a href="http://cgit.freedesktop.org/systemd/systemd/tree/src/shared/util.c?id=v205#n3035">http://cgit.freedesktop.org/systemd/systemd/tree/src/shared/util.c?id=v205#n3035</a>
+            
+                
+                    <div class="post-signature">
+                        This Must Be The Place I Waited Years To Leave
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexef64.html?next=/forum/topic/13423/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/13423/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:33:08 GMT -->
+</html>

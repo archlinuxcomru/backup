@@ -1,0 +1,963 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/12534/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:52:12 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [Написан велосипед] Хранение конфигов в git
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/9/index.html">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[Написан велосипед] Хранение конфигов в git</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[Написан велосипед] Хранение конфигов в git</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-121872"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/corner/index.html">
+                <span class="post-username">corner</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/121872/index.html">#</a>
+            8 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/corner/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/corner/posts/index.html">
+                    773
+                </a>
+            </div>
+            <div>
+                Участник с: 21 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ну да, локальный репозиторий и есть папка, только в ней инициализирован git - присутствует скрытая папка git с конфигами git.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-122740"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/lampslave/index.html">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/122740/index.html">#</a>
+            8 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/lampslave/topics/index.html">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/lampslave/posts/index.html">
+                    4796
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Нацарапал скрипт для синхронизации (хотя за его качество и удобность поручиться не могу): <a href="https://github.com/lampslave/configs/blob/master/sync/sync.py">https://github.com/lampslave/configs/blob/master/sync/sync.py</a>. Как пользоваться вроде и так понятно должно быть, но на всякий случай небольшое описание тут: <a href="http://lampslave.ru/dotfiles-sync/">http://lampslave.ru/dotfiles-sync/</a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-122742"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/corner/index.html">
+                <span class="post-username">corner</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/122742/index.html">#</a>
+            8 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/corner/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/corner/posts/index.html">
+                    773
+                </a>
+            </div>
+            <div>
+                Участник с: 21 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            На вашем сайте <a href="http://lampslave.ru/xfce4-terminal-drop-down/">по адресу</a> картинка рвет шаблон.<br/>Назначьте этому классу width:100% и будет работать.<br/><div class="code"><pre>
+.article img {
+    float: right;
+    margin: 0 0 1.5em 1.5em;
+    width: 100%;
+}</pre></div><br/>P.S. А Quake точно не нужен. Я уже давно xterm использую. :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-122743"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/lampslave/index.html">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/122743/index.html">#</a>
+            8 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/lampslave/topics/index.html">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/lampslave/posts/index.html">
+                    4796
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Спасибо, но это лучше было бы прямо там и написать.<br/>Да и не то, что бы она что-то рвала, просто немного вылезает за пределы блока. Лень было обрезать.<br/><br/><strong>UPD:</strong> подозреваю, что у вас масштабирование в браузере выкручено.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-122746"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/corner/index.html">
+                <span class="post-username">corner</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/122746/index.html">#</a>
+            8 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/corner/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/corner/posts/index.html">
+                    773
+                </a>
+            </div>
+            <div>
+                Участник с: 21 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Нет, у меня ничего не выкручено. Я немножко занимаюсь разработкой, и часто с этим сталкиваюсь.<br/>Вы смотрели страницу на широком экране, поэтому просто не заметили.<br/>У вас родительский блок не имеет ширины, в то время как родителький блок уровнем выше имеет ширину 57%.<br/>Если iimg сделать блочным, дать ширину 100% и высоту в auto - он никогда не вылезет.<br/>Я img всегда делаю блочным (как правило inline-block). Это позволяет легко "разбираться" с размерами и т.д.<br/>К тому же я не использую фреймворки, хотя некоторые стили беру оттуда (лень-матушка).<br/>А сайты нужно делать responsive - се ля ви :)<br/>А что сюда написал, думал, так лучше будет.<br/>Написал от настроения, просто помочь. Удачи.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-122750"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/lampslave/index.html">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/122750/index.html">#</a>
+            8 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/lampslave/topics/index.html">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/lampslave/posts/index.html">
+                    4796
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ах да, там же ещё минимальная ширина в 1000 пикселей поставлена, забыл я об этом.<br/>Про масштабирование я в курсе, хотя для некоторых картинок оно совершенно неприемлемо.<br/>Там на самом деле нужно не только вёрстку менять, а вообще всё.<br/><br/>Всё же, лучше было бы это у меня в комментариях оставить, чтобы не оффтопить тут.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-122754"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/corner/index.html">
+                <span class="post-username">corner</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/122754/index.html">#</a>
+            8 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/corner/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/corner/posts/index.html">
+                    773
+                </a>
+            </div>
+            <div>
+                Участник с: 21 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Хорошо, хорошо. Когда я еще туда зайду... :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-122805"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/arcanis/index.html">
+                <span class="post-username">arcanis</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/122805/index.html">#</a>
+            8 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8e/cd/8ecde9b9bf77f0b2a47300c7eb3d904f.png" alt="arcanis avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/arcanis/topics/index.html">
+                    31
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/arcanis/posts/index.html">
+                    1496
+                </a>
+            </div>
+            <div>
+                Участник с: 09 сентября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            гуд. У меня только один вопрос. Почему не на шелле, если не секрет? Потому что из питона я увидел, по сути, только парсер, а он делается довольно легко
+            
+                
+                    <div class="post-signature">
+                        PGP <a href="http://pgp.mit.edu:11371/pks/lookup?op=vindex&amp;fingerprint=on&amp;exact=on&amp;search=0x779CD2942629B7FA04AB8F172E89012331361F01">0x31361F01</a><br /><a href="https://repo.arcanis.me/">arcanisrepo</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-122819"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/lampslave/index.html">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/122819/index.html">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/lampslave/topics/index.html">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/lampslave/posts/index.html">
+                    4796
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Потому что шелл я не знаю практически совсем, а в питоне попрактиковаться никогда не мешает. Я и хотел сначала на шелле написать, но моя лень и всякие неудобства типа отсутствия простого "изкоробочного" парсера и непривычного синтаксиса (например, всё время забываю, что при определении переменной нельзя пробелы ставить) моё желание быстро задушили.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexe596.html?next=/forum/topic/12534/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/12534/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:52:12 GMT -->
+</html>

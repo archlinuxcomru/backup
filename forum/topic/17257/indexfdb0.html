@@ -1,0 +1,949 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17257/?page=4 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 09 Sep 2022 03:05:20 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Правила udev для usb флэшек
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/9/index.html">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Правила udev для usb флэшек</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Правила udev для usb флэшек</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index9ba9.html?page=3" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="indexfdb0.html?page=4">4 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185098"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185098/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br>Если же подключать флешки уже к загруженной машине, обе определяются нормально.</blockquote>Понятно ...... все таки при чтении что то да пропущу ...... ну не могу без этого ....
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185099"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185099/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Однажды, находясь в поиске по проблемам с USB устройствами, попалась на глаза одна фраза .... точно не помню, но смысл такой ... <strong>не рекомендуют постоянно загружаться  с вставленными USB устройствами</strong> … вредно сказывается …<br />Уточнять причину не стал, принял на веру без доказательств …. <em>что то в этом да есть</em> ...<br />PS ... к мыши и подобным устройствам это не относится ...
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185107"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/allon925/index.html">
+                <span class="post-username">allon925</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185107/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/allon925/topics/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/allon925/posts/index.html">
+                    310
+                </a>
+            </div>
+            <div>
+                Участник с: 14 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вроде бы я разобрался в чем проблема.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185109"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/allon925/index.html">
+                <span class="post-username">allon925</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185109/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/allon925/topics/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/allon925/posts/index.html">
+                    310
+                </a>
+            </div>
+            <div>
+                Участник с: 14 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Первое что я сделал обновил UEFI на самую новую версию. с 13.02 до 26.03.<br /><br />Итак я подключил в первый порт USB 3.0 компьютера USB хаб.<br /><br />Далее в него я стал подключать флэшки. В 2.0 порты подключил флэшки 2.0 все определились.<br />В 3,0 порты я подключил 2 флэшки transcend о которых тут писал, и еще одну флэшку virico с usb 3.0<br />Каково же было мое удивление, когда transcend (Jetflash 730 белая ) и verico определились, имею ввиду после перезапуска компа.<br />Я пошел дальше раз 2,0 определяются я сунул злощастную флэшку jetflash 700 (черная usb 3.0), в порт usb 2.0 и перезапустил комп.<br />И опять был удивлен так как   jetflash 700 также не определилась и в 2,0 порте. Хотя Jetflash 730 белая спокойно определился и в 2,0 порте при ребуте.<br /><br />Также я зашел в биос и увидел определение это й флэшки  jetflash 700  как SMI USB MEmory BAR потом опять перегрузил зашел уже определилась как JetFlash. Не знаю в ядре проблема в флэшке или в некорректном определении ее биосом в принципе эту флэшку  jetflash 700 можно использовать как загрузочную или просто хранить не ней что-нибудь.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185110"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/allon925/index.html">
+                <span class="post-username">allon925</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185110/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/allon925/topics/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/allon925/posts/index.html">
+                    310
+                </a>
+            </div>
+            <div>
+                Участник с: 14 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Если есть варианты, что сделать с флэшкой Jetflash 700 чтобы она работала корректно, буду благодарен.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185118"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185118/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я уже <a href="https://www.google.com/search?q=%22jetflash+700%22+%22Memory+BAR%22"><strong><u>гуглил</u></strong></a> по странному имени флешки в первом дампе, и там были какие-то обсуждения проблеммных флешек.<br />Собственно, потому я и спрашивал, одна и та же не определяется, или разные.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185122"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/redix/index.html">
+                <span class="post-username">redix</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185122/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/85/25/8525b8b3d838c29f000f57cb18c9307a.png" alt="redix avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/redix/topics/index.html">
+                    34
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/redix/posts/index.html">
+                    3433
+                </a>
+            </div>
+            <div>
+                Участник с: 11 марта 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>не рекомендуют постоянно загружаться с вставленными USB устройствами … вредно сказывается …</blockquote>Могу сказать почему не рекомендуют, это касается usb3. Некоторые материнские платы(начиная где то с 85-го чипсета) имеют фунцию зарядки айфонов и пр, даже в дежурном режиме. То есть контроллер видит устройство и начинает его насиловать стабилизатором тока. Я забыл флешку дня на три в слоте usb3, теперь система видит только ее контроллер, больше ничего.
+            
+                
+                    <div class="post-signature">
+                        In Tux We Trust
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185125"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185125/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Инет показывает много жалоб на флэшки jetflash 700 USB 3.0 и, как я понял, при наличии проблем они определяются как<br /><strong>USB MEMORY BAR</strong>.<br /><blockquote><em>allon925</em><br>есть варианты, что сделать с флэшкой Jetflash 700 чтобы она работала корректно</blockquote>1) Можно попробовать применить ихнюю фирменную утилиту для восстановления Jetflash - <strong>JetFlash Recovery Tool</strong><br />2) Если не поможет, тогда искать на форуме <strong>FlashBoot</strong> подходящую утилиту (под конкретный контроллер) и …. дать ей новую жизнь ….<br /><em>UPD … контроллер SMI … и вроде бы SM3267 (или SM32xx), но конкретно нужно смотреть)</em><br /><br /><em>PS ... сейчас много китайских поделок ..... и частенько фактический контроллер не соответствует заявленному ... если будешь искать прогу под контроллер, то рекомендую флешку вскрыть и определить тип контроллера визуально ...</em>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index9ba9.html?page=3" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="indexfdb0.html?page=4">4 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index28c8.html?next=/forum/topic/17257/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'7472d1183fb59d76',m:'VLRjMbuyujG6jc5KZyVqpUgziWCy_eX0t3WEkzf3JO0-1662589071-0-AdeWosvlUXOYY+m3t3I4D1KQw6UGgVnD4jYeTJ1RpKESA8SQgZQ2Bd8S24gO9AL733qveJd2pCdASWigbNO3Z3CSwpN2V/1NQlBlUUfrGTc++8o8BsgmZNzMDVtjtjzYKM/Rgc46vaygO0aV7QR/iSU=',s:[0x39754b3d13,0x16ffdb2ec1],u:'/cdn-cgi/challenge-platform/h/b'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../cdn-cgi/challenge-platform/h/b/scripts/alpha/invisible5615.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17257/?page=4 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 09 Sep 2022 03:05:20 GMT -->
+</html>

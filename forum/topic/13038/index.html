@@ -1,0 +1,1034 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Gummiboot и LVM
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Gummiboot и LVM</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Gummiboot и LVM</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-129411"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/irzhyk/">
+                <span class="post-username">irzhyk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/129411/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/61/32/6132c3412dd1571c1d6a3bb5b7eff4de.png" alt="irzhyk avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/irzhyk/topics/">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/irzhyk/posts/">
+                    78
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Доброго времени суток.<br/>Возвращаюсь к старым проблемам.<br/>Мать с UEFI. GPT разметка, / на LVM.<br/>Создаю разделы:<br/><br/>gdisk /dev/sda<br/>o<br/>y<br/>n<br/>1<br/>enter<br/>+512M (efi раздел)<br/>ef00<br/>n<br/>2<br/>enter<br/>+20G (root раздел)<br/>8e00 (LVM)<br/>w<br/>y<br/>enter<br/><br/>Создаю LVM:<br/>modprobe dm-mod<br/>pvcreate /dev/sda2<br/>vgcreate arch /dev/sda2<br/>lvcreate -l100%FREE -n root arch<br/><br/>Форматирую разделы:<br/>mkfs.vfat /dev/sda1<br/>mkfs.ext4 /dev/mapper/arch-root<br/><br/>Монтирую разделы:<br/>mount /dev/mapper/arch-root /mnt<br/>mkdir /mnt/boot<br/>mount /dev/sda1 /mnt/boot<br/><br/>pacman -Syy (обновляю список зеркал)<br/>pacstrap /mnt base base-devel<br/><br/>genfstab -p /mnt &gt;&gt; /mnt/etc/fstab (генерирую fstab)<br/><br/>arch-chroot /mnt<br/><br/>nano /etc/mkinitcpio.conf (добавляю lvm2 в HOOKS перед filesystem)<br/><br/>mkinitcpio -p linux<br/><br/>pacman -S gummiboot<br/>nano /boot/loader/loader.conf<br/>	default arch<br/>	timeout 4<br/><br/>nano /boot/loader/entries/arch.conf<br/>	title          Arch Linux<br/>	linux          /vmlinuz-linux<br/>	initrd         /initramfs-linux.img<br/>	options        root=/dev/mapper/arch-root rw<br/><br/>exit<br/>umount /mnt/boot<br/>umount /mnt<br/><br/>reboot<br/>Система не грузится.<br/><br/>Вопросы:<br/>1) В некоторых гайдах, перед установкой делают<br/>	mount --bind /dev /mnt/dev<br/>	mount --bind /proc /mnt/proc<br/>	mount --bind /sys /mnt/sys<br/><br/>Зачем нужно биндить эти дирректории? Можно ли обойтись без этого?<br/><br/>2)Правильно ли я монтирую esp раздел? Или его нужно монтировать в /mnt/boot/EFI<br/><br/>?<br/>3)В чем разница /dev/mapper/arch-root или /dev/arch/root ? Не могу отловить<br/><br/>когда работает как /dev/arch/root а когда нет.<br/>4) Нужно ли делать modprobe dm-mod ? А после chroot-а?<br/><br/>5) gdisk /dev/sda<br/>MBR: protective<br/>BSD: not present<br/>APM: not present<br/>GPT: present<br/><br/>Что значит MBR: protective ? Это гибридный режим? Как сделать MBR only я кажется научился, а как сделать GPT only?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-129412"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/lampslave/">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/129412/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/lampslave/topics/">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/lampslave/posts/">
+                    4801
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Любят же люди проблемы себе создавать: gpt, lvm, загрузчик какой-то левый...<br/><br/><blockquote><em>irzhyk</em><br/>1) В некоторых гайдах, перед установкой делают<br/>mount --bind /dev /mnt/dev<br/>mount --bind /proc /mnt/proc<br/>mount --bind /sys /mnt/sys<br/><br/>Зачем нужно биндить эти дирректории? Можно ли обойтись без этого?<br/></blockquote>Я даже знаю, в каких :)<br/>Если пользуетесь pacstrap-ом, то биндить ничего не надо.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-129416"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/irzhyk/">
+                <span class="post-username">irzhyk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/129416/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/61/32/6132c3412dd1571c1d6a3bb5b7eff4de.png" alt="irzhyk avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/irzhyk/topics/">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/irzhyk/posts/">
+                    78
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            lampslave, почему левый? Как правильно тогда загрузить систему на UEFI ? Чисто средствами UEFI ? Спасибо за ответ.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-129417"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/lampslave/">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/129417/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/lampslave/topics/">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/lampslave/posts/">
+                    4801
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Лично я решил не тратить время, а обойтись mbr и grub-ом.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-129419"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/129419/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>irzhyk</em><br/>В некоторых гайдах, перед установкой делают<br/>mount --bind /dev /mnt/dev<br/>mount --bind /proc /mnt/proc<br/>mount --bind /sys /mnt/sys</blockquote>Это делается перед чрутом, чтобы программы, запускаемые в чруте, не потеряли доступ к /dev , /proc и /sys<br/>Если вы используете всяческие pacstrap и arch-chroot , они сделают всё это сами.<br/><br/><blockquote><em>lampslave</em><br/>Лично я решил не тратить время, а обойтись mbr и grub-ом.</blockquote>А вот я уже думаю, на каких "кошках" бы мне попробовать загрузку с EFI и LVM, чтобы написать про это в вики. А то <a href="https://wiki.archlinux.org/index.php/GRUB2_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">пишу там о GRUB</a>, а у меня все примеры только с BIOS и MBR :)<br/>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-129421"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/irzhyk/">
+                <span class="post-username">irzhyk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/129421/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/61/32/6132c3412dd1571c1d6a3bb5b7eff4de.png" alt="irzhyk avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/irzhyk/topics/">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/irzhyk/posts/">
+                    78
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Загрузка с EFI и LVM точно работает, ставил какой-то дистрибутив(точно не вспомню, вроде *ubunta какая-то), в гуевом инсталяторе все указывалось, и root на lvm, и  boot не выносился в отельный раздел, только там GRUB ставился. Хочу попробовать без него.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-129485"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/irzhyk/">
+                <span class="post-username">irzhyk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/129485/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/61/32/6132c3412dd1571c1d6a3bb5b7eff4de.png" alt="irzhyk avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/irzhyk/topics/">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/irzhyk/posts/">
+                    78
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            lampslave, не могли бы вы ответить на остальные 4 вопроса, если не затруднит. Спасибо
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-129492"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Kycok/">
+                <span class="post-username">Kycok</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/129492/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/b7/3e/b73e340446ad65d73a75ebec48fc70c8.png" alt="Kycok avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Kycok/topics/">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Kycok/posts/">
+                    1585
+                </a>
+            </div>
+            <div>
+                Участник с: 09 января 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>irzhyk</em><br/>gdisk /dev/sda<br/>MBR: protective<br/>BSD: not present<br/>APM: not present<br/>GPT: present</blockquote>Я так понимаю, что это значит GPT. У меня gdisk тоже так писал
+            
+                
+                    <div class="post-signature">
+                        <a href="https://github.com/Kycko">GitHub</a>, <a href="https://wiki.archlinux.org/index.php/User:Kycok">ArchWiki</a>, <a href="https://aur.archlinux.org/account/Kycok">AUR</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-129504"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/lampslave/">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/129504/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/lampslave/topics/">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/lampslave/posts/">
+                    4801
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>irzhyk</em><br/>lampslave, не могли бы вы ответить на остальные 4 вопроса, если не затруднит. Спасибо</blockquote>Если бы я знал ответы, я бы сразу их написал. Но, повторю, возможности gpt и efi я не использую, поэтому и проблем таких не имею.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-129510"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Medar/">
+                <span class="post-username">Medar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/129510/">#</a>
+            8 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Medar/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Medar/posts/">
+                    402
+                </a>
+            </div>
+            <div>
+                Участник с: 08 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А где <div class="code"><pre># gummiboot install</pre></div>?<br/>И, возможно, <div class="code"><pre># mount -t efivarfs efivarfs /sys/firmware/efi/efivars</pre></div>?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/13038/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747c4b3fcba39d93',m:'8aztVYAWtsX9On79kUoxFM_r47Q9O2B3wA5rgb7tgyk-1662688448-0-AYYN4Yz7/JhlQEcEZgA295z4KK22ZjTmNsevEywHIlvtLtYgbT+5RgQOna4uiBVJWySeJ+iLywTgNd8LbvVaBKEWWF48+0XP5PNOpUAKUcxANOIeJNZ3RUmwnZQuDNulLoPmt/TCGOa6xB4BIZYsxhI=',s:[0x010839761f,0x4c80a5de64],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

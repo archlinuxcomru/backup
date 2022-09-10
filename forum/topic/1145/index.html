@@ -1,0 +1,1095 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [Баг починен] systemd, virtualbox и dhcp
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[Баг починен] systemd, virtualbox и dhcp</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[Баг починен] systemd, virtualbox и dhcp</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11090"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/lampslave/">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11090/">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/lampslave/topics/">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/lampslave/posts/">
+                    4801
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Решил поковырять arch с systemd в виртуалбоксе. initscripts и sysvinit снёс, поставил systemd-arch-units и включил сервис: <div class="code"><pre>systemctl enable <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6f0b070c1f0c0b2f411c0a1d19060c0a">[email&#160;protected]</a></pre></div>После перезагрузки наблюдаю неработающую, как и прежде, сеть. ip a показывает, что адрес для eth0 не получен. В логах ругань на то, что интерфейс eth0 не обнаружен. Если запускать <div class="code"><pre>systemctl start <a href="/cdn-cgi/l/email-protection#583c303b283b3c183d2c306876203675752b3d2a2e313b3d6477282a3d6664773c312e66753d29282e37343b2e3c3a6a302131"><span class="__cf_email__" data-cfemail="e4808c87948780a481908cd4ca978196928d8781">[email&#160;protected]</span></pre></div>вручную</a> после загрузки, то всё работает, что наводит на мысль о том, что демон запускается слишком рано, когда девайсы ещё не обнаружены.<br/><br/>Вопрос: как бороться? Причём желательно без редактирования .service файла, чтобы изменения не пропали при обновлении.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11091"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/aady/">
+                <span class="post-username">aady</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11091/">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/9d/38/9d384ddca4bdbb3b6bef22e65d7f348b.png" alt="aady avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/aady/topics/">
+                    9
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/aady/posts/">
+                    101
+                </a>
+            </div>
+            <div>
+                Участник с: 08 ноября 2011
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            systemd-sysvcompat нужно поставить, он заменяет initscripts и sysvinit.
+            
+                
+                    <div class="post-signature">
+                        Свежий воздух - единственный враг философии.<br /><a href="https://box-look.org/content/show.php/Gray+Sadness?content=159019">GTK2/GTK3 тема для openbox.</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11092"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/lampslave/">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11092/">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/lampslave/topics/">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/lampslave/posts/">
+                    4801
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Несколько неспортивное решение. Я решил разобраться с systemd, чтобы иметь возможность настраивать загрузку в любом дистрибутиве, который его использует. Для Арча и initscripts хватает выше головы.<br/><br/>Проблема в общем-то решается как-то так: <a href="https://bugs.archlinux.org/task/30235">https://bugs.archlinux.org/task/30235</a> . Я почти пришел к тому же выводу, но ничего умнее не придумал, чем прописать запуск после systemd-logind.service :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11093"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11093/">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            Была такая же проблема когда начал использовать <strong>systemd-readahead</strong> для ускорения загрузки, через раз стал запускаться <strong>netcfg.service</strong> писал что нет сетевых устройств, но после полной загрузки спокойно запускался вручную&#8230;<br/>Изменил так<br/><strong>/etc/systemd/system/netcfg.service</strong><br/><div class="code"><pre>.include /usr/lib/systemd/system/netcfg.service
+[Unit]
+Requires=systemd-udev-settle.service
+After=systemd-udev-settle.service</pre></div>Пока вроде работает, НО все же очень редко иногда бывает та же ошибка&#8230;
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11094"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/lampslave/">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11094/">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/lampslave/topics/">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/lampslave/posts/">
+                    4801
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ага, значит тоже после systemd-udev-settle.service предлагаете запускать. Спасибо, пусть будет так, раз другой &ldquo;точки отправления&rdquo; нету.<br/>Интересно, а все остальные networkmanager что ли используют? Я ведь гуглил хорошенько, но что-то большого количества жалоб на неработающую сеть не нашел.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11095"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/citadeldimon/">
+                <span class="post-username">citadeldimon</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11095/">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/citadeldimon/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/citadeldimon/posts/">
+                    288
+                </a>
+            </div>
+            <div>
+                Участник с: 09 июля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>lampslave</em><br/>Интересно, а все остальные networkmanager что ли используют? Я ведь гуглил хорошенько, но что-то большого количества жалоб на неработающую сеть не нашел.</blockquote>на десктопе отлично работает сеть с <a href="/cdn-cgi/l/email-protection#680c000b180b0c280d1c0058461b0d1a1e010b"><span class="__cf_email__" data-cfemail="b2d6dad1c2d1d6f2d7c6da829cc1d7c0c4dbd1">[email&#160;protected]</span></a> e, на ноуте начал использавать netcfg - отличная вещь. И еще, в первом посте ошибка - должно быть <br/><div class="code"><pre>systemctl enable <a href="/cdn-cgi/l/email-protection#5c38343f2c3f381c3928346c722f392e2a353f3960732c2e3962607338352a62"><span class="__cf_email__" data-cfemail="385c505b485b5c785d4c5008164b5d4a4e515b5d">[email&#160;protected]</span></pre></div></a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11096"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/lampslave/">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11096/">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/lampslave/topics/">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/lampslave/posts/">
+                    4801
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            И что, ничего не отваливается? Странно&#8230;<br/>Да нет, у меня как раз всё правильно. При enable указывать интерфейс не нужно.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11097"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11097/">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            Замечу что у меня без ускорителя все работает стабильно, а проблема появляется только с ускорителем&#8230;
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11098"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/citadeldimon/">
+                <span class="post-username">citadeldimon</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11098/">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/citadeldimon/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/citadeldimon/posts/">
+                    288
+                </a>
+            </div>
+            <div>
+                Участник с: 09 июля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>lampslave</em><br/>И что, ничего не отваливается? Странно&#8230;<br/>Да нет, у меня как раз всё правильно. При enable указывать интерфейс не нужно.</blockquote>да, не нужно. ошибся - извиняюсь.<br/><br/>Все норм работает, хотя в демонах убрал я network.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11099"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/lampslave/">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11099/">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/lampslave/topics/">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/lampslave/posts/">
+                    4801
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br/>Замечу что у меня без ускорителя все работает стабильно, а проблема появляется только с ускорителем&#8230;</blockquote><blockquote><em>citadeldimon</em><br/>Все норм работает, хотя в демонах убрал я network.</blockquote>А initscripts или sysvinit, или какие-нибудь пакеты совместимости стоят? У меня, например, в виртуалке rc.conf вообще нет.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/1145/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747ae963fca69daa',m:'SZtU9UbFmNpIFXGb3VTNL1J3oCIYTsRGEvOzJt4fLpI-1662673953-0-AcE26V0wTaNjE7Zc/gdUF7OSFDA1cxgyIXqHpKJzdRQHprejlUM2qvt1fL9VZSL9VuvZ/MxyVLP54oueWAiQchuCRj7Eq/a7CbjX+XNI83dxfTEL89Y3llEV76W+hwNBAk6xLTvOAVHnlhHS916d6HU=',s:[0xfd6a9b930d,0x68656f0cdc],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

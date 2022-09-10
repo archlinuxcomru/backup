@@ -1,0 +1,1171 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [РЕШЕНО] systemd-212-1 - сломали автомонтирование udev
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/12/">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[РЕШЕНО] systemd-212-1 - сломали автомонтирование udev</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[РЕШЕНО] systemd-212-1 - сломали автомонтирование udev</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=3" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=4">4 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=5" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133836"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/elsonador/">
+                <span class="post-username">elsonador</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133836/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c4/74/c4744210be47d6c1692ba03d7d1a5b83.png" alt="elsonador avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/elsonador/topics/">
+                    63
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/elsonador/posts/">
+                    996
+                </a>
+            </div>
+            <div>
+                Участник с: 09 апреля 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Штатное средство - команда <strong>mount</strong>. Вот она действительно способна, а всё что выше - причиндалы.<br /><br />За всё время, что я пользуюсь <strong>KDE</strong> , был один(!) затык - когда он не дожидался размонтирования. А тут стоило архимагам поменять своё заклинание - и у деревенских колдунов тут же сбежали демоны.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133859"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133859/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>elsonador</em><br>А тут стоило архимагам поменять своё заклинание - и у деревенских колдунов тут же сбежали демоны.</blockquote>+100 )))
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133880"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/akorop/">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133880/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/akorop/topics/">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/akorop/posts/">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>elsonador</em><br>А тут стоило архимагам поменять своё заклинание - и у деревенских колдунов тут же сбежали демоны.</blockquote>Вообще-то, сбежали они только у меня одного. Да и то потому что я использовал очень древнее заклинание, к тому же не очень корректное, как выяснилось. Но древность его обусловлена тем, что оно долго и без проблем <strong>работало</strong>. Сейчас я его как следует обновил, и дооолго ещё не буду иметь проблем.<br />
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133884"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/akorop/">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133884/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/akorop/topics/">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/akorop/posts/">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Итог.<br />Комплект из 4 файлов - правило, сервис и два скрипта.<br />CD/DVD (sr*) монтирует в /media/cdrom; всё остальное - в /media/метка или (если метки нет) в /media/устройство.<br />Особенности: монтирует от пользователя с uid=1000; параметры vfat слегка заточены под русский; монтирует sdb* и далее (то есть если в системе два винта, то правило надо изменить).<br /><strong>/etc/udev/rules.d/64-automount.rules</strong><pre><code># Automount removables
+# Automount removables
+
+KERNEL==&quot;sd[b-z]*&quot;, ACTION==&quot;add&quot;, RUN+=&quot;/usr/bin/systemctl start <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f09185849f9d9f859e84b0">[email&#160;protected]</a>%k&quot;
+KERNEL==&quot;sd[b-z]*&quot;, ACTION==&quot;remove&quot;, RUN+=&quot;/usr/bin/systemctl stop <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c3a2b6b7acaeacb6adb783">[email&#160;protected]</a>%k&quot;
+
+KERNEL==&quot;sr0&quot;, ACTION==&quot;change&quot;, ENV{ID_FS_TYPE}==&quot;?*&quot;, RUN+=&quot;/usr/bin/systemctl start <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3f5e4a4b5052504a514b7f">[email&#160;protected]</a>%k&quot;
+KERNEL==&quot;sr0&quot;, ACTION==&quot;change&quot;, ENV{ID_FS_TYPE}!=&quot;?*&quot;, RUN+=&quot;/usr/bin/systemctl stop <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d1b0a4a5bebcbea4bfa591">[email&#160;protected]</a>%k&quot;
+</code></pre><strong>/etc/systemd/system/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e7869293888a88928993a7c9948295918e8482">[email&#160;protected]</a></strong><pre><code>[Service]
+Type=oneshot
+TimeoutSec=0
+RemainAfterExit=yes
+
+ExecStart=/usr/local/bin/automount %I
+ExecStop=/usr/local/bin/autoumount %I
+</code></pre><strong>/usr/local/bin/automount</strong><pre><code>#!/bin/bash
+# mount $1 to the /media by label or device name
+# mount for user with uid=1000
+echo $1
+# is FS exists?
+ID_FS_TYPE=$(/usr/bin/lsblk -no FSTYPE /dev/$1 2&gt; /dev/null)
+if [ ! -n &quot;$ID_FS_TYPE&quot; ]; then
+  exit
+fi
+echo FS=$ID_FS_TYPE
+
+#Define mountpoint: &quot;cdrom&quot; for sr0, label if present, else device name.
+#Define mount options
+if [ &quot;$1&quot; == &quot;sr0&quot; ]; then
+  echo $1==cdrom
+  MP=&quot;cdrom&quot;
+  mount_options=&quot;ro&quot;
+else
+  MP=$(/usr/bin/lsblk -no LABEL /dev/$1 2&gt; /dev/null)
+# Global mount options
+  mount_options=&quot;uid=1000,umask=022,dmask=0&quot;
+
+# Special mount options
+  if [ &quot;$ID_FS_TYPE&quot;==&quot;vfat&quot; ]; then
+    mount_options=$mount_options,codepage=866,iocharset=utf8
+  fi
+  if [ &quot;$ID_FS_TYPE&quot;==&quot;ntfs&quot; ]; then
+    mount_options=defaults,$mount_options
+  fi
+fi
+if [ ! -n &quot;$MP&quot; ]; then
+  MP=$1
+fi
+mountpoint=&quot;/media/$MP&quot;
+
+mp_dir=&quot;/run/removable-mount&quot;
+echo create $mountpoint, mount $1 and save $mp_dir/$1
+
+# Mount the device
+/bin/mkdir -p $mountpoint
+/bin/mount -o $mount_options /dev/$1 $mountpoint
+
+# Remember the mountpoint (see &quot;removable-umount&quot;)
+mkdir -p $mp_dir
+echo $mountpoint &gt; $mp_dir/$1
+</code></pre><strong>/usr/local/bin/autoumount</strong><pre><code>#!/bin/bash
+# umount $1 if mounted and remove mountpoint (see &quot;removable-mount&quot;)
+mp_dir=&quot;/run/removable-mount&quot;
+mp_file=$mp_dir/$1
+if [ -f $mp_file ]; then
+  mountpoint=`cat $mp_file`
+  echo umount $1, remove $mountpoint and $mp_file
+  umount /dev/$1 2&gt; /dev/null
+  rmdir $mountpoint 2&gt; /dev/null
+  rm $mp_file
+fi
+</code></pre>Есть ещё подвязанные к монтированию в /media два скрипта: один для вывода списка смонтированного в conky, второй - pipemenu отмонтирования для openbox.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133886"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/52th/">
+                <span class="post-username">52th</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133886/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/52th/topics/">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/52th/posts/">
+                    462
+                </a>
+            </div>
+            <div>
+                Участник с: 01 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+                 У меня пхожая пролема, но на свежеустановленной системе (стационар). На нетбуке, где арч живёт давно и обновляется регулярно, такого нет.<br />     Суть проблемы такова, что при подключении внешних носителей (типа флешки), DE это событие видит, спрашивает &quot;подключить?&quot;, если нажимаю &quot;Да&quot;, то в ответ приходит &quot;недостаточно прав, введите пароль администратора&quot;. Это я выличил быстро, допилив одно правило polkit. Флэшки начали монтироватися, но в режиме &quot;read-only&quot;, то есть ничего туда не запишешь. Ради эксперемента монтировал/размонтировал в ручную, пытался записать данные под root`ом, но результат тот-же. ФС на флешках - FAT/NTFS, бегло просмотрел правила polkit и udev, на первый взгляд ничего нового и необычного. Сильно глубоко копать времени нет. Может я какой пакет забыл установить?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133891"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/elsonador/">
+                <span class="post-username">elsonador</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133891/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c4/74/c4744210be47d6c1692ba03d7d1a5b83.png" alt="elsonador avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/elsonador/topics/">
+                    63
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/elsonador/posts/">
+                    996
+                </a>
+            </div>
+            <div>
+                Участник с: 09 апреля 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Читай <strong>WiKi</strong> по установке ещё раз, я от нечего делать сделал чистую установку на виртуальную машину - всё тикает.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133892"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/akorop/">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133892/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/akorop/topics/">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/akorop/posts/">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>52th</em><br>У меня пхожая пролема,</blockquote>Ничего похожего. У меня простые и понятные скрипты, а у Вас - неизвестно что, работающее неизвестно как. Зато &quot;полноценная DE&quot;.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133899"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/52th/">
+                <span class="post-username">52th</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133899/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/52th/topics/">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/52th/posts/">
+                    462
+                </a>
+            </div>
+            <div>
+                Участник с: 01 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><br>У меня простые и понятные скрипты, а у Вас - неизвестно что, работающее неизвестно как. Зато &quot;полноценная DE&quot;.</blockquote><br />    А вот мне чего-то не очень хочется городить огород и изобретать велосипеды. Я хочу решать проблемы системы методами самой системы. Скрипты - это давольно тепло и лапово, но мне в данном случае, я хочу  чтобы всё работало и без левых &quot;костылей&quot;. Когда у меня будут нестандартные задачи по автоматизации (в системе), тогда буду писать скрипты. А монтирование флешек, это простите, ситуация штатная, которая должна работать &quot;из коробки&quot; и причём корректно.<br />    Чует моё сердце - ответ лежит на поверхности, надо либо пару строчек в одном из правил дописать, либо какой-нибудь пакет доустановить.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133914"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/tchgefest/">
+                <span class="post-username">tchgefest</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133914/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/tchgefest/topics/">
+                    51
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/tchgefest/posts/">
+                    1505
+                </a>
+            </div>
+            <div>
+                Участник с: 20 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>52th</em><br>ФС на флешках - FAT/NTFS</blockquote>Это стоит ntfs-3g,gvfs?
+            
+                
+                    <div class="post-signature">
+                        Последний крик моды - эхо 30-летней давности.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133939"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/akorop/">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133939/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/akorop/topics/">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/akorop/posts/">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>52th</em><br><blockquote><br>У меня простые и понятные скрипты, а у Вас - неизвестно что, работающее неизвестно как. Зато &quot;полноценная DE&quot;.</blockquote>    А вот мне чего-то не очень хочется городить огород и изобретать велосипеды. Я хочу решать проблемы системы методами самой системы. Скрипты - это давольно тепло и лапово, но мне в данном случае, я хочу  чтобы всё работало и без левых &quot;костылей&quot;.</blockquote>Золотые слова. Только непонятные. Что такое эта самая &quot;система&quot;? Я считаю, что каждая задача должна решаться на самом нижнем уровне, на котором она решается просто. А если вместо этого &quot;система&quot; нагромождает странные, разнообразные и зачастую глючные средства - это зло и ubuntu way.<br />В KDE монтированием занимается Dolphin (или кто там дескотоп), в гноме - Nautilus, в XFCE - Thunar, в LXDE - pcmanfm; для особых ценителей есть ещё spaceFM, Stuurman и не знаю что ещё. Кто-то из них монтирует через udisks, кто-то через udisks2 (которые между собой не совместимы), кому-то агента можно полностью настроить; настройки у всех разные; интерфейс не очень удобный. И всё это запросто может заглючить после очередного обновления, что уже не раз бывало.<br />Что делать тем, кто не любит автомонтирования, я советовать не берусь. А если автомонтирование желательно, то <a href="https://archlinux.org.ru/forum/post/133884/">только что</a> я привёл очень простое решение, которое будет работать под любой DE и не повалится после очередного улучшения ФМ.<br /><blockquote><em>52th</em><br>Когда у меня будут нестандартные задачи по автоматизации (в системе), тогда буду писать скрипты. А монтирование флешек, это простите, ситуация штатная, которая должна работать &quot;из коробки&quot; и причём корректно.</blockquote>Золотые слова. Только жизнь, к сожалению, под них не подходит. Я не видел ни одной системы, в которой работа с флэшками &quot;из коробки&quot; не имела бы очевидных недостатков. А ведь кроме монтирования есть ещё и отмонтирование - тут вообще песня, самый яркий пример того, как не надо делать, даёт винда.<br /><blockquote><em>52th</em><br>Чует моё сердце - ответ лежит на поверхности, надо либо пару строчек в одном из правил дописать, либо какой-нибудь пакет доустановить.</blockquote>Если уж надо разбираться в каких-то правилах и писать какие-то строчки, то лучше это сделать на уровне одинаковых везде udev и systemd - эти знания пригодятся ещё не раз.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=3" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=4">4 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=5" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/13322/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747b8a1c2e61162e',m:'zekS4Yyu.p5mSU41W6mEV3HYsCKf9qGbxZN_EYhKVJk-1662680540-0-Ae3nB5NdUBm6D0ag3Dr1/uuh8u81m4ObKYD44U3GFvTnGe8tWIjU1aj+oCxMEtRZjsZ2aYTCOg3A7OGohAqtcYP5dqTwNDwTeJg0mxVXyNsJtYplZ6CJSv2sPDh2SeiLj4ybMRqEmxw7cyHlFgtd8i0=',s:[0x7145c65732,0x4e0722dd12],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

@@ -1,0 +1,1178 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17427/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:23:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        systemd не запускает с первого раза display manager
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/23/index.html">Демоны и загрузка системы</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>systemd не запускает с первого раза display manager</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>systemd не запускает с первого раза display manager</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-188790"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/svicer/index.html">
+                <span class="post-username">svicer</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/188790/index.html">#</a>
+            5 лет, 4 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 4 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/86/fa/86fa1b0c414baca804a3d090b75ad6db.png" alt="svicer avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/svicer/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/svicer/posts/index.html">
+                    856
+                </a>
+            </div>
+            <div>
+                Участник с: 27 июля 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            При запуске системы systemd пытается запустить dm(запускается dm и xorg), но остается черный экран, иногда dm нагружает проц на 100%, тогда, при попытке убить dm вываливается ошибка <pre><code>kernel: [drm:drm_atomic_helper_commit_cleanup_done [drm_kms_helper]] *ERROR* [CRTC:31:pipe A] flip_done timed out</code></pre>. Если убить dm и xorg то dm автоматически перезапускается в нормальном режиме.<br />Пробовал обойтись без dm, но запуск с помощью getty@tty1 дает такой результат:<pre><code>systemd-coredump[1105]: Process 852 (startx) of user 1000 dumped core.
+
+                                                   Stack trace of thread 852:
+                                                   #0  0x00007fb755a12da7 kill (libc.so.6)
+                                                   #1  0x000000000044dc02 command_substitute (bash)
+                                                   #2  0x00000000004542d6 n/a (bash)
+                                                   #3  0x00000000004554bc n/a (bash)
+                                                   #4  0x000000000045561a expand_string_assignment (bash)
+                                                   #5  0x000000000044e8ae n/a (bash)
+                                                   #6  0x000000000044ed87 n/a (bash)
+                                                   #7  0x0000000000457455 n/a (bash)
+                                                   #8  0x000000000042fdbf n/a (bash)
+                                                   #9  0x0000000000431e4c execute_command_internal (bash)
+                                                   #10 0x0000000000433a6e execute_command (bash)
+                                                   #11 0x0000000000431b36 execute_command_internal (bash)
+                                                   #12 0x0000000000433a6e execute_command (bash)
+                                                   #13 0x0000000000432e85 execute_command_internal (bash)
+                                                   #14 0x0000000000431b71 execute_command_internal (bash)
+                                                   #15 0x0000000000433a6e execute_command (bash)
+                                                   #16 0x0000000000431fec execute_command_internal (bash)
+                                                   #17 0x0000000000433a6e execute_command (bash)
+                                                   #18 0x000000000041c492 reader_loop (bash)
+                                                   #19 0x000000000041b1b5 main (bash)
+                                                   #20 0x00007fb7559ff511 __libc_start_main (libc.so.6)
+                                                   #21 0x000000000041b6fa _start (bash)
+Май 01 22:55:45 dhcppc6 systemd-coredump[1160]: Process 1153 (Xorg) of user 1000 dumped core.
+
+                                                   Stack trace of thread 1153:
+                                                   #0  0x00007ff6c6ddca10 raise (libc.so.6)
+                                                   #1  0x00007ff6c6dde13a abort (libc.so.6)
+                                                   #2  0x00007ff6c6dd5607 __assert_fail_base (libc.so.6)
+                                                   #3  0x00007ff6c6dd56b2 __assert_fail (libc.so.6)
+                                                   #4  0x000000000045517e dixRegisterPrivateKey (Xorg)
+                                                   #5  0x00007ff6bec116a0 glamor_init (libglamoregl.so)
+                                                   #6  0x00007ff6bee43711 n/a (modesetting_drv.so)
+                                                   #6  0x00007ff6bee43711 n/a (modesetting_drv.so)
+                                                   #7  0x0000000000436d70 AddGPUScreen (Xorg)
+                                                   #8  0x0000000000496df6 n/a (Xorg)
+                                                   #9  0x000000000049ca31 n/a (Xorg)
+                                                   #10 0x00000000004989dc n/a (Xorg)
+                                                   #11 0x0000000000499643 n/a (Xorg)
+                                                   #12 0x0000000000498019 config_init (Xorg)
+                                                   #13 0x000000000047b267 InitInput (Xorg)
+                                                   #14 0x000000000043a921 n/a (Xorg)
+                                                   #15 0x00007ff6c6dc9511 __libc_start_main (libc.so.6)
+                                                   #16 0x000000000042464a _start (Xorg)
+
+                                                   Stack trace of thread 1158:
+                                                   #0  0x00007ff6c715a756 pthread_cond_wait@@GLIBC_2.3.2 (libpthread.so.0)
+                                                   #1  0x00007ff6bd9310cb n/a (r600_dri.so)
+                                                   #2  0x00007ff6bd930df7 n/a (r600_dri.so)
+                                                   #3  0x00007ff6c71542e7 start_thread (libpthread.so.0)
+                                                   #4  0x00007ff6c6e9554f __clone (libc.so.6)
+
+                                                   Stack trace of thread 1154:
+                                                   #0  0x00007ff6c715a756 pthread_cond_wait@@GLIBC_2.3.2 (libpthread.so.0)
+                                                   #1  0x00007ff6c37aa8e9 n/a (intel_drv.so)
+                                                   #2  0x00007ff6c71542e7 start_thread (libpthread.so.0)
+                                                   #3  0x00007ff6c6e9554f __clone (libc.so.6)
+Май 01 22:55:57 dhcppc6 systemd-coredump[1213]: Process 1206 (Xorg) of user 1000 dumped core.
+
+                                                   Stack trace of thread 1206:
+                                                   #0  0x00007f925d3e5a10 raise (libc.so.6)
+                                                   #1  0x00007f925d3e713a abort (libc.so.6)
+                                                   #2  0x00007f925d3de607 __assert_fail_base (libc.so.6)
+                                                   #3  0x00007f925d3de6b2 __assert_fail (libc.so.6)
+                                                   #4  0x000000000045517e dixRegisterPrivateKey (Xorg)
+                                                   #5  0x00007f925521a6a0 glamor_init (libglamoregl.so)
+                                                   #6  0x00007f925544c711 n/a (modesetting_drv.so)
+                                                   #7  0x0000000000436d70 AddGPUScreen (Xorg)
+                                                   #8  0x0000000000496df6 n/a (Xorg)
+                                                   #9  0x000000000049ca31 n/a (Xorg)
+                                                   #10 0x00000000004989dc n/a (Xorg)
+                                                   #11 0x0000000000499643 n/a (Xorg)
+                                                   #12 0x0000000000498019 config_init (Xorg)
+                                                   #13 0x000000000047b267 InitInput (Xorg)
+                                                   #14 0x000000000043a921 n/a (Xorg)
+                                                   #15 0x00007f925d3d2511 __libc_start_main (libc.so.6)
+                                                   #16 0x000000000042464a _start (Xorg)
+
+                                                   Stack trace of thread 1211:
+                                                   #0  0x00007f925d763756 pthread_cond_wait@@GLIBC_2.3.2 (libpthread.so.0)
+                                                   #1  0x00007f9253f3a0cb n/a (r600_dri.so)
+                                                   #2  0x00007f9253f39df7 n/a (r600_dri.so)
+                                                   #3  0x00007f925d75d2e7 start_thread (libpthread.so.0)
+                                                   #4  0x00007f925d49e54f __clone (libc.so.6)
+
+                                                   Stack trace of thread 1207:
+                                                   #0  0x00007f925d763756 pthread_cond_wait@@GLIBC_2.3.2 (libpthread.so.0)
+                                                   #1  0x00007f9259db38e9 n/a (intel_drv.so)
+                                                   #2  0x00007f925d75d2e7 start_thread (libpthread.so.0)
+                                                   #3  0x00007f925d49e54f __clone (libc.so.6)</code></pre><br />В логах никаких ошибок, есть только это:<br /><pre><code>cat /var/log/Xorg.0.log | grep WW
+	(WW) warning, (EE) error, (NI) not implemented, (??) unknown.
+[   126.565] (WW) The directory &quot;/usr/share/fonts/Type1/&quot; does not exist.
+[   126.565] (WW) `fonts.dir&#39; not found (or not valid) in &quot;/usr/share/fonts/100dpi/&quot;.
+[   126.565] (WW) `fonts.dir&#39; not found (or not valid) in &quot;/usr/share/fonts/75dpi/&quot;.
+[   126.588] (WW) Open ACPI failed (/var/run/acpid.socket) (No such file or directory)
+[   126.628] (WW) Warning, couldn&#39;t open module fbdev[s][/s]
+[   126.628] (WW) Warning, couldn&#39;t open module vesa
+[   126.632] (WW) Falling back to old probe method for modesetting</code></pre><br />Не могу понят куда копать.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-188791"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/188791/index.html">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>svicer</em><br>[   126.565] (WW) `fonts.dir&#39; not found (or not valid) in &quot;/usr/share/fonts/100dpi/&quot;.<br />[   126.565] (WW) `fonts.dir&#39; not found (or not valid) in &quot;/usr/share/fonts/75dpi/&quot;.</blockquote>Если по указанному пути файлы fonts.alias на месте и:<br /><blockquote><em>svicer</em><br>[   126.628] (WW) Warning, couldn&#39;t open module fbdev<strike></strike><br />[   126.628] (WW) Warning, couldn&#39;t open module vesa</blockquote>тоже на своих местах, есть вероятность проблемы с файловой системой.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-188794"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/svicer/index.html">
+                <span class="post-username">svicer</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/188794/index.html">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/86/fa/86fa1b0c414baca804a3d090b75ad6db.png" alt="svicer avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/svicer/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/svicer/posts/index.html">
+                    856
+                </a>
+            </div>
+            <div>
+                Участник с: 27 июля 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>RusWolf</em><br>есть вероятность проблемы с файловой системой.</blockquote>Этих пакетов в системе не было, но когда поставил появилось:<br /><pre><code>cat /var/log/Xorg.0.log | grep WW
+	(WW) warning, (EE) error, (NI) not implemented, (??) unknown.
+[    51.912] (WW) The directory &quot;/usr/share/fonts/Type1/&quot; does not exist.
+[    51.936] (WW) Open ACPI failed (/var/run/acpid.socket) (No such file or directory)
+[    51.979] (WW) Falling back to old probe method for modesetting
+[    51.979] (WW) Falling back to old probe method for fbdev
+[    51.979] (WW) Falling back to old probe method for vesa</code></pre><br />Falling back to old probe method, что это означает. И что должно быть в &quot;/usr/share/fonts/Type1
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-188795"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/188795/index.html">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <strong>svicer</strong>, у тебя падают иксы.<br />переустанови...
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-188796"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/svicer/index.html">
+                <span class="post-username">svicer</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/188796/index.html">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/86/fa/86fa1b0c414baca804a3d090b75ad6db.png" alt="svicer avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/svicer/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/svicer/posts/index.html">
+                    856
+                </a>
+            </div>
+            <div>
+                Участник с: 27 июля 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br>переустанови...</blockquote>переустановил Xorg, удалил конфиги, таже штука.... Буду систему переустанавливать, благо это дело 15мин:-).
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-188797"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/188797/index.html">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>svicer</em><br>И что должно быть в &quot;/usr/share/fonts/Type1</blockquote><a href="http://radikal.ru/big/pomyrj2l086fa"><img src="http://s02.radikal.ru/i175/1705/a9/eac88aae1a98t.jpg"></a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-188798"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/188798/index.html">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <strong>svicer</strong>, а бекапа нет?
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-188799"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/svicer/index.html">
+                <span class="post-username">svicer</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/188799/index.html">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/86/fa/86fa1b0c414baca804a3d090b75ad6db.png" alt="svicer avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/svicer/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/svicer/posts/index.html">
+                    856
+                </a>
+            </div>
+            <div>
+                Участник с: 27 июля 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Это десктоп, зачем? В бекапе только home.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-188800"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/188800/index.html">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>svicer</em><br>Это десктоп, зачем?</blockquote>для самого быстрого восстановления работоспособности...
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-188803"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/svicer/index.html">
+                <span class="post-username">svicer</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/188803/index.html">#</a>
+            5 лет, 4 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 4 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/86/fa/86fa1b0c414baca804a3d090b75ad6db.png" alt="svicer avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/svicer/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/svicer/posts/index.html">
+                    856
+                </a>
+            </div>
+            <div>
+                Участник с: 27 июля 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strike>Пипец: поставил xorg-fonts-type1, все заработало, никогда не ставил все работало, а тут на тебе. Странно почему его тогда нет в зависимостях или группе Xorg?</strike>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexe296.html?next=/forum/topic/17427/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17427/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:23:05 GMT -->
+</html>

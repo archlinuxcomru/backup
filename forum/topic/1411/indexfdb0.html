@@ -1,0 +1,1428 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        ошибки при обновлении glibc и kernel
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/3/">Пакетная система</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/7/">Pacman и обновления</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>ошибки при обновлении glibc и kernel</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>ошибки при обновлении glibc и kernel</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=3" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=4">4 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=9">9</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=10">10</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=11">11</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=5" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-14535"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vadik/">
+                <span class="post-username">vadik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/14535/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vadik/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vadik/posts/">
+                    5395
+                </a>
+            </div>
+            <div>
+                Участник с: 17 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>samson4747</em><br/><strong>vadik</strong>, чего-то запутался, должен убить всё что относить к глибу или наоборот?</blockquote>наоборот<br/><br/>Upd. И лучше не &ldquo;убить&rdquo;, а временно перенести в другое место (с сохранением всех атрибутов). Или имелось ввиду удаление пакетов, а не самих файлов?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-14536"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/samson4747/">
+                <span class="post-username">samson4747</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/14536/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/23/59232634ea8a7ff311ad2fe4a29f66e9.png" alt="samson4747 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/samson4747/topics/">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/samson4747/posts/">
+                    534
+                </a>
+            </div>
+            <div>
+                Участник с: 23 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strike>как </strike><blockquote><strike>временно перенести в другое место (с сохранением всех атрибутов)</strike></blockquote><strike>каталог udev?</strike>
+            
+                
+                    <div class="post-signature">
+                        &quot;If you try to hide the complexity of the system, you&#39;ll end up with a more complex system&quot;. Layers of abstraction that serve to hide internals are never a good thing. Instead, the internals should be designed in a way such that they NEED no hiding.     <a href="http://phraktured.net/">—Aaron Griffin</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-14537"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/samson4747/">
+                <span class="post-username">samson4747</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/14537/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/23/59232634ea8a7ff311ad2fe4a29f66e9.png" alt="samson4747 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/samson4747/topics/">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/samson4747/posts/">
+                    534
+                </a>
+            </div>
+            <div>
+                Участник с: 23 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ему опять что-то не нравится:<br/><div class="code"><pre>$ sudo pacman -Su
+:: Запускается полное обновление системы...
+разрешение зависимостей...
+проверка на взаимную несовместимость...
+Цели (1): glibc-2.16.0-2
+Будет установлено:  33,94 MiB
+Изменение размера:  0,00 MiB
+Приступить к установке? [Y/n] 
+(1/1) проверяется целостность пакета               [######################] 100%
+(1/1) загрузка файлов пакета                       [######################] 100%
+(1/1) проверка возможных конфликтов файлов         [######################] 100%
+ошибка: не удалось завершить запрос (конфликтующие файлы)
+glibc: /lib уже существует в файловой системе
+Обнаружены ошибки, пакеты не были обновлены.
+$ find /lib -exec pacman -Qo -- {} +
+ошибка: не удалось установить владельца каталога '/lib'
+/lib/ld-2.16.so принадлежит glibc 2.16.0-1
+/lib/libcidn.so.1 принадлежит glibc 2.16.0-1
+/lib/libanl.so.1 принадлежит glibc 2.16.0-1
+/lib/libBrokenLocale.so.1 принадлежит glibc 2.16.0-1
+/lib/libnss_files-2.16.so принадлежит glibc 2.16.0-1
+/lib/libpthread.so.0 принадлежит glibc 2.16.0-1
+/lib/libmemusage.so принадлежит glibc 2.16.0-1
+/lib/libnss_compat.so.2 принадлежит glibc 2.16.0-1
+/lib/libanl-2.16.so принадлежит glibc 2.16.0-1
+/lib/libnss_hesiod.so.2 принадлежит glibc 2.16.0-1
+/lib/ld-linux.so.2 принадлежит glibc 2.16.0-1
+/lib/libutil.so.1 принадлежит glibc 2.16.0-1
+/lib/libm-2.16.so принадлежит glibc 2.16.0-1
+/lib/libnss_db.so.2 принадлежит glibc 2.16.0-1
+/lib/libnsl-2.16.so принадлежит glibc 2.16.0-1
+/lib/libresolv.so.2 принадлежит glibc 2.16.0-1
+/lib/libpthread-2.16.so принадлежит glibc 2.16.0-1
+/lib/libnss_nis-2.16.so принадлежит glibc 2.16.0-1
+/lib/libnss_nisplus-2.16.so принадлежит glibc 2.16.0-1
+/lib/libBrokenLocale-2.16.so принадлежит glibc 2.16.0-1
+/lib/libnss_files.so.2 принадлежит glibc 2.16.0-1
+/lib/libnss_nis.so.2 принадлежит glibc 2.16.0-1
+/lib/libnss_compat-2.16.so принадлежит glibc 2.16.0-1
+/lib/libcrypt-2.16.so принадлежит glibc 2.16.0-1
+/lib/libthread_db-1.0.so принадлежит glibc 2.16.0-1
+/lib/libnss_hesiod-2.16.so принадлежит glibc 2.16.0-1
+/lib/libnss_dns-2.16.so принадлежит glibc 2.16.0-1
+/lib/libpcprofile.so принадлежит glibc 2.16.0-1
+/lib/librt-2.16.so принадлежит glibc 2.16.0-1
+/lib/libthread_db.so.1 принадлежит glibc 2.16.0-1
+/lib/libnss_dns.so.2 принадлежит glibc 2.16.0-1
+/lib/libSegFault.so принадлежит glibc 2.16.0-1
+/lib/libc-2.16.so принадлежит glibc 2.16.0-1
+/lib/libdl-2.16.so принадлежит glibc 2.16.0-1
+/lib/libnsl.so.1 принадлежит glibc 2.16.0-1
+/lib/libutil-2.16.so принадлежит glibc 2.16.0-1
+/lib/librt.so.1 принадлежит glibc 2.16.0-1
+/lib/libresolv-2.16.so принадлежит glibc 2.16.0-1
+/lib/libdl.so.2 принадлежит glibc 2.16.0-1
+/lib/libnss_db-2.16.so принадлежит glibc 2.16.0-1
+/lib/libc.so.6 принадлежит glibc 2.16.0-1
+/lib/libnss_nisplus.so.2 принадлежит glibc 2.16.0-1
+/lib/libm.so.6 принадлежит glibc 2.16.0-1
+/lib/libcrypt.so.1 принадлежит glibc 2.16.0-1
+/lib/libcidn-2.16.so принадлежит glibc 2.16.0-1
+$ </pre></div>
+            
+                
+                    <div class="post-signature">
+                        &quot;If you try to hide the complexity of the system, you&#39;ll end up with a more complex system&quot;. Layers of abstraction that serve to hide internals are never a good thing. Instead, the internals should be designed in a way such that they NEED no hiding.     <a href="http://phraktured.net/">—Aaron Griffin</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-14538"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/14538/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <strong>samson4747,</strong> а попробуй сделать вот что, с лайфа<br/>на всякий случай заархивируй папку /lib<br/>потом перенеси ее в /usr<br/>и сделай ссылку на /usr/lib<br/>а потом попробуй обновится&#8230;<br/>может поможет )))
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-14539"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sunstroke/">
+                <span class="post-username">sunstroke</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/14539/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sunstroke/topics/">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sunstroke/posts/">
+                    625
+                </a>
+            </div>
+            <div>
+                Участник с: 17 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>samson4747</em><br/>Ему опять что-то не нравится</blockquote>Теперь покажите вывод<br/><div class="code"><pre>grep '^lib/' /var/lib/pacman/local/*/files</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-14540"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/samson4747/">
+                <span class="post-username">samson4747</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/14540/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/23/59232634ea8a7ff311ad2fe4a29f66e9.png" alt="samson4747 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/samson4747/topics/">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/samson4747/posts/">
+                    534
+                </a>
+            </div>
+            <div>
+                Участник с: 23 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <div class="code"><pre>$ grep '^lib/' /var/lib/pacman/local/*/files
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/ld-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/ld-linux.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libBrokenLocale-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libBrokenLocale.so.1
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libSegFault.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libanl-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libanl.so.1
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libc-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libc.so.6
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libcidn-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libcidn.so.1
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libcrypt-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libcrypt.so.1
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libdl-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libdl.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libm-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libm.so.6
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libmemusage.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnsl-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnsl.so.1
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_compat-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_compat.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_db-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_db.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_dns-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_dns.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_files-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_files.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_hesiod-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_hesiod.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_nis-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_nis.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_nisplus-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_nisplus.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libpcprofile.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libpthread-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libpthread.so.0
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libresolv-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libresolv.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/librt-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/librt.so.1
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libthread_db-1.0.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libthread_db.so.1
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libutil-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libutil.so.1
+/var/lib/pacman/local/udev-compat-180-1/files:lib/
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/devices/
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/devices/autofs
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/devices/btrfs-control
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/devices/cpu/
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/devices/cpu/microcode
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/devices/fuse
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/devices/mapper/
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/devices/mapper/control
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/devices/net/
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/devices/net/tun
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/devices/ppp
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/devices/snd/
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/devices/snd/seq
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/devices/snd/timer
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/devices/uinput
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/rules.d/
+/var/lib/pacman/local/udev-compat-180-1/files:lib/udev/rules.d/30-kernel-compat.rules
+/var/lib/pacman/local/virtualbox-bin-4.1.6-2/files:lib/
+/var/lib/pacman/local/virtualbox-bin-4.1.6-2/files:lib/udev/
+/var/lib/pacman/local/virtualbox-bin-4.1.6-2/files:lib/udev/VBoxCreateUSBNode.sh
+/var/lib/pacman/local/virtualbox-bin-4.1.6-2/files:lib/udev/rules.d/
+/var/lib/pacman/local/virtualbox-bin-4.1.6-2/files:lib/udev/rules.d/10-vboxdrv.rules
+$</pre></div>
+            
+                
+                    <div class="post-signature">
+                        &quot;If you try to hide the complexity of the system, you&#39;ll end up with a more complex system&quot;. Layers of abstraction that serve to hide internals are never a good thing. Instead, the internals should be designed in a way such that they NEED no hiding.     <a href="http://phraktured.net/">—Aaron Griffin</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-14541"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sunstroke/">
+                <span class="post-username">sunstroke</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/14541/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sunstroke/topics/">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sunstroke/posts/">
+                    625
+                </a>
+            </div>
+            <div>
+                Участник с: 17 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У вас из базы пакмана на папку /lib ссылаются кроме <strong>glibc</strong> еще и пакеты <strong>udev-compat</strong> и <strong>virtualbox-bin</strong>. Поэтому обновление glibc не может произвести необходимые манипуляции с папкой /lib - даже если там не осталось подпапок (не читал начало дискуссии). Просто удалите пакеты udev-compat и virtualbox-bin. И тогда обновление glibc должно пройти нормально. Потом доставите необходимое.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-14542"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/samson4747/">
+                <span class="post-username">samson4747</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/14542/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/23/59232634ea8a7ff311ad2fe4a29f66e9.png" alt="samson4747 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/samson4747/topics/">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/samson4747/posts/">
+                    534
+                </a>
+            </div>
+            <div>
+                Участник с: 23 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Обновился. Благодарю.
+            
+                
+                    <div class="post-signature">
+                        &quot;If you try to hide the complexity of the system, you&#39;ll end up with a more complex system&quot;. Layers of abstraction that serve to hide internals are never a good thing. Instead, the internals should be designed in a way such that they NEED no hiding.     <a href="http://phraktured.net/">—Aaron Griffin</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-14543"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/samson4747/">
+                <span class="post-username">samson4747</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/14543/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/23/59232634ea8a7ff311ad2fe4a29f66e9.png" alt="samson4747 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/samson4747/topics/">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/samson4747/posts/">
+                    534
+                </a>
+            </div>
+            <div>
+                Участник с: 23 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            После обновления при запуске gdm<strike>(он в модулях прописан у меня)</strike>, чёрный экран который должен перейти в графическое окно с вводом пароля, но он чего то думает&#8230; приходится в консоле делать <div class="code"><pre>$ sudo /etc/rc.d/gdm restart</pre></div>он мне ответно всё нормально запускает<br/> <strike>с выводом: </strike><div class="code"><pre>:: Stopping GDM                                            [DONE] 
+:: Starting GDM                                            [DONE][/code]</pre></div><div class="code"><pre>$ sudo /etc/rc.d/gdm start</pre></div>запускается, хотя и очень долго(минуты 3)
+            
+                
+                    <div class="post-signature">
+                        &quot;If you try to hide the complexity of the system, you&#39;ll end up with a more complex system&quot;. Layers of abstraction that serve to hide internals are never a good thing. Instead, the internals should be designed in a way such that they NEED no hiding.     <a href="http://phraktured.net/">—Aaron Griffin</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-14544"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/deep/">
+                <span class="post-username">deep</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/14544/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/deep/topics/">
+                    44
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/deep/posts/">
+                    263
+                </a>
+            </div>
+            <div>
+                Участник с: 02 февраля 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня то же проблемы с обновлением<br/>Всё почистил от лишних программ, у меня остался только  &ldquo;lib32-glibc&rdquo; ,у меня 64 битка, в /lib<br/>Скорее всего она мешает, но при удалении, &ldquo;lib32-glibc&rdquo;, там стока зависимостей ужассс.<br/>Вот посмотрите вывод, всё таки может &ldquo;lib32-glibc&rdquo; мешать или нет? Если да, то как справится с зависимостями при удалении<br/><br/># grep &lsquo;^lib/&rsquo; /var/lib/pacman/local/*/files<br/><div class="code"><pre>/var/lib/pacman/local/glibc-2.16.0-1/files:lib/
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/ld-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/ld-linux-x86-64.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libBrokenLocale-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libBrokenLocale.so.1
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libSegFault.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libanl-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libanl.so.1
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libc-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libc.so.6
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libcidn-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libcidn.so.1
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libcrypt-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libcrypt.so.1
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libdl-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libdl.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libm-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libm.so.6
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libmemusage.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnsl-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnsl.so.1
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_compat-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_compat.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_db-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_db.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_dns-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_dns.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_files-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_files.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_hesiod-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_hesiod.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_nis-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_nis.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_nisplus-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libnss_nisplus.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libpcprofile.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libpthread-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libpthread.so.0
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libresolv-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libresolv.so.2
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/librt-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/librt.so.1
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libthread_db-1.0.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libthread_db.so.1
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libutil-2.16.so
+/var/lib/pacman/local/glibc-2.16.0-1/files:lib/libutil.so.1
+/var/lib/pacman/local/lib32-glibc-2.15-10/files:lib/
+/var/lib/pacman/local/lib32-glibc-2.15-10/files:lib/ld-linux.so.2</pre></div><br/># find /lib -exec pacman -Qo &ndash; {} +<br/><div class="code"><pre>ошибка: не удалось установить владельца каталога '/lib'
+/lib/libnss_nis.so.2 принадлежит glibc 2.16.0-1
+/lib/libm.so.6 принадлежит glibc 2.16.0-1
+/lib/libnss_compat-2.16.so принадлежит glibc 2.16.0-1
+/lib/libnss_files.so.2 принадлежит glibc 2.16.0-1
+/lib/libnss_dns-2.16.so принадлежит glibc 2.16.0-1
+/lib/libresolv.so.2 принадлежит glibc 2.16.0-1
+/lib/libcidn-2.16.so принадлежит glibc 2.16.0-1
+/lib/libnsl.so.1 принадлежит glibc 2.16.0-1
+/lib/libc-2.16.so принадлежит glibc 2.16.0-1
+/lib/libpthread-2.16.so принадлежит glibc 2.16.0-1
+/lib/libnss_nis-2.16.so принадлежит glibc 2.16.0-1
+/lib/libutil.so.1 принадлежит glibc 2.16.0-1
+/lib/libnss_db-2.16.so принадлежит glibc 2.16.0-1
+/lib/libthread_db-1.0.so принадлежит glibc 2.16.0-1
+/lib/ld-linux-x86-64.so.2 принадлежит glibc 2.16.0-1
+/lib/libpcprofile.so принадлежит glibc 2.16.0-1
+/lib/libSegFault.so принадлежит glibc 2.16.0-1
+/lib/libnss_compat.so.2 принадлежит glibc 2.16.0-1
+/lib/libnss_nisplus-2.16.so принадлежит glibc 2.16.0-1
+/lib/libmemusage.so принадлежит glibc 2.16.0-1
+/lib/libcidn.so.1 принадлежит glibc 2.16.0-1
+/lib/libdl-2.16.so принадлежит glibc 2.16.0-1
+/lib/libthread_db.so.1 принадлежит glibc 2.16.0-1
+/lib/libnsl-2.16.so принадлежит glibc 2.16.0-1
+/lib/libnss_hesiod-2.16.so принадлежит glibc 2.16.0-1
+/lib/libnss_hesiod.so.2 принадлежит glibc 2.16.0-1
+/lib/libanl.so.1 принадлежит glibc 2.16.0-1
+/lib/libanl-2.16.so принадлежит glibc 2.16.0-1
+/lib/libcrypt.so.1 принадлежит glibc 2.16.0-1
+/lib/libBrokenLocale.so.1 принадлежит glibc 2.16.0-1
+/lib/ld-linux.so.2 принадлежит lib32-glibc 2.15-10
+/lib/libdl.so.2 принадлежит glibc 2.16.0-1
+/lib/libutil-2.16.so принадлежит glibc 2.16.0-1
+/lib/ld-2.16.so принадлежит glibc 2.16.0-1
+/lib/libnss_dns.so.2 принадлежит glibc 2.16.0-1
+/lib/libresolv-2.16.so принадлежит glibc 2.16.0-1
+/lib/libBrokenLocale-2.16.so принадлежит glibc 2.16.0-1
+/lib/libnss_files-2.16.so принадлежит glibc 2.16.0-1
+/lib/librt-2.16.so принадлежит glibc 2.16.0-1
+/lib/libnss_db.so.2 принадлежит glibc 2.16.0-1
+/lib/libpthread.so.0 принадлежит glibc 2.16.0-1
+/lib/libnss_nisplus.so.2 принадлежит glibc 2.16.0-1
+/lib/libc.so.6 принадлежит glibc 2.16.0-1
+/lib/libcrypt-2.16.so принадлежит glibc 2.16.0-1
+/lib/librt.so.1 принадлежит glibc 2.16.0-1
+/lib/libm-2.16.so принадлежит glibc 2.16.0-1</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=3" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=4">4 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=9">9</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=10">10</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=11">11</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=5" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/1411/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747c0fa92c4e9dab',m:'R7WWmBmuALM5HPy7DtcrPmRROWCzXCnCyTfLCfL_aIg-1662686010-0-AT/3TDKPExXEjQHBrikvIIEZIMav+1Ts9QhMRt/cm3NKKNMApf/0pYGsgC4eztbWG99mA1A7eAyke7tP7U0auYuCfvfw+cdxrdkoc0OkY8dJovUIHWEAlO0y/oIJzStCaARWk+4u0u7mwtioHMkN0lE=',s:[0x15c87f4e0a,0x4e0722dd12],u:'/cdn-cgi/challenge-platform/h/g'};var _cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/cb/invisible.js?cb=747c0fa92c4e9dab',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

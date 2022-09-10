@@ -1,0 +1,958 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Проверка исходников на наличие вредоносного кода.
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/5/">Разное</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/4/">/dev/null</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Проверка исходников на наличие вредоносного кода.</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Проверка исходников на наличие вредоносного кода.</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=4" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=5">5 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61535"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vadik/">
+                <span class="post-username">vadik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61535/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vadik/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vadik/posts/">
+                    5395
+                </a>
+            </div>
+            <div>
+                Участник с: 17 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sirocco</em><br/>ИМХО, ничем не хуже скрипта.</blockquote>Возможно, сам не пробовал, но по отзывам в инете этот антивирь имеет смысл держать для проверки виндовых программ и файлов. Поэтому внимания на него не обращал.<br/><br/><blockquote><em>sirocco</em><br/>Ну и на закуску (для медитации) - списочек пакетов из репозитария:<br/>chkrootkit<br/>rkhunter<br/>tiger<br/>unhide</blockquote>Вот за это отдельное спасибо, обязательно возьму на заметку (малоли что), хотя как показал быстрый гуглеж эти программы (за исключением chkrootkit) больше для борьбы с последствиями чем для предотвращения &ldquo;заражений&rdquo;.<br/><br/>Кстати я пока не дошел до стадии острой необходимости использавиния таких программ. :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61536"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/bobart/">
+                <span class="post-username">bobart</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61536/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/bobart/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/bobart/posts/">
+                    2537
+                </a>
+            </div>
+            <div>
+                Участник с: 28 ноября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong> vadik</strong>, в связи с <strong>chkrootkit</strong>, меня гуглёж некогда завёл <a href="http://www.protocols.ru/Papers/chkrootkit.shtml">сюда</a>, проникнись, если не читал. У меня не хватило терпения постигать все тонкости, но тем не менее - может тебе пригодится?<br/>А это уж и не помню откуда:<br/><div class="code"><pre>   1.   Как chkrootkit обнаруживает известные трояны на серверах?
+      chkrootkit ищет известные ему "подписи" на зараженной/взломанной машине в основных бинарных файлах. Например, некоторые версии троянов, подмененняя ps имеют внутри вот такую строку: "/dev/ptyp".
+      Как правило, атакующий легко может заменить данную строку(и) в исходниках рут-кита, тем самым затруднив его обнаружение. В общем смотрите следующий вопрос :).
+   2. Как chkrootkit может обнаруживать модифицированные или новые рут-киты?
+      если  chkrootkit не может обнаружить стандартные (известные) подписи (строки) от известных ему троянов червей и т.п. , он не может автоматически обнаружить, что система заражена/вскрыта. Запускайте chkrootkit в эксперт-режиме (expert-mode) (-x В этом режиме ползьзователь может проверить подозрительные строки, которые могут принадлежать трояну или червю, в бинарных файлах.
+      Например, большинство текстовой информации, находящейся в бинарном файле, можно посмотреть так:
+      # ./strings file_name| more
+      используйте комманду strings именно из комплекта chkrootkit, т.к. троян мог подменить вашу базовую комманду на свою, запретив ей показывать определенные строки, или используйте следующую команду из пакета chkrootkit:
+      # ./chkrootkit -x |more
+      данная команда покажет содержимое ВСЕХ файлов, которые будет проверять! Будте внимательны, т.к. будет выведено большое кол-во информации на экран.
+      пример поиска путей внутри файла:
+      # ./strings file_name| egrep '^/'
+      # ./chkrootkit -x | egrep '^/'
+      т.к. путь как правило содержит энное кол-ва слешей(/) то искать удобнее всего именно их,
+      хотя вам, думается, будет виднее, что именно вы хотите найти внутри файла(ов).
+      Так же рекомендуем почитать о регулярных выражениях (например тут, т.к. с их помощью поиск осуществить гораздо легче.
+   3. Почему вы написали chkrootkit не на perl/pyton?
+      К сожалению, не на всех системах perl или pyton может присутствовать, поэтому Мы пошли по пути наиболее удобному для конечного пользователя chkrootkit - написали обычный shell-скрипт, т.к. он как правило работает всегда и везде.
+   4. Какие системные комманды использует chkrootkit?
+      Chkrootkit использует следующие системные комманды:
+      awk, cut, echo, egrep, find, head, id, ls, netstat, ps, strings, sed -потоковый текстовый редактор, uname
+   5. Могу ли я верить данным полученным от chkrootkit в ходе проверки, если есть подозрение на то, что машина вскрыта/заражена?!
+      Мы бы не поверили :). Рекомендуем в подобном случае воспользоваться альтернативными путями обнаружения этой гадости:
+         1. Исползуйте ключ `-p путь_к_заведомо_чистым_ситемным_файлам'(netstat,ifconfig,ps и т.п.), только не забудте сделать копию на всякий пожарный, после установки системы:
+            # ./chkrootkit -p /cdrom/bin
+         2. Или воспользуйтесь ключом `-r rootdir' для mountа каталога с заведомо "чистой" машины:
+            # ./chkrootkit -r /mnt
+   6. Насколько можно верить chkproc?
+      если  вы запустили chkproc на сервере, на который запущенно большое кол-во кратковременных процессов, то в результате вы можете получить какое-то количество сообщений о возможном наличии трояна/червя на сервере. chkproc сравнивает результаты вывода команды ps с содержимым каталога /proc. если процесc был создан/убит в течении работы chkproc, то chkproc может ругнуться на это, т.к. считает это весьма подозрительной фичей :).
+   7. У меня запущен PortSentry/klaxon. Может быть что-то не так при тестировании bindshell?
+      если у вас запущен PortSentry/klaxon или любая другая программа, которая "слушает" неиспользуемые порты, chkrootkit может выдавать неправильные отчеты при тестировании bindshell (порты: 114/tcp, 465/tcp, 511/tcp, 1008/tcp, 1524/tcp, 1999/tcp, 3879/tcp, 4369/tcp, 5665/tcp, 10008/tcp, 12321/tcp, 23132/tcp, 27374/tcp, 29364/tcp, 31336/tcp, 31337/tcp, 45454/tcp, 47017/tcp, 47889/tcp, 60001/tcp). Так что рекомендуем "убить" на время тестирования все программы мониторинга портов (для наиболее точного отчета).
+   8. chkrootkit ругается на файлы и папки, например: `.packlist', `.cvsignore', и т.п. Да, есть такая проблема, т.к. многие программы хранят свои настройки в файлах, которые начинаются с . (точки) - просто проигнорируйте ее! :)
+      Но мы рекомендуем Вам внимательно изучить все, что выведенно в этой строке, т.к. атакующий как правило пытается спрятать свои файлы/каталоги в каталоги, которые начинаются c точки, например: .sk, ... ,/dev/.security и т.п. - !!! БУДТЕ ВНИМАТЕЛЬНЫ !!!, т.к. chkrootkit просто показывает подобные каталоги/файлы, не анализируя их содержимое.
+   9. А могу ли я запускать chkrootkit из cron (крона)?
+      Да. Например, для запуска chkrootkit в 3 часа утра и отсылки результатов проверки к вам на email, используйте:
+      0 3 * * * (cd /path/to/chkrootkit; ./chkrootkit 2&gt;&amp;1 | mail -s "chkrootkit output" root)
+      Но учтите, что в случае атаки на вашу машину, атакующий одним из первых дел проверит содержимое крона, и либо подменит его на свое, либо придумает что то в этом роде.</pre></div>Блин, хреново, что спойлера нету, вот такая портянка получается.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61537"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vadik/">
+                <span class="post-username">vadik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61537/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vadik/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vadik/posts/">
+                    5395
+                </a>
+            </div>
+            <div>
+                Участник с: 17 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Спасибо за инфу, у всех программ названных выше, есть один недостаток - они ищут вредоносный код когда он уже присутствует в системе (кроме strings?). Как я понял исходники и пакеты эти сканеры проверять не умеют (или я просто не правильно понял). Для проверки файлов до установки пакета должен (по идее) использоваться антивирус.<br/>НО, насколько я понимаю, на сегодняшний день для  обычного домашнего компа все эти меры избыточны (хочется чего-то простого, маленького, быстрого, прозрачного). Хотя знать о таких инструментах конечно же не помешает.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61538"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/bobart/">
+                <span class="post-username">bobart</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61538/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/bobart/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/bobart/posts/">
+                    2537
+                </a>
+            </div>
+            <div>
+                Участник с: 28 ноября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я понял (навскидку, поверхностно), что chkrootkit может проверять бинарники, а для этого, вроде, не обязательно проге быть установленной. Бинарник может и должен быть в архиве с сырцами. Как оно там всё &ldquo;чекает&rdquo; и вкуривать man chkrootkit - не заморачивался, глаза поберёг))<br/>ps/ Насчёт паранойи: вчера кто-то написал эрэм эрэф на перле &ldquo;так&rdquo;, а сейчас, в это самое время, какой-нибудь экспериментатор сидит и пишет на том-же перле уже &ldquo;эдак&rdquo;, оттачивает мастерство.., и что с ним делать прикажешь? Я в этом нихрена не смыслю, но как смыслю я: эти чекруткиты и пр. отслеживают бяки в соответствии с неким &ldquo;каноничным&rdquo; течением событий, и если что-то не соответствует принятому ходу вещей (им известному на сегодняшний день) - они бьют тревогу. А если что-то ранее неизвестное и незарегистрированное? Тогда хз&#8230;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61539"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vadik/">
+                <span class="post-username">vadik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61539/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vadik/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vadik/posts/">
+                    5395
+                </a>
+            </div>
+            <div>
+                Участник с: 17 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Кстати chkrootkit всем известное эрэм эрэф возможно даже искать не будет. Утилита предназначена для поиска зловредов так или иначе связанных с сетевыми атаками, а эрэм эрэф к таким не относится. Хотя в действии не проверял.<br/>Интересно, а как ментейнеры пакетов решают подобные вопросы?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61540"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/bobart/">
+                <span class="post-username">bobart</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61540/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/bobart/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/bobart/posts/">
+                    2537
+                </a>
+            </div>
+            <div>
+                Участник с: 28 ноября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Может, монетку подкидывают?)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61541"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vadik/">
+                <span class="post-username">vadik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61541/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vadik/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vadik/posts/">
+                    5395
+                </a>
+            </div>
+            <div>
+                Участник с: 17 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Хорошая шутка, будем надеятся, что это действительно шутка.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-61542"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/ssss/">
+                <span class="post-username">ssss</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/61542/">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/ssss/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/ssss/posts/">
+                    1
+                </a>
+            </div>
+            <div>
+                Участник с: 27 июня 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Написать что-то универсальное не получится, потому что вот: <a href="https://ru.wikipedia.org/wiki/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D0%BC%D0%B0_%D0%A0%D0%B0%D0%B9%D1%81%D0%B0">http://ru.wikipedia.org/wiki/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D0%BC%D0%B0_%D0%A0%D0%B0%D0%B9%D1%81%D0%B0</a>.<br/><br/>Можно, конечно, искать какие-то шаблоны, но смысла мало будет, т.к. это будет работать только на конкретных вещах.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=4" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=5">5 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/6374/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747acdf40cf19d6d',m:'pyd4jVOezGF5PlRLfZpYQc1xFn8jm_g1M_UXT2BSHkU-1662672827-0-AfAl4Kp+Whcd4UIddDZIAWJb34tdQgQR5Yd9bvLwRiGA/C5qdgBVeLmE/M2/Uj7o6WOLJVMyR6qE+V86SDnJWtQnyS0BFoGB0OSizCm/2sI+MvG/aJIh8xI920y8DLqNZ4BnKY4BD6tcUuvM6hbGrik=',s:[0x010839761f,0x5340c33201],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

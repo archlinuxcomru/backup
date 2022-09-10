@@ -1,0 +1,1103 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18019/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:48:51 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Настройка PXE-сервера на dnsmasq + UEFI
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/13/index.html">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Настройка PXE-сервера на dnsmasq + UEFI</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Настройка PXE-сервера на dnsmasq + UEFI</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197578"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/irzhyk/index.html">
+                <span class="post-username">irzhyk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/197578/index.html">#</a>
+            4 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/61/32/6132c3412dd1571c1d6a3bb5b7eff4de.png" alt="irzhyk avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/irzhyk/topics/index.html">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/irzhyk/posts/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Доброго времени суток. Есть такой вопрос по настройке PXE-сервера на dnsmasq.<br /><br />Есть сервер(на archlinux, но это не суть важно)<br /><br />На нем 2 сетевых интерфейса: enp3s0(на нем должен работать DHCP-сервер) и enp4s0(смотрит в Internet)<br /><br />pacman -S syslinux<br /><br />cp /usr/lib/syslinux/bios/{lpxelinux.0,menu.c32,memdisk,chain.c32,libutil.c32,ldlinux.c32} /hdd/pxe/<br /><br />nano /hdd/pxe/<a href="http://pxelinux.cfg/default">pxelinux.cfg/default</a><br />    DEFAULT menu.c32<br />    PROMPT 0<br />    TIMEOUT 600<br /><br />    MENU TITLE PXE BOOT MENU<br />    #MENU INCLUDE <a href="http://pxelinux.cfg/graphics.conf">pxelinux.cfg/graphics.conf</a><br /><br />    LABEL Boot Local HDD<br />    kernel chain.c32<br />    append hd0 0<br /><br />    LABEL TestTools - &gt;<br />    KERNEL menu.c32<br />    APPEND <a href="http://pxelinux.cfg/testtools">pxelinux.cfg/testtools</a><br /><br />    LABEL Utils - &gt;<br />    KERNEL menu.c32<br />    APPEND <a href="http://pxelinux.cfg/utils">pxelinux.cfg/utils</a><br /><br />    LABEL OS - &gt;<br />    KERNEL menu.c32<br />    APPEND <a href="http://pxelinux.cfg/os">pxelinux.cfg/os</a><br /><br />/hdd/pxe/<a href="http://pxelinux.cfg/{TestTools,Utils,OS">pxelinux.cfg/{TestTools,Utils,OS</a>}       // отдельные файлы настроек, вида /hdd/pxe/<a href="http://pxelinux.cfg/TestTools">pxelinux.cfg/TestTools</a><br /><br />    PROMPT 0<br />    MENU TITLE test<br /><br />    LABEL &lt; - Main Menu<br />    KERNEL menu.c32<br />    APPEND <a href="http://pxelinux.cfg/default">pxelinux.cfg/default</a><br /><br />    LABEL Memtest<br />    MENU LABEL RAM test Memtest 5.01<br />    KERNEL memdisk<br />    APPEND iso initrd=images/memtest86+-5.01.iso<br />pacman -S dnsmasq<br /><br />nano /etc/dnsmasq.conf<br />    interface=enp3s0<br />    dhcp-range=192.168.1.2,192.168.1.10,12h<br />    enable-tftp<br />    tftp-root=/hdd/pxe<br /><br />    dhcp-match=set:efi-x86_64,option:client-arch,7<br />    dhcp-match=set:efi-x86_64,option:client-arch,9<br />    dhcp-match=set:efi-x86,option:client-arch,6<br />    dhcp-match=set:bios,option:client-arch,0<br /><br />    dhcp-boot=tag:efi-x86_64,&quot;syslinux.efi&quot;<br />    #dhcp-boot=tag:efi-x86_64,&quot;ipxe.1e77e6bfd61e.efi&quot; // Загрузка клиента по PXE в UEFI режиме, тут конкретно Arch Linux Netboot, этот пункт работает<br />    #dhcp-boot=tag:efi-x86_64,&quot;Shell.efi&quot;            // Тут EFI-Shell, работает<br /><br />    dhcp-boot=tag:bios,&quot;lpxelinux.0&quot;                 // Загрузка клиента по PXE в Legacy(BIOS) режиме<br /><br />systemctl start/enable dnsnasq<br /><br />В Legacy(BIOS) режиме клиенты грузятся по PXE, меню работают - вопросов нет.<br />Собственно вопрос: Как я должен загрузить то же меню в UEFI-режиме? Клиент переключен в UEFI-only, по PXE IP-адрес получает.<br />Меню не грузятся.<br />Насколько я понимаю нужно подсунуть клиенту efi-файл?<br />Скопировав из /usr/lib/syslinux/efi64/syslinux.efi в /hdd/pxe результата не добился<br />После любых манипуляций с dnsmasq.conf делаю systemctl restart dnsmasq.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197579"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/197579/index.html">#</a>
+            4 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3167
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            из вашей писанины ничего непонятно.<br />минимально необходимо:<br />запуск syslinux:<br /><pre><code>dhcp-match=set:efi-x86_64,option:client-arch,7
+dhcp-boot=tag:efi-x86_64,syslinux.efi
+dhcp-option-force=209,syslinux.cfg
+</code></pre>запуск ipxe:<br /><pre><code>dhcp-match=set:efi-x86_64,option:client-arch,7
+dhcp-boot=tag:efi-x86_64,ipxe.1e77e6bfd61e.efi
+</code></pre>если вам не нужен доступ к uefi vars нечего с ним заморачиваться:<br /><pre><code>dhcp-boot=tag:bios,lpxelinux.0
+dhcp-option-force=209,syslinux.cfg</code></pre>а если<br /><blockquote><em>irzhyk</em><br>Меню не грузятся.</blockquote>посмотреть ошибки можно так:<br /><pre><code># journalctl -u dnsmasq -f</code></pre>
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197595"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/irzhyk/index.html">
+                <span class="post-username">irzhyk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/197595/index.html">#</a>
+            4 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/61/32/6132c3412dd1571c1d6a3bb5b7eff4de.png" alt="irzhyk avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/irzhyk/topics/index.html">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/irzhyk/posts/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Спасибо за ответ, поясню для чего заморочился с UEFI - современные ноуты идут с отключенным CSM по умолчанию, я хочу не переключаться в Legacy-режим. Но иногда попадаются с BIOS. За путаницу в посте - извиняюсь, пытался дать всю информацию, закоментированные строчки оставил чтобы показать ход моих действий.  Из ответа я понял что не хватает /hdd/pxe/syslinux.cfg и &quot;dhcp-option-force=209,syslinux.cfg&quot; строчки в dnsmasq.conf ? Само меню(без пунктов, они в /hdd/pxe/pxelinux.cfg) это файл /hdd/pxe/menu.c32 ? И оно будет грузиться и с файла lpxelinux.0(для BIOS) и с файла syslinux.efi(для UEFI)?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197598"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/197598/index.html">#</a>
+            4 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3167
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Наверно косяк у вас в этом:<br /><pre><code>$ ls -la /usr/lib/syslinux/bios/menu.c32
+$ ls -la /usr/lib/syslinux/efi64/menu.c32
+$ ls -la /usr/lib/syslinux/efi32/menu.c32</code></pre><br /><blockquote><em>irzhyk</em><br>dhcp-option-force=209,syslinux.cfg</blockquote>syslinux.cfg и pxelinux.cfg одно и тоже, по идеи pxelinux.cfg даже правильнее если он будет лежать в корне с *.efi то эта строчка и не надо.<br />
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197601"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/irzhyk/index.html">
+                <span class="post-username">irzhyk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/197601/index.html">#</a>
+            4 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/61/32/6132c3412dd1571c1d6a3bb5b7eff4de.png" alt="irzhyk avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/irzhyk/topics/index.html">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/irzhyk/posts/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Настроил так, что сервер понимает какая(BIOS или UEFI) система подключена. При загрузке UEFI-системы:<br /><br />&gt;&gt;Start PXE over IPv4.<br />  Station IP address is 192.168.1.10<br />  Server IP address is 192.168.1.1<br />  NBP filename is syslinux.efi<br />  NBP filesize is 176176 Bytes<br />Downloading NBP file ...<br /><br />  Success to download NBP file.<br />Getting cashed packet<br />My IP is 192.168.1.10<br /><br />На этом все, через время система ребутится.<br />Вот лог(гугление не помогло):<br /><br />[<a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="fb8e889e89bb928981938290">[email&#160;protected]</a> pxe]$ journalctl -u dnsmasq -f<br />-- Logs begin at Mon 2017-10-02 18:06:47 EEST. --<br />ноя 24 14:18:56 irzhyk systemd[1]: Stopped A lightweight DHCP and caching DNS server.<br />ноя 24 14:18:56 irzhyk systemd[1]: Starting A lightweight DHCP and caching DNS server...<br />ноя 24 14:18:56 irzhyk dnsmasq[18821]: dnsmasq: syntax check OK.<br />ноя 24 14:18:56 irzhyk systemd[1]: Started A lightweight DHCP and caching DNS server.<br />ноя 24 14:18:56 irzhyk dnsmasq[18822]: started, version 2.78 DNS disabled<br />ноя 24 14:18:56 irzhyk dnsmasq[18822]: compile time options: IPv6 GNU-getopt DBus i18n IDN DHCP DHCPv6 no-Lua TFTP conntrack ipset auth DNSSEC loop-detect inotify<br />ноя 24 14:18:56 irzhyk dnsmasq[18822]: DBus support enabled: connected to system bus<br />ноя 24 14:18:56 irzhyk dnsmasq-dhcp[18822]: DHCP, IP range 192.168.1.2 -- 192.168.1.10, lease time 12h<br />ноя 24 14:18:56 irzhyk dnsmasq-dhcp[18822]: DHCP, sockets bound exclusively to interface enp3s0<br />ноя 24 14:18:56 irzhyk dnsmasq-tftp[18822]: TFTP root is /hdd/pxe<br />ноя 24 14:19:11 irzhyk dnsmasq-dhcp[18822]: DHCPDISCOVER(enp3s0) 3c:97:0e:98:ba:b9<br />ноя 24 14:19:11 irzhyk dnsmasq-dhcp[18822]: DHCPOFFER(enp3s0) 192.168.1.10 3c:97:0e:98:ba:b9<br />ноя 24 14:19:15 irzhyk dnsmasq-dhcp[18822]: DHCPREQUEST(enp3s0) 192.168.1.10 3c:97:0e:98:ba:b9<br />ноя 24 14:19:15 irzhyk dnsmasq-dhcp[18822]: DHCPACK(enp3s0) 192.168.1.10 3c:97:0e:98:ba:b9<br /><br />ноя 24 14:19:15 irzhyk dnsmasq-tftp[18822]: error 8 User aborted the transfer received from 192.168.1.10<br />ноя 24 14:19:15 irzhyk dnsmasq-tftp[18822]: failed sending /hdd/pxe/syslinux.efi to 192.168.1.10<br /><br />ноя 24 14:19:15 irzhyk dnsmasq-tftp[18822]: sent /hdd/pxe/syslinux.efi to 192.168.1.10<br />ноя 24 14:19:15 irzhyk dnsmasq-tftp[18822]: sent /hdd/pxe/ldlinux.e64 to 192.168.1.10<br />ноя 24 14:19:15 irzhyk dnsmasq-tftp[18822]: sent /hdd/pxe/<a href="http://pxelinux.cfg/default">pxelinux.cfg/default</a> to 192.168.1.10<br />ноя 24 14:19:15 irzhyk dnsmasq-tftp[18822]: sent /hdd/pxe/menu.c32 to 192.168.1.10<br /><br />Еще раз, syslinux.efi - требует свой menu.c32? Из /usr/lib/syslinux/efi64 ? Или вопрос в правах на файл?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197602"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/197602/index.html">#</a>
+            4 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3167
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>irzhyk</em><br>syslinux.efi - требует свой menu.c32? Из /usr/lib/syslinux/efi64 ?</blockquote>Конечно, и всё остальное тоже.<br /><br />p.s. покажите <pre><code>$ cat /hdd/pxe/<a href="http://pxelinux.cfg/default">pxelinux.cfg/default</a></code></pre>
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197603"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/irzhyk/index.html">
+                <span class="post-username">irzhyk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/197603/index.html">#</a>
+            4 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/61/32/6132c3412dd1571c1d6a3bb5b7eff4de.png" alt="irzhyk avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/irzhyk/topics/index.html">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/irzhyk/posts/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Странно, я всю директорию /usr/lib/syslynux/efi64 копировал в /hdd/pxe/ - и ничего не получилось..<br /><br />[<a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="1f6a6c7a6d5f766d65776674">[email&#160;protected]</a> ~]$ cat /hdd/pxe/<a href="http://pxelinux.cfg/default">pxelinux.cfg/default</a><br />DEFAULT menu.c32<br />PROMPT 0<br />TIMEOUT 600<br /><br />MENU TITLE PXE BOOT MENU<br /><br />LABEL Boot LocalHDD<br />localboot 0x80<br />append SLX=0x80<br /><br />LABEL TestTools - &gt;<br />KERNEL menu.c32<br />APPEND <a href="http://pxelinux.cfg/testtools">pxelinux.cfg/testtools</a><br /><br />LABEL Utils - &gt;<br />KERNEL menu.c32<br />APPEND <a href="http://pxelinux.cfg/utils">pxelinux.cfg/utils</a><br /><br />LABEL OS - &gt;<br />KERNEL menu.c32<br />APPEND <a href="http://pxelinux.cfg/os">pxelinux.cfg/os</a><br /><br />LABEL Windows - &gt;<br />KERNEL menu.c32<br />APPEND <a href="http://pxelinux.cfg/windows">pxelinux.cfg/windows</a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197604"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/197604/index.html">#</a>
+            4 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3167
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Как то так попробуйте:<br /><pre><code>ui menu.c32
+timeout 3000
+default select
+
+LABEL existing
+MENU LABEL Boot existing OS
+COM32 chain.c32
+APPEND hd0 0</code></pre>ну и<br /><pre><code># journalctl -u dnsmasq -f </code></pre>
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197605"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/irzhyk/index.html">
+                <span class="post-username">irzhyk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/197605/index.html">#</a>
+            4 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/61/32/6132c3412dd1571c1d6a3bb5b7eff4de.png" alt="irzhyk avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/irzhyk/topics/index.html">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/irzhyk/posts/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Получилось!!! Еще толком не разобрался, но по вашему совету кажется получается!! Правда лог пишет какие-то ошибки:<br /><br />ноя 24 16:49:38 irzhyk dnsmasq-tftp[19248]: error 8 User aborted the transfer received from 192.168.1.10<br />ноя 24 16:49:38 irzhyk dnsmasq-tftp[19248]: failed sending /hdd/pxe/syslinux.efi to 192.168.1.10<br />ноя 24 16:49:38 irzhyk dnsmasq-tftp[19248]: sent /hdd/pxe/syslinux.efi to 192.168.1.10<br />ноя 24 16:49:38 irzhyk dnsmasq-tftp[19248]: sent /hdd/pxe/ldlinux.e64 to 192.168.1.10<br />ноя 24 16:49:38 irzhyk dnsmasq-tftp[19248]: file /hdd/pxe/<a href="http://pxelinux.cfg/01-3c-97-0e-98-ba-b9">pxelinux.cfg/01-3c-97-0e-98-ba-b9</a> not found<br />ноя 24 16:49:38 irzhyk dnsmasq-tftp[19248]: file /hdd/pxe/<a href="http://pxelinux.cfg/C0A8010A">pxelinux.cfg/C0A8010A</a> not found<br />ноя 24 16:49:38 irzhyk dnsmasq-tftp[19248]: file /hdd/pxe/<a href="http://pxelinux.cfg/C0A8010">pxelinux.cfg/C0A8010</a> not found<br />ноя 24 16:49:38 irzhyk dnsmasq-tftp[19248]: file /hdd/pxe/<a href="http://pxelinux.cfg/C0A801">pxelinux.cfg/C0A801</a> not found<br />ноя 24 16:49:38 irzhyk dnsmasq-tftp[19248]: file /hdd/pxe/<a href="http://pxelinux.cfg/C0A80">pxelinux.cfg/C0A80</a> not found<br />ноя 24 16:49:38 irzhyk dnsmasq-tftp[19248]: file /hdd/pxe/<a href="http://pxelinux.cfg/C0A8">pxelinux.cfg/C0A8</a> not found<br />ноя 24 16:49:38 irzhyk dnsmasq-tftp[19248]: file /hdd/pxe/<a href="http://pxelinux.cfg/C0A">pxelinux.cfg/C0A</a> not found<br />ноя 24 16:49:38 irzhyk dnsmasq-tftp[19248]: file /hdd/pxe/<a href="http://pxelinux.cfg/C0">pxelinux.cfg/C0</a> not found<br />ноя 24 16:49:38 irzhyk dnsmasq-tftp[19248]: file /hdd/pxe/pxelinux.cfg/C not found<br /><br />Сейчас немного разберусь, и еще задам пару вопросов. Огромное спасибо за помощь - уже реально год бьюсь
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197606"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/irzhyk/index.html">
+                <span class="post-username">irzhyk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/197606/index.html">#</a>
+            4 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/61/32/6132c3412dd1571c1d6a3bb5b7eff4de.png" alt="irzhyk avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/irzhyk/topics/index.html">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/irzhyk/posts/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Насколько я понимаю, в строчке лога<br />ноя 24 16:49:38 irzhyk dnsmasq-tftp[19248]: file /hdd/pxe/<a href="http://pxelinux.cfg/01-3c-97-0e-98-ba-b9">pxelinux.cfg/01-3c-97-0e-98-ba-b9</a> not found<br />01-3c-97-0e-98-ba-b9 - это MAC-адрес клиента, но мне это ни о чем не говорит..
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index16b3-2.html?next=/forum/topic/18019/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'745e1f1ebac69d8d',m:'3MrNk1b6OkhLvWrqAjxC04st5aHoBH3O.3893oaNqcA-1662372067-0-AfR2aFgWKaXcvpCJf45rj5bNiz/dYS+zjPCK+clWHLt3CWg6GWksRI1ulHf/ragbCKfbjG8Kg68i2bNYIMwfvJk8rk3P8Gr9H1cxbSyHGilUFvDvv5q43DsuB1lgMXbEvzmhHqQ6YNSWg2XeDfop0hA=',s:[0x8d30a6fb4d,0xf777637942],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible5615.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18019/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:48:51 GMT -->
+</html>

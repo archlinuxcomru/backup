@@ -1,0 +1,804 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [РЕШЕНО] pulseaudio,  тонкая настройка и &quot;заикания&quot;
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/10/">Мультимедиа</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[РЕШЕНО] pulseaudio,  тонкая настройка и &quot;заикания&quot;</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[РЕШЕНО] pulseaudio,  тонкая настройка и &quot;заикания&quot;</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183310"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/selishii/">
+                <span class="post-username">selishii</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/183310/">#</a>
+            5 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/selishii/topics/">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/selishii/posts/">
+                    74
+                </a>
+            </div>
+            <div>
+                Участник с: 03 июня 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Проблема проявляется в виде &quot;заикания&quot; исключительно на Youtube (на других ресурсах нормально)  и только при подключении ноута по Wi-Fi. Сброс на Дефолтные настройки, равно как и увеличения буфера (<em>default-fragment-size-msec = 200</em>) ощутимых результатов не принесли, &quot;заикания&quot; стали пореже (субьективно), но совсем не исчезли.<br />Понимаю, что &quot;адептов &quot;пульсы&quot; днем с огнем...&quot;, но может быть что присоветуете, в том числе и  на тему - есть  ли смысл выставлять:<br /><em>default-sample-format = s32le<br />default-sample-rate = 96000</em><br />или на встройке (Realtek ALC269VB ) этого не почувствуешь.<br />Спасибо!<br /><pre><code> $ pulseaudio --dump-conf
+...
+resample-method = soxr-hq
+enable-remixing = yes
+enable-lfe-remixing = no
+lfe-crossover-freq = 0
+default-sample-format = s16le
+default-sample-rate = 44100
+alternate-sample-rate = 48000
+default-sample-channels = 2
+default-channel-map = front-left,front-right
+default-fragments = 4
+default-fragment-size-msec = 50
+....
+</code></pre><pre><code> $ pactl list sinks
+Sink #0
+        State: RUNNING
+        Name: alsa_output.pci-0000_00_1b.0.analog-stereo
+        Description: Built-in Audio Analog Stereo
+        Driver: module-alsa-card.c
+        Sample Specification: s16le 2ch 48000Hz
+        Channel Map: front-left,front-right
+        Owner Module: 6
+        Mute: no
+        Volume: front-left: 27525 /  42% / -22.61 dB,   front-right: 27525 /  42% / -22.61 dB
+                balance 0.00
+        Base Volume: 65536 / 100% / 0.00 dB
+        Monitor Source: alsa_output.pci-0000_00_1b.0.analog-stereo.monitor
+        Latency: 104400 usec, configured 105000 usec
+        Flags: HARDWARE HW_MUTE_CTRL HW_VOLUME_CTRL DECIBEL_VOLUME LATENCY
+        Properties:
+                alsa.resolution_bits = &quot;16&quot;
+                device.api = &quot;alsa&quot;
+                device.class = &quot;sound&quot;
+                alsa.class = &quot;generic&quot;
+                alsa.subclass = &quot;generic-mix&quot;
+                alsa.name = &quot;ALC269VB Analog&quot;
+                alsa.id = &quot;ALC269VB Analog&quot;
+                alsa.subdevice = &quot;0&quot;
+                alsa.subdevice_name = &quot;subdevice #0&quot;
+                alsa.device = &quot;0&quot;
+                alsa.card = &quot;0&quot;
+                alsa.card_name = &quot;HDA Intel PCH&quot;
+                alsa.long_card_name = &quot;HDA Intel PCH at 0xf0900000 irq 34&quot;
+                alsa.driver_name = &quot;snd_hda_intel&quot;
+                device.bus_path = &quot;pci-0000:00:1b.0&quot;
+                sysfs.path = &quot;/devices/pci0000:00/0000:00:1b.0/sound/card0&quot;
+                device.bus = &quot;pci&quot;
+                device.vendor.id = &quot;8086&quot;
+                device.vendor.name = &quot;Intel Corporation&quot;
+                device.product.id = &quot;1c20&quot;
+                device.product.name = &quot;6 Series/C200 Series Chipset Family High Definition Audio Controller&quot;
+                device.form_factor = &quot;internal&quot;
+                device.string = &quot;front:0&quot;
+                device.buffering.buffer_size = &quot;352800&quot;
+                device.buffering.fragment_size = &quot;176400&quot;
+                device.access_mode = &quot;mmap+timer&quot;
+                device.profile.name = &quot;analog-stereo&quot;
+                device.profile.description = &quot;Analog Stereo&quot;
+                device.description = &quot;Built-in Audio Analog Stereo&quot;
+                alsa.mixer_name = &quot;Realtek ALC269VB&quot;
+                alsa.components = &quot;HDA:10ec0269,101999dc,00100100 HDA:80862805,80860101,00100000&quot;
+                module-udev-detect.discovered = &quot;1&quot;
+                device.icon_name = &quot;audio-card-pci&quot;
+        Ports:
+                analog-output-speaker: Speakers (priority: 10000, not available)
+                analog-output-headphones: Headphones (priority: 9000, available)
+        Active Port: analog-output-headphones
+        Formats:
+                pcm
+ </code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183315"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Velesich/">
+                <span class="post-username">Velesich</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/183315/">#</a>
+            5 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/de/05/de0576f8b854d1c6d989bb44f030c649.png" alt="Velesich avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Velesich/topics/">
+                    14
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Velesich/posts/">
+                    784
+                </a>
+            </div>
+            <div>
+                Участник с: 23 апреля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            &quot;Заикание&quot; звука на одном из компов бывает, лечится перезагрузкой компа. Перезагрузка звуковой системы не помогает, пульсы - тоже.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183506"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/selishii/">
+                <span class="post-username">selishii</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/183506/">#</a>
+            5 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/selishii/topics/">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/selishii/posts/">
+                    74
+                </a>
+            </div>
+            <div>
+                Участник с: 03 июня 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Заменил LTS-ядро на ядро с альтернативным планировщиком и проблема решилась сама-собой.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183521"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Velesich/">
+                <span class="post-username">Velesich</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/183521/">#</a>
+            5 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/de/05/de0576f8b854d1c6d989bb44f030c649.png" alt="Velesich avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Velesich/topics/">
+                    14
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Velesich/posts/">
+                    784
+                </a>
+            </div>
+            <div>
+                Участник с: 23 апреля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня загрузка на загрузку не приходится. Иногда совершенно спокойно звук относится к загрузке компа, иногда заикается на обновлении страницы в браузере.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-187544"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Ooops/">
+                <span class="post-username">Ooops</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/187544/">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Ooops/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Ooops/posts/">
+                    1
+                </a>
+            </div>
+            <div>
+                Участник с: 02 апреля 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня такое только в убунту/минте было.Лечил так:<br />окрываем  /etc/pulse/daemon.conf<br />и приводим строку ; realtime-scheduling = yes<br />к виду                       realtime-scheduling = no<br />(раскоментировав её)<br />Сохранить/перегруться(либо перезапустить службу) - всегда помогало.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-187547"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/chronos/">
+                <span class="post-username">chronos</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/187547/">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/e5/b3/e5b356d224cbeef88b07e8fced8d6ae9.png" alt="chronos avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/chronos/topics/">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/chronos/posts/">
+                    518
+                </a>
+            </div>
+            <div>
+                Участник с: 15 марта 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Еще можно так: В консоли команда alsamixer жмем F6 выбираем свое устройство что по умолчанию и кнопками курсора на клаве доходим до auto-mute потом кнопками курсора вверх или вниз чтоб получилось disabled и выходим кнопкой ESC снова в консоль команда sudo alsactl store на этом все!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-188261"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Velesich/">
+                <span class="post-username">Velesich</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/188261/">#</a>
+            5 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/de/05/de0576f8b854d1c6d989bb44f030c649.png" alt="Velesich avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Velesich/topics/">
+                    14
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Velesich/posts/">
+                    784
+                </a>
+            </div>
+            <div>
+                Участник с: 23 апреля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            На своём компе обнаружил, что просто звук и встроенная сетевая карточка сидят на одном векторе прерываний (17м). В зависимости от того, что вставало раньше в очередь на обработку, и происходили эффекты. Поставил отдельную сетевую - как рукой сняло.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/17178/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b9992a9377b57',m:'PnJwPTCRrWJnW_M2C5sAky8Mlr7GpHco0OXB5YEWa0U-1662681169-0-AVJQ8QfMaVPlaIbpR3Qcvj0lPvWlLptjY4LkxzKr03kZL7UkcJV8eQ7mOtBkqFuPTAVj5s0L8LJAXuUC2R6EZQCnQ+TSBdbthIMfCdUC8qWXburS/ufZ2vJ+1w729spIQRU5mrAbnV1QmaBJ9TRCqcQ=',s:[0x0311fd8dee,0x15fdcac521],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

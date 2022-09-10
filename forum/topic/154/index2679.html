@@ -1,0 +1,1050 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        proftpd, sshd, gnupd, rc.firewall
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>proftpd, sshd, gnupd, rc.firewall</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>proftpd, sshd, gnupd, rc.firewall</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-1077"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/blackbanny/">
+                <span class="post-username">blackbanny</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/1077/">#</a>
+            9 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/blackbanny/topics/">
+                    27
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/blackbanny/posts/">
+                    167
+                </a>
+            </div>
+            <div>
+                Участник с: 29 марта 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Подскажите пожалуйста, где можно прочитать про настройку следующих программ на ArchLinux proftpd, sshd, gnupd, rc.firewall, просто на вики либо нет, либо мало, а про sshd на английском я не совсем понимаю, про rc.firewall я даже в гугле не нашел как настраивать и использовать?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-1078"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/1078/">#</a>
+            9 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            арч просто очередной забор поставленный вокруг ядра, найдите любой устраивающий вас мануал , необращая внимания на дистр(но на дату надо бы приглядеться) и примените теже действия к арчу ;)
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-1079"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/blackbanny/">
+                <span class="post-username">blackbanny</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/1079/">#</a>
+            9 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/blackbanny/topics/">
+                    27
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/blackbanny/posts/">
+                    167
+                </a>
+            </div>
+            <div>
+                Участник с: 29 марта 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sleepycat</em><br/>арч просто очередной забор поставленный вокруг ядра, найдите любой устраивающий вас мануал , необращая внимания на дистр(но на дату надо бы приглядеться) и примените теже действия к арчу ;)</blockquote>ок, спасибо) а не подскажите по rc.firewall, а то что вобще ничего не могу найти как настроить и использовать?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-1080"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/1080/">#</a>
+            9 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            rc.firewall немного мутный термин. Его можно встретить при описаниях работы не только iptables, но и ipfw и pf.<br/>Документ староват, например можно встретить уже упраздненные команды, например для установки правила по состоянию соединения. Но тут главное теория, а в гугле ответ найдется быстро, тем более что iptables ласково сообщает, что так командовать нынче не модно. ;)<br/> <a href="https://www.opennet.ru/docs/RUS/iptables/">http://www.opennet.ru/docs/RUS/iptables/</a> <br/>большой брат &ndash;&gt; <a href="https://www.frozentux.net/iptables-tutorial/iptables-tutorial.html">http://www.frozentux.net/iptables-tutor &#8230; orial.html</a> <br/>Не каждый дочитал до конца, из них половина поняла и совсем единицы смогли запомнить хотя 50%. xD
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-1081"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/blackbanny/">
+                <span class="post-username">blackbanny</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/1081/">#</a>
+            9 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/blackbanny/topics/">
+                    27
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/blackbanny/posts/">
+                    167
+                </a>
+            </div>
+            <div>
+                Участник с: 29 марта 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sleepycat</em><br/>rc.firewall немного мутный термин. Его можно встретить при описаниях работы не только iptables, но и ipfw и pf.<br/>Документ староват, например можно встретить уже упраздненные команды, например для установки правила по состоянию соединения. Но тут главное теория, а в гугле ответ найдется быстро, тем более что iptables ласково сообщает, что так командовать нынче не модно. ;)<br/> <a href="https://www.opennet.ru/docs/RUS/iptables/">http://www.opennet.ru/docs/RUS/iptables/</a> <br/>большой брат &ndash;&gt; <a href="https://www.frozentux.net/iptables-tutorial/iptables-tutorial.html">http://www.frozentux.net/iptables-tutor &#8230; orial.html</a> <br/>Не каждый дочитал до конца, из них половина поняла и совсем единицы смогли запомнить хотя 50%. xD</blockquote>мне вот нужно сделать следующее:<br/>Запрет входящих соединений udp порт 3317:<br/><div class="code"><pre>sudo iptables -A INPUT –p udp –i eth0 --dport 3317 –j DROP</pre></div>Подсчет входящих icmp:<br/><div class="code"><pre>sudo iptables -A INPUT -i eth0 -m icmp -p icmp --icmp-type 8</pre></div>правильно ли я сделал?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-1082"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/1082/">#</a>
+            9 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            (-m icmp - без уточнения не отрабатывает?)<br/>В принципе да.
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-1083"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/blackbanny/">
+                <span class="post-username">blackbanny</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/1083/">#</a>
+            9 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/blackbanny/topics/">
+                    27
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/blackbanny/posts/">
+                    167
+                </a>
+            </div>
+            <div>
+                Участник с: 29 марта 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sleepycat</em><br/>(-m icmp - без уточнения не отрабатывает?)</blockquote>нет, говорит, что уточнять надо&#8230;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-1084"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/1084/">#</a>
+            9 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            как скажите, просто у меня и без этого фурычит на centos. поэтому и спросил&#8230; только вот отсутвие &ldquo;решения&rdquo; в конце правила вводит в тупик. Я тоже иногда считаю трафик фаерволом, но делаю это обычно немного иначе.
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-1085"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/blackbanny/">
+                <span class="post-username">blackbanny</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/1085/">#</a>
+            9 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/blackbanny/topics/">
+                    27
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/blackbanny/posts/">
+                    167
+                </a>
+            </div>
+            <div>
+                Участник с: 29 марта 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            а почему, когда я пишу arp у меня ничего не выводится?<br/>просто, надо скрипт написать, который выводит таблицу arp, если в ней есть информация о адресе 192.168.0.1
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-1086"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/1086/">#</a>
+            9 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            arp -e<br/>Чисто гипотетически на запрос мог ответить аппарат по пути следования.(как я читал) Но всеже можете проверить tcpdump-ом, пущеным на фаерволе. Хотя если ответ на пинг приходит, то куда уж тут прозрачней? ;)<br/>И да, вы перед контрольной проверкой попытайтесь сбросить арп таблицу на хосте , с которого будете тестировать ехо пакет. Возможно что чистая таблица на сервере всего лишь следствие наличия адресата у клиента. А может вы правы и оно просто не фурычит, я не говорил , что этого не может быть ;) Просто спросил интереса ради.(нет шлюзов на арче)
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/154/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747c70b9b8339db1',m:'IX6t1YfeluDLdo_49Lti790AIzRPgsc2ILtUzVR6iNI-1662689982-0-AZaR/f0kFzR/voqA9tes0mcvLafbQrJ4izLxgVGGPGcQql68NSxOmmrVdLCzshlpw3kjL8gBLwklp7Xz6lYhQBmiqK0/nBKRi2nPMTSryP4yoNXOwm8IaYidjx480V+bMiHyvHW2+zEDD8mv+KG77vQ=',s:[0xb6bd30c6dd,0x87010e1997],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

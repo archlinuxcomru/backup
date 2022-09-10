@@ -1,0 +1,1232 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17491/?page=6 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:37:23 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Установка Arch Linux на файловую систему ZFS [upd - октябрь 2017]
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/8/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/25/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Установка Arch Linux на файловую систему ZFS [upd - октябрь 2017]</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Установка Arch Linux на файловую систему ZFS [upd - октябрь 2017]</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="indexaf4d.html?page=5" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexaf4d.html?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="indexc575.html?page=6">6 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index235c.html?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdfa.html?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index0b08.html?page=9">9</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index1448.html?page=10">10</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index1c8b.html?page=11">11</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index235c.html?page=7" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189969"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/pztrn/index.html">
+                <span class="post-username">pztrn</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189969/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/pztrn/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/pztrn/posts/index.html">
+                    1436
+                </a>
+            </div>
+            <div>
+                Участник с: 20 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>s-ugra@ya.ru</em><br>По wiki - да, но по тем материалам, на которые я дал ссылку в шапке, пишут что не получилось, и я пробовать не стал. Если у кого получится - давайте, добавим. Если у кого с UEFI получится, тоже давайте. У меня получилось только так как описал.</blockquote>У меня с UEFI. Грабовую инструкцию заменить на инструкцию с systemd-boot из archwiki плюс те параметры, которые передаем ядру для zfs.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189970"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189970/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>pztrn</strong>, у меня есть такой вариант (в контексте этого блога, как вариант для UEFI)<br />Готовим SSD<br />Создание раздела EFI на загрузочном диске<br />Загружаемся из установочного носителя в режиме UEFI и создаем раздел EFI 512 Мб на загрузочном диске.<br /><pre><code>fdisk /dev/sdc
+g # создаем новую GPT таблицу разделов
+n # для создания нового раздела
+enter # раздел 1 по умолчанию
+enter # номер первого сектора по умолчанию 2048
++512M # для конца раздела
+t # изменить тип раздела на EFI
+0 # в fdisk системный раздел EFI равен 0
+w # для записи изменений на диск</code></pre>Создаем файловую систему Fat32<br /><pre><code>mkfs.vfat -F32 /dev/sdc1</code></pre>...<br />Монтируем загрузочный раздел<br /><pre><code>mount /dev/sdc1 /mnt/boot # boot disk</code></pre>...<br />Теперь можно выполнить chroot.<br /><pre><code>arch-chroot /mnt /bin/bash</code></pre>...<br />Установим загрузчик EFI<br /><pre><code>bootctl --path=/boot install</code></pre>Создадим запись для Arch в загрузчике<br /><pre><code>nano /boot/loader/entries/arch.conf</code></pre><br />добавьте следующее<br /><pre><code>title     Arch Linux
+linux     /vmlinuz-linux
+initrd    /initramfs-linux.img
+options   zfs=zarch/ROOT/default rw</code></pre>...<br />При загрузке машина не видит загрузочного устройства. Что я сделал не так?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189971"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189971/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>s-ugra@ya.ru</em><br>Загружаемся из установочного носителя в режиме UEFI и создаем раздел EFI 512 Мб на загрузочном диске.</blockquote>512М слишком жирно<br />у меня 100M, использовано 26M из которых 25М виндой.<br />правда у меня груб, но когда пробовал systemd-boot, то свободного места хватило и на сам systemd-boot и на ядра, которые тоже нужно размещать на EFI разделе.
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189972"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189972/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br>512М слишком жирно</blockquote>Ну, это же не принципиально, хорошо, сделаем 100М, но ошибка то не в этом.<br />Да, забыл про<br /><pre><code>mkfs.vfat -F32 /dev/sdc1</code></pre>Добавил.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189973"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/pztrn/index.html">
+                <span class="post-username">pztrn</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189973/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/pztrn/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/pztrn/posts/index.html">
+                    1436
+                </a>
+            </div>
+            <div>
+                Участник с: 20 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>s-ugra@ya.ru</em><br>При загрузке машина не видит загрузочного устройства. Что я сделал не так?</blockquote>Попробуй добавить в параметры ядра:<br /><br /><pre><code>zfs_force=1</code></pre><br />И да - экспортировал пул после всех действий?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189974"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189974/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>s-ugra@ya.ru</em><br>Ну, это же не принципиально, хорошо, сделаем 100М, но ошибка то не в этом.</blockquote>идеально 128М )))
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189975"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189975/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>pztrn</em><br>Попробуй добавить в параметры ядра:<br /><br />zfs_force=1</blockquote>Сейчас не на чем, но позже попробую.<br /><blockquote><em>pztrn</em><br>экспортировал пул после всех действий?</blockquote>Да, перед перезагрузкой, как в шапке описано.<br />Но проблема не в этих моментах. Они могли бы иметь место, если бы началась загрузка и что-то не пошло с ZFS. У меня же загрузка вообще не началась, комп вывалился в bios и презренно заявил что не видит с чего грузиться. Что-то не так с загрузочным разделом, может не так создал, не так примонтировал...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189976"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189976/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+                (отредактировано
+                
+                    5 лет, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            а какой тип разделу для zfs выставлять?<br />36 FreeBSD ZFS<br />48 Solaris /usr &amp; Apple ZFS<br />72 MidnightBSD ZFS<br /><br />я конечно понимаю что можно и не ставить, а оставить по умолчанию &quot;20 Linux filesystem&quot;, но в принципе, какой?
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189977"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189977/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br>а какой тип разделу для zfs выставлять?</blockquote>Пустой. ZFS сама все создаст. Для fdisk:<br />Жмем &quot;n&quot; для создания нового раздела<br />Жмем 4 раза Enter оставляя все вопросы по умолчанию<br />Жмем &quot;w&quot; для записи изменений на диск.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-189982"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/pztrn/index.html">
+                <span class="post-username">pztrn</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/189982/index.html">#</a>
+            5 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/pztrn/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/pztrn/posts/index.html">
+                    1436
+                </a>
+            </div>
+            <div>
+                Участник с: 20 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br>а какой тип разделу для zfs выставлять?</blockquote>Она (ZFS) по твоему копипасту 48 выставит, который Solaris /usr &amp; Apple ZFS<br /><br />Кстати, было бы очень интересно на Apple ZFS посмотреть. Это откуда вывод, если не секрет?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="indexaf4d.html?page=5" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexaf4d.html?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="indexc575.html?page=6">6 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index235c.html?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdfa.html?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index0b08.html?page=9">9</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index1448.html?page=10">10</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index1c8b.html?page=11">11</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index235c.html?page=7" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index2adf.html?next=/forum/topic/17491/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17491/?page=6 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:37:23 GMT -->
+</html>

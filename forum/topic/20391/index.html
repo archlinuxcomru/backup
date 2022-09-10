@@ -1,0 +1,488 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20391/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 07:51:10 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Как исправить ошибки QEMU/KVM и libvirt, в UEFI режиме? [РЕШЕНО]
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/9/index.html">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Как исправить ошибки QEMU/KVM и libvirt, в UEFI режиме? [РЕШЕНО]</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Как исправить ошибки QEMU/KVM и libvirt, в UEFI режиме? [РЕШЕНО]</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-238160"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Konstantin1722/index.html">
+                <span class="post-username">Konstantin1722</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/238160/index.html">#</a>
+            1 год, 8 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a2/0c/a20c1e1ba29e790f98cd0bbd1b262376.png" alt="Konstantin1722 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Konstantin1722/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Konstantin1722/posts/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июля 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Уже второй день не могу решить проблему.<br /><br />Как устанавливал:<br /><pre><code>sudo su
+pacman -Syu
+pacman -S qemu virt-manager dnsmasq dmidecode
+systemctl enable libvirtd.service
+nano /etc/libvirt/libvirtd.conf
+-----------------libvirtd.conf-----------------
+#unix_sock_group = &quot;libvirt&quot;       -&gt; unix_sock_group = &quot;libvirt&quot;
+#unix_sock_rw_perms = &quot;0770&quot;  -&gt; unix_sock_rw_perms = &quot;0770&quot;
+---------------------------------------------------
+usermod -a -G libvirt [пользователь]
+usermod -a -G kvm [пользователь]
+usermod -a -G input [пользователь]
+systemctl restart libvirtd.service
+</code></pre>На этом этапе всё хорошо, в BIOS режиме могу устанавливать виртуальные машины и пользоваться всем функционалом.<br /><br />Проблема начинается на этапе добавления UEFI.<br />Устанавливал так:<br /><pre><code>sudo su
+pacman -Syu
+pacman -S edk2-ovmf
+nano /etc/libvirt/qemu.conf
+-----------------qemu.conf-----------------
+#nvram = [   -&gt; nvram = [&quot;/usr/share/ovmf/x64/OVMF_CODE.fd:/usr/share/ovmf/x64/OVMF_VARS.fd&quot;]
+--------------------------------------------------
+systemctl restart libvirtd.service
+</code></pre>Вывод systemctl status libvirtd.service:<br /><pre><code>● libvirtd.service - Virtualization daemon
+     Loaded: loaded (/usr/lib/systemd/system/libvirtd.service; disabled; vendor preset: disabled)
+     Active: active (running) since Thu 2020-12-10 16:05:06 MSK; 1min 27s ago
+TriggeredBy: ● libvirtd-admin.socket
+             ● libvirtd.socket
+             ● libvirtd-ro.socket
+       Docs: man:libvirtd(8)
+             <a href="https://libvirt.org/">https://libvirt.org</a>
+   Main PID: 9603 (libvirtd)
+      Tasks: 19 (limit: 32768)
+     Memory: 18.5M
+     CGroup: /system.slice/libvirtd.service
+             ├─7273 /usr/bin/dnsmasq --conf-file=/var/lib/libvirt/dnsmasq/vlan0.conf --leasefile-ro --dhcp-script=/usr/lib/libvirt/libvirt_leaseshelper
+             ├─7274 /usr/bin/dnsmasq --conf-file=/var/lib/libvirt/dnsmasq/vlan0.conf --leasefile-ro --dhcp-script=/usr/lib/libvirt/libvirt_leaseshelper
+             └─9603 /usr/bin/libvirtd --timeout 120
+
+дек 10 16:05:06 desktop-pc systemd[1]: libvirtd.service: Unit process 7274 (dnsmasq) remains running after unit stopped.
+дек 10 16:05:06 desktop-pc systemd[1]: Stopped Virtualization daemon.
+дек 10 16:05:06 desktop-pc systemd[1]: libvirtd.service: Found left-over process 7273 (dnsmasq) in control group while starting unit. Ignoring.
+дек 10 16:05:06 desktop-pc systemd[1]: This usually indicates unclean termination of a previous run, or service implementation deficiencies.
+дек 10 16:05:06 desktop-pc systemd[1]: libvirtd.service: Found left-over process 7274 (dnsmasq) in control group while starting unit. Ignoring.
+дек 10 16:05:06 desktop-pc systemd[1]: This usually indicates unclean termination of a previous run, or service implementation deficiencies.
+дек 10 16:05:06 desktop-pc systemd[1]: Started Virtualization daemon.
+дек 10 16:05:06 desktop-pc libvirtd[9603]: libvirt version: 6.5.0
+дек 10 16:05:06 desktop-pc libvirtd[9603]: hostname: desktop-pc
+дек 10 16:05:06 desktop-pc libvirtd[9603]: Obsolete nvram variable is set while firmware metadata files found. Note that the nvram config file variable is going to be ignored.
+</code></pre><br />Вот непонятная мне проблема: &quot;Obsolete nvram variable is set while firmware metadata files found. Note that the nvram config file variable is going to be ignored.&quot;<br />Я гуглил пути её решения, но всё что находил вообще никак не повлияло на неё. Кто-то ведь пользуется QEMU/KVM на Arch Linux? Как вы решали эти проблемы?<br />Скрины прилагаются:<br /><a href="https://i.ibb.co/z6fxqJm/2020-12-09-13-28.png">https://i.ibb.co/z6fxqJm/2020-12-09-13-28.png</a><br /><a href="https://i.ibb.co/3vrHkjM/2020-12-10-16-10.png">https://i.ibb.co/3vrHkjM/2020-12-10-16-10.png</a><br /><a href="https://i.ibb.co/Jqg51TG/2020-12-10-16-15.png">https://i.ibb.co/Jqg51TG/2020-12-10-16-15.png</a><br /><a href="https://i.ibb.co/3c2gfss/2020-12-10-16-18.png">https://i.ibb.co/3c2gfss/2020-12-10-16-18.png</a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-238162"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vadik/index.html">
+                <span class="post-username">vadik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/238162/index.html">#</a>
+            1 год, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vadik/topics/index.html">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vadik/posts/index.html">
+                    5395
+                </a>
+            </div>
+            <div>
+                Участник с: 17 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вместо полноразмерных изображений используйте превьюшки. Скриншоты пока удалил, в следующий раз удалю всю тему.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-238169"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/beisic/index.html">
+                <span class="post-username">beisic</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/238169/index.html">#</a>
+            1 год, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/beisic/topics/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/beisic/posts/index.html">
+                    184
+                </a>
+            </div>
+            <div>
+                Участник с: 22 августа 2018
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Konstantin1722</em><br>Как устанавливал:<br />sudo su<br />pacman -Syu<br />pacman -S qemu virt-manager dnsmasq dmidecode</blockquote><pre><code>$ sudo pacman -S virt-manager qemu qemu-arch-extra ovmf vde2 ebtables dnsmasq bridge-utils openbsd-netcat</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index38f9.html?next=/forum/topic/20391/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20391/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 07:51:10 GMT -->
+</html>

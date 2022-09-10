@@ -1,0 +1,1181 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20366/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:15:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        systemd-nspawn как альтернатива chroot ... ?
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/5/index.html">Разное</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/4/index.html">/dev/null</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>systemd-nspawn как альтернатива chroot ... ?</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>systemd-nspawn как альтернатива chroot ... ?</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237739"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237739/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Мне не нравится chroot по причине<br />- сложностью запуска - вопрос, конечно, спорный, но я обычно использовал его запуск по старинке и приходилось вводить кучу команд<br />- не удобством использования - все-таки голая консоль и проблемы с просмотром информации, всего не упомнишь и лучше скопировать/вставить, чем набирать в консоле<br />- ну и частенько нужен интерент - что то посмотреть, скачать и др.<br />И вот нашел альтернативу chroot - <strong>systemd-nspawn</strong> - эта штуковина более мощная, чем chroot, и дает намного больше возможностей, описывать нет смысла, отсылаю к <a href="https://wiki.archlinux.org/index.php/Systemd-nspawn">Wiki</a>, да и статей по ее использованию дополна.<br />Само использоание  systemd-nspawn для других целей вообщем то не так и просто, нужно разбираться, а вот вместо chroot и для восстановления неработающей системы довольно просто и удобно.<br />Запускать можно и с archiso и с других мест, но очень удобно запускать с <strong>systemrescuecd</strong>, сделан на основе Archlinux, но главное то, что набрав startx, попадаешь в DE Xfce и получаешь намного больше возможностей, чем в простой консоле.<br />Опишу подробнее запуск и работу в systemd-nspawn, а для начала попорчу свою систему, ну не очень так, а слегка … просто удалю ядро<br />Смотрим, что имеется в /boot<br /><strong>ls /boot | grep linux</strong><br /><pre><code>initramfs-linux-lts.img
+initramfs-linux.img
+vmlinuz-linux
+vmlinuz-linux-lts</code></pre>Переместим vmlinuz-linux в другое место - <strong>sudo mv /boot/vmlinuz-linux /ISO</strong><br /><u>Reboot</u>  - и разумеется не получилось - логи сообщили, что сначала загрузите ядро.<br />Вставляем мультизагрузочную флешку, на которой два образа archlinux-2020.08.01-x86_64.iso и systemrescuecd-amd64-6.1.5.iso и плюс папка с разными полезными файлами … Загружаемся в systemrescuecd и после загрузки в консоль набираем <strong>startx</strong> и попадаем в  Xfce.<br />Первым делом настраиваем интернет.<br />Далее открываю файл-менеджер и перехожу в папку с файлами на флэшке (точно не помню, но вроде бы по пути /run/archiso/dev_img/…) и открываю файл-напоминалку по работе с systemd-nspawn.<br />Далее открываю терминал и копирую в него команды из открытого ранее файла<br /><pre><code>mkdir /mnt/systemd_nspawn
+mount /dev/sda3 /mnt/systemd_nspawn
+sudo systemd-nspawn --directory /mnt/systemd_nspawn --boot -- --unit rescue.target</code></pre>Так как запускаю систему не в default mode, а в <u>rescue mode</u> (так удобнее), то нам предложат ввести пароль root, водим и попадаем в rescue mode<br />Для удобства сохранения логов, после того, как загрузился в систему, открыл новый файл ~/test_systemd-nspawn.txt и стал копировать в него все вводимые команды и выводы … в принципе и мне так удобнее - не писать самому - привожу содержание этого файла (уже из восстановленной системы) - лишнее убрал<br /><pre><code>[root@sysresccd ~]# mkdir /mnt/systemd_nspawn
+[root@sysresccd ~]# mount /dev/sda3 /mnt/systemd_nspawn
+[root@sysresccd ~]#  sudo systemd-nspawn --directory /mnt/systemd_nspawn --boot -- --unit rescue.target
+Spawning container systemdnspawn on /mnt/systemd_nspawn.
+Press ^] three times within 1s to kill container.
+Detected virtualization systemd-nspawn.
+Detected architecture x86-64.
+
+Welcome to Arch Linux!
+…. ……...
+Queued start job for default target Rescue Mode.
+…………..
+[  OK  ] Started Rescue Shell.
+[  OK  ] Reached target Rescue Mode.
+You are in rescue mode. After logging in, type &quot;journalctl -xb&quot; to view
+system logs, &quot;systemctl reboot&quot; to reboot, &quot;systemctl default&quot; or &quot;exit&quot;
+to boot into default mode.
+Dlya prodolzheniya vvedite parol` root
+(ili nazhmite Control-D dlya prodolzheniya):
+root #</code></pre>и после ввода пароля root мы в rescue mode …<br />далее в этом же терминале смотрим, что у нас в /boot<br />ls /boot<br /><pre><code>grub  initramfs-linux-lts.img  initramfs-linux.img  memdisk  vmlinuz-linux-lts</code></pre>ядра нет, но сначала попробуем обновиться и если все будет нормально, то установим linux<br /><br /><strong>PS</strong> - напоминаю, что в любой момент можно перейти в любое приложение systemrescuecd - браузер, файловый менеджер и др., а потом снова вернутся в терминал, в нашу систему ... и <u>можно запустить MC</u>, что тоже очень удобно.<br /><br />Пробуем обновиться<br />root # <strong>pacman -Syu</strong><br /><pre><code>:: Обновление баз данных пакетов...
+ core не устарел
+ extra                 1637,0 KiB   930 KiB/s 00:02 [###########################] 100%
+ community                5,3 MiB   964 KiB/s 00:06 [###########################] 100%
+ multilib не устарел
+ошибка: не удалось получить файл &#39;archlinuxcn.db&#39; из cdn.repo.archlinuxcn.org : Resolving timed out after 10000 milliseconds
+ошибка: не удалось обновить archlinuxcn (ошибка в библиотеке загрузки)
+ошибка: failed to synchronize all databases</code></pre>Затык с repo  archlinuxcn - иногда с ним такое бывает - я обычно запускаю снова<br />root # <strong>pacman -Syu</strong><br /><pre><code>:: Обновление баз данных пакетов...
+ core не устарел
+ extra не устарел
+ community не устарел
+ multilib не устарел
+ archlinuxcn           1432,4 KiB  1031 KiB/s 00:01 [###########################] 100%
+:: Запускается полное обновление системы...
+……………...
+Пакеты (1) imagemagick-7.0.10.45-1
+Будет загружено:  2,54 MiB
+Будет установлено:  9,85 MiB
+:: Приступить к установке? [Y/n] y</code></pre>Вроде все работает … и далее ставим пакет linux<br />root # <strong>pacman -S linux</strong><br /><pre><code>предупреждение: linux-5.9.11.arch2-1 не устарел -- переустанавливается
+разрешение зависимостей...
+проверка конфликтов...
+Пакеты (1) linux-5.9.11.arch2-1
+Будет загружено:  73,85 MiB
+Будет установлено:  79,08 MiB
+Изменение размера:   0,00 MiB
+:: Приступить к установке? [Y/n] y
+………...
+==&gt; finished: 1 packages removed (disk space saved: 73.85 MiB)</code></pre>На этом закончим … самое главное: <strong>ВЫХОД</strong> - <u>не забываем завершить работу контейнера и размонтировать раздел</u><br />1.  <strong>poweroff</strong> … или как написано в логе - <u>Press ^] three times within 1s to kill containe</u>, но надежнее poweroff<br /><pre><code>[  OK  ] Stopped target Rescue Mode.
+...................................
+[  OK  ] Finished Power-Off.
+[  OK  ] Reached target Power-Off.
+exit
+Container systemdnspawn has been shut down.
+[root@sysresccd ~]#</code></pre>и видим, что попадаем в окружение  sysresccd<br />2. <strong>umont /dev/sda3</strong><br /><br />Далее перегружаемся и пробуем загрузиться в систему ... все нормально … проверяемся<br /><strong>sudo pacman -Syu</strong><br /><pre><code>:: Обновление баз данных пакетов...
+ core не устарел
+ extra не устарел
+ community не устарел
+ multilib не устарел
+ archlinuxcn не устарел
+:: Запускается полное обновление системы...
+предупреждение: firefox: пропуск обновления пакета (56.0.2-1 =&gt; 83.0-2)
+ делать больше нечего</code></pre><br />Специально описал подробно, чтобы было нагляднее ... ничего доустанавливать не нужно ...<br />Может кому то удобнее и chroot, а кому то будет удобнее systemd-nspawn … выбор за Вами
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237741"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Aivar/index.html">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237741/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Aivar/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Aivar/posts/index.html">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>приходилось вводить кучу команд</blockquote>Дык они уже вводятся на уровне рефлексов.<br />Но для ленивых есть arch-chroot (arch-install-scripts).
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237742"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237742/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Aivar</em><br>Дык они уже вводятся на уровне рефлексов.<br />Но для ленивых есть arch-chroot (arch-install-scripts).</blockquote>У меня уже и рефлексов то нет - все забывается и даже нет желания работать с Live USB … для меня намного удобнее иметь нормальную Linux систему вместо этого Live USB … что я и делаю - имеется backup системы Arch (практически не обновляется), которую намного проще использовать для этих целей<br /><strong>lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL,UUID</strong><br /><pre><code>├─sda2  75,3G ext4              Archlinux_backup   dfd6597d-d346-4e7d-8393-52b614083b1f
+├─sda3  70,3G ext4   /          ArchLinux               e4a612f9-f62c-4303-b81e-190d29d40f75</code></pre>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237743"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237743/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Aivar</em><br>arch-chroot</blockquote>+<br />Хотя наверно не всегда арч ремонтируется.<br />А вот с загрузкой из бекапа, по удобству имхо ничего не сравнится, уже все настроено так как нравится и привычно.<br />А 20 - 50гиг при нынешних дисках, флешках это не проблема. Вот только на разных дисках хранить при возможности.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237744"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237744/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vs220</em><br>наверно не всегда арч ремонтируется</blockquote>да вообщем то он сам практически и не ломается ... но приходится частенько насиловать систему самому (разного рода эксперименты) - а с этим chroot и Live USB одна морока - намного проще зайти в другую систему, в ту же backup, и из нее просто переместить нужные файла в нужное место, а если для этого нужны операции, связанные с интеренетом и др., то прямо из этой же системы backup очень быстро, используя systemd-nswap, попадаешь прямо в нужную систему.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237745"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Vadim/index.html">
+                <span class="post-username">Vadim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237745/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/72/22/7222132327ed41066e6514a2df7291c9.png" alt="Vadim avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Vadim/topics/index.html">
+                    280
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Vadim/posts/index.html">
+                    1909
+                </a>
+            </div>
+            <div>
+                Участник с: 20 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>а если для этого нужны операции, связанные с интеренетом и др., то прямо из этой же системы backup очень быстро, используя systemd-nswap, попадаешь прямо в нужную систему.</blockquote>ничего не понял,чем удобнее.<br />загружаешся с любой,хоть с жесткого диска,хоть с systemrescuecd  системы,через chroot подключаешь раздел с Arch и делай что хочешь,копируй,обновляй,устанавливай и удаляй пакеты без всякого systemd-nspawn,и интернет при этом есть.<br />я когда неохота перезагружаться прямо из Debian спокойно обновляю Arch на другом разделе,и наоборот,и вообще все что угодно сделаю с другой системой.мне кажется все намного проще и удобней чем с systemd-nswap.
+            
+                
+                    <div class="post-signature">
+                        Linux Forever!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237747"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237747/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Vadim</em><br>мне кажется все намного проще и удобней чем с systemd-nswap.</blockquote>Это дело вкуса - уже отмечал, что делаю chroot по-старинке и скриптов не использую (даже не установлены)<br />И  у меня переход из одной системы в другую выглядит так<br />1. <strong>chroot</strong> из системы в другую систему<br />Вход<br /><pre><code>sudo mkdir /mnt/arch
+sudo mount /dev/sda2 /mnt/arch
+cd /mnt/arch
+sudo mount -t proc proc proc/
+sudo mount -t sysfs sys sys/
+sudo mount -o bind /dev dev/
+sudo chroot /mnt/arch bin/bash</code></pre>Выход<br /><pre><code>exit
+cd ~
+sudo umount --recursive /mnt/arch</code></pre><br />2. <strong>systemd-nspawn</strong> из системы в другую систему<br />Вход<br /><pre><code>sudo mkdir /mnt/arch
+sudo mount /dev/sda2 /mnt/arch
+sudo systemd-nspawn --directory /mnt/arch --boot -- --unit rescue.target</code></pre>Выход<br /><pre><code>poweroff
+sudo umount /mnt/arch</code></pre> и для меня проще 2-ой вариант ... это не говоря о безопасности и возможностях.<br /><br /><strong>EDIT 1</strong> - еще одна из причин, по которой открыл этот топик - неоднократно замечал, что многие новички не очень хорошо справляются с chroot и боятся его выполнять.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237781"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/anode/index.html">
+                <span class="post-username">anode</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237781/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/anode/topics/index.html">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/anode/posts/index.html">
+                    982
+                </a>
+            </div>
+            <div>
+                Участник с: 30 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>2. systemd-nspawn из системы в другую систему</blockquote><pre><code>
+[anode@TM-8481 ~]$ su -
+Пароль:
+[root@TM-8481 ~]# mount /dev/sda7 /mnt
+[root@TM-8481 ~]# ls /mnt
+bin   crux  etc   lib    lib64       mnt  proc  run   seven  tmp  var
+boot  dev   home  lib32  lost+found  opt  root  sbin  sys    usr
+[root@TM-8481 ~]# systemd-nspawn --directory /mnt --boot -- --unit rescue.target
+Directory /mnt doesn&#39;t look like an OS root directory (os-release file is missing). Refusing.
+[root@TM-8481 ~]#
+[root@TM-8481 ~]# systemd-nspawn --directory /mnt
+Spawning container mnt on /mnt.
+Press ^] three times within 1s to kill container.
+-bash-5.0# blkid
+-bash-5.0# ls -l /dev | grep sda
+-bash-5.0# ls /dev
+char     core  full    net   ptmx  random  stderr  stdout  urandom
+console  fd    mqueue  null  pts   shm     stdin   tty     zero
+</code></pre>Т.е. швейцарский нож не такой уж и универсальный? Или я что-то не так делаю?<br />Дедовский метод.<br /><pre><code>
+[root@TM-8481 ~]# arch-chroot /mnt
+bash-5.0# blkid
+bash: blkid: command not found
+bash-5.0# /sbin/blk
+blkdeactivate  blkdiscard     blkid          blkzone
+bash-5.0# /sbin/blkid
+/dev/sda1: LABEL=&quot;CRUX32&quot; UUID=&quot;2c67c694-bc2e-4eef-af06-cd5d52aebb81&quot; BLOCK_SIZE=&quot;4096&quot; TYPE=&quot;ext4&quot; PARTUUID=&quot;01e83624-01&quot;
+/dev/sda2: BLOCK_SIZE=&quot;512&quot; UUID=&quot;360E92E90E92A183&quot; TYPE=&quot;ntfs&quot; PARTUUID=&quot;01e83624-02&quot;
+/dev/sda3: LABEL=&quot;SWAP&quot; UUID=&quot;767329c9-83c1-4b06-8bbd-f76e337b69a2&quot; TYPE=&quot;swap&quot; PARTUUID=&quot;01e83624-03&quot;
+/dev/sda5: LABEL=&quot;ARCH&quot; UUID=&quot;10bf8759-a8b3-4a8e-90aa-a000007d7a73&quot; BLOCK_SIZE=&quot;4096&quot; TYPE=&quot;ext4&quot; PARTUUID=&quot;01e83624-05&quot;
+/dev/sda6: LABEL=&quot;HOME&quot; UUID=&quot;d7d7593e-81cc-48ae-8fe0-78f5e5c55df0&quot; BLOCK_SIZE=&quot;4096&quot; TYPE=&quot;ext4&quot; PARTUUID=&quot;01e83624-06&quot;
+/dev/sda7: LABEL=&quot;CRUX64&quot; UUID=&quot;ce28283b-8ca9-4ee3-92be-02922b27a10c&quot; BLOCK_SIZE=&quot;4096&quot; TYPE=&quot;ext4&quot; PARTUUID=&quot;01e83624-07&quot;
+/dev/mmcblk0p1: SEC_TYPE=&quot;msdos&quot; LABEL=&quot;SD1G&quot; UUID=&quot;5859-D7EE&quot; BLOCK_SIZE=&quot;512&quot; TYPE=&quot;vfat&quot; PARTUUID=&quot;ff989d1d-01&quot;
+bash-5.0#
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237782"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237782/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>anode</strong>, почему не получается, точно сказать не могу - не нравится <strong>os-release</strong>, а уж почему не нравится, нужно смотреть конкретно.<br />Может что то с файлами /usr/lib/os-release, /etc/os-release - возможно в <strong>CRUX64</strong> они другие или это симлинки и др.<br />И еще не соображу, сейчас этот дистр без systemd? - правда даже и не знаю, важно ли это.<br /><br /><strong>PS</strong> - лучше <strong>su</strong> не использовать ...<br /><br /><strong>PSS</strong> - насколько я понял, многим больше нравится chroot, хотя это и понятно - все новое внедряется не сразу ...<br /><br /><strong>EDIT 1</strong> - я экспериментировал только с Arch, просто других систем сейчас не стоит - наигрался и все снес, взамен поставил backup Arch.<br />Вот с чем бы поигрался, так это с микроядерной ОС, но пока достойной нет.<br /><br /><strong>EDIT 2</strong> - ... вот что прописано в man в части os-release<br /><pre><code>As a safety check systemd-nspawn will verify the existence of /usr/lib/os-release or /etc/os-release in the container tree before starting the container (see os-release(5)). It might be necessary to add this file to the container tree manually if the OS of the container is too old to contain this file out-of-the-box.</code></pre>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237791"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/anode/index.html">
+                <span class="post-username">anode</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237791/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/anode/topics/index.html">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/anode/posts/index.html">
+                    982
+                </a>
+            </div>
+            <div>
+                Участник с: 30 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>лучше su не использовать &#8230;</blockquote> аргументы?<br /><br /><blockquote><em>vasek</em><br>этот дистр без systemd? - правда даже и не знаю, важно ли это.</blockquote>Не просто важно, а как говАривал дедушка Лёнарт: Архи важно! Всех, кто не использует СистемДЭ к стенке! )))<br />ЗЫ. А особенно меня пугает, что сиськадэ - это уже не система инициализации, а: <pre><code>suite of basic building blocks for a Linux system</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexc295.html?next=/forum/topic/20366/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20366/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:15:15 GMT -->
+</html>

@@ -1,0 +1,857 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/920/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:13:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [РЕШЕНО] юнит snmpd.service для systemd
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/23/index.html">Демоны и загрузка системы</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[РЕШЕНО] юнит snmpd.service для systemd</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[РЕШЕНО] юнит snmpd.service для systemd</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8776"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/casper/index.html">
+                <span class="post-username">casper</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/8776/index.html">#</a>
+            9 лет, 11 месяцев назад
+            
+                (отредактировано
+                
+                    9 лет, 11 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/b6/36/b63640331e52973ed9b8c68fb0f4ac29.png" alt="casper avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/casper/topics/index.html">
+                    18
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/casper/posts/index.html">
+                    122
+                </a>
+            </div>
+            <div>
+                Участник с: 01 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Как оказалось пакет net-snmp не содержит юнит файлика для systemd. Может кто то уже с этим столкнулся и нашел правильное содержимое для snmpd.service. Нашел такой вот вариант:<div class="code"><pre>[root@pts/1 &gt; /tmp]# cat /usr/lib/systemd/system/snmpd.service                                [13:12]
+[Unit]
+Description=Simple Network Management Protocol (SNMP) Daemon.
+After=syslog.target network.target
+[Service]
+Type=notify
+Environment=SNMPDLOG="-LS0-6d"
+EnvironmentFile=-/etc/conf.d/snmpd
+ExecStart=/usr/sbin/snmpd $SNMPDLOG $SNMPD_ARGS -f
+ExecReload=/bin/kill -HUP $MAINPID
+[Install]
+WantedBy=multi-user.target</pre></div>Но после запуска остается висеть сам процесс systemctl пока не нажмешь Ctrl+C:<div class="code"><pre>[root@pts/2 &gt; /home/casper]# ps -ef | grep snmp                         [12:04]
+root     11401 13526  0 13:11 pts/1    00:00:00 systemctl start snmpd
+root     11403     1  0 13:11 ?        00:00:00 /usr/sbin/snmpd -LS0-6d -f
+root     11615 20404  0 13:11 pts/2    00:00:00 grep --color=auto snmp</pre></div>Пробовал убирать ключик -f, тогда snmpd стартует и сразу же умирает. Может кто знает как правильно его запустить под systemd?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8777"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/8777/index.html">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У вас стоит <strong>Type=notify</strong> <blockquote><strong>man systemd.service</strong><div class="code"><pre>           Behaviour of notify is similar to simple, however it is expected
+           that the daemon sends a notification message via sd_notify(3) or an
+           equivalent call when it finished starting up. systemd will proceed
+           starting follow-up units after this notification message has been
+           sent. If this option is used NotifyAccess= (see below) should be
+           set to open access to the notification socket provided by systemd.
+           If NotifyAccess= is not set, it will be implicitly set to main.</pre></div></blockquote>Если <strong>systemctl start</strong> не завершается, значит он ждёт сообщения об успешном (или неуспешном) старте демона, но это сообщение не поступает. Очевидно, причина либо в том, что выбран неправильный Type, либо демон сам чего-то ждёт, и не может дождаться.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8778"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/casper/index.html">
+                <span class="post-username">casper</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/8778/index.html">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/b6/36/b63640331e52973ed9b8c68fb0f4ac29.png" alt="casper avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/casper/topics/index.html">
+                    18
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/casper/posts/index.html">
+                    122
+                </a>
+            </div>
+            <div>
+                Участник с: 01 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Спасибо за ответ. Слегка подправил юнит и терь стартует как надо!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8779"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/beerman/index.html">
+                <span class="post-username">beerman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/8779/index.html">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/beerman/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/beerman/posts/index.html">
+                    21
+                </a>
+            </div>
+            <div>
+                Участник с: 18 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Casper</em><br/>Спасибо за ответ. Слегка подправил юнит и терь стартует как надо!</blockquote>А как именно подправил?<br/>Убрал &ldquo;Type=notify&rdquo; или на что-то другое заменил?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8780"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sleepycat/index.html">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/8780/index.html">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sleepycat/topics/index.html">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sleepycat/posts/index.html">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            поменял notify на чтото более путное.
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-211802"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/dzhazzz/index.html">
+                <span class="post-username">dzhazzz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/211802/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/dzhazzz/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/dzhazzz/posts/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Участник с: 11 декабря 2018
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вот рабочий вариант.<br />Я собрал snmpd из исходников net-snmp 5.7.3<br /><br />Самый простой unit для systemd:<br /># vi /etc/systemd/system/snmpd.service<br /><pre><code>[Unit]
+Description=Simple Network Management Protocol (SNMP) Daemon.
+After=syslog.target network.target
+
+[Service]
+Type=forking
+ExecStart=/usr/local/sbin/snmpd -c /root/snmpd.conf #путь к snmpd и его конф файлу
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target</code></pre># systemctl enable snmpd.service<br /># systemctl start snmpd.service<br /># systemctl status snmpd.service
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-211807"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Aivar/index.html">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/211807/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Aivar/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Aivar/posts/index.html">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strike>И тебе привет, некрофилушка</strike>.<br />На дату создания_темы/последнего_поста не смотрим?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-211811"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/211811/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>dzhazzz</em><br>Я собрал snmpd из исходников net-snmp 5.7.3</blockquote>а чем версия из репозитория не подошла?
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexe4ed.html?next=/forum/topic/920/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/920/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:13:25 GMT -->
+</html>

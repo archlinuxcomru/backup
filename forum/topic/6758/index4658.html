@@ -1,0 +1,678 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/6758/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:55:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Перезапуск демонов через SSH
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/13/index.html">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Перезапуск демонов через SSH</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Перезапуск демонов через SSH</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-64939"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/amigo/index.html">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/64939/index.html">#</a>
+            12 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/amigo/topics/index.html">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/amigo/posts/index.html">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Eugenefast</strong>, какой дистрибутив установлен на сервере?
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-64940"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/mango/index.html">
+                <span class="post-username">mango</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/64940/index.html">#</a>
+            12 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c5/ab/c5ab59aeb9e60e219176c244dc66f6a8.png" alt="mango avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/mango/topics/index.html">
+                    43
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/mango/posts/index.html">
+                    1521
+                </a>
+            </div>
+            <div>
+                Участник с: 18 декабря 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Eugenefast</em><br/>Попробовал использовать <strong>su -</strong>. Но результат тот же.<br/>/etc/rc.d/httpd stop<br/>/etc/rc.d/httpd start<br/>Тоже пробовал. Я понимаю, что нужно смотреть логи, но я не нашел ничего. Я точно не знаю какие именно логи нужно смотреть, но я просмотрел все, что есть в /var/log на всякий случай и ничего не нашел. В каком логе может быть информация о неудачном выполнении команды?</blockquote><br/>Что пишет после <strong>/etc/rc.d/httpd stop</strong> ?  or <br/>Ну прибейте апач жёстко, например <strong>killall apache</strong> или что там у нас?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-64941"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/kernelpanic/index.html">
+                <span class="post-username">kernelpanic</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/64941/index.html">#</a>
+            12 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/kernelpanic/topics/index.html">
+                    17
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/kernelpanic/posts/index.html">
+                    452
+                </a>
+            </div>
+            <div>
+                Участник с: 14 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Странная вещь какая то у товарища. Вчера собирал nginx сидя на работе через SSH, и рестартил его раз 5 fast-cgi и другие тоже. Все нормально. Логи индейца обычно в <br/><div class="code"><pre>/var/log/httpd</pre></div>или более точно смотреть в /etc/httpd/httpd.conf на наличие иных путей для логов. Да и обычно я использую %daemon% stop | start . Мускуль например и некоторые другие демоны фэйлят при restart, так что взял за привычку рестартить методом stop|start.<br/><br/>P.S. Кстати насчет демонов.. В <a href="https://wiki.archlinux.org/index.php/NginX_(Русский)">АрчВики</a> поправил скрипт для запуска php-cgi.Вернее нагло скопипастил его у <a href="https://wiki.archlinux.org/index.php/Archlinux_NginX配置指南(简体中文)">кетайцев</a>  В русской версии статьи он был косячный и не убивал процесс при stop.<br/>Русский с кетайцем братья на век.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-64942"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/eugenefast/index.html">
+                <span class="post-username">eugenefast</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/64942/index.html">#</a>
+            12 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/eugenefast/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/eugenefast/posts/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Участник с: 12 февраля 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            На сервере стоит arch. Команда:<br/><div class="code"><pre>/etc/rc.d/httpd stop</pre></div>Также выдает fail.<br/>Лог апача находится в /var/log/httpd/error_log (проверил по конфигу апача). После попытки перезапуска или остановки апача никаких событий в логе не прибавляется.<br/><div class="code"><pre>killall httpd</pre></div>Убила апач, но запустить его после этого командой /etc/rc.d/httpd start не удалось (также выдает fail) :(<br/>Пришлось перезагружать сервер.<br/>При перезагрузке сервера в лог /var/log/httpd/error_log записываются строки:<br/><div class="code"><pre>[Tue Mar 30 18:47:07 2010] [notice] caught SIGTERM, shutting down
+[Tue Mar 30 18:48:29 2010] [warn] Init: Session Cache is not configured [hint: SSLSessionCache]
+[Tue Mar 30 18:48:29 2010] [notice] Digest: generating secret for digest authentication ...
+[Tue Mar 30 18:48:29 2010] [notice] Digest: done
+[Tue Mar 30 18:48:30 2010] [notice] Apache/2.2.14 (Unix) mod_ssl/2.2.14 OpenSSL/0.9.8k DAV/2 PHP/5.3.1 with Suhosin-Patch configured -- resuming normal operations</pre></div>Вроде ничего особенного. Вообщем буду пока если что ребутать сервер, он пока не очень нагруженный. Просто интересно почему не дает перезапустить httpd.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-64943"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/amigo/index.html">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/64943/index.html">#</a>
+            12 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/amigo/topics/index.html">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/amigo/posts/index.html">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В конфигурировании.
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index2151.html?next=/forum/topic/6758/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'745ea29d3d003a7d',m:'npgYKfjWvyenmSGkY_mGG4hu.QEW9O1Fab.sEaQvKY0-1662377452-0-ATuJ2zniy1wKdz/FlDOFT46mpkLKCbTaYH364s7Midn70nhLayzCUQOmhoLgpvBCpfWepFXqnLCMOwGWh/5/aL5Nh8kA7BXUVE49ijXr5I1RzbFVUg8dE0bPx9L/6HqBGxhJ2bCCLJlboMzAaEOBZVs=',s:[0x5f9af61191,0xb66bb762c6],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible5615.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/6758/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:55:19 GMT -->
+</html>

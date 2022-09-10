@@ -1,0 +1,561 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Автомонтирование сетевых каталогов (fstab, systemd, cifs)
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/23/">Демоны и загрузка системы</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Автомонтирование сетевых каталогов (fstab, systemd, cifs)</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Автомонтирование сетевых каталогов (fstab, systemd, cifs)</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-148610"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/madbittern/">
+                <span class="post-username">madbittern</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/148610/">#</a>
+            7 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/madbittern/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/madbittern/posts/">
+                    2
+                </a>
+            </div>
+            <div>
+                Участник с: 27 февраля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Всем привет. Сразу оговорюсь, что знаком с systemd оеносительно поверхностно.<br />После обновления,  перестал монтироваться сетевой каталог(расшареный каталог виндовс)<br /><pre><code>&gt;&gt; cat /etc/fstab
+#
+# /etc/fstab: static file system information
+#
+# &lt;file system&gt;	&lt;dir&gt;	&lt;type&gt;	&lt;options&gt;	&lt;dump&gt;	&lt;pass&gt;
+# /dev/sda6
+UUID=d5364e99-da2c-451a-984d-a6e3d5a97a3d	/         	ext4      	rw,relatime,data=ordered	0 1
+
+# /dev/sda8
+UUID=1c15facd-71c8-471e-af05-37985da4a2eb	/home     	ext4      	rw,relatime,data=ordered	0 2
+
+# /dev/sda7
+#UUID=b2265fc7-5173-4164-aeaf-a6b2474e3e22	none      	swap      	defaults  	0 0
+
+# Расшаренная общая папка windows
+//sharkypc/d /home/ad/share cifs credentials=/root/.smbcredentials,iocharset=utf8,file_mode=0777,dir_mode=0777 0 0
+[~] &gt;&gt;
+</code></pre><br /><pre><code>[~] &gt;&gt; mount -a
+[sudo] пароль для ad:
+mount error(121): Remote I/O error
+Refer to the mount.cifs(8) manual page (e.g. man mount.cifs)
+[~] &gt;&gt;
+</code></pre><br />Изучив обстоятельств, наткнулся вот на это:<br /><br /><pre><code>● archbook
+    State: degraded
+     Jobs: 0 queued
+   Failed: 1 units
+    Since: Пт 2015-02-27 20:06:37 MSK; 11min ago
+   CGroup: /
+           ├─1 /sbin/init \boot\vmlinuz-linux
+           ├─system.slice
+           │ ├─slim.service
+           │ │ └─594 /usr/lib/xorg-server/Xorg -nolisten tcp vt07 -auth /var/run/slim.auth
+           │ ├─dbus.service
+           │ │ └─435 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
+           │ ├─system-netctl\x2dauto.slice
+           │ │ ├─<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4c2229382f3820612d3938230c3b203c783f7c623f293e3a252f29">[email&#160;protected]</a>
+           │ │ │ ├─481 wpa_supplicant -B -P /run/wpa_supplicant_wlp4s0.pid -i wlp4s0 -D nl80211,wext -c/run/network/wpa_supplicant_wlp4s0.conf -W
+           │ │ │ ├─484 wpa_actiond -p /run/wpa_supplicant -i wlp4s0 -P /run/network/wpa_actiond_wlp4s0.pid -a /usr/lib/network/auto.action
+           │ │ │ └─640 dhcpcd -4 -q -t 30 -K -L wlp4s0
+           │ │ └─<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5638332235223a7b372322391633382665256678253324203f3533">[email&#160;protected]</a>
+           │ │   └─479 wpa_supplicant -B -P /run/wpa_supplicant_enp3s0.pid -i enp3s0 -D nl80211,wext -c/run/network/wpa_supplicant_enp3s0.conf -W
+           │ ├─systemd-journald.service
+           │ │ └─148 /usr/lib/systemd/systemd-journald
+           │ ├─systemd-logind.service
+           │ │ └─432 /usr/lib/systemd/systemd-logind
+           │ ├─system-getty.slice
+           │ │ └─<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7e191b0a0a073e0a0a074f500d1b0c08171d1b">[email&#160;protected]</a>
+           │ │   └─492 /sbin/agetty --noclear tty1 linux
+           │ └─systemd-udevd.service
+           │   └─180 /usr/lib/systemd/systemd-udevd
+           └─user.slice
+             └─user-1000.slice
+               ├─<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="285d5b4d5a6819181818065b4d5a5e414b4d">[email&#160;protected]</a>
+               │ ├─642 /usr/lib/systemd/systemd --user
+               │ └─643 (sd-pam)
+               └─session-c1.scope
+                 ├─ 491 /usr/bin/slim -nodaemon
+                 ├─ 645 i3
+                 ├─ 654 python2 -m guake.main
+                 ├─ 656 /usr/bin/i3bar --bar_id=bar-1 --socket=/run/user/1000/i3/ipc-socket.645
+                 ├─ 658 /bin/sh /home/ad/.i3/conky.sh
+                 ├─ 659 conky -c /home/ad/.i3/conkyrc
+                 ├─ 665 /usr/bin/dbus-launch --autolaunch 939d1aaeaa80443ca7bf9352b86f2cb3 --binary-syntax --close-stderr
+                 ├─ 666 /usr/bin/dbus-daemon --fork --print-pid 5 --print-address 7 --session
+                 ├─ 668 /usr/lib/GConf/gconfd-2
+                 ├─ 670 gnome-pty-helper
+                 ├─ 671 /bin/zsh
+                 ├─ 702 urxvt
+                 ├─ 703 zsh
+                 ├─ 747 urxvt
+                 ├─ 748 zsh
+                 ├─ 893 sudo systemctl list-dependencies default.target
+                 ├─ 894 systemctl list-dependencies default.target
+                 ├─ 895 less
+                 ├─ 897 urxvt
+                 ├─ 898 zsh
+                 ├─ 920 urxvt
+                 ├─ 921 zsh
+                 ├─ 944 firefox
+                 ├─1154 sudo systemctl status
+                 └─1155 systemctl status
+</code></pre><br /><pre><code>[~] &gt;&gt; sudo systemctl --failed
+  UNIT                LOAD   ACTIVE SUB    DESCRIPTION
+● home-ad-share.mount loaded failed failed /home/ad/share
+
+LOAD   = Reflects whether the unit definition was properly loaded.
+ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+SUB    = The low-level unit activation state, values depend on unit type.
+
+1 loaded units listed. Pass --all to see loaded but inactive units, too.
+To show all installed unit files use &#39;systemctl list-unit-files&#39;.
+[~] &gt;&gt;
+</code></pre><br />Как я понял за монтирование отвичает юнит home-ad-share.mount, который зависит от remote-fs.target, вообщем вот:<br /><pre><code>[~] &gt;&gt; sudo systemctl status remote-fs.target
+● remote-fs.target - Remote File Systems
+   Loaded: loaded (/usr/lib/systemd/system/remote-fs.target; enabled; vendor preset: enabled)
+   Active: inactive (dead)
+     Docs: man:systemd.special(7)
+
+фев 27 20:06:46 archbook systemd[1]: Dependency failed for Remote File Systems.
+фев 27 20:06:46 archbook systemd[1]: Job remote-fs.target/start failed with...&#39;.
+Hint: Some lines were ellipsized, use -l to show in full.
+[~] &gt;&gt; sudo systemctl status home-ad-share.mount
+● home-ad-share.mount - /home/ad/share
+   Loaded: loaded (/etc/fstab)
+   Active: failed (Result: exit-code) since Пт 2015-02-27 20:06:46 MSK; 18min ago
+    Where: /home/ad/share
+     What: //sharkypc/d
+     Docs: man:fstab(5)
+           man:systemd-fstab-generator(8)
+  Process: 485 ExecMount=/bin/mount -n //sharkypc/d /home/ad/share -t cifs -o credentials=/root/.smbcredentials,iocharset=utf8,file_mode=0777,dir_mode=0777 (code=exited, status=1/FAILURE)
+
+фев 27 20:06:46 archbook mount[485]: mount error: could not resolve address...or
+фев 27 20:06:46 archbook systemd[1]: home-ad-share.mount mount process exit...=1
+фев 27 20:06:46 archbook systemd[1]: Failed to mount /home/ad/share.
+фев 27 20:06:46 archbook systemd[1]: Unit home-ad-share.mount entered faile...e.
+Hint: Some lines were ellipsized, use -l to show in full.
+[~] &gt;&gt;
+/code]
+Не как не могу понять, что произошло?
+Да, после обновы система еще грешила на монтирование swap, но это решилось коментированием соответственной строчки в fstab.
+
+Может кто сталкивался с подобным и знает ответ, очень жду помощи)</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-148616"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Sheykhnur/">
+                <span class="post-username">Sheykhnur</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/148616/">#</a>
+            7 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/d1/b6/d1b62754f45b5c4a783cd15c795c84b5.png" alt="Sheykhnur avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Sheykhnur/topics/">
+                    16
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Sheykhnur/posts/">
+                    244
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У вас сообщение об ошибке лежит на поверхности вроде бы...<br /><pre><code>фев 27 20:06:46 archbook mount[485]: mount error: could not resolve address...or</code></pre>Данная строчка есть ни что иное, как ошибка разрешения сетевого адреса. По-видимому, у вас что-то с самбой случилось, ибо сервис не может достучаться до удалённой фс и завершается с ошибкой. Ищите ошибку в районе самбы.
+            
+                
+                    <div class="post-signature">
+                        <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fd8f929289bd8b8d888d969493">[email&#160;protected]</a># cat /dev/ass &gt; /dev/head
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-148670"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/madbittern/">
+                <span class="post-username">madbittern</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/148670/">#</a>
+            7 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/madbittern/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/madbittern/posts/">
+                    2
+                </a>
+            </div>
+            <div>
+                Участник с: 27 февраля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Sheykhnur</em><br>У вас сообщение об ошибке лежит на поверхности вроде бы...<br /><pre><code>фев 27 20:06:46 archbook mount[485]: mount error: could not resolve address...or</code></pre>Данная строчка есть ни что иное, как ошибка разрешения сетевого адреса. По-видимому, у вас что-то с самбой случилось, ибо сервис не может достучаться до удалённой фс и завершается с ошибкой. Ищите ошибку в районе самбы.</blockquote><br />На это я обратил внимание, но не придал значения т.к. имена устройств в сети резольвяца. Да скорей всего вы правы дело в самбе, пока что разбераюсь, хотя виндовые разделы на локальном диске монтируются.<br /><br />[upd]Тоже самое выдает при попытке примонтировать любой сетевой ресурс((
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/14560/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747b91b3cb3d00bc',m:'fmLQPAlYvxWO2cpJMQAjN9X7JdAontQizhi3IRuoZX0-1662680845-0-Acr4VAkd3YolQZV7DVigX4+mD2/NRulvlVH5m9pvccyysd4G0Glf0iQKmYGiH9wz06YG65BHuD0uo2u0bpyKRZgf5s9d9xjFUrJDJICXz6EahA5l2mM9BoQzesfYW4VvdkODLBFF+svMBnEhCicnQC0=',s:[0xb6bd30c6dd,0x7394ae579e],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

@@ -1,0 +1,1163 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/14995/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:10:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        How-to свой почтовый сервер без наворотов, postfix dovecot  в 2015г. и переезд с gmail.com
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/8/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/25/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>How-to свой почтовый сервер без наворотов, postfix dovecot  в 2015г. и переезд с gmail.com</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>How-to свой почтовый сервер без наворотов, postfix dovecot  в 2015г. и переезд с gmail.com</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index9ba9.html?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-154042"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/yaroslav/index.html">
+                <span class="post-username">yaroslav</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/154042/index.html">#</a>
+            7 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/yaroslav/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/yaroslav/posts/index.html">
+                    140
+                </a>
+            </div>
+            <div>
+                Участник с: 30 апреля 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Молодец, ибо нормальных манов по этому поводу не найти.
+            
+                
+                    <div class="post-signature">
+                        PGP: <a href="http://pgp.mit.edu/pks/lookup?op=vindex&amp;search=0xB8C89275ACC50145">0xB8C89275ACC50145</a>. Arch GNU/Linux, KDE 5.<br /><em>Мы за Newnix</em>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-154046"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Velesich/index.html">
+                <span class="post-username">Velesich</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/154046/index.html">#</a>
+            7 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/de/05/de0576f8b854d1c6d989bb44f030c649.png" alt="Velesich avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Velesich/topics/index.html">
+                    14
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Velesich/posts/index.html">
+                    784
+                </a>
+            </div>
+            <div>
+                Участник с: 23 апреля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <a href="http://jared.kiev.ua/2010/01/isp-mailserver-1-exim/">Вот ещё неплохой гайд</a> - сам ставил корпоративную почту по нему, с шлюхами и блэкджеком.<br />Честно говоря exim мне нравится гораздо больше чем postfix.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-154055"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/palpalych/index.html">
+                <span class="post-username">palpalych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/154055/index.html">#</a>
+            7 лет, 1 месяц назад
+            
+                (отредактировано
+                
+                    7 лет, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/47/d0/47d0dfe31100e02907f5e9bb71c76f86.png" alt="palpalych avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/palpalych/topics/index.html">
+                    89
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/palpalych/posts/index.html">
+                    1126
+                </a>
+            </div>
+            <div>
+                Участник с: 09 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Velesich</em><br>Честно говоря exim мне нравится гораздо больше чем postfix</blockquote>не пользовал postfix, а вот <a href="http://www.opennet.ru/opennews/art.shtml?num=42669">Exim</a> очень крут...
+            
+                
+                    <div class="post-signature">
+                        Арчи ~]$ ...as always want ready-made solutions that would make even tastier
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-243305"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/wau/index.html">
+                <span class="post-username">wau</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/243305/index.html">#</a>
+            1 год, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/wau/topics/index.html">
+                    132
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/wau/posts/index.html">
+                    956
+                </a>
+            </div>
+            <div>
+                Участник с: 11 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Внезапно, после многих лет эксплуатации, выяснилось, что я неправильно настраивал ptr запись. И хоть бы кто указал на ошибку. Суть вот в чем - если мы делаем почту на домене domen.ru, то ptr надо настраивать не domen.ru, а mx.domen.ru.<br />В первом сообщении поправил.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-243307"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/243307/index.html">#</a>
+            1 год, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ух как быстро время летит... я начал изучать вопрос с вашей статьи, правда прошу прощения она оказалась совсем слабенькая...<br />а ptr (rdns мне так привычнее) можно настраивать куда угодно, правда сначала надо уговорить девушку переключить вас на кого нибудь кто сможет вам помочь)))<br />и даже если она  будет неправильна настроена но будет *.domen.ru она всё равно пройдёт все проверки, гораздо существеннее отсутствие у вас записей dmarc и dkim...<br />а вообще <a href="https://www.mail-tester.com/">вот</a>.
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-243333"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/wau/index.html">
+                <span class="post-username">wau</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/243333/index.html">#</a>
+            1 год, 5 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/wau/topics/index.html">
+                    132
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/wau/posts/index.html">
+                    956
+                </a>
+            </div>
+            <div>
+                Участник с: 11 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Да, за давностью проагрейтить про дким, спф и дмарк забыл, они, конечно, есть и работают. И &quot;куда угодно&quot; не канает, увы, &quot;все проверки&quot; не проходит. Не спрашивайте почему.<br />Меж тем <a href="http://www.mail-tester.com/">www.mail-tester.com</a> настойчиво утверждает, что мол ptr должен четко соответствовать доменному имени почты (как у меня раньше и было).
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-243346"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/243346/index.html">#</a>
+            1 год, 5 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ещё интересно как вы без fail2ban выживаете? В iptables китайцев заносите? Или он тоже есть?
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-243352"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/wau/index.html">
+                <span class="post-username">wau</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/243352/index.html">#</a>
+            1 год, 5 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/wau/topics/index.html">
+                    132
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/wau/posts/index.html">
+                    956
+                </a>
+            </div>
+            <div>
+                Участник с: 11 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Шутить изволите?<br />Творчески выживаю. В моем ведении несколько серверов, личный и служебный. Модели соотв. разные. На один из них прилично так наваливались и до сих пор не отвалились, уже более полутора лет подряд, желающие поломать. Общий вывод таков - использование шаблонных по чужим хаутушкам решений давно бы привело к той, или иной форме падения. Фэйлтубан действует по простой логике - фэйл по какой-то линии == бан на уровне iptables. Это, конечно, хорошо, однако если навалиться с чередованием ip, то довольно быстро получим не просто атомный, а термоядерный список банов, ворочать которым будет уже само по себе тяжело. Прикиньте, вот  год и 9 месяцев непрерывно ломают, используя стратегию раз в 10 сек. с одного ip с парой логин-пароль (по меняющимся словарям), после чего меняется ip. Я проверял (выборочно) повторяемость адресов - как минимум внутри двух месяцев повторов считай, что нет. Возьмем (9+12)*30*24*60*6= пять с половиной миллионов ip адресов - капля в море их общего числа, а для таблицы маршрутизации накладно - а ведь через нее гоняется весь трафик, до (в пике) 500мбит.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-243359"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/243359/index.html">#</a>
+            1 год, 5 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <pre><code>`   27  1312 REJECT     all  --  *      *       103.125.191.78       0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       45.133.1.157         0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       203.159.80.25        0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       45.133.1.131         0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       31.210.20.200        0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       31.210.20.226        0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       203.159.80.250       0.0.0.0/0            reject-with icmp-port-unreachable
+   20  1016 REJECT     all  --  *      *       45.144.225.108       0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       45.133.1.42          0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       45.133.1.67          0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       45.144.225.14        0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       203.159.80.42        0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       45.133.1.9           0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       45.133.1.177         0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       31.210.20.74         0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       45.133.1.30          0.0.0.0/0            reject-with icmp-port-unreachable
+   20  1012 REJECT     all  --  *      *       203.159.80.249       0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       45.133.1.152         0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       203.159.80.251       0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       31.210.20.76         0.0.0.0/0            reject-with icmp-port-unreachable
+   21  1064 REJECT     all  --  *      *       45.133.1.217         0.0.0.0/0            reject-with icmp-port-unreachable
+17009 1020K REJECT     all  --  *      *       212.70.149.55        0.0.0.0/0            reject-with icmp-port-unreachable
+  378 19100 REJECT     all  --  *      *       203.154.204.33       0.0.0.0/0            reject-with icmp-port-unreachable
+10395  624K REJECT     all  --  *      *       87.246.7.227         0.0.0.0/0            reject-with icmp-port-unreachable
+   35  1850 REJECT     all  --  *      *       202.186.139.202      0.0.0.0/0            reject-with icmp-port-unreachable
+    7   316 REJECT     all  --  *      *       103.125.191.85       0.0.0.0/0            reject-with icmp-port-unreachable
+22893 1374K REJECT     all  --  *      *       212.70.149.86        0.0.0.0/0            reject-with icmp-port-unreachable
+ 5531  332K REJECT     all  --  *      *       212.70.149.71        0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       193.169.255.232      0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       193.169.255.231      0.0.0.0/0            reject-with icmp-port-unreachable
+   31  1532 REJECT     all  --  *      *       45.133.1.221         0.0.0.0/0            reject-with icmp-port-unreachable
+   23  1168 REJECT     all  --  *      *       45.144.225.206       0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       45.144.225.203       0.0.0.0/0            reject-with icmp-port-unreachable
+   23  1164 REJECT     all  --  *      *       45.133.1.58          0.0.0.0/0            reject-with icmp-port-unreachable
+   23  1164 REJECT     all  --  *      *       45.144.225.205       0.0.0.0/0            reject-with icmp-port-unreachable
+   23  1164 REJECT     all  --  *      *       45.133.1.50          0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       31.210.20.109        0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       31.210.20.41         0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       45.144.225.207       0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       45.144.225.204       0.0.0.0/0            reject-with icmp-port-unreachable
+   23  1164 REJECT     all  --  *      *       31.210.20.111        0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       45.133.1.192         0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       45.133.1.127         0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       45.133.1.118         0.0.0.0/0            reject-with icmp-port-unreachable
+   22  1116 REJECT     all  --  *      *       45.133.1.109         0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       31.210.20.215        0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       31.210.20.89         0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       31.210.20.54         0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       45.133.1.102         0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       45.133.1.100         0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       193.169.254.233      0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       193.169.254.250      0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       193.169.254.235      0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       176.111.173.50       0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       193.169.254.252      0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       193.169.252.9        0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       193.169.252.8        0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       193.169.254.231      0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       193.169.254.251      0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       193.169.254.234      0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       176.111.173.48       0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       176.111.173.46       0.0.0.0/0            reject-with icmp-port-unreachable
+   42  2040 REJECT     all  --  *      *       176.111.173.47       0.0.0.0/0            reject-with icmp-port-unreachable
+   24  1216 REJECT     all  --  *      *       176.111.173.49       0.0.0.0/0            reject-with icmp-port-unreachable
+ 2081  108K REJECT     all  --  *      *       141.98.10.136        0.0.0.0/0            reject-with icmp-port-unreachable
+ 2160  112K REJECT     all  --  *      *       141.98.10.143        0.0.0.0/0            reject-with icmp-port-unreachable
+ 2183  114K REJECT     all  --  *      *       141.98.10.183        0.0.0.0/0            reject-with icmp-port-unreachable
+33658 2019K REJECT     all  --  *      *       87.246.7.244         0.0.0.0/0            reject-with icmp-port-unreachable
+  893 53580 REJECT     all  --  *      *       193.169.255.72       0.0.0.0/0            reject-with icmp-port-unreachable
+  110  5560 REJECT     all  --  *      *       77.247.110.152       0.0.0.0/0            reject-with icmp-port-unreachable
+  154  7848 REJECT     all  --  *      *       103.149.12.29        0.0.0.0/0            reject-with icmp-port-unreachable
+  132  8018 REJECT     all  --  *      *       5.188.206.246        0.0.0.0/0            reject-with icmp-port-unreachable
+   59  3068 REJECT     all  --  *      *       77.247.110.165       0.0.0.0/0            reject-with icmp-port-unreachable
+</code></pre>что-то сомнительно, вот в реальном времени, 73 жёлтолицых(или узкоглазых, как правильно что-бы не обидеть) прямо стандарт, по логам в за 2 года был пик в 374(блокировка на 3 дня). На вас наверно последователи Мао второй великий поход затеяли. Хотя может вы географически куда более выгодно расположены...<br /><br />p.s. ну и как бы 5млн это очень существенно, у меня в стране всего 1793280 адресов... т.е. на вас напало ~2.89 Беларуси, ну или 5000 шт. КНДР!!!
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-243386"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/wau/index.html">
+                <span class="post-username">wau</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/243386/index.html">#</a>
+            1 год, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/wau/topics/index.html">
+                    132
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/wau/posts/index.html">
+                    956
+                </a>
+            </div>
+            <div>
+                Участник с: 11 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Краткости этого списка забаненых можно только позавидовать, тихая, видать, гавань. Даже у моего домашнего сервера почитателей больше после суточного дежурства f2b. Мао же, он на порядки бОльшими величинами оперировал бы.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index9ba9.html?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index3389.html?next=/forum/topic/14995/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/14995/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:10:21 GMT -->
+</html>

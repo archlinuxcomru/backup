@@ -1,0 +1,808 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        dnsmasq на localhost и dns-серверы локальных сетей
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>dnsmasq на localhost и dns-серверы локальных сетей</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>dnsmasq на localhost и dns-серверы локальных сетей</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79142"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/cac2s/">
+                <span class="post-username">cac2s</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79142/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/cac2s/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/cac2s/posts/">
+                    277
+                </a>
+            </div>
+            <div>
+                Участник с: 10 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Обладатель ноутбука, в связи с чем пользую его в нескольких сетях&#8230;<br/>Сетевые подключения управляются NetworkManager'ом.<br/><br/>После длительного мозгасекаства с кэширующими DNS надумал такое:<br/><br/>Прописать в конфигах dnsmasq несколько внешних серверов + на своём контупере тыкнуть DNS в 127.0.0.1 не есть проблема.<br/>НО: Как же быть с резолвингом ИП локальных сетей? Если оных в сетке 5-10 - ещё куда не шло, а когда их 50-100 + DHCP? Дописывать в список внешних серверов ещё и локальный/локальные - костыль.<br/><br/>Может ничего нового и не придумал, но хотелось бы услышать ваши мнения/предложения/&lt;и т.д&gt; по поводу следующего решения:<br/><br/>1. NetworkManager при подключении какого либо интерфейса толкает настройки, полученные по DHCP в /etc/resolv.conf (dnsmasq берет DNSы от туда)<br/>2. Не составит труда попросить его (NM) использовать для подключений DHCP для ИП/маски/&#8230;, а DNS прописать 127.0.0.1<br/>3. При помощи iptables перенаправить все DNS запросы на 127.0.0.1, окромя запросов dnsmasq<br/><br/>В итоге имеем: firefox (напр.) патается зарезолвить ИП, спрашивает у DNS-сервера из /etc/resolv.conf, а отвечает ему наш локальный, сохраняя полученный ИП в своём кэше. При этом резолвится будут как внешние, так и внутренние ИП + не нужно добавлять/изменять/удалять костыли в виде DNS-серверов локальных сетей, прописанных в /etc/dnsmasq.conf<br/><br/>Осталось только &lt;придумать как это осуществить&gt;/&lt;тыкнуть носом в уже придуманное&gt;.<br/><br/>Не знаю на сколько идея бредовая, но озвучить спешил, дабы не забыть&#8230; Так что в спешке мог и натупить :) 
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79141"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/amigo/">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79141/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/amigo/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/amigo/posts/">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я не осилил зачем на ноуте dnsmasq?  :-\
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79143"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/cac2s/">
+                <span class="post-username">cac2s</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79143/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/cac2s/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/cac2s/posts/">
+                    277
+                </a>
+            </div>
+            <div>
+                Участник с: 10 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Amigo</em><br/>Я не осилил зачем на ноуте dnsmasq?  :-\ </blockquote>Если честно - началось с того, что захотелось нэт на телефон&lt;е|ах&gt; через синий зуб. В настройках bleman-services нашел нужное, но увидел необходимость установки dhcpd3/dnsmasq &#8230; заинтересовался вторым зверьком -&gt; узнал про speedup dns-запросов&#8230; А после этого вопрос: &ldquo;а зачем dns-сервер на клиенте сети&rdquo;, как ни старнно :) , не появился&#8230; Просто быстрее, значит лучше; лучше - нужно ::) <br/><br/>Сейчас, поразмыслив, понимаю: наверное, да&#8230; точнее нет - не нужен. Хотя, поработав на локальном сервере, сложилось впечатление - быстрее (допускаю, что показалось :) ). Вот и захотелось сделать порядок резолвинга: local dns для внешних ip - в первую очередь, ну, а, если зарезолвить неудалось - спрашивать у dns-серверов, полученных посредством dhcp-протокола, в том числе и ip контуперов локальной сети.<br/><br/>Вот собственно и всё. ::) Есть идеи/факты/доводы?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79144"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/amigo/">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79144/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/amigo/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/amigo/posts/">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            если заглянуть в /etc/rc.d/, то можно увидеть такую штуку как nscd (Name Server Cache Daemon). Дальше думаю домыслить несложно.<br/><br/>ЗЫ: собственно, не увидел в первом посте вопроса :)
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79145"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/cac2s/">
+                <span class="post-username">cac2s</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79145/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/cac2s/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/cac2s/posts/">
+                    277
+                </a>
+            </div>
+            <div>
+                Участник с: 10 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Amigo</em><br/>если заглянуть в /etc/rc.d/, то можно увидеть такую штуку как nscd (Name Server Cache Daemon). Дальше думаю домыслить несложно.<br/><br/>ЗЫ: собственно, не увидел в первом посте вопроса :) </blockquote><br/>То что нужно! Пасиб. Странно, что в Вики нет ни одной статьи про него. :-\ <br/><br/>Думаю, тема закрыта.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79146"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/devsyukov/">
+                <span class="post-username">devsyukov</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79146/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/devsyukov/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/devsyukov/posts/">
+                    159
+                </a>
+            </div>
+            <div>
+                Участник с: 03 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Amigo</em><br/>если заглянуть в /etc/rc.d/, то можно увидеть такую штуку как nscd (Name Server Cache Daemon). Дальше думаю домыслить несложно</blockquote>Ух ты! Век живи, век учись&#8230; Я использовал для этого pdnsd&#8230; Теперь буду тестировать nscd&#8230; =)<br/>Даже и не знал, что данный сервис ставиться по умолчанию&#8230;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79147"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Nebulosa/">
+                <span class="post-username">Nebulosa</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79147/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4a/9b/4a9bd66c7a2a170b1585f3b56cdb48de.png" alt="Nebulosa avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Nebulosa/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Nebulosa/posts/">
+                    831
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Если я ничего не путаю, в самом dnsmasq можно прописать localhost так, чтобы он сперва искал ДНС у себя в кеше, а затем если не находит, то дальше по списку в /etc/resolf.conf
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79148"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/cac2s/">
+                <span class="post-username">cac2s</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79148/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/cac2s/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/cac2s/posts/">
+                    277
+                </a>
+            </div>
+            <div>
+                Участник с: 10 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Nebulosa</em><br/>Если я ничего не путаю, в самом dnsmasq можно прописать localhost так, чтобы он сперва искал ДНС у себя в кеше, а затем если не находит, то дальше по списку в /etc/resolf.conf</blockquote>Дело в том, что NetworkManager затирает файл <em>/etc/resolv.conf</em> своими настройками, а значит если в настройках NM для соединений прописать <em>127.0.0.1</em> (dns), то dnsmasq будет &ldquo;спрашивать&rdquo; самого себя.<br/><br/>Если не ошибаюсь - это можно побороть путём добавления скрипта в <em>/etc/Networkmanager/dispatcher.d/</em>, который будет копировать <em>/etc/resolv.conf</em>, напр., в <em>/etc/resolv.dnsmasq.conf</em> перед его перезаписью NM'ом, а dnsmasq'у &ldquo;тыкать&rdquo; в <em>/etc/resolv.dnsmasq.conf</em> (каж., вот так: "resolv-file=<em>/etc/resolv.dnsmasq.conf</em>")<br/><br/>Но это <strong>уже</strong> другая история для другой темы&#8230; :) <br/><br/>З.Ы.: <a href="https://bbs.archlinux.org/viewtopic.php?id=45394">http://bbs.archlinux.org/viewtopic.php?id=45394</a> - тема про затирание файла <em>/etc/resolv.dnsmasq.conf</em> NetworkManager'ом
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/8304/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b0b605be29d58',m:'pgZvQhyaeDameqsyRCyMMtenHb80xE5CzBgJIJZnLGo-1662675344-0-AXHMSug9MriRkZbphT0143g8IGZeVnPAIquQ4Q5aDmm/YXeSA2NY2Po607l6trS7vWfeQtIdLbfRpI1zdXu52z0SCZ8PrN2aeW6NqK8DduxdPpmjHbcYxJizjwrP6dazXTPcFF67zrmSeOnAH1XQgFo=',s:[0xba82a1155b,0x841d4a1621],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

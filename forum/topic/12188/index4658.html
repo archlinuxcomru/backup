@@ -1,0 +1,1055 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/12188/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:11:30 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Осторожно! Возможен kernel panic при загрузке после обновления glibc+binutils.
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/1/index.html">Основное</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/1/index.html">Новости Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Осторожно! Возможен kernel panic при загрузке после обновления glibc+binutils.</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Осторожно! Возможен kernel panic при загрузке после обновления glibc+binutils.</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index9ba9.html?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-117574"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Aivar/index.html">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/117574/index.html">#</a>
+            9 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Aivar/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Aivar/posts/index.html">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Не работают terminator и guake, но по прежнему жив xterm. Думаю, до фикса протянуть без отката.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-117579"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/samson4747/index.html">
+                <span class="post-username">samson4747</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/117579/index.html">#</a>
+            9 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/23/59232634ea8a7ff311ad2fe4a29f66e9.png" alt="samson4747 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/samson4747/topics/index.html">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/samson4747/posts/index.html">
+                    534
+                </a>
+            </div>
+            <div>
+                Участник с: 23 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Не открывается терминал и htop, выдаёт следующее:<br/><blockquote>Произошла ошибка при создании дочернего процесса для этого терминала<br/>grantpt failed: Операция не позволена</blockquote><blockquote>Думаю, до фикса протянуть без отката. </blockquote>
+            
+                
+                    <div class="post-signature">
+                        &quot;If you try to hide the complexity of the system, you&#39;ll end up with a more complex system&quot;. Layers of abstraction that serve to hide internals are never a good thing. Instead, the internals should be designed in a way such that they NEED no hiding.     <a href="http://phraktured.net/">—Aaron Griffin</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-117586"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sirocco/index.html">
+                <span class="post-username">sirocco</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/117586/index.html">#</a>
+            9 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sirocco/topics/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sirocco/posts/index.html">
+                    2501
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>konstantinov-ms</em><br/>Спасибо за предупреждение. У меня обновление glibc проявилось в невозможности запуска терминала (будь то terminal из Xfce или tilda). Ругается на /bin/bash. Запустить терминал получилось только через gksu. Пришлось откатиться.</blockquote><br/><a href="https://bugs.archlinux.org/task/36521">/dev/pts in fstab</a> присутствуют?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-117597"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/konstantinov-ms/index.html">
+                <span class="post-username">konstantinov-ms</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/117597/index.html">#</a>
+            9 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/konstantinov-ms/topics/index.html">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/konstantinov-ms/posts/index.html">
+                    636
+                </a>
+            </div>
+            <div>
+                Участник с: 29 ноября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sirocco</em><br/><blockquote><em>konstantinov-ms</em><br/>Спасибо за предупреждение. У меня обновление glibc проявилось в невозможности запуска терминала (будь то terminal из Xfce или tilda). Ругается на /bin/bash. Запустить терминал получилось только через gksu. Пришлось откатиться.</blockquote><br/><a href="https://bugs.archlinux.org/task/36521">/dev/pts in fstab</a> присутствуют?</blockquote>Да.<br/><div class="code"><pre>devpts                 				/dev/pts      		devpts    	defaults        0       0
+shm                    				/dev/shm      		tmpfs    	nodev,nosuid    0       0</pre></div><strong>Закомментировал devpts, перезагрузился, проблема с терминалами исчезла.</strong> Большое спасибо sirocco!<br/>Действительно, /dev/pts теперь монтируется systemd, поэтому в fstab его прописывать не нужно. Интересно, а shm тоже нужно удалить из fstab?<br/>Теперь осталась только потенциальная проблема с KMS.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-117609"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/leonardo19/index.html">
+                <span class="post-username">leonardo19</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/117609/index.html">#</a>
+            9 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a9/6a/a96a10f640be017dcd017364aa690659.png" alt="leonardo19 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/leonardo19/topics/index.html">
+                    40
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/leonardo19/posts/index.html">
+                    848
+                </a>
+            </div>
+            <div>
+                Участник с: 25 ноября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>konstantinov-ms</em><br/>Интересно, а shm тоже нужно удалить из fstab?</blockquote>У меня давно уже нет в fstab shm - и так монтируется.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-117612"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/konstantinov-ms/index.html">
+                <span class="post-username">konstantinov-ms</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/117612/index.html">#</a>
+            9 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/konstantinov-ms/topics/index.html">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/konstantinov-ms/posts/index.html">
+                    636
+                </a>
+            </div>
+            <div>
+                Участник с: 29 ноября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>leonardo19</em><br/><blockquote><em>konstantinov-ms</em><br/>Интересно, а shm тоже нужно удалить из fstab?</blockquote>У меня давно уже нет в fstab shm - и так монтируется.</blockquote>Спасибо, уберу и я от греха. Странно, что не было новостей об этих изменениях.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-117621"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sirocco/index.html">
+                <span class="post-username">sirocco</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/117621/index.html">#</a>
+            9 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sirocco/topics/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sirocco/posts/index.html">
+                    2501
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>konstantinov-ms</em><br/>Странно, что не было новостей об этих изменениях.</blockquote>fstab.pacnew тоже не было? :)<br/><br/>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-117623"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/konstantinov-ms/index.html">
+                <span class="post-username">konstantinov-ms</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/117623/index.html">#</a>
+            9 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/konstantinov-ms/topics/index.html">
+                    15
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/konstantinov-ms/posts/index.html">
+                    636
+                </a>
+            </div>
+            <div>
+                Участник с: 29 ноября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sirocco</em><br/><blockquote><em>konstantinov-ms</em><br/>Странно, что не было новостей об этих изменениях.</blockquote>fstab.pacnew тоже не было? :)<br/><br/></blockquote>Было. А что это даёт? У меня это практически пустой файл, без каких-либо указаний или намёков на pts, shm, systemd и т.д. :)<br/><div class="code"><pre>#
+# /etc/fstab: static file system information
+#
+# &lt;file system&gt;	&lt;dir&gt;	&lt;type&gt;	&lt;options&gt;	&lt;dump&gt;	&lt;pass&gt;</pre></div>Вот и весь fstab.pacnew. Возможно, что-то писалось в терминале при обновлении, а я прозевал? В любом случае, похоже, что я не один такой. Поэтому новость от разработчиков не помешала бы.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-117624"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Aivar/index.html">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/117624/index.html">#</a>
+            9 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Aivar/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Aivar/posts/index.html">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sirocco</em><br/>fstab.pacnew тоже не было? :)</blockquote>Не было уже давно:<br/><div class="code"><pre>grep fstab.pacnew /var/log/pacman.log
+[2011-08-16 20:53] warning: /etc/fstab installed as /etc/fstab.pacnew
+[2012-11-28 11:41] warning: /etc/fstab installed as /etc/fstab.pacnew</pre></div><br/><blockquote><em>konstantinov-ms</em><br/>Возможно, что-то писалось в терминале при обновлении, а я прозевал?</blockquote>Не писалось.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-117627"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sirocco/index.html">
+                <span class="post-username">sirocco</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/117627/index.html">#</a>
+            9 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sirocco/topics/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sirocco/posts/index.html">
+                    2501
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>konstantinov-ms</em><br/>У меня это практически пустой файл, без каких-либо указаний или намёков на pts, shm, systemd и т.д. :)<br/></blockquote>Ну к такому fstab и надо стремиться, прописывая в него только монтируемые фс.<br/>Я отслеживал появление pacnew, вычищая из fstab наследие прошлого.<br/>Ну а боком вылезло не сразу...<br/><br/>Конечно, лучше бы вывесили в новостях<br/><a href="https://mailman.archlinux.org/pipermail/arch-dev-public/2013-August/025332.html">https://mailman.archlinux.org/pipermail/arch-dev-public/2013-August/025332.html</a><br/>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index9ba9.html?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexbfbd.html?next=/forum/topic/12188/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/12188/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:11:30 GMT -->
+</html>

@@ -1,0 +1,1090 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        intel_pstate vs acpi-cpufreq
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/12/">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>intel_pstate vs acpi-cpufreq</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>intel_pstate vs acpi-cpufreq</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-177130"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sirocco/">
+                <span class="post-username">sirocco</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/177130/">#</a>
+            5 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sirocco/topics/">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sirocco/posts/">
+                    2501
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Турбо-буст появляется в i5, в i3 его нет.<br /><br />Совсем забыл про i7z (A better i7 (and now i3, i5) reporting tool for Linux).<br /><br />Показывает частоту и все эти C0-Cn состояния. <br />Т.е. процессор может перейти в энергосберегающее состояние не снижая частоту.<br /><br /><a href="https://code.google.com/archive/p/i7z/">https://code.google.com/archive/p/i7z/</a><br /><br /><blockquote>If you want to save power, enable C6 state in bios.</blockquote><br /><a href="https://www.linux.org.ru/forum/linux-hardware/9862171?cid=9862804">https://www.linux.org.ru/forum/linux-hardware/9862171?cid=9862804</a><br /><br /><blockquote>Intel folks давно говорят о том, что лучше держать все ядра на номинальной частоте, гася их при отсутствии работы, а не снижая частоту. intel_pstate этим и занимается.</blockquote>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-177138"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Eva_Berg/">
+                <span class="post-username">Eva_Berg</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/177138/">#</a>
+            5 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8d/04/8d04e9119ff01e488e9798a09050a20a.png" alt="Eva_Berg avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Eva_Berg/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Eva_Berg/posts/">
+                    424
+                </a>
+            </div>
+            <div>
+                Участник с: 08 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sirocco</em><br>Турбо-буст появляется в i5, в i3 его нет.</blockquote>Ну мне знач это снится:<br />[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="107275627750727562773d7e7f6475727f7f7b">[email&#160;protected]</a> ~]$ sudo pstate-frequency -G<br />pstate-frequency version 3.6.3<br />    pstate::CPU_DRIVER   -&gt; intel_pstate<br />    pstate::CPU_GOVERNOR -&gt; powersave<br />    <strong>pstate::TURBO        -&gt; 1 [OFF]</strong><br />    pstate::CPU_MIN      -&gt; 47% [800000KHz]<br />    pstate::CPU_MAX      -&gt; 100% [1700000KHz]<br />[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e381869184a381869184ce8d8c9786818c8c88">[email&#160;protected]</a> ~]$ sudo pstate-frequency -G -r<br />pstate-frequency version 3.6.3<br />    pstate::CPU[0]   -&gt; 1599.975MHz<br />    pstate::CPU[1]   -&gt; 1599.975MHz<br />    pstate::CPU[2]   -&gt; 1599.975MHz<br />    pstate::CPU[3]   -&gt; 1599.975MHz<br />[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f092958297b092958297dd9e9f8495929f9f9b">[email&#160;protected]</a> ~]$ sudo pstate-frequency -S -t on<br />pstate-frequency version 3.6.3<br />    pstate::CPU_DRIVER   -&gt; intel_pstate<br />    pstate::CPU_GOVERNOR -&gt; powersave<br />    <strong>pstate::TURBO        -&gt; 0 [ON]</strong><br />    pstate::CPU_MIN      -&gt; 47% [800000KHz]<br />    pstate::CPU_MAX      -&gt; 100% [1700000KHz]<br />[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="86e4e3f4e1c6e4e3f4e1abe8e9f2e3e4e9e9ed">[email&#160;protected]</a> ~]$ sudo pstate-frequency -G -r<br />pstate-frequency version 3.6.3<br />    pstate::CPU[0]   -&gt; 1699.896MHz<br />    pstate::CPU[1]   -&gt; 1700.000MHz<br />    pstate::CPU[2]   -&gt; 1700.000MHz<br />    pstate::CPU[3]   -&gt; 1700.000MHz<br />[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="92f0f7e0f5d2f0f7e0f5bffcfde6f7f0fdfdf9">[email&#160;protected]</a> ~]$<br />З.Ы. Попробовала<br /><br /># echo 50 &gt; /sys/devices/system/cpu/intel_pstate/max_perf_pct ## 50 , конечно, мало .... может где то 70 -80 ...<br /># echo 1 &gt; /sys/devices/system/cpu/intel_pstate/no_turbo<br /><br />теперь даже на нагруженном процессоре (кодирование видео) частота на минимуме :-(
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-177139"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sirocco/">
+                <span class="post-username">sirocco</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/177139/">#</a>
+            5 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sirocco/topics/">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sirocco/posts/">
+                    2501
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <a href="https://ark.intel.com/products/75107/Intel-Core-i3-4010U-Processor-3M-Cache-1_70-GHz">http://ark.intel.com/products/75107/Intel-Core-i3-4010U-Processor-3M-Cache-1_70-GHz</a><br /><br /><blockquote>Processor Base Frequency	1.70 GHz<br />...<br />Intel® Turbo Boost Technology 	No</blockquote><br /><a href="https://ark.intel.com/products/80343/Intel-Core-i5-4310U-Processor-3M-Cache-up-to-3_00-GHz">http://ark.intel.com/products/80343/Intel-Core-i5-4310U-Processor-3M-Cache-up-to-3_00-GHz</a><br /><br /><blockquote>Processor Base Frequency	2.00 GHz<br />Max Turbo Frequency	3.00 GHz<br />...<br />Intel® Turbo Boost Technology 2.0</blockquote><br /><pre><code># cat /sys/devices/system/cpu/intel_pstate/no_turbo
+1
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1d3ceced5e1d3d3">[email&#160;protected]</a> ~]# echo 0 &gt; /sys/devices/system/cpu/intel_pstate/no_turbo
+-bash: echo: ошибка записи: Операция не позволена
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f98b96968db98b8b">[email&#160;protected]</a> ~]# echo 1 &gt; /sys/devices/system/cpu/intel_pstate/no_turbo
+-bash: echo: ошибка записи: Операция не позволена
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-177141"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Eva_Berg/">
+                <span class="post-username">Eva_Berg</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/177141/">#</a>
+            5 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8d/04/8d04e9119ff01e488e9798a09050a20a.png" alt="Eva_Berg avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Eva_Berg/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Eva_Berg/posts/">
+                    424
+                </a>
+            </div>
+            <div>
+                Участник с: 08 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            [<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bcced3d3c8fcded9cedb91d2d3c8d9ded3d3d7">[email&#160;protected]</a> berg]# cat /sys/devices/system/cpu/intel_pstate/no_turbo<br />0<br />[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="364459594276545344511b585942535459595d">[email&#160;protected]</a> berg]# echo 0 &gt; /sys/devices/system/cpu/intel_pstate/no_turbo<br />[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bac8d5d5cefad8dfc8dd97d4d5cedfd8d5d5d1">[email&#160;protected]</a> berg]#<br />$sudo i7z<br /><br />..........<br />Socket [0] - [physical cores=2, logical cores=4, max online cores ever=2]<br />  TURBO ENABLED on 2 Cores, Hyper Threading ON<br />Я к тому, что у меня никакой ошибки записи нет и параметр прекрасно меняется туда-сюда. i7z тоже пишет что turbo on\off, разница правда между режимами несущественная (хоть и есть)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-177143"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sirocco/">
+                <span class="post-username">sirocco</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/177143/">#</a>
+            5 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sirocco/topics/">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sirocco/posts/">
+                    2501
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Странно. <br />Интел утверждает, что турбо-буст - разгон одного ядра выше базовой частоты. У i3 такого не наблюдается.<br /><br />Что же такое pstate: turbo (в случае i3-4010U)?<br />
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-177144"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/177144/">#</a>
+            5 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Eva_Berg</em><br>теперь даже на нагруженном процессоре (кодирование видео) частота на минимуме :-(</blockquote>Можно и это изменить - имеется еще один параметр /sys/devices/system/cpu/intel_pstate/<strong>min_perf_pct</strong> (по умолчанию 38, в процентах) - минимальная производительность в процентах от максимальной частоты (без учёта режима turbo) ...<br />А вообще все это устанавливается индивидуально - в зависимости от решаемых задач и качества/надежности железа. У меня, например, один ноутбук старенький, при больших нагрузках температура близка к критической ...... а потому для таких задач приходится ограничивать производительность - пусть подольше, зато спокоен за железо......... а так, в основном, все стоит по дефолту ...
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-177148"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Eva_Berg/">
+                <span class="post-username">Eva_Berg</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/177148/">#</a>
+            5 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8d/04/8d04e9119ff01e488e9798a09050a20a.png" alt="Eva_Berg avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Eva_Berg/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Eva_Berg/posts/">
+                    424
+                </a>
+            </div>
+            <div>
+                Участник с: 08 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sirocco</em><br>Что же такое pstate: turbo (в случае i3-4010U)?</blockquote>Загадка мистическая. В турборежиме у меня штатная частота 1.7, в turbo off 1.59, вот и пойми их.<br />В общем путем экспериментов я пришла к следующему выводу - intel_pstate простой и тупой как сибирский валенок, выдернул шланг питания - на тебе powersave, воткнул - получи perfprance и не отсвечивай, гувернера ondemand и динамической частоты на нем искать - время терять. Нужна динамика - юзай acpi-cpufreq.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-177149"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sirocco/">
+                <span class="post-username">sirocco</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/177149/">#</a>
+            5 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sirocco/topics/">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sirocco/posts/">
+                    2501
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Eva_Berg</em><br><blockquote><em>sirocco</em><br>Что же такое pstate: turbo (в случае i3-4010U)?</blockquote>Загадка мистическая. В турборежиме у меня штатная частота 1.7, в turbo off 1.59, вот и пойми их.</blockquote><br /><br />Возник вопрос - у Вас intel-ucode загружается?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-177150"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Eva_Berg/">
+                <span class="post-username">Eva_Berg</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/177150/">#</a>
+            5 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8d/04/8d04e9119ff01e488e9798a09050a20a.png" alt="Eva_Berg avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Eva_Berg/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Eva_Berg/posts/">
+                    424
+                </a>
+            </div>
+            <div>
+                Участник с: 08 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sirocco</em><br>Возник вопрос - у Вас intel-ucode загружается?</blockquote>Я б еще знала что это такое.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-177151"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sirocco/">
+                <span class="post-username">sirocco</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/177151/">#</a>
+            5 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sirocco/topics/">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sirocco/posts/">
+                    2501
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <a href="https://wiki.archlinux.org/index.php/Microcode#Enabling_Intel_microcode_updates">https://wiki.archlinux.org/index.php/Microcode#Enabling_Intel_microcode_updates</a><br /><br />Возможно, в этом причина, что у Вас как-то меняется параметр no_turbo <br />Ещё раз проверил у себя - <pre><code># echo 0 &gt; /sys/devices/system/cpu/intel_pstate/no_turbo 
+-bash: echo: ошибка записи: Операция не позволена</code></pre><br />И я не стал бы смотреть на циферки частоты, а померил бы производительность каким-нибудь бенчмарком.<br />mprime
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/16734/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747b507eae589d76',m:'XixyOqMqzSDpdqA_kpuq2XU.dRqDUKIdeSRfVG8NiFQ-1662678180-0-AS9I9X+VVaYBKB7v9nDJAnfyZdit1G1uV444rkX1A2ElrkO4ESBLenI49ybZO9a8Gvmiq15KXmsMSXPH2MZiop98aF8+AC25TSbd46IqNu1sB5O0iacD7jRYI13UDTrss/qmMI6ybW7aOfVN+J6jMPU=',s:[0x0ddd3ee11c,0x74d31ee988],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

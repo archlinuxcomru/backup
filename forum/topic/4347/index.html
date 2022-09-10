@@ -1,0 +1,956 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        установка на RAID
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/11/">Установка</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>установка на RAID</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>установка на RAID</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-43112"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/deva/">
+                <span class="post-username">deva</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/43112/">#</a>
+            11 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/deva/topics/">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/deva/posts/">
+                    31
+                </a>
+            </div>
+            <div>
+                Участник с: 08 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Помогите разобраться, пожалуйста. С английским дружба пока что очень трудно налаживается.<br/>необходимо установить linux на систему с raid5 <br/>Intel Corporation 82801 SATA RAID Controller вроде как выяснилось что fake-raid. <br/><br/>по вики:<br/> <a href="https://wiki.archlinux.org/index.php/Installing_with_Fake_RAID">https://wiki.archlinux.org/index.php/In &#8230; _Fake_RAID</a> <br/><br/>дохожу до<br/><br/><strong>Load dmraid</strong><br/><br/>Load device-mapper and find RAID sets:<br/><div class="code"><pre># modprobe dm_mod
+# dmraid -ay
+# ls -la /dev/mapper/</pre></div><br/>и получаю :<br/> ERROR: device-mapper target type raid45 is not in the kernel<br/> RAID set &ldquo;isw_fcjcfjcjg_r5&rdquo; was not activated<br/> ERROR: device &ldquo;isw_fcjcfjcjg_r5&rdquo; could not be found<br/><br/>и <br/>/dev/mapper/control  и больше ничего.<br/>Помогите разобраться, пожалуйста, что с этим делать
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-43113"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/deva/">
+                <span class="post-username">deva</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/43113/">#</a>
+            11 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/deva/topics/">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/deva/posts/">
+                    31
+                </a>
+            </div>
+            <div>
+                Участник с: 08 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            было решено изменить raid5 на raid1. Так что неактуально. Можно закрывать
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-43114"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/gard/">
+                <span class="post-username">gard</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/43114/">#</a>
+            11 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/5c/f5/5cf5a07c0739d7bc6ac7ac27f4f6a0be.png" alt="gard avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/gard/topics/">
+                    66
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/gard/posts/">
+                    1167
+                </a>
+            </div>
+            <div>
+                Участник с: 15 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вы же делали хардварный рэйд? Просто любопытство..
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-43115"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/deva/">
+                <span class="post-username">deva</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/43115/">#</a>
+            11 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/deva/topics/">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/deva/posts/">
+                    31
+                </a>
+            </div>
+            <div>
+                Участник с: 08 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Извините что не отвечала. Нет, это не полноценный хардварный райд.<br/><blockquote><em>Дева</em><br/>Intel Corporation 82801 SATA RAID Controller вроде как выяснилось что fake-raid. <br/></blockquote>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-43116"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/inar/">
+                <span class="post-username">inar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/43116/">#</a>
+            10 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/d3/d0/d3d07685a760035d71f1be7d4ac0f25d.png" alt="inar avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/inar/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/inar/posts/">
+                    62
+                </a>
+            </div>
+            <div>
+                Участник с: 30 сентября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня та же проблема, народ, помогите пожалуйста<br/>на мамке gigabyte PH67-DS3-B3 собрал пятый рейд в биосе, 4х2 ТБ.<br/><br/>Делаю по той же инструкции что и Дева, и та же ошибка.<br/><br/>в интернете, говорят что есть какой-то волшебный патч, то ли этот<br/> <a href="https://people.redhat.com/heinzm/sw/dmraid/src/">http://people.redhat.com/heinzm/sw/dmraid/src/</a> <br/>то ли этот<br/> <a href="https://people.redhat.com/heinzm/sw/dm/dm-raid45/">http://people.redhat.com/heinzm/sw/dm/dm-raid45/</a> <br/><br/>кто-нибудь разобрался с проблемой?<br/>как применить эти патчи?
+            
+                
+                    <div class="post-signature">
+                        Только Россия, только хардкор..
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-43118"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/ramcram/">
+                <span class="post-username">ramcram</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/43118/">#</a>
+            10 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/ramcram/topics/">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/ramcram/posts/">
+                    310
+                </a>
+            </div>
+            <div>
+                Участник с: 25 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Мне так и не удалось собрать fake raid с диска 2011 года. С предыдущего загрузочного всё ставится без проблем.<br/>Насчёт 5-го рэйда. У тебя биос какой? EFI?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-43119"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/inar/">
+                <span class="post-username">inar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/43119/">#</a>
+            10 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/d3/d0/d3d07685a760035d71f1be7d4ac0f25d.png" alt="inar avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/inar/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/inar/posts/">
+                    62
+                </a>
+            </div>
+            <div>
+                Участник с: 30 сентября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            хз, если честно<br/>в описании написано <br/>Hybrid EFI technology with DualBIOS for 3TB HDD support
+            
+                
+                    <div class="post-signature">
+                        Только Россия, только хардкор..
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-43117"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/ramcram/">
+                <span class="post-username">ramcram</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/43117/">#</a>
+            10 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/ramcram/topics/">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/ramcram/posts/">
+                    310
+                </a>
+            </div>
+            <div>
+                Участник с: 25 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Попробуй массив создать, загрузившись с загрузочного диска 2005.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-43120"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/yegres/">
+                <span class="post-username">yegres</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/43120/">#</a>
+            10 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/yegres/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/yegres/posts/">
+                    3
+                </a>
+            </div>
+            <div>
+                Участник с: 02 октября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Не дадите ссылку на образ?<br/>тоже сталкнулся с такой проблеммой, но при создани RAID0<br/>dmraid -ay<br/>RAID set &ldquo;isw_XXXXXXXXX_LOL&rdquo; was not activated<br/> ERROR: device &ldquo;isw_XXXXXXX_LOL&rdquo; could not be found
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-43121"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vadik/">
+                <span class="post-username">vadik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/43121/">#</a>
+            10 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vadik/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vadik/posts/">
+                    5395
+                </a>
+            </div>
+            <div>
+                Участник с: 17 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <a href="http://schlunix.org/archlinux/iso/">http://schlunix.org/archlinux/iso/</a> ???
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/4347/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747c85beabbc2de6',m:'82fmn9lqb6C.aVTYENKJtYoP1o.VjgYmkutSTFsCrHk-1662690847-0-AfghobZXgBAN6RSGmEBIG0PSxay87YqGBBd4qtFqDSoxdGp7ul8DYBNAVoXm7hJxXenmLF4SOvRpJShTT8tUDnXejMV4nv0ZuVrLAnDIwNq8orqmbxMbpeXCSDpBv6pGEwBpoWePzyysd+VOSSC0XOk=',s:[0xa2066306ef,0xbc0c50e185],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

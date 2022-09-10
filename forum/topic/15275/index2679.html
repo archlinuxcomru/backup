@@ -1,0 +1,1089 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/15275/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 19:07:36 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [Решено]Монтирование  без udisks и polkit в системе
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/5/index.html">Разное</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/4/index.html">/dev/null</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[Решено]Монтирование  без udisks и polkit в системе</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[Решено]Монтирование  без udisks и polkit в системе</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-157262"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Vadim/index.html">
+                <span class="post-username">Vadim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/157262/index.html">#</a>
+            6 лет, 11 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/72/22/7222132327ed41066e6514a2df7291c9.png" alt="Vadim avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Vadim/topics/index.html">
+                    280
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Vadim/posts/index.html">
+                    1909
+                </a>
+            </div>
+            <div>
+                Участник с: 20 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Пользуюсь pcmanfm,он монтирует с помощью udisk2 и gvfs.<br />У меня автомонтирование работает,настроил,но хочу отключить блокирование автомонтирования в принципе.<br />Мне страшно не нравиться зависимость udisks2 от polkit,всякие рулесы-хуюлесы в /etc/polkit-1,freedesktopы в /usr/share/polkit-1/actions ,в одной системе приходится автомонтирование прописывать в одном файле,в другой системе-в другом.Даже влияет что пропишешь в .xinitrc для запуска системы.<br /> Меня это бесит.<br />Я вообще не понимаю для чего это всё городили,мой компьютер,хочу чтобы всё автоматом монтировалось,вначале приходится ставить polkit чтобы эту возможность отключить а потом придумывать костыли чтобы polkit обойти.<br />Прописал в /etc/sudoerc nopasswd для /usr/bin/mount и umount,теперь команда sudo mount ..... пароль не спрашивает,но к рсмаnfm это не относится.<br />Пробовал прописывать в sudoerc nopasswd для /usr/bin/udisksctl,всё равно команда udisksctl mount -b /dev/.. запрашивает пароль.<br />Пробовал в sudoers nopasswd для /usr/bin/gvfs-mount,не работает,команда gvfs-mount -d /dev/... всё равно требует пароль.<br />Никто ничего не посоветует?<br />Хочу раз и навсегда решить для себя эту искуственно созданую на пустом месте проблему и забыть.
+            
+                
+                    <div class="post-signature">
+                        Linux Forever!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-157267"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/valera_cr/index.html">
+                <span class="post-username">valera_cr</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/157267/index.html">#</a>
+            6 лет, 11 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 11 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/d4/cd/d4cd802646fbb8c106d5c546c1c3b358.png" alt="valera_cr avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/valera_cr/topics/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/valera_cr/posts/index.html">
+                    418
+                </a>
+            </div>
+            <div>
+                Участник с: 12 января 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я в usr/share/polkit-1/actions/org.freedesktop.udisks2.policy  в секциях с:<br />..filesystem-mount<br />..filesystem-mount-system<br />..filesystem-mount-system<br />..filesystem-fstab<br />..filesystem-unmount-others<br />заменил &lt;allow_active&gt;auth_admin_keep&lt;/allow_active&gt; на &lt;allow_active&gt;yes&lt;/allow_active&gt;<br /><br />Вроде теперь работает без ввода пароля и запуска этой фигни &#39; polkit-gnome-authentication-agent-1&#39; не требуется.<br /><br />Да, в ~/.xprofile еще fix от ув. Haron_Prime добавил:<br /># Dbus fix<br />if [ -z &quot;$DBUS_SESSION_BUS_ADDRESS&quot; ]; then<br />    eval &quot;$(dbus-launch --sh-syntax --exit-with-session)&quot;<br />fi<br />Без systemd ,кстати, таким макаром и без lxdm и т.п..  работает и через startx<br />В .xinitrc:<br />exec  dbus-launch своя_сессия<br />Ну или тот же fix выше.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-157280"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Vadim/index.html">
+                <span class="post-username">Vadim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/157280/index.html">#</a>
+            6 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/72/22/7222132327ed41066e6514a2df7291c9.png" alt="Vadim avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Vadim/topics/index.html">
+                    280
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Vadim/posts/index.html">
+                    1909
+                </a>
+            </div>
+            <div>
+                Участник с: 20 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>valera_cr</strong>,спасибо,я знаю что писать в usr/share/polkit-1/actions/org.freedesktop.udisks2.policy или в /etc/polkit1/,что писать в .xinitrc чтобы автомонтирование работало.Но<a href="https://www.linux.org.ru/forum/desktop/5889473#comment-5892862">мне категорически не нравяться эти костыли</a>  и я хочу вообще от них уйти,или с помощью sudoers,может pmount или ещё чего.
+            
+                
+                    <div class="post-signature">
+                        Linux Forever!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-157296"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/157296/index.html">#</a>
+            6 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3170
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Используйте udev.
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-157336"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/akorop/index.html">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/157336/index.html">#</a>
+            6 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/akorop/topics/index.html">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/akorop/posts/index.html">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br>Используйте udev.</blockquote>Таки да. Типа так:<br /><strong>/etc/udev/rules.d/64-automount.rules</strong><br /><pre><code># Automount removables
+# normal USB mass-storage
+KERNEL==&quot;sd[b-z]*&quot;, ENV{ID_BUS}==&quot;usb&quot;, ACTION==&quot;add&quot;, ENV{ID_FS_TYPE}==&quot;?*&quot;, RUN+=&quot;/usr/bin/systemctl start <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="e18094958e8c8e948f95a1">[email&#160;protected]</a>%k&quot;
+KERNEL==&quot;sd[b-z]*&quot;, ACTION==&quot;remove&quot;, RUN+=&quot;/usr/bin/systemctl stop <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="7c1d09081311130912083c">[email&#160;protected]</a>%k&quot;
+
+# delayed USB mass-storage as Android device with mass-storage
+KERNEL==&quot;sd[b-z]*&quot;, ENV{ID_BUS}==&quot;usb&quot;, ACTION==&quot;change&quot;, ENV{ID_FS_TYPE}==&quot;?*&quot;, RUN+=&quot;/usr/bin/systemctl start <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="f29387869d9f9d879c86b2">[email&#160;protected]</a>%k&quot;
+
+KERNEL==&quot;sd[b-z]&quot;, GROUP=&quot;storage&quot;</code></pre>Ну и прописать сервис, типа так:<br /><strong>/etc/systemd/system/<a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="69081c1d0604061c071d29471a0c1b1f000a0c">[email&#160;protected]</a></strong><br /><pre><code>[Service]
+Type=oneshot
+TimeoutSec=0
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/automount %I
+ExecStop=/usr/local/bin/autoumount %I
+</code></pre>И, естественно, написать скрипты automount и autoumount. Скрипты вызывать прямо из правила udev нельзя: всё, что долго работает, вскоре прибивается системой.<br />Оно, может,  и длинно, но зато ни от чего лишнего не зависит. Ну при чём тут pcmanfm?<br /><blockquote><em>Vadim</em><br>мой компьютер,хочу чтобы всё автоматом монтировалось</blockquote>Угу. Естественно, в suders желательно прописать что-то вроде <strong> %wheel ALL=(ALL) ALL</strong>. Или вообще сделать автологон рутом (у меня именно так). Оно, конечно, идейно красиво, что типа вот это система, это для всех пользователей и этим правит админ, а вот это для определённого пользователя, этим правит он сам. Но когда пользователь ровно один, и админ - он же, нафига вся эта шизофрения?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-157349"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/anode/index.html">
+                <span class="post-username">anode</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/157349/index.html">#</a>
+            6 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/anode/topics/index.html">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/anode/posts/index.html">
+                    982
+                </a>
+            </div>
+            <div>
+                Участник с: 30 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>akorop</em><br>Но когда пользователь ровно один, и админ - он же, нафига вся эта шизофрения?</blockquote> У вас єто прямо какая-то навязчиво-холиварная идея ;P
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-157351"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/akorop/index.html">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/157351/index.html">#</a>
+            6 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/akorop/topics/index.html">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/akorop/posts/index.html">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>anode</em><br><blockquote><em>akorop</em><br>Но когда пользователь ровно один, и админ - он же, нафига вся эта шизофрения?</blockquote> У вас єто прямо какая-то навязчиво-холиварная идея ;P</blockquote>Если <strong>вам</strong> хочется похоливарить - это без меня. А если есть что сказать по существу - отчего бы и не обсудить этот сугубо технический вопрос.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-157589"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Vadim/index.html">
+                <span class="post-username">Vadim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/157589/index.html">#</a>
+            6 лет, 11 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 11 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/72/22/7222132327ed41066e6514a2df7291c9.png" alt="Vadim avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Vadim/topics/index.html">
+                    280
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Vadim/posts/index.html">
+                    1909
+                </a>
+            </div>
+            <div>
+                Участник с: 20 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Много читал,потом удалил нахрен пакеты polkit,policykit,gvfs,udisks2,установил pmount,udevil,файловый менеджер с возможностью выбора способа монтирования SpaceFm,для монтирования выбрал пока Pmount,пока всё работает как надо.Буду тестировать.<br />Для какой цели во всех FM кроме spacefm жёстко привязали монтирование к udisks с шизофренической завязкой на polkit,всякими exec=cklaunch-session... и другими заморочками до меня вообще не доходит.<br />Тестирую пока на второй,тестовой OS Debian testing,если всё будет работать как надо сделаю то-же на Arch.Пока никаких недостатков не вижу,одни плюсы.(Если честно одна программа удалилась,требует udisks,по моему gnome-disk-utilite,но она нужна как собаке пятая нога,не больше)<br /><a href="http://itmages.ru/image/view/3077809/8084a339"><img src="http://storage4.static.itmages.ru/i/15/1010/s_1444469560_8691802_8084a339d0.png"></a><br />Теперь название наверное нужно поменять на &quot;монтирование всего без udisks и polkit в системе&quot;.<br />Ещё надо сделать <a href="https://www.youtube.com/watch?v=qWebvzhFtjo">корзину к spacefm</a>,пока  <a href="https://www.youtube.com/watch?v=dLu6S7k7FSc">не занимался,некогда</a>.Но это так,мелочи.
+            
+                
+                    <div class="post-signature">
+                        Linux Forever!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-157611"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/157611/index.html">#</a>
+            6 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Vadim</em><br>Теперь название наверное нужно поменять на &quot;монтирование всего без udisks и polkit в системе&quot;.</blockquote>На эту тему я пару лет назад не поленился написать <a href="../12698/index.html"><u><strong>целый опус в трёх частях</strong></u></a>.<br />Даже spacefm там <a href="../12712/index.html"><strong><u>под конец</u></strong></a> фигурировал.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-157615"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Vadim/index.html">
+                <span class="post-username">Vadim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/157615/index.html">#</a>
+            6 лет, 11 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 11 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/72/22/7222132327ed41066e6514a2df7291c9.png" alt="Vadim avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Vadim/topics/index.html">
+                    280
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Vadim/posts/index.html">
+                    1909
+                </a>
+            </div>
+            <div>
+                Участник с: 20 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Natrio</strong><br />у меня нет столько знаний,напиши в двух словах,можно так монтировать как я сделал?Подводных камней нет?<br />Ещё если не трудно,как сделать монтирование через mont,какой командой в spacefm чтобы и pmount убрать?<br />sudo umont %v диски нормально размонтирует,а sudo mont %v монтировать не хочет.Естественно в sudoers nopasswd для mount и umount прописаны.<br />С pmount у меня отлично пока всё работает,но хочется ещё лишнее повыбрасывать из системы<br />И хоть в двух словах,для чего придумали udisks2 с идиотской привязкой к polkit с его рулесами,всякими демонами и чертями,без которых монтирование не работает?Сколько ни пытаюсь хоть чуть понять смысл этих костылей до меня не доходит.<br />p.s<br />Сейчас на экспериментальной системе удалил осиротевшие пакеты,удалилось ещё 23 пакета,в том числе и consolekit.Всё думаю,доэксперементировался,система пропала и не загрузиться.Перезагрузился,всё работает как швейцарские часы,и не просто работает а летает!<br />Гляньте потребление памяти<br /><a href="http://itmages.ru/image/view/3079684/fb86b7fd"><img src="http://storage9.static.itmages.ru/i/15/1011/s_1444522780_6107277_fb86b7fd63.png"></a>
+            
+                
+                    <div class="post-signature">
+                        Linux Forever!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index417c.html?next=/forum/topic/15275/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'746f0eddcd9b3a83',m:'bmaBSNCguEsE61_BeLhWdoy_MsI2TE2_sRssbK3hPLo-1662549659-0-AUosvfBs18hTiFnpHAYyEDOyWR+fAF2xfStn1dSvVPr21LcE9o/DZnTZyEt/WV5KI2e2xGs6X7o9zmmpFccCP9pB2RXm+5m6jQl81xD8CICbvIcA9SNPFIWLTL3eDMkAFbDCtHb5GtaJtL0z9TjkhmA=',s:[0x9f4eedb1e5,0x3bd442f2e1],u:'/cdn-cgi/challenge-platform/h/b'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../cdn-cgi/challenge-platform/h/b/scripts/alpha/invisible5615.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/15275/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 19:07:36 GMT -->
+</html>

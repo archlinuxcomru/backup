@@ -1,0 +1,1126 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [Решено]jre java runtime и циклическая зависимость.
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[Решено]jre java runtime и циклическая зависимость.</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[Решено]jre java runtime и циклическая зависимость.</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221804"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Bendalf/">
+                <span class="post-username">Bendalf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221804/">#</a>
+            2 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/15/c6/15c6c33661cb538069a2e3f373747a78.png" alt="Bendalf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Bendalf/topics/">
+                    36
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Bendalf/posts/">
+                    395
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vinc</em><br>устанавливаете jre10-openjdk-headless, а не jre10-openjdk?</blockquote>нужен рантайм для браузеров.<br />разработка (jdk)  пока-что не интересует.
+            
+                
+                    <div class="post-signature">
+                        С уважением, .
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221806"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vinc/">
+                <span class="post-username">vinc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221806/">#</a>
+            2 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vinc/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vinc/posts/">
+                    180
+                </a>
+            </div>
+            <div>
+                Участник с: 13 июня 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Bendalf,<br />А, например, pacman какой версии? Он как раз недавно обновился.<br /><pre><code>pacman -V</code></pre>А лучше сразу покажите:<br /><pre><code>pacman -Q linux pacman</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221808"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Bendalf/">
+                <span class="post-username">Bendalf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221808/">#</a>
+            2 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/15/c6/15c6c33661cb538069a2e3f373747a78.png" alt="Bendalf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Bendalf/topics/">
+                    36
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Bendalf/posts/">
+                    395
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vinc</em><br>pacman -V</blockquote>5.2.0  и красивая зачётная псевдографика выводится<br /><blockquote><em>vinc</em><br>pacman -Q linux pacman</blockquote><a href="https://cloud.mail.ru/public/5zty/k3EAi6KU6">пишет что оба пакета не найдены(скриншот)</a>
+            
+                
+                    <div class="post-signature">
+                        С уважением, .
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221809"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vinc/">
+                <span class="post-username">vinc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221809/">#</a>
+            2 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vinc/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vinc/posts/">
+                    180
+                </a>
+            </div>
+            <div>
+                Участник с: 13 июня 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Bendalf</em><br><blockquote><em>vinc</em><br>pacman -Q linux pacman</blockquote>пишет что оба пакета не найдены</blockquote>Что-то не в порядке в датском королевстве.<br /><br />PS. Плюньте на java, чините локальную базу пакетов.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221810"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Bendalf/">
+                <span class="post-username">Bendalf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221810/">#</a>
+            2 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/15/c6/15c6c33661cb538069a2e3f373747a78.png" alt="Bendalf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Bendalf/topics/">
+                    36
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Bendalf/posts/">
+                    395
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vinc</em><br>Что-то не в порядке в датском королевстве.</blockquote><br />2-7 дней назад раздел   /   заполнился почти<br />и я в пакман конф <a href="https://cloud.mail.ru/public/43WU/2kwKdpgHK">изменил пути по умолчанию(скриншот).</a><br />затем из мест по умолчанию перенёс содержимое в новое место. на другой раздел.<br />обновления проходили без ошибок. место    на   /  не забивалось<br />затем пакман обновился.<br />я заменил конф из бекапа.<br />mutt<br />java<br />теперь у меня две папки pacman.d<br />1    в     /<br />2  там где обычно
+            
+                
+                    <div class="post-signature">
+                        С уважением, .
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221811"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vinc/">
+                <span class="post-username">vinc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221811/">#</a>
+            2 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vinc/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vinc/posts/">
+                    180
+                </a>
+            </div>
+            <div>
+                Участник с: 13 июня 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Bendalf, с этого и надо было начинать;)<br />Похоже, после ваших перетрубаций pacman не видит локальную базу, которая по-умолчанию лежит здесь: /var/lib/pacman/local<br />Надо чинить.<br /><br />PS. Заголовок темы как-то перестал совпадать с реальной проблемой, не так ли?;)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221812"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Bendalf/">
+                <span class="post-username">Bendalf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221812/">#</a>
+            2 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/15/c6/15c6c33661cb538069a2e3f373747a78.png" alt="Bendalf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Bendalf/topics/">
+                    36
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Bendalf/posts/">
+                    395
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vinc</em><br>чините локальную базу пакетов.</blockquote>я почитал вики русскую и английскую. там капец ))) .<br /> хз чо делать. подходящего рецепта не нашёл.<br />нету такого, чтобы я написал pacman --ремонт<br />и на этом всё.<br />копию базы я не делал.<br />но она никуда не девалась ?<br />я переносил тотально всё в новые пути из своего конфига.<br /><br />Заголовок темы как-то перестал совпадать     ----- да вы правы.
+            
+                
+                    <div class="post-signature">
+                        С уважением, .
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221813"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Bendalf/">
+                <span class="post-username">Bendalf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221813/">#</a>
+            2 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/15/c6/15c6c33661cb538069a2e3f373747a78.png" alt="Bendalf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Bendalf/topics/">
+                    36
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Bendalf/posts/">
+                    395
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vinc</em><br>которая по-умолчанию лежит здесь: /var/lib/pacman/local</blockquote>Эта папка заполнена файлами.<br />на мой путь из пакман конф [<a href="https://cloud.mail.ru/public/5C34/54NqUXNvY">https://cloud.mail.ru/public/5C34/54NqUXNvY</a>] pacman  забил на конфиг(скриншот).<br />Мой конфиг  <a href="https://cloud.mail.ru/public/43WU/2kwKdpgHK">изменены мной пути по умолчанию(скриншот).</a><br />в новом пути ничего нет.<br />а я переносил руками в новое место<br />!!!   афигеть чо творит ))<br /><br />Кажись я баг отловил ! ?
+            
+                
+                    <div class="post-signature">
+                        С уважением, .
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221815"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vinc/">
+                <span class="post-username">vinc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221815/">#</a>
+            2 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vinc/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vinc/posts/">
+                    180
+                </a>
+            </div>
+            <div>
+                Участник с: 13 июня 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Bendalf</em><br>копию базы я не делал.<br />но она никуда не девалась ?</blockquote>Если сами не удаляли, то куда она денется. Я написал, где она лежит.<br />Можно аккуратно все починить, а лучше вернуть как было - пока нет понимания, как оно работает.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-221816"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/221816/">#</a>
+            2 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Bendalf</em><br>а я переносил руками</blockquote>Вспоминается высказывание <strong>anode</strong> - ТС не ищет легких путей ...<br /><br /><strong>PS</strong> - не поленился, поискал - надо же, как врезалось в память - один в один ...<br /><blockquote><em>anode</em><br>ТС не ищет легких путей</blockquote>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/19524/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b7f573c43169b',m:'IeEaJwvCsdduLjUUO6TP3jf47NhKD7eUDGOd6tYV7fE-1662680094-0-AcMLhAqaMNI4kLbSf2aXju4HwZR/RrRE56zbBHF+H+HYvM6ZcR9nuG2Xl6xPtoOZyqAK8MN130g04of4w68haefJ4Nkv0rrRFxKe4vA9eGrlAC502k0mpXR2HFhSPfGy4NxTkLnTJ6SkZ5uY8y16ygI=',s:[0xdb109a06e7,0x82c313709d],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

@@ -1,0 +1,614 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Скрипт проверки кэша Pacman
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/6/">Разработка</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/21/">Разработки арчеводов</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Скрипт проверки кэша Pacman</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Скрипт проверки кэша Pacman</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-9060"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/9060/">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            Не знаю как вы, но я храню кэш установленных пакетов, как часть бекапа системы.<br/>Вот тут понадобилось узнать все ли пакеты сохраняются, но штатной команды не нашел.<br/>Пришлось написать маленький скриптик.<br/><br/><strong>functions</strong> - библиотечка<br/><div class="code"><pre>#!/bin/bash
+#
+#   functions (pacman-save-sys)
+#
+#   Copyright (c) 2012 ArchAnTavr &lt;<a href="/cdn-cgi/l/email-protection#6f0e1d0c070306011a172f0e011b0e191d411d1a49081b"><span class="__cf_email__" data-cfemail="aecfdccdc6c2c7c0dbd6eecfc0dacfd8dc80dcdb">[email&#160;protected]</span>&gt</a>;
+#   <a href="http://archlinux.antavr.ru">http://archlinux.antavr.ru</a>
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see &lt;<a href="https://www.gnu.org/licenses/&gt">http://www.gnu.org/licenses/&gt</a>;.
+#
+TEXTDOMAIN="$SCRNAME"
+TEXTDOMAINDIR='/usr/share/locale'
+# Цвет и вид текста сообщений
+BLDRED='\e[1;31m' # Red
+BLDGRN='\e[1;32m' # Green
+BLDYLW='\e[1;33m' # Yellow
+BLDBLU='\e[1;34m' # Blue
+BLDWHT='\e[1;37m' # White
+TXTRST='\e[0m'    # Text Reset
+# Параметры по умолчанию
+D_PACMANCONF='/etc/pacman.conf'
+# Пути укаываются без последнего слеша, кроме '/'
+D_PACMANROOT='/'
+D_PACMANDB='/var/lib/pacman'
+D_PACMANCACHE='/var/cache/pacman/pkg'
+T_PACMANCONF=
+T_PACMANROOT=
+T_PACMANDB=
+T_PACMANCACHE=
+PACMANCONF=$D_PACMANCONF
+PACMANROOT=$D_PACMANROOT
+PACMANDB=$D_PACMANDB
+PACMANCACHE=$D_PACMANCACHE
+PACMANOPT=
+PROOT=
+OPTION=
+OPTARG=
+echo_help1()
+{
+  echo -e "${BLDYLW}$(gettext "Использование: $SCRNAME &lt;опции&gt; [...]")${TXTRST}" &gt;&amp;2
+  echo -e "${BLDWHT}$(gettext 'ОПЦИИ:')${TXTRST}" &gt;&amp;2
+  echo -e "\t${BLDWHT}-h${TXTRST}
+\t\t$(gettext 'вывод помощи')\n" &gt;&amp;2
+  echo -e "\t${BLDWHT}-p &lt;file&gt;${TXTRST}
+\t\t$(gettext 'использовать альтернативный конфигурационный файл')
+\t\t\t$(gettext 'по умолчанию:') $D_PACMANCONF\n" &gt;&amp;2
+  echo -e "\t${BLDWHT}-r &lt;dir&gt;${TXTRST}
+\t\t$(gettext 'указать альтернативный корневой каталог')
+\t\t\t$(gettext 'по умолчанию:') $D_PACMANROOT\n" &gt;&amp;2
+  echo -e "\t${BLDWHT}-b &lt;dir&gt;${TXTRST}
+\t\t$(gettext 'указать альтернативное расположение базы данных')
+\t\t\t$(gettext 'по умолчанию:') $D_PACMANDB\n" &gt;&amp;2
+  echo -e "\t${BLDWHT}-e &lt;dir&gt;${TXTRST}
+\t\t$(gettext 'указать альтернативное расположение кэша')
+\t\t\t$(gettext 'по умолчанию:') $D_PACMANCACHE\n" &gt;&amp;2
+}
+# Убираем из пути последний слеш если он не единственный
+delslpath()
+{
+  if [ "$1" == '/' ]
+  then
+    echo -n "/"
+  else
+    echo -n "$1" | sed 's/\/$//g'
+  fi
+}
+# Получаем параметр из конфига
+getcfgopt()
+{
+  local TEMP=$(grep -e "^$2" "$1" \
+    | awk -F '=' '{print $2}' \
+    | sed 's/^[ \t]*//;s/[ \t]*$//')
+  echo -n "$(delslpath "$TEMP")"
+}
+# Проверяем параметры
+choption()
+{
+  local OPTARG="$2"
+  case "$1" in
+    p)
+        if [ ! -f "$OPTARG" ]
+        then
+          echo -e "${BLDRED}$(gettext 'Ошибка!!!')${TXTRST} $(gettext 'Файл не найден') '$OPTARG'" &gt;&amp;2
+          exit 1
+        fi
+        T_PACMANCONF="$OPTARG"
+        ;;
+    r|b|e)
+        OPTARG="$(delslpath "$OPTARG")"
+        if [ ! -d "$OPTARG" ]
+        then
+          echo -e "${BLDRED}$(gettext 'Ошибка!!!')${TXTRST} $(gettext 'Каталог не найден') '$OPTARG'" &gt;&amp;2
+          exit 1
+        fi
+        case "$1" in
+          r)
+              T_PACMANROOT="$OPTARG"
+              ;;
+          b)
+              T_PACMANDB="$OPTARG"
+              ;;
+          e)
+              T_PACMANCACHE="$OPTARG"
+              ;;
+        esac
+        ;;
+    h)
+        echo_help
+        exit 0
+        ;;
+    \?)
+        echo_help
+        exit 1
+        ;;
+  esac
+}
+# Устанавливаем параметры
+setoption()
+{
+# Если есть парамерт -r то устанавливаем
+  if [ "$T_PACMANROOT" ]
+  then
+    PACMANROOT="$T_PACMANROOT"
+  fi
+  PROOT="$PACMANROOT"
+  if [ "$PACMANROOT" ] \
+    &amp;&amp; [ "$PACMANROOT" == '/' ]
+  then
+    PROOT=
+  fi
+  if [ "$T_PACMANCONF" ]
+  then
+    PACMANCONF="$T_PACMANCONF"
+  else
+    PACMANCONF="$PROOT$PACMANCONF"
+  fi
+# Получаем DBPath RootDir CacheDir из конфиг файла
+  local ROOT=$(getcfgopt "$PACMANCONF" 'RootDir')
+  local DB=$(getcfgopt "$PACMANCONF" 'DBPath')
+  local CACHE=$(getcfgopt "$PACMANCONF" 'CacheDir')
+# Устанавливаем значения из параметров
+  if [ "$T_PACMANROOT" ]
+  then
+    PACMANROOT="$T_PACMANROOT"
+  else
+    if [ "$ROOT" ]
+    then
+      PACMANROOT="$ROOT"
+    fi
+  fi
+  PROOT="$PACMANROOT"
+  if [ "$PACMANROOT" ] \
+    &amp;&amp; [ "$PACMANROOT" == '/' ]
+  then
+    PROOT=
+  fi
+  if [ "$T_PACMANDB" ]
+  then
+    PACMANDB="$T_PACMANDB"
+  else
+    if [ "$DB" ]
+    then
+      PACMANDB="$DB"
+    fi
+    PACMANDB="$PROOT$PACMANDB"
+  fi
+  if [ "$T_PACMANCACHE" ]
+  then
+    PACMANCACHE="$T_PACMANCACHE"
+  else
+    if [ "$CACHE" ]
+    then
+      PACMANCACHE="$CACHE"
+    fi
+    PACMANCACHE="$PROOT$PACMANCACHE"
+  fi
+# добавляем опции к пакмену
+  if [ "$PACMANCONF" != "$D_PACMANCONF" ]
+  then
+    PACMANOPT+=" --config '$PACMANCONF'"
+  fi
+  if [ "$PACMANROOT" != "$D_PACMANROOT" ] \
+    &amp;&amp; [ "$PACMANROOT" != "$ROOT" ]
+  then
+    PACMANOPT+=" --root '$PACMANROOT'"
+  fi
+  if [ "$PACMANDB" != "$D_PACMANDB" ] \
+    &amp;&amp; [ "$PACMANDB" != "$DB" ]
+  then
+    PACMANOPT+=" --dbpath '$PACMANDB'"
+  fi
+  if [ "$PACMANCACHE" != "$D_PACMANCACHE" ] \
+    &amp;&amp; [ "$PACMANCACHE" != "$CACHE" ]
+  then
+    PACMANOPT+=" --cachedir '$PACMANCACHE'"
+  fi
+}</pre></div><br/><strong>pacman-pkg-list</strong> - скрипт выводящий списки пакетов<br/><div class="code"><pre>#!/bin/bash
+#
+#   pacman-pkg-list (pacman-save-sys)
+#
+#   Copyright (c) 2012 ArchAnTavr &lt;<a href="/cdn-cgi/l/email-protection#7a1b0819121613140f023a1b140e1b0c0854080f5c1d0e"><span class="__cf_email__" data-cfemail="8beaf9e8e3e7e2e5fef3cbeae5ffeafdf9a5f9fe">[email&#160;protected]</span>&gt</a>;
+#   <a href="http://archlinux.antavr.ru">http://archlinux.antavr.ru</a>
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see &lt;<a href="https://www.gnu.org/licenses/&gt">http://www.gnu.org/licenses/&gt</a>;.
+#
+# Имя текущего скрипта
+SCRNAME=$(basename "$BASH_SOURCE")
+# Путь к папке со скриптом
+SCRDIR=$(dirname "$BASH_SOURCE")
+source "$SCRDIR/functions"
+# Переключатели параметров
+VER='q'
+DEP='e'
+LOC=0
+VERCACH=0
+CACHE=0
+# Функция вывода помощи
+echo_help()
+{
+  echo_help1
+  echo -e "\t${BLDWHT}-v${TXTRST}
+\t\t$(gettext 'выводить версии пакетов')
+\t\t\t$(gettext 'по умолчанию:') $(gettext 'не выводить')\n" &gt;&amp;2
+  echo -e "\t${BLDWHT}-c${TXTRST}
+\t\t$(gettext 'вывести пакеты отсутствующие в кэше')
+\t\t\t$(gettext 'по умолчанию:') $(gettext 'из базы данных')\n" &gt;&amp;2
+  echo -e "\t${BLDWHT}-d${TXTRST}
+\t\t$(gettext 'вывести пакеты установленные как зависимости')
+\t\t\t$(gettext 'по умолчанию:') $(gettext 'явно установленные')\n" &gt;&amp;2
+  echo -e "\t${BLDWHT}-l${TXTRST}
+\t\t$(gettext 'вывести пакеты установленные локально или из AUR')
+\t\t\t$(gettext 'по умолчанию:') $(gettext 'зарегистрированные репозитории')\n" &gt;&amp;2
+}
+# Функция проверки существования файлов из передаваемого списка в кэше
+testcahe()
+{
+  local LINE
+  echo -e "${BLDYLW}$(gettext 'проверяю существование пакетов в кэше')${TXTRST}" &gt;&amp;2
+  while read LINE
+  do
+    eval "LINE=($LINE)"
+    if [ ! -f "$PROOT$PACMANCACHE/"${LINE[0]}-${LINE[1]}-*.pkg.tar.[gx]z ]
+    then
+      if [[ $VERCACHE -ne 0 ]]
+      then
+        echo ${LINE[@]}
+      else
+        echo ${LINE[0]}
+      fi
+    fi
+  done
+}
+# Функция получения списков пакетов
+get_pkg()
+{
+  echo -e "${BLDYLW}$(gettext 'получаю список пакетов'), pacman -Qm$DEP$VER$PACMANOPT${TXTRST}" &gt;&amp;2
+  if [[ $LOC -ne 0 ]]
+  then
+    eval "pacman -Qm$DEP$VER$PACMANOPT" | sort
+  else
+    comm -13 &lt;(eval "pacman -Qm$DEP$VER$PACMANOPT" | sort) &lt;(eval "pacman -Q$DEP$VER$PACMANOPT" | sort)
+  fi
+}
+# Обработка параметров командной строки
+while getopts hp:r:b:e:cvdl OPTION
+do
+  case $OPTION in
+    h|\?|p|r|b|e)
+        choption "$OPTION" "$OPTARG"
+        ;;
+    c)
+        VER=
+        CACHE=1
+        ;;
+    v)
+        VER=
+        VERCACHE=1
+        ;;
+    d)
+        DEP='d'
+        ;;
+    l)
+        LOC=1
+        ;;
+  esac
+done
+setoption
+# Выполняем
+if [[ $CACHE -ne 0 ]]
+then
+  get_pkg | testcahe
+else
+  get_pkg
+fi</pre></div>Скрипт умеет выводить списки пакетов установленных явно и как зависимости, как из официальных репозиториев так и локально. Так же проверяет наличие архивного файла пакета в кеше и выводит те которых в кеше нет.<br/>Пример использования<br/><div class="code"><pre># Списки установленных пакетов
+bash pacman-pkg-list &gt; pkg-official.list
+bash pacman-pkg-list -d &gt; pkg-official-dep.list
+bash pacman-pkg-list -l &gt; pkg-local.list
+bash pacman-pkg-list -ld &gt; pkg-local-dep.list
+# Списки пакетов отсутствующих в кеше
+bash pacman-pkg-list -c &gt; pkg-no-cache-official.list
+bash pacman-pkg-list -cd &gt; pkg-no-cache-official-dep.list
+bash pacman-pkg-list -cl &gt; pkg-no-cache-local.list
+bash pacman-pkg-list -cld &gt; pkg-no-cache-local-dep.list</pre></div>
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/947/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747a42d28a7175a3',m:'awUZAkD5.QjKqV6KX.oocQyRMUohFAnS3PfP6TLDxi8-1662667128-0-AXFAxJA1vR/CfaoYlnnxTjMs1avoYb6brfhY4CwhQCk6Q0FSNrM9Am+CQARAB06XhECcoyQ8ZK9sGcHr3V0x/ebP3NKfP1oZpNYPwUuvFWl2QwiFyvBj0/QepMGEC7b6vDGa/il4fm5finJY4Wa6SAU=',s:[0x782936177b,0x25ca6141fc],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

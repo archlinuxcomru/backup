@@ -1,0 +1,1082 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20760/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:11:59 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        LVM правильная разбивка дисков (gpt, uefi, ssd+hdd+hdd)
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/9/index.html">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>LVM правильная разбивка дисков (gpt, uefi, ssd+hdd+hdd)</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>LVM правильная разбивка дисков (gpt, uefi, ssd+hdd+hdd)</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245373"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Konstantin1722/index.html">
+                <span class="post-username">Konstantin1722</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245373/index.html">#</a>
+            1 год, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a2/0c/a20c1e1ba29e790f98cd0bbd1b262376.png" alt="Konstantin1722 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Konstantin1722/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Konstantin1722/posts/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июля 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Здравствуйте, возникли вопросы с LVM, хотелось бы получить совет от более опытных пользователей в этой теме.<br /><br />В моей системе используется три жестких диска:<br />1) SSD на 512 GB.<br />2) HDD на 1TB.<br />3) HDD на 2TB.<br /><br />Система будет ставиться в режиме UEFI с таблицей разделов GPT. Я изучил некоторые аспекты, и хочу уточнить верны ли мои суждения:<br />1) Снимки LVM адски урезают производительность.<br />2) В случае использования таблицы DOS, можно выбирать всё устройство (прим. /dev/sda) в качестве Physical Volume.<br />3) DOS не поддерживает диски больше 2TB.<br />4) При использовании GPT, сначала необходимо создать раздел (прим. /dev/sda1) и только после этого его можно будет выбрать в качестве Physical Volume.<br />5) Если я создам (на всё свободное место) на каждом устройстве по разделу (прим.  /dev/sda1,  /dev/sdb1,  /dev/sdc1), и добавлю их в Volume Group, запись на эти диски будет идти по порядку (линейно), то есть сначала заполниться первый диск, потом второй, и так далее?<br />6) Продолжая пятый вопрос, скорость чтения/записи будет зависеть от того, на каком диске находятся данные?<br />7) SWAP раздел можно поместить как в LVM так и во вне?<br />8) LVM поддерживает только GRUB?<br />9) GRUB должен находиться вне LVM иначе работать не будет?<br />10) Если девятое суждение верно, то весь boot раздел должен находиться вне LVM, и при установке GRUB нужно указать --efi-directory=/boot, вместо --efi-directory=/boot/efi ?<br />11) Никаких нюансов в использовании SSD и LVM нет, не считая параметров монтирования и TRIM?<br /><br />Теперь касательно вопросов на которые я не смог найти ответы (на момент написания этой темы).<br /><br />Я изначально и до сих пор планирую разместить один Volume Group на все три жестких диска, и в случае линейного распределения данных, мне более менее понятно как это будет работать (если нет нюансов при использовании SDD и HDD), но как я предполагаю, картина будет такая, как я описал в пятом и шестом вопросе. Предположим так, значит может быть так, что SSD будет забит под 100%, а остальные диски нет, что явно не хорошо. Насколько я выяснил у LVM есть другой алгоритм распределения данных на Physical Volume, который распределяет их равномерно, а не линейно.<br />Существует только два таких режима?<br />Как будет работать данное распределение если учесть, что накопители не одинаковых размеров, они будет заполняться одинаково в процентном соотношении или всё же может быть так, что на SSD будет 512 ГБ и на обоих HDD по 512 ГБ?<br />В случае использования режима распределения, скорость чтения данных действительно возрастает? (ведь это похоже на RAID 0)<br /><br />Касательно фрагментации данных.<br />Как LVM решает и решает ли этот вопрос, нужна ли ручная конфигурация?<br />Если всё &quot;работает из коробки&quot;, то дефрагментация выполняется на каждом Logical Volume, или это будет уровнями ниже?<br /><br />Два вопроса выше, не дают мне понять как лучше делить диски (как в плане VG так и LV).
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245389"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/jim945/index.html">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245389/index.html">#</a>
+            1 год, 3 месяца назад
+            
+                (отредактировано
+                
+                    1 год, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/jim945/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/jim945/posts/index.html">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Konstantin1722</em><br>1) Снимки LVM адски урезают производительность.</blockquote>Да. По факту логический раздел копируется в свободное место.
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245390"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/jim945/index.html">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245390/index.html">#</a>
+            1 год, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/jim945/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/jim945/posts/index.html">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Konstantin1722</em><br>2) В случае использования таблицы DOS, можно выбирать всё устройство (прим. /dev/sda) в качестве Physical Volume.</blockquote>При выборе устройства целиком на нем не будет нрикакой таблицы разделов. Один раздел с первого блока.
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245391"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/jim945/index.html">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245391/index.html">#</a>
+            1 год, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/jim945/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/jim945/posts/index.html">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Konstantin1722</em><br>6) Продолжая пятый вопрос, скорость чтения/записи будет зависеть от того, на каком диске находятся данные?</blockquote>да<br /><br /><blockquote><em>Konstantin1722</em><br>3) DOS не поддерживает диски больше 2TB.</blockquote>да<br /><br /><blockquote><em>Konstantin1722</em><br>7) SWAP раздел можно поместить как в LVM так и во вне?</blockquote>да<br /><br /><blockquote><em>Konstantin1722</em><br>9) GRUB должен находиться вне LVM иначе работать не будет?</blockquote>Поддерживает lvm. Отдельный раздел не обязателен.
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245392"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/jim945/index.html">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245392/index.html">#</a>
+            1 год, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/jim945/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/jim945/posts/index.html">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В целом. Не рекомендую использовать lvm.<br />На мой взгляд он не надежен. При выходе из строя одного из дисков можно потерять всё.<br /><br />Посмотрите в сторону raid, а лучше btrfs. Возможно подберете для себя вариант поинтереснее.
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245482"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Konstantin1722/index.html">
+                <span class="post-username">Konstantin1722</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245482/index.html">#</a>
+            1 год, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a2/0c/a20c1e1ba29e790f98cd0bbd1b262376.png" alt="Konstantin1722 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Konstantin1722/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Konstantin1722/posts/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июля 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>jim945</em><br>В целом. Не рекомендую использовать lvm.<br />На мой взгляд он не надежен.</blockquote>У меня каждый день делается бэкап на домашний сервер, мне всё равно на надёжность, мне нужны преимущества и гибкость LVM.<br /><br /><blockquote><em>jim945</em><br>При выходе из строя одного из дисков можно потерять всё.</blockquote>Тоже самое при некоторых RAID, а вообще где-то писали уже, но рассчитывать на raid, lvm или что-то другое, это глупо, всегда надо делать бэкапы важных данных.<br /><br /><blockquote><em>jim945</em><br>а лучше btrfs</blockquote>А чем лучше? Насколько я знаю, btrfs это уже файловая система, в отличии от lvm, вы сами её используете? Если да, то напишите сколько времени и что вам больше всего в ней нравится.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245483"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Konstantin1722/index.html">
+                <span class="post-username">Konstantin1722</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245483/index.html">#</a>
+            1 год, 3 месяца назад
+            
+                (отредактировано
+                
+                    1 год, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a2/0c/a20c1e1ba29e790f98cd0bbd1b262376.png" alt="Konstantin1722 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Konstantin1722/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Konstantin1722/posts/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июля 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В данный момент, решил попробовать так, не смешивая систему(SSD) и диски хранения(HDD).<br />Первый диск:<br /><a href="https://ibb.co/ZNJJwfB">https://ibb.co/ZNJJwfB</a><br /><img src="https://d.radikal.ru/d15/2105/51/ad4b01e8a645.png"><br /><br />Второй и третий (будет настроено в режиме чередования):<br /><a href="https://ibb.co/5n4wcSS">https://ibb.co/5n4wcSS</a><br /><img src="https://d.radikal.ru/d39/2105/f1/09aa42b477a3.png">
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245484"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245484/index.html">#</a>
+            1 год, 3 месяца назад
+            
+                (отредактировано
+                
+                    1 год, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Konstantin1722</strong>, за такую порнографию могут и забанить на несколько деньков ... разгребай<br /><br /><strong>PS</strong> - быстро исправил - молодец ...
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245485"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Konstantin1722/index.html">
+                <span class="post-username">Konstantin1722</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245485/index.html">#</a>
+            1 год, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a2/0c/a20c1e1ba29e790f98cd0bbd1b262376.png" alt="Konstantin1722 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Konstantin1722/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Konstantin1722/posts/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июля 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>за такую порнографию могут и забанить на несколько деньков</blockquote>Да меня уже предупреждали, всё усложняет тот факт, что на форум нельзя заливать картинки, приходится грузить в другие места...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245526"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/jim945/index.html">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245526/index.html">#</a>
+            1 год, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/jim945/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/jim945/posts/index.html">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Konstantin1722</em><br>Первый диск:</blockquote>/boot не обязательно выносить из lvm в случае использования граб.<br />И в целом зачем так дробить корень?<br />/home еще ладно отделять. Но остальное...<br /><blockquote><em>Konstantin1722</em><br>мне нужны преимущества и гибкость LVM.</blockquote>Это удобство работы с разделами, не обращая внимания на их расположение?<br />Пришел к тому что это слишком топорно сделано в lvm.<br />Попробуй. Может сейчас всё лучше конечно.<br /><br /><blockquote><em>Konstantin1722</em><br>btrfs это уже файловая система</blockquote>Не являюсь её фанатом, но исейчас вернулся к её использованию в корне из-за нормальной поддержки сжатия zstd.<br />Пока критичные косяки не всплывали.<br /><br />Да это фс, но с поддержкой сабволюмов, моментальных снимков и т.д. В инете найдешь описание сам.<br /><br /><blockquote><em>Konstantin1722</em><br>У меня каждый день делается бэкап на домашний сервер, мне всё равно на надёжность, мне нужны преимущества и гибкость</blockquote>Ну вот темболее btrfs.
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index3ca6.html?next=/forum/topic/20760/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20760/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:11:59 GMT -->
+</html>

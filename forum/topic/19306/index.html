@@ -1,0 +1,1318 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19306/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:13:24 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Обновление выше systemd-241.93 ломает монтирование FakeRAID с хуком dmraid
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/23/index.html">Демоны и загрузка системы</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Обновление выше systemd-241.93 ломает монтирование FakeRAID с хуком dmraid</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Обновление выше systemd-241.93 ломает монтирование FakeRAID с хуком dmraid</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-218176"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/zven/index.html">
+                <span class="post-username">zven</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/218176/index.html">#</a>
+            3 года, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/zven/topics/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/zven/posts/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Участник с: 12 июня 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Суть проблемы такая:<br />FakeRAID уровня 0 создан в биосе и ранее использовался под Win. Три года назад установлен arch и данный райд собрался автоматом при добавлении хука <pre><code>dmraid</code></pre> в mkinitcpio.conf после чего соответсвенно всё заработало, диски появились в thunar.<br />Шло время, выходили обновы, всё работало как часы, но после выходя обновления systemd 241.93-1 =&gt; 242 монтирование сломалось.<br />В попытке разобраться с проблемой выяснил следующее:<br />хук отрабатывает и raid собирается в:<br /><pre><code>
+ls /dev/mapper/
+control  isw_bbhdgjabgf_mass01  isw_bbhdgjabgf_mass01p1  isw_bbhdgjabgf_mass01p2  isw_bbhdgjabgf_mass01p3
+</code></pre><br />о чём собственно свидетельствует и сам dmraid:<br /><pre><code>
+⋊&gt; ~ sudo dmraid -ay
+RAID set &quot;isw_bbhdgjabgf_mass01&quot; already active
+device &quot;isw_bbhdgjabgf_mass01&quot; is now registered with dmeventd for monitoring
+RAID set &quot;isw_bbhdgjabgf_mass01p1&quot; already active
+RAID set &quot;isw_bbhdgjabgf_mass01p2&quot; already active
+RAID set &quot;isw_bbhdgjabgf_mass01p3&quot; already active
+</code></pre><br />и lsblk<br /><br /><pre><code>
+⋊&gt; ~lsblk
+NAME                        MAJ:MIN RM   SIZE RO TYPE   MOUNTPOINT
+sda                           8:0    0 238,5G  0 disk
+├─sda1                        8:1    0  15,7M  0 part
+├─sda2                        8:2    0   353M  0 part   /boot
+└─sda3                        8:3    0 238,1G  0 part   /
+sdb                           8:16   0 119,2G  0 disk
+└─sdb1                        8:17   0 119,2G  0 part   /run/media/zven/ssd_win8
+sdc                           8:32   0 298,1G  0 disk
+└─isw_bbhdgjabgf_mass01     254:0    0 596,2G  0 dmraid
+  ├─isw_bbhdgjabgf_mass01p1 254:1    0 117,2G  0 dmraid /run/media/zven/SYS_01
+  ├─isw_bbhdgjabgf_mass01p2 254:2    0 283,7G  0 dmraid /run/media/zven/SYS_02
+  └─isw_bbhdgjabgf_mass01p3 254:3    0 195,3G  0 dmraid /run/media/zven/SYS_03
+sdd                           8:48   0 298,1G  0 disk
+└─isw_bbhdgjabgf_mass01     254:0    0 596,2G  0 dmraid
+  ├─isw_bbhdgjabgf_mass01p1 254:1    0 117,2G  0 dmraid /run/media/zven/SYS_01
+  ├─isw_bbhdgjabgf_mass01p2 254:2    0 283,7G  0 dmraid /run/media/zven/SYS_02
+  └─isw_bbhdgjabgf_mass01p3 254:3    0 195,3G  0 dmraid /run/media/zven/SYS_03
+sde                           8:64   0 931,5G  0 disk
+├─sde1                        8:65   0 350,2G  0 part   /run/media/zven/NOUT_SYS
+└─sde2                        8:66   0 581,1G  0 part   /run/media/zven/NOUT_ARXIV
+sdf                           8:80   0   2,7T  0 disk
+├─sdf1                        8:81   0   128M  0 part
+├─sdf2                        8:82   0   500G  0 part   /run/media/zven/3G_TOM1_temp
+├─sdf3                        8:83   0   1,5T  0 part   /run/media/zven/3G_TOM2_musik
+├─sdf4                        8:84   0   656G  0 part   /run/media/zven/3G_TOM3_video
+├─sdf5                        8:85   0  98,3G  0 part
+└─sdf6                        8:86   0     3G  0 part   [SWAP]
+</code></pre><br />Но далее процесс не идёт т.е. не появляются устройства /dev/dm-0 и прочие, которые имеются, если systemd версией ниже:<br /><pre><code>
+&gt; ls /dev/dm-*
+/dev/dm-0  /dev/dm-1  /dev/dm-2  /dev/dm-3
+</code></pre><br />следовательно далее это ломает gvfs который не может увидеть диски в thunar и ему подобных, это ломает fstab т.к. ранее диски монтировались по метке трёх разделов на райде, т.к. никаких ссылок в /dev/disk/by-label/ на /dev/dm-* нет, т.к. нет самого /dev/dm-*:<br /><pre><code>
+# /etc/fstab
+/dev/disk/by-label/SYS_01 /run/media/zven/SYS_01 auto ro,nosuid,nodev,nofail,x-gvfs-show,x-udisks-auth 0 0
+/dev/disk/by-label/SYS_02 /run/media/zven/SYS_02 auto ro,nosuid,nodev,nofail,x-gvfs-show 0 0
+/dev/disk/by-label/SYS_03 /run/media/zven/SYS_03 auto nosuid,nodev,nofail,x-gvfs-show 0 0
+</code></pre><br />В логах чисто.<br /><br />Если выполнить <pre><code>sudo mount /dev/mapper/isw_bbhdgjabgf_mass01p1 /mnt/d1</code></pre> всё успешно монтируется.<br /><br />Вопросы:<br />1) куда и как копать в данной ситуации, как вернуть видимость устройств в файловых менеджерах, я конечно понимаю, что можно просто переписать fstab - но должно же оно работать нормально, как собственно работало и ранее?<br /><br />2) Я так понимаю понимаю за устройства /dev/dm-* отвечает udev и создаются они на уровне mkinitcpio - или я неправ? Прошу помочь понять на каком уровне ломается процесс... куда рулить, и почему откат <pre><code>yay -U /var/cache/pacman/pkg/systemd-libs-241.93-1-x86_64.pkg.tar.xz</code></pre> лечит систему?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-218186"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/218186/index.html">#</a>
+            3 года, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>zven</em><br><strong>FakeRAID</strong> уровня 0 создан в биосе и ранее использовался под Win.<br />Три года назад установлен arch и данный райд собрался автоматом при добавлении хука <strong>dmraid</strong></blockquote> А не пробовал хук mdadm_udev - как пишут в <a href="https://wiki.archlinux.org/index.php/mkinitcpio">Wiki</a><br /><strong>dmraid</strong> -  Note that it is preferred to use mdadm with the mdadm_udev hook with fakeRAID if your controller supports it.<br /><strong>mdadm_udev</strong> - Provides support for assembling RAID arrays via udev. You must have mdadm installed to use this. If you use this hook with a FakeRAID array, it is recommended to include mdmon in the binaries section.<br /><br /><strong>PS</strong> - имхо, если была такая проблема, то должно быть и на BBS, посмотри
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-218196"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/zven/index.html">
+                <span class="post-username">zven</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/218196/index.html">#</a>
+            3 года, 2 месяца назад
+            
+                (отредактировано
+                
+                    3 года, 2 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/zven/topics/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/zven/posts/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Участник с: 12 июня 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>mdadm</strong> в общем то отрабатывает, т.е. он собирает райд, но разделов на райде не видно, можно форматировать диск и делать разделы без обратной совместимочти назад под винду с потерей данных - короче он делает софт-райд<br /><br />На BBS ничего толком не нашел, и гугл - видать мало кто пользуется такими настройками...<br /><br />Мне больше даже интересно где именно и на каком уровне создаются <em>/dev/dm-0  /dev/dm-1  /dev/dm-2  /dev/dm-3</em>  и можно ли где то написать какой нить хук для их создания с <em>/dev/mapper/isw_bbhdgjabgf_mass01  /dev/mapper/isw_bbhdgjabgf_mass01p1  /dev/mapper/isw_bbhdgjabgf_mass01p2  /dev/mapper/isw_bbhdgjabgf_mass01p3</em>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-218209"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/218209/index.html">#</a>
+            3 года, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>zven</em><br>Мне больше даже интересно где именно и на каком уровне создаются /dev/dm-0 /dev/dm-1 /dev/dm-2 /dev/dm-3</blockquote>Для этого нужно подключать отладку, а так одно гадание. Лично я никогда райд не использовал, так что в этом деле не спец и гадать не буду ... и в части подключения отладки навскидку тоже ничего сказать не могу. Может что подскажут те, кто использует райд.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-218213"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/218213/index.html">#</a>
+            3 года, 2 месяца назад
+            
+                (отредактировано
+                
+                    3 года, 2 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>zven</em><br>Я так понимаю понимаю за устройства /dev/dm-* отвечает udev и создаются они на уровне mkinitcpio - или я неправ?</blockquote>Сказать не могу, но если этим занимается udev, то можно проверить - может и получится что то увидеть (но не факт).<br />Если есть желание, можно увеличить логирование udev и посмотреть, будет ли там что то в части /dev/dm*<br /><strong>cat /etc/udev/udev.conf | grep log</strong><br />#udev_log=info<br />вместо <strong>#udev_log=info</strong> пропиши <strong>udev_log=debug</strong> и перегрузись ... и смотри логи типа <strong>journalctl -b | grep -i udev</strong> или др.<br /><br /><strong>PS</strong> - не забудь вернуть потом на место
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-218214"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/zven/index.html">
+                <span class="post-username">zven</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/218214/index.html">#</a>
+            3 года, 2 месяца назад
+            
+                (отредактировано
+                
+                    3 года, 2 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/zven/topics/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/zven/posts/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Участник с: 12 июня 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>вместо #udev_log=info пропиши udev_log=debug и перегрузись &#8230; и смотри логи типа journalctl -b | grep -i udev или др.</blockquote>Отличная идея, разговорчивый он стал аж капец:)<br />Вот что получилось:<br /><br />при нормально работающем и автоматом монтирующимся радом(initramfs собран со <strong>systemd 241</strong>):<br /><pre><code>
+journalctl -b | grep -i dm- |cut -c 26-                                                                                                                                                                                      20:29:57
+ kernel: device-mapper: ioctl: 4.40.0-ioctl (2019-01-18) initialised: dm-devel@redhat.com
+ systemd-udevd[314]: Reading rules file: /usr/lib/udev/rules.d/11-dm-lvm.rules
+ systemd-udevd[314]: Reading rules file: /usr/lib/udev/rules.d/13-dm-disk.rules
+ systemd-udevd[314]: Reading rules file: /usr/lib/udev/rules.d/69-dm-lvm-metad.rules
+ systemd-udevd[314]: Reading rules file: /usr/lib/udev/rules.d/95-dm-notify.rules
+ systemd-udevd[314]: dm-0: Device (SEQNUM=2865, ACTION=add) is queued
+ systemd-udevd[314]: dm-0: sd-device-monitor: Passed 202 byte to netlink monitor
+ systemd-udevd[354]: dm-0: Processing device (SEQNUM=2865, ACTION=add)
+ systemd-udevd[354]: dm-0: Removing watch
+ systemd-udevd[354]: dm-0: LINK &#39;disk/by-id/dm-name-isw_bbhdgjabgf_mass01&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:17
+ systemd-udevd[354]: dm-0: LINK &#39;disk/by-id/dm-uuid-DMRAID-isw_bbhdgjabgf_mass01&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:18
+ systemd-udevd[354]: dm-0: IMPORT builtin &#39;blkid&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:23
+ systemd-udevd[354]: dm-0: Probe /dev/dm-0 with raid and offset=0
+ systemd-udevd[314]: dm-1: Device (SEQNUM=2866, ACTION=add) is queued
+ systemd-udevd[314]: dm-1: sd-device-monitor: Passed 202 byte to netlink monitor
+ systemd-udevd[359]: dm-1: Processing device (SEQNUM=2866, ACTION=add)
+ systemd-udevd[314]: dm-2: Device (SEQNUM=2867, ACTION=add) is queued
+ systemd-udevd[359]: dm-1: Removing watch
+ systemd-udevd[330]: dm-2: Processing device (SEQNUM=2867, ACTION=add)
+ systemd-udevd[330]: dm-2: Removing watch
+ systemd-udevd[359]: dm-1: LINK &#39;disk/by-id/dm-name-isw_bbhdgjabgf_mass01p1&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:17
+ systemd-udevd[359]: dm-1: LINK &#39;disk/by-id/dm-uuid-DMRAID-isw_bbhdgjabgf_mass01p1&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:18
+ systemd-udevd[359]: dm-1: IMPORT builtin &#39;blkid&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:23
+ systemd-udevd[359]: dm-1: Probe /dev/dm-1 with raid and offset=0
+ systemd-udevd[330]: dm-2: LINK &#39;disk/by-id/dm-name-isw_bbhdgjabgf_mass01p2&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:17
+ systemd-udevd[330]: dm-2: LINK &#39;disk/by-id/dm-uuid-DMRAID-isw_bbhdgjabgf_mass01p2&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:18
+ systemd-udevd[330]: dm-2: IMPORT builtin &#39;blkid&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:23
+ systemd-udevd[314]: dm-2: sd-device-monitor: Passed 202 byte to netlink monitor
+ systemd-udevd[330]: dm-2: Probe /dev/dm-2 with raid and offset=0
+ systemd-udevd[314]: dm-3: Device (SEQNUM=2868, ACTION=add) is queued
+ systemd-udevd[323]: dm-3: Processing device (SEQNUM=2868, ACTION=add)
+ systemd-udevd[323]: dm-3: Removing watch
+ systemd-udevd[314]: dm-3: sd-device-monitor: Passed 202 byte to netlink monitor
+ systemd-udevd[323]: dm-3: LINK &#39;disk/by-id/dm-name-isw_bbhdgjabgf_mass01p3&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:17
+ systemd-udevd[323]: dm-3: LINK &#39;disk/by-id/dm-uuid-DMRAID-isw_bbhdgjabgf_mass01p3&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:18
+ systemd-udevd[323]: dm-3: IMPORT builtin &#39;blkid&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:23
+ systemd-udevd[354]: dm-0: GROUP 6 /usr/lib/udev/rules.d/50-udev-default.rules:59
+ systemd-udevd[323]: dm-3: Probe /dev/dm-3 with raid and offset=0
+ systemd-udevd[354]: dm-0: Handling device node &#39;/dev/dm-0&#39;, devnum=b254:0, mode=0660, uid=0, gid=6
+ systemd-udevd[354]: dm-0: Setting permissions /dev/dm-0, 060660, uid=0, gid=6
+ systemd-udevd[354]: dm-0: Preserve already existing symlink &#39;/dev/block/254:0&#39; to &#39;../dm-0&#39;
+ systemd-udevd[354]: dm-0: Preserve already existing symlink &#39;/dev/disk/by-id/dm-uuid-DMRAID-isw_bbhdgjabgf_mass01&#39; to &#39;../../dm-0&#39;
+ systemd-udevd[354]: dm-0: Preserve already existing symlink &#39;/dev/disk/by-id/dm-name-isw_bbhdgjabgf_mass01&#39; to &#39;../../dm-0&#39;
+ systemd-udevd[354]: dm-0: sd-device: Created db file &#39;/run/udev/data/b254:0&#39; for &#39;/devices/virtual/block/dm-0&#39;
+ systemd-udevd[354]: dm-0: Adding watch on &#39;/dev/dm-0&#39;
+ systemd-udevd[354]: dm-0: sd-device: Created db file &#39;/run/udev/data/b254:0&#39; for &#39;/devices/virtual/block/dm-0&#39;
+ systemd-udevd[354]: dm-0: Device (SEQNUM=2865, ACTION=add) processed
+ systemd-udevd[354]: dm-0: sd-device-monitor: Passed 598 byte to netlink monitor
+ systemd-udevd[359]: dm-1: LINK &#39;disk/by-uuid/DEC89A96C89A6D11&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:25
+ systemd-udevd[359]: dm-1: LINK &#39;disk/by-label/SYS_01&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:26
+ systemd-udevd[359]: dm-1: GROUP 6 /usr/lib/udev/rules.d/50-udev-default.rules:59
+ systemd-udevd[359]: dm-1: Handling device node &#39;/dev/dm-1&#39;, devnum=b254:1, mode=0660, uid=0, gid=6
+ systemd-udevd[359]: dm-1: Setting permissions /dev/dm-1, 060660, uid=0, gid=6
+ systemd-udevd[359]: dm-1: Preserve already existing symlink &#39;/dev/block/254:1&#39; to &#39;../dm-1&#39;
+ systemd-udevd[359]: dm-1: Preserve already existing symlink &#39;/dev/disk/by-id/dm-uuid-DMRAID-isw_bbhdgjabgf_mass01p1&#39; to &#39;../../dm-1&#39;
+ systemd-udevd[359]: dm-1: Preserve already existing symlink &#39;/dev/disk/by-id/dm-name-isw_bbhdgjabgf_mass01p1&#39; to &#39;../../dm-1&#39;
+ systemd-udevd[359]: dm-1: Preserve already existing symlink &#39;/dev/disk/by-uuid/DEC89A96C89A6D11&#39; to &#39;../../dm-1&#39;
+ systemd-udevd[359]: dm-1: Preserve already existing symlink &#39;/dev/disk/by-label/SYS_01&#39; to &#39;../../dm-1&#39;
+ systemd-udevd[359]: dm-1: sd-device: Created db file &#39;/run/udev/data/b254:1&#39; for &#39;/devices/virtual/block/dm-1&#39;
+ systemd-udevd[359]: dm-1: Adding watch on &#39;/dev/dm-1&#39;
+ systemd-udevd[359]: dm-1: sd-device: Created db file &#39;/run/udev/data/b254:1&#39; for &#39;/devices/virtual/block/dm-1&#39;
+ systemd-udevd[359]: dm-1: Device (SEQNUM=2866, ACTION=add) processed
+ systemd-udevd[359]: dm-1: sd-device-monitor: Passed 775 byte to netlink monitor
+ systemd-udevd[330]: dm-2: LINK &#39;disk/by-uuid/A498951C9894EDD4&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:25
+ systemd-udevd[330]: dm-2: LINK &#39;disk/by-label/SYS_02&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:26
+ systemd-udevd[330]: dm-2: GROUP 6 /usr/lib/udev/rules.d/50-udev-default.rules:59
+ systemd-udevd[330]: dm-2: Handling device node &#39;/dev/dm-2&#39;, devnum=b254:2, mode=0660, uid=0, gid=6
+ systemd-udevd[330]: dm-2: Setting permissions /dev/dm-2, 060660, uid=0, gid=6
+ systemd-udevd[330]: dm-2: Preserve already existing symlink &#39;/dev/block/254:2&#39; to &#39;../dm-2&#39;
+ systemd-udevd[330]: dm-2: Preserve already existing symlink &#39;/dev/disk/by-id/dm-uuid-DMRAID-isw_bbhdgjabgf_mass01p2&#39; to &#39;../../dm-2&#39;
+ systemd-udevd[330]: dm-2: Preserve already existing symlink &#39;/dev/disk/by-id/dm-name-isw_bbhdgjabgf_mass01p2&#39; to &#39;../../dm-2&#39;
+ systemd-udevd[330]: dm-2: Preserve already existing symlink &#39;/dev/disk/by-label/SYS_02&#39; to &#39;../../dm-2&#39;
+ systemd-udevd[330]: dm-2: Preserve already existing symlink &#39;/dev/disk/by-uuid/A498951C9894EDD4&#39; to &#39;../../dm-2&#39;
+ systemd-udevd[330]: dm-2: sd-device: Created db file &#39;/run/udev/data/b254:2&#39; for &#39;/devices/virtual/block/dm-2&#39;
+ systemd-udevd[330]: dm-2: Adding watch on &#39;/dev/dm-2&#39;
+ systemd-udevd[330]: dm-2: sd-device: Created db file &#39;/run/udev/data/b254:2&#39; for &#39;/devices/virtual/block/dm-2&#39;
+ systemd-udevd[330]: dm-2: Device (SEQNUM=2867, ACTION=add) processed
+ systemd-udevd[330]: dm-2: sd-device-monitor: Passed 775 byte to netlink monitor
+ systemd-udevd[323]: dm-3: LINK &#39;disk/by-uuid/DC8CA2B78CA28C18&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:25
+ systemd-udevd[323]: dm-3: LINK &#39;disk/by-label/SYS_03&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:26
+ systemd-udevd[323]: dm-3: GROUP 6 /usr/lib/udev/rules.d/50-udev-default.rules:59
+ systemd-udevd[323]: dm-3: Handling device node &#39;/dev/dm-3&#39;, devnum=b254:3, mode=0660, uid=0, gid=6
+ systemd-udevd[323]: dm-3: Setting permissions /dev/dm-3, 060660, uid=0, gid=6
+ systemd-udevd[323]: dm-3: Preserve already existing symlink &#39;/dev/block/254:3&#39; to &#39;../dm-3&#39;
+ systemd-udevd[323]: dm-3: Preserve already existing symlink &#39;/dev/disk/by-label/SYS_03&#39; to &#39;../../dm-3&#39;
+ systemd-udevd[323]: dm-3: Preserve already existing symlink &#39;/dev/disk/by-id/dm-name-isw_bbhdgjabgf_mass01p3&#39; to &#39;../../dm-3&#39;
+ systemd-udevd[323]: dm-3: Preserve already existing symlink &#39;/dev/disk/by-id/dm-uuid-DMRAID-isw_bbhdgjabgf_mass01p3&#39; to &#39;../../dm-3&#39;
+ systemd-udevd[323]: dm-3: Preserve already existing symlink &#39;/dev/disk/by-uuid/DC8CA2B78CA28C18&#39; to &#39;../../dm-3&#39;
+ systemd-udevd[323]: dm-3: sd-device: Created db file &#39;/run/udev/data/b254:3&#39; for &#39;/devices/virtual/block/dm-3&#39;
+ systemd-udevd[323]: dm-3: Adding watch on &#39;/dev/dm-3&#39;
+ systemd-udevd[323]: dm-3: sd-device: Created db file &#39;/run/udev/data/b254:3&#39; for &#39;/devices/virtual/block/dm-3&#39;
+ systemd-udevd[323]: dm-3: Device (SEQNUM=2868, ACTION=add) processed
+ systemd-udevd[323]: dm-3: sd-device-monitor: Passed 775 byte to netlink monitor
+ lxdm-session[871]: gkr-pam: unable to locate daemon control file
+ lxdm-session[871]: pam_unix(lxdm:session): session opened for user zven by (uid=0)
+ udisksd[1111]: Mounted /dev/dm-3 at /run/media/zven/SYS_03 on behalf of uid 1000
+ udisksd[1111]: Mounted /dev/dm-2 at /run/media/zven/SYS_02 on behalf of uid 1000
+ udisksd[1111]: Mounted /dev/dm-1 at /run/media/zven/SYS_01 on behalf of uid 1000
+</code></pre><br />не монтирующийся райд (<strong>systemd 242</strong>):<br /><pre><code>
+journalctl -b -1 | grep -i dm- |cut -c 26-                                                                                                                                                                                   20:30:08
+ kernel: device-mapper: ioctl: 4.40.0-ioctl (2019-01-18) initialised: dm-devel@redhat.com
+ systemd-udevd[314]: Reading rules file: /usr/lib/udev/rules.d/11-dm-lvm.rules
+ systemd-udevd[314]: Reading rules file: /usr/lib/udev/rules.d/13-dm-disk.rules
+ systemd-udevd[314]: Reading rules file: /usr/lib/udev/rules.d/69-dm-lvm-metad.rules
+ systemd-udevd[314]: Reading rules file: /usr/lib/udev/rules.d/95-dm-notify.rules
+ systemd-udevd[314]: dm-0: Device (SEQNUM=2868, ACTION=add) is queued
+ systemd-udevd[322]: dm-0: Processing device (SEQNUM=2868, ACTION=add)
+ systemd-udevd[322]: dm-0: GROUP 6 /usr/lib/udev/rules.d/50-udev-default.rules:59
+ systemd-udevd[322]: dm-0: Handling device node &#39;/dev/dm-0&#39;, devnum=b254:0, mode=0660, uid=0, gid=6
+ systemd-udevd[322]: dm-0: Setting permissions /dev/dm-0, 060660, uid=0, gid=6
+ systemd-udevd[322]: dm-0: Preserve already existing symlink &#39;/dev/block/254:0&#39; to &#39;../dm-0&#39;
+ systemd-udevd[322]: dm-0: sd-device: Created db file &#39;/run/udev/data/b254:0&#39; for &#39;/devices/virtual/block/dm-0&#39;
+ systemd-udevd[322]: dm-0: Device (SEQNUM=2868, ACTION=add) processed
+ systemd-udevd[322]: dm-0: sd-device-monitor: Passed 341 byte to netlink monitor
+ systemd-udevd[314]: dm-0: sd-device-monitor: Passed 202 byte to netlink monitor
+ systemd-udevd[314]: dm-1: Device (SEQNUM=2869, ACTION=add) is queued
+ systemd-udevd[322]: dm-1: Processing device (SEQNUM=2869, ACTION=add)
+ systemd-udevd[322]: dm-1: GROUP 6 /usr/lib/udev/rules.d/50-udev-default.rules:59
+ systemd-udevd[322]: dm-1: Handling device node &#39;/dev/dm-1&#39;, devnum=b254:1, mode=0660, uid=0, gid=6
+ systemd-udevd[322]: dm-1: Setting permissions /dev/dm-1, 060660, uid=0, gid=6
+ systemd-udevd[322]: dm-1: Preserve already existing symlink &#39;/dev/block/254:1&#39; to &#39;../dm-1&#39;
+ systemd-udevd[322]: dm-1: sd-device: Created db file &#39;/run/udev/data/b254:1&#39; for &#39;/devices/virtual/block/dm-1&#39;
+ systemd-udevd[322]: dm-1: Device (SEQNUM=2869, ACTION=add) processed
+ systemd-udevd[322]: dm-1: sd-device-monitor: Passed 341 byte to netlink monitor
+ systemd-udevd[314]: dm-1: sd-device-monitor: Passed 202 byte to netlink monitor
+ systemd-udevd[314]: dm-2: Device (SEQNUM=2870, ACTION=add) is queued
+ systemd-udevd[322]: dm-2: Processing device (SEQNUM=2870, ACTION=add)
+ systemd-udevd[322]: dm-2: GROUP 6 /usr/lib/udev/rules.d/50-udev-default.rules:59
+ systemd-udevd[322]: dm-2: Handling device node &#39;/dev/dm-2&#39;, devnum=b254:2, mode=0660, uid=0, gid=6
+ systemd-udevd[322]: dm-2: Setting permissions /dev/dm-2, 060660, uid=0, gid=6
+ systemd-udevd[322]: dm-2: Preserve already existing symlink &#39;/dev/block/254:2&#39; to &#39;../dm-2&#39;
+ systemd-udevd[322]: dm-2: sd-device: Created db file &#39;/run/udev/data/b254:2&#39; for &#39;/devices/virtual/block/dm-2&#39;
+ systemd-udevd[322]: dm-2: Device (SEQNUM=2870, ACTION=add) processed
+ systemd-udevd[322]: dm-2: sd-device-monitor: Passed 341 byte to netlink monitor
+ systemd-udevd[314]: dm-2: sd-device-monitor: Passed 202 byte to netlink monitor
+ systemd-udevd[314]: dm-3: Device (SEQNUM=2871, ACTION=add) is queued
+ systemd-udevd[322]: dm-3: Processing device (SEQNUM=2871, ACTION=add)
+ systemd-udevd[322]: dm-3: GROUP 6 /usr/lib/udev/rules.d/50-udev-default.rules:59
+ systemd-udevd[322]: dm-3: Handling device node &#39;/dev/dm-3&#39;, devnum=b254:3, mode=0660, uid=0, gid=6
+ systemd-udevd[322]: dm-3: Setting permissions /dev/dm-3, 060660, uid=0, gid=6
+ systemd-udevd[322]: dm-3: Preserve already existing symlink &#39;/dev/block/254:3&#39; to &#39;../dm-3&#39;
+ systemd-udevd[322]: dm-3: sd-device: Created db file &#39;/run/udev/data/b254:3&#39; for &#39;/devices/virtual/block/dm-3&#39;
+ systemd-udevd[322]: dm-3: Device (SEQNUM=2871, ACTION=add) processed
+ systemd-udevd[322]: dm-3: sd-device-monitor: Passed 341 byte to netlink monitor
+ systemd-udevd[314]: dm-3: sd-device-monitor: Passed 202 byte to netlink monitor
+ lxdm-session[870]: gkr-pam: unable to locate daemon control file
+ lxdm-session[870]: pam_unix(lxdm:session): session opened for user zven by (uid=0)
+</code></pre><br />Как видно во втором нет кусков<br />LINK &#39;disk/by-uuid/DEC89A96C89A6D11&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:25<br />systemd-udevd[359]: dm-1: LINK &#39;disk/by-label/SYS_01&#39; /usr/lib/udev/rules.d/13-dm-disk.rules:26<br />причём ошибок между по полному логу тоже не нашёл...<br />Сравнил для надёжности образы initramfs, получилось не так много различающихся файлов, конфигов среди них нет, одни бинарники:<br /><pre><code>
+/usr/bin/systemd-tmpfiles
+/usr/bin/udevadm
+/usr/lib/libudev.so.1
+/usr/lib/systemd/systemd-udevd
+/usr/lib/udev/scsi_id
+/usr/lib/udev/ata_id
+</code></pre><br />и те на что грешу, принадлежат systemd 242.29-1:<br /><pre><code>
+⋊&gt; ~ yay -Qo /bin/udevadm
+/usr/bin/udevadm принадлежит systemd 242.29-1
+⋊&gt; ~ yay -Qo /lib/udev/ata_id
+/usr/lib/udev/ata_id принадлежит systemd 242.29-1
+⋊&gt; ~ yay -Qo /usr/lib/systemd/systemd-udevd
+/usr/lib/systemd/systemd-udevd принадлежит systemd 242.29-1
+</code></pre><br />Как писать тикеты в адрес systemd?:)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-218215"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/218215/index.html">#</a>
+            3 года, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>zven</em><br>Как писать тикеты в адрес systemd?:)</blockquote>И все таки я бы сначала попробовал хук <strong>mdadm_udev</strong> (и что там еще с ним причитается) - все-таки пишут, что он боее предпочтителен.<br /><br /><strong>PS</strong> - логи подробно не смотрел, но навскидку ничего крамольного не заметил, отличия незначительные.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-218217"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/zven/index.html">
+                <span class="post-username">zven</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/218217/index.html">#</a>
+            3 года, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/zven/topics/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/zven/posts/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Участник с: 12 июня 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>И все таки я бы сначала попробовал хук mdadm_udev</blockquote>Не, mdadm_udev создаёт програмный райд - им можно вообще не имея на материнской плате собрать райд с двух дисков, в то время как dmraid как раз работает с фейкрайдами типа материнки с чипами intel и поддержкой рад из биоса - FakeRAID<br /><br />Короче ошибка явно в udev который от systemd - почитал их багтрек там куча таких проблем с назначением вторичных атрибутов типа by-id, by-label - то они их путают после очередного фикса... походу надо тупо в fstab сослатся на /dev/mapper/isw_bbhdgjabgf_mass01p1, и я даже попробовал прописать:<br /><pre><code>
+fstab
+/dev/mapper/isw_bbhdgjabgf_mass01p1 /run/media/zven/SYS_01 auto ro,nosuid,nodev,nofail,x-gvfs-show 0 0
+</code></pre><br />диск даже виден в gvfs т.к. наверно x-gvfs-show отвечает за это, но зараза не монтируется пока папку SYS_01 не создать в /run/media/zven/  - ща попгуглю, думаю это решаемо, как то же он создаёт папку при работе с udev и его линками на автомате...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-218218"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/218218/index.html">#</a>
+            3 года, 2 месяца назад
+            
+                (отредактировано
+                
+                    3 года, 2 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>zven</em><br>Если выполнить<br /><br />sudo mount /dev/mapper/isw_bbhdgjabgf_mass01p1 /mnt/d1<br /><br />всё успешно монтируется.</blockquote>Можно тогда написать и простенький юнит.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-218219"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/zven/index.html">
+                <span class="post-username">zven</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/218219/index.html">#</a>
+            3 года, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/zven/topics/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/zven/posts/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Участник с: 12 июня 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            вывод <strong>udevadm info -n /dev/mapper/isw_bbhdgjabgf_mass01</strong>:<br /><br />не монтируется автоматом:<br /><pre><code>
+P: /devices/virtual/block/dm-0
+N: dm-0
+L: 0
+E: DEVPATH=/devices/virtual/block/dm-0
+E: DEVNAME=/dev/dm-0
+E: DEVTYPE=disk
+E: MAJOR=254
+E: MINOR=0
+E: SUBSYSTEM=block
+E: USEC_INITIALIZED=2868442
+E: DM_UDEV_DISABLE_SUBSYSTEM_RULES_FLAG=1
+E: DM_UDEV_DISABLE_DISK_RULES_FLAG=1
+E: DM_UDEV_DISABLE_OTHER_RULES_FLAG=1
+E: SYSTEMD_READY=0
+E: TAGS=:systemd:
+</code></pre><br />монтируется:<br /><pre><code>
+P: /devices/virtual/block/dm-0
+N: dm-0
+L: 0
+S: disk/by-id/dm-name-isw_bbhdgjabgf_mass01
+S: disk/by-id/dm-uuid-DMRAID-isw_bbhdgjabgf_mass01
+E: DEVPATH=/devices/virtual/block/dm-0
+E: DEVNAME=/dev/dm-0
+E: DEVTYPE=disk
+E: MAJOR=254
+E: MINOR=0
+E: SUBSYSTEM=block
+E: USEC_INITIALIZED=3171695
+E: DM_UDEV_DISABLE_DM_RULES_FLAG=1
+E: DM_UDEV_DISABLE_SUBSYSTEM_RULES_FLAG=1
+E: DM_UDEV_PRIMARY_SOURCE_FLAG=1
+E: DM_UDEV_RULES_VSN=2
+E: DM_ACTIVATION=1
+E: DM_NAME=isw_bbhdgjabgf_mass01
+E: DM_UUID=DMRAID-isw_bbhdgjabgf_mass01
+E: DM_SUSPENDED=0
+E: ID_PART_TABLE_TYPE=atari
+E: DEVLINKS=/dev/disk/by-id/dm-name-isw_bbhdgjabgf_mass01 /dev/disk/by-id/dm-uuid-DMRAID-isw_bbhdgjabgf_mass01
+E: TAGS=:systemd:
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index591d.html?next=/forum/topic/19306/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19306/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:13:24 GMT -->
+</html>

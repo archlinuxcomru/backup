@@ -1,0 +1,904 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        netcfg, ifplugd, rc.conf - что чему соотвествует?
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>netcfg, ifplugd, rc.conf - что чему соотвествует?</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>netcfg, ifplugd, rc.conf - что чему соотвествует?</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-58764"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/danhuu/">
+                <span class="post-username">danhuu</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/58764/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/danhuu/topics/">
+                    19
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/danhuu/posts/">
+                    93
+                </a>
+            </div>
+            <div>
+                Участник с: 30 ноября 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Конкретно, программа-минимум - чтобы при воткнутом в ноут шнуре нормально запускалась сеть (DHCP), при выткнутом - не пыталась долго и мучительно настроиться, наконец выдавая &ldquo;FAIL&rdquo; (при старте системы). Программа-максимум: автоподключение через DHCP, если он есть, статический адрес вручную (лучше через archassistant).<br/>Хорошо работает: самые примитивные настройки (только rc.conf, где в соответствии с викой указаны eth0, DHCP и network в демонах), когда шнур воткнут. Когда шнур не воткнут, система на старте пытается таки сеть подключить, не нравится мне это.<br/>Поставил ifplugd, вставлял его в демоническую секцию rc.conf, что до network, что после - ifplugd рапортует о включении, но поведение системы не меняется никоим образом.<br/>Поставил netcfg, создал профиль /etc/network.d/eth0-dhcp такого содержания:<br/><div class="code"><pre># Network Profile
+#
+CONNECTION="ethernet"
+DESCRIPTION="'A basic dhcp ethernet connection'"
+# Network Settings
+INTERFACE=eth0
+HOSTNAME=""
+# Interface Settings
+IP="dhcp"
+IFOPTS="dhcp"
+DHCP_TIMEOUT=5</pre></div>В вики читаю:<br/><blockquote>Tip: If enabling one of the following daemons and nothing is configured within the INTERFACES array in rc.conf, you may remove the network daemon from the DAEMONS array. </blockquote>Меня интересует сейчас<strong> net-auto-wired</strong>, так что делаю, как написано в <a href="https://wiki.archlinux.org/index.php/Netcfg#net-auto-wired">http://wiki.archlinux.org/index.php/Netcfg#net-auto-wired</a>, т.е. в rc.conf так:<br/><div class="code"><pre>...
+eth0="dhcp"
+INTERFACES=()
+WIRED_INTERFACE="eth0"
+...
+DAEMONS=(syslog-ng net-auto-wired hal cpufreq !netfs crond @alsa)</pre></div>Сеть в этом случае не стартует ни в каком случае. Попробовал вариант с <a href="https://wiki.archlinux.org/index.php/Netcfg#net-profiles">http://wiki.archlinux.org/index.php/Netcfg#net-profiles</a> + archassistant, но опять-таки без network в DAEMONS запускаться сеть не хотела, ругаясь, что интерфейс недоступен. А если network в DAEMONS есть, то возвращаемся к исходному варианту.<br/>Вариантов достаточно много, поэтому понять, где я напортачил, не могу.<br/>Помогите, пожалуйста, осуществить один из двух: net-auto-wired или net-profiles (в последнем случае так чтобы система на старте не искала сеть, а я бы вручную подключал нужный профиль). Что должно быть написано в  rc.conf в NETWORKING и DAEMONS?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-58765"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/amigo/">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/58765/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/amigo/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/amigo/posts/">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            надо быть проще :)<br/><br/>в rc.conf:<br/><br/>eth0=&ldquo;dhcp&rdquo;<br/>INTERFACES=(eth0)<br/>DAEMONS=(syslog-ng @network &#8230;
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-58766"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/mango/">
+                <span class="post-username">mango</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/58766/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c5/ab/c5ab59aeb9e60e219176c244dc66f6a8.png" alt="mango avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/mango/topics/">
+                    43
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/mango/posts/">
+                    1521
+                </a>
+            </div>
+            <div>
+                Участник с: 18 декабря 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            посмотри в сторону <strong>wicd</strong> - всё станет просто и легко и в консоли и в Х-сах
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-58767"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/danhuu/">
+                <span class="post-username">danhuu</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/58767/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/danhuu/topics/">
+                    19
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/danhuu/posts/">
+                    93
+                </a>
+            </div>
+            <div>
+                Участник с: 30 ноября 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Amigo</strong>, спасибо, идея интересная. Как я понял, сеть будет устанавливаься в фоне, и при отстутствии провода, система будет &ldquo;страдать молча в уголке&rdquo;. К сожалению, это не спасёт при разных сетях (дома - 10.10.х.х, статический адрес, на работе DHCP).<br/>2 <strong>mango</strong>: и тебе спасибо, почитаю, что вика пишет. Единственное, у меня неприятный опыт с wicd год назад на Дзенволке - с проводными сетями он вёл себя непредсказуемо. Может, на Арче лучше.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-58768"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/amigo/">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/58768/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/amigo/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/amigo/posts/">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Почему не спасет? Статический устанавливается молча. А DHCP на то он и DHCP чтобы дрочиться.
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-58769"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/borunov/">
+                <span class="post-username">borunov</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/58769/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/borunov/topics/">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/borunov/posts/">
+                    9
+                </a>
+            </div>
+            <div>
+                Участник с: 09 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            вопрос по теме: есть wicd и все прекрасно работает. но хочется что бы при включении в usb телефона (Nokia N900) автоматически устанавливалось соединение с телефоном. udev при подключении телефона создает интерфейс n900, но кому скормить пару строчек что бы интерфейс поднялся? в rc.conf  я указать ничего не могу (при загрузке интерфейса еще нет), демон network не запускается - они не дружат с wicd и wicd не умеет работать с usb.. что делать?<br/>спасибо
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-58770"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/amigo/">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/58770/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/amigo/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/amigo/posts/">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Думаю, что udev будет самое то. В вики есть пару примеров, как запустить что либо по какому-то событию, например, при подключении usb устройства. Так же при отключении, можно интерфейс &ldquo;опускать&rdquo;.
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-58771"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/borunov/">
+                <span class="post-username">borunov</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/58771/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/borunov/topics/">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/borunov/posts/">
+                    9
+                </a>
+            </div>
+            <div>
+                Участник с: 09 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            да-да, уже до того же дочитался.. решилось добавлением RUN+=&ldquo;ifconfig n900 up et cetera..&rdquo;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-58772"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/mango/">
+                <span class="post-username">mango</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/58772/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c5/ab/c5ab59aeb9e60e219176c244dc66f6a8.png" alt="mango avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/mango/topics/">
+                    43
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/mango/posts/">
+                    1521
+                </a>
+            </div>
+            <div>
+                Участник с: 18 декабря 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            и в wicd указать проводной адаптер <strong>n900</strong> вместо <strong>eth0</strong>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/6060/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747bbd241ded9d70',m:'BFI_jAnn0onf.aKJ7fGeKhEsvEy35GzJjtjonGJjWt4-1662682626-0-AUyDRcreCpgMIt2R55h+631AjdPZ0F/TADyLAtvAep1oG2iQHkFkplyKgB+ulORwtPUvPqtH8GXmvPuyIIiGG0eRx4e7QTcvhvQ5QYpWGqWsFuMtr0/dwC8kdEUAHhj6Z0EJHpapLFdzATq16y93qz4=',s:[0x088f5f4465,0xea9d2e6426],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

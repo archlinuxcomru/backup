@@ -1,0 +1,386 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19753/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:10:22 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Применение debugfs для анализа файловой системы ext3/4
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/8/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/25/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Применение debugfs для анализа файловой системы ext3/4</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Применение debugfs для анализа файловой системы ext3/4</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-226739"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/226739/index.html">#</a>
+            2 года, 6 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            По следам <a href="../19747/index.html">этого топика</a> заинтересовала проблема испорченного файла, который не удаляется. Никогда с таким не сталкивался, проверить лично не могу, но попробую хотя бы описать возможный способ для решения данной проблемы. Кроме того, используя debugfs можно получить много дополнительной информации о файловой системе и, в некоторой степени, даже выполнять определенные изменения. Работу с данной утилитой не описываю, отсылаю к man и DOC, а вот в части применения к данному случаю опишу подробно. .... И да, будте внимательны в режиме внесения изменений - семь раз подумай, один раз отрежь.<br /><br />С данной тематикой немного знаком, а потому видится следующий способ решения проблемы при удалении файла -<strong> очистка блока inode</strong> - блок обнулится и система должна перестать видеть данный файл. 100% гарнтии нет, НО если даже и не поможет, информация думаю будет полезна.<br />Показывать буду на нормальном файле <strong>/home/vasek/TTT/TEST/TEST.txt</strong><br /><strong>1. Разминка - ознакомление</strong>, НЕ ОБЯЗАТЕЛЬНОЕ - этого можно ничего и не делать, привожу для понимания.<br />Узнаем номер inode данного файла<br /><strong>ls -i /home/vasek/TTT/TEST/TEST.txt</strong><br /><strong>655365</strong>  /vasek/TTT/TEST/TEST.txt<br />Иногда это и не получится сделать (как в случае указанного выше топика), тогда используем следующую команду<br /><strong>sudo debugfs -R &#39;imap /home/vasek/TTT/TEST/TEST.txt&#39; /dev/sda3</strong><br /><pre><code>Inode 655365 is part of block group 80
+	located at block 2621472, offset 0x0400</code></pre>Чем хорош этот вывод - узнаем и номер inode и расположение на диска блока inode, соответствующему данному файлу. Блок inode составляет 256 байт (там не много все сложнее - 128 байт и плюс расширение, а важны только 128 байт - но не будем с этим заморачиваться) и в нем содержится практически вся информация о файле, которую другие утилиты парсят из этого блока.<br />И так, строчка  <strong>located at block 2621472, offset 0x0400</strong> несет информацию о расположении блока inode на разделе, точнее показывает смещение от начала раздела. Зная это и выполнив соответствующий расчет (от начала раздела sda3 = 2621472 * 4096 + 1024 = 10737550336 ) вытаскиваем этот блок с диска<br /><strong>sudo hexdump -C -s 10737550336 -n 256 /dev/sda3</strong><br /><pre><code>280020400  a4 81 e8 03 06 00 00 00  5c d2 4a 5e 38 70 4b 5e  |........\.J^8pK^|
+280020410  5c d2 4a 5e 00 00 00 00  64 00 01 00 08 00 00 00  |\.J^....d.......|
+280020420  00 00 08 00 01 00 00 00  0a f3 01 00 04 00 00 00  |................|
+280020430  00 00 00 00 00 00 00 00  01 00 00 00 fe bf 28 00  |..............(.|
+280020440  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+280020460  00 00 00 00 60 0c 86 31  00 00 00 00 00 00 00 00  |....`..1........|
+280020470  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+280020480  20 00 00 00 10 5e f9 3a  78 9d 07 0d cc 10 d3 0d  | ....^.:x.......|
+280020490  5c d2 4a 5e 78 9d 07 0d  00 00 00 00 00 00 00 00  |\.J^x...........|
+2800204a0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+280020500</code></pre>Проверим - по смещению <strong>8-11</strong> (4 байта) находится время последнего доступа к файлу<br /><pre><code>5c d2 4a 5e --- 5e4ad25c --- 1581961820, что соответствует Пн 17 фев 2020 20:50:20 MSK</code></pre>Проверяем (и убеждаемся в совпадении, с точностью до секунд, дробные в расчет не брал)<br /><strong>stat -c%x /home/vasek/TTT/TEST/TEST.txt</strong><br />2020-02-17 20:50:20.057984051 +0300<br />Если полностью очисть этот блок (точнее 128 байт), то файл исчезнет - система о нем знать не будет - это можно проделать как в ручную (самый надежный способ), так и с помощью утилиты debugfs, но вот всегда ли это сработает,  практически 100% уверенности нет, но теоретически должно сработать.<br /><br /><strong>2. Процесс очистки inode с использованием debugfs</strong><br />В linux есть очень хорошая утилита <strong>debugfs</strong>, с ее помощью можно очень многое проделать, в ней действуют все те же команды, что и в обычном bash (ls, cat, stat, rm и др.) плюс к этому можно вытащить очень много полезной информации, вплоть до удаленных файлов. Но редко кто пользуется этим - все привыкли к GUI.<br />В работающей системе утилита запускается в режиме <strong>read only</strong> и можно только просматривать информацию, а вот менять не возможно. Для этого нужно перевести систему в режим записи и лучше отмонтировать. А так как нам нужно будет вносить изменения, то буду грузиться с Live CD … я могу загрузиться и с образа archiso, расположенного на диске, в этом же разделе, НО лучше оставить раздел, с которым будем работать, в покое, а потому загружусь с флешки, на которой несколько образов, но я для удобства выберу <strong>systemrescuecd-6.0.0</strong> (нужно будет копировать команды и их вывод в файл и сохранить все это на флэшке).<br /><br /><strong>PS</strong> - чем мне нравится  systemrescuecd-6.0.0 - он сделан на основе ArchLinux, а если запустить startx, то попадаешь в DE xfce - очень удобно.<br /><br />И так приступим, загрузились и запускаем debugfs, конечно, перед началом рекомендую уточнить разделы утилитой fdisk или альтернативной командой<br /><strong>sudo debugfs /dev/sda3</strong><br /><strong>debugfs</strong>:<br />... получаем строку приглашения для ввода команд и смотрим наш файл в нужной директории ...<br /><strong>debugfs: ls -l /home/vasek/TTT/TEST</strong><br />…….<br /><strong>655365</strong>  100644 (1)   1000    100       6 17-Feb-2020 20:50 inode<br />……<br />номер inode  <strong>655365</strong> совпадает с приведенным в начале ... то есть можно было его и не узнавать перед этим, но так спокойнее - лишняя проверка не помешает<br />Посмотрим информацию из блока inode (hex вывод блока inode был приведен выше)<br /><strong>debugfs:  mi &lt;655365&gt;</strong><br /><u>mi: Filesystem opened read/only</u><br />… нам напоминают, что система только для чтения - переведем в режим записи<br /><strong>debugfs:  open /dev/sda3 -w</strong><br /><u>open: Filesystem /dev/sda3 is still open.  Close it first</u>.<br />… говорят, что сначала закройте … закроем и снова откроем (обычно на этом большинство спотыкается)<br /><strong>debugfs:  close_filesys -a</strong><br /><strong>debugfs:  open /dev/sda3 -w</strong><br />debugfs:<br />… все нормально - ожидание для ввода команд - посмотрим инфу inode<br /><strong>debugfs:  mi &lt;655365&gt;</strong><br />… для листания Enter, для выхода q ...<br /><pre><code>                          Mode    [0100644]
+                       User ID    [1000]
+                      Group ID    [100]
+                          Size    [6]
+                 Creation time    [1582002232]
+             Modification time    [1581961820]
+                   Access time    [1581961820]
+                 Deletion time    [0]
+                    Link count    [1]
+              Block count high    [0]
+                   Block count    [8]
+                    File flags    [0x80000]
+                    Generation    [0x31860c60]
+                      File acl    [0]
+           High 32bits of size    [0]
+              Fragment address    [0]
+               Direct Block #0    [127754]
+               Direct Block #1    [4]
+               Direct Block #2    [0]
+               Direct Block #3    [0]
+               Direct Block #4    [1]
+               Direct Block #5    [2670590]
+               Direct Block #6    [0]
+               Direct Block #7    [0]
+               Direct Block #8    [0]
+               Direct Block #9    [0]
+              Direct Block #10    [0]
+              Direct Block #11    [0]
+                Indirect Block    [0]
+         Double Indirect Block    [0]
+         Triple Indirect Block    [0]</code></pre>… ну вот видим часть информации из блока inode, но в человеческом виде, а не в hex-code. Замечаем, что время последнего доступа к файлу равно - <strong>Access time [1581961820]</strong>, что соответствует значение, вытащенному напрямую из блока inode -  <strong>5c d2 4a 5e &mdash; 5e4ad25c &mdash; 1581961820</strong><br />Приступим к очистке inode<br /><strong>debugfs:  clri &lt;655365&gt;</strong><br />и снова смотрим информацию inode<br /><strong>debugfs:  mi &lt;655365&gt;</strong><br /><pre><code>                          Mode    [00]
+                       User ID    [0]
+                      Group ID    [0]
+                          Size    [0]
+                 Creation time    [0]
+             Modification time    [0]
+                   Access time    [0]
+                 Deletion time    [0]
+                    Link count    [0]
+              Block count high    [0]
+                   Block count    [0]
+                    File flags    [0x0]
+                    Generation    [0x0]
+                      File acl    [0]
+           High 32bits of size    [0]
+              Fragment address    [0]
+               Direct Block #0    [0]
+               Direct Block #1    [0]
+               Direct Block #2    [0]
+               Direct Block #3    [0]
+               Direct Block #4    [0]
+               Direct Block #5    [0]
+               Direct Block #6    [0]
+               Direct Block #7    [0]
+               Direct Block #8    [0]
+               Direct Block #9    [0]
+              Direct Block #10    [0]
+              Direct Block #11    [0]
+                Indirect Block    [0]
+         Double Indirect Block    [0]
+         Triple Indirect Block    [0]</code></pre>Все обнулилось, а значит система не должна больше ничего знать об этом файле. Выходим и перегружаемся.<br /><br /><strong>3. Загрузка после проведенных работ.</strong><br />По идее нужно сразу при загрузке выполнить проверку <strong>fsck -fv /dev/sda3</strong>, зарузившись с параметром <strong>break</strong> или <strong>break=premount</strong> … количество свободных inode изменилось, да и кое что еще во внутренностях ext4 изменилось - пусть система все проверит, изменит и запишет …. <u>но мы сейчас этого не делали</u> - интересно посмотреть сразу же (до проверки), до всяких изменений, как будет выглядеть блок inode.<br />И так, загрузились успешно, смотрим этот файл<br /><strong>ls  /home/vasek/TTT/TEST/TEST.txt</strong><br /><pre><code>ls: невозможно получить доступ к &#39;/home/vasek/TTT/TEST/TEST.txt&#39;: Структуру необходимо почистить</code></pre>Вот нам система и сама напоминает о проверке … заодно смотрим старый блок inode<br /><strong>sudo hexdump -C -s 10737550336 -n 256 /dev/sda3</strong><br /><pre><code>280020400  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+280020480  20 00 00 00 10 5e f9 3a  78 9d 07 0d cc 10 d3 0d  | ....^.:x.......|
+280020490  5c d2 4a 5e 78 9d 07 0d  00 00 00 00 00 00 00 00  |\.J^x...........|
+2800204a0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+280020500</code></pre>Видим одни нули (128 байт нули, за исключением расширения, 24 байт, но они отношения к нашему файлу не имеют - кстати, эти байты всегда будут одни и те же).<br />И все таки я перегружусь и сделаю проверку fsck …. перегрузился, проверился, но проверка выполнилась автоматом, сама - но я все равно запустил повторно<br /><br />Загрузились, проверяем повторно<br /><strong>ls  /home/vasek/TTT/TEST/TEST.txt</strong><br /><pre><code>ls: невозможно получить доступ к &#39;/home/vasek/TTT/TEST/TEST.txt&#39;: Нет такого файла или каталога</code></pre>Заодно смотрим старый блок inode<br /><strong>sudo hexdump -C -s 10737550336 -n 256 /dev/sda3</strong><br /><pre><code>280020400  a4 81 e8 03 0f 5b 00 00  e2 83 4b 5e 65 85 4b 5e  |.....[....K^e.K^|
+280020410  65 84 4b 5e 00 00 00 00  64 00 01 00 30 00 00 00  |e.K^....d...0...|
+280020420  00 00 08 00 01 00 00 00  0a f3 01 00 04 00 00 00  |................|
+280020430  00 00 00 00 00 00 00 00  06 00 00 00 03 42 81 00  |.............B..|
+280020440  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+280020460  00 00 00 00 43 37 97 1e  00 00 00 00 00 00 00 00  |....C7..........|
+280020470  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+280020480  20 00 00 00 78 9c 6d 2d  fc 6e 49 1f 5c b2 87 eb  | ...x.m-.nI.\...|
+280020490  e2 83 4b 5e 5c b2 87 eb  00 00 00 00 00 00 00 00  |..K^\...........|
+2800204a0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|</code></pre>И похоже пока перегрузился, а исследуемый блок уже занят другим inode - но, возможно, это система что то там переместила в процессе проверки. И, кстати, убеждаемся в части упомянутых выше 24 байт.<br /><br />Как то так, может кому и пригодится - не обязательно для этих целей, но возможно для … не хороших дел (например, изменения даты) … или получения дополнительной информации.<br /><br /><strong>EDIT 1</strong> - Уточнение, разумеется, если уж заупрямится обнулить debugfs, то это всегда можно выполнить в ручную, прямо на диске ...<br /><br /><strong>EDIT 2</strong> - .... и еще раз напоминаю, в режиме <strong>write</strong>,  будте внимательны и осторожны - <strong>You may completely destroy the data on your hard disk!</strong>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index3b33.html?next=/forum/topic/19753/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19753/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:10:22 GMT -->
+</html>

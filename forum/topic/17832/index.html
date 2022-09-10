@@ -1,0 +1,1122 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17832/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:49:16 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        LAMP на VirtualBox настройка сети
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/13/index.html">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>LAMP на VirtualBox настройка сети</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>LAMP на VirtualBox настройка сети</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195193"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/dikoobraz/index.html">
+                <span class="post-username">dikoobraz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/195193/index.html">#</a>
+            4 года, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/dikoobraz/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/dikoobraz/posts/index.html">
+                    102
+                </a>
+            </div>
+            <div>
+                Участник с: 14 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Всем привет!<br />Поднят LAMP на VirtualBox за основу взят Ubuntu Server 14.04. Сервер работал успешно пока я не перешел на Arch Linux.<br />В Арче все настраивал по wiki и данному форуму, вроде все заработало, сайты открывались, ssh и FileZilla коннектился без проблем.<br />В один прекрасный день браузер перестал открывать сайты, ssh и FileZilla от меня отвернулись. Подозреваю проблема связана с сетевыми настройками VBox`a<br /><br />Итак, суть проблемы!!!<br />Перестали открываться сайты в браузере:<br /><blockquote>&quot;Не удается получить доступ к сайту<br />Сайт site не позволяет установить соединение.<br />Попробуйте сделать следующее:<br />Проверьте подключение к Интернету.<br />Проверьте настройки прокси-сервера и брандмауэра.<br />ERR_CONNECTION_REFUSED&quot;</blockquote><br />ssh <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="592c2a3c2b1968606b77686f617768696977686969">[email&#160;protected]</a> - просит пароль который благополучно игнорирует (хотя пароль верный и глупо забыть пароль &quot;123&quot; )<br />Filezilla по SFTP выдает критическую ошибку при соединении.<br /><br />Локальный сервер пингуется в обоих направлениях с хоста на виртуалку и обратно, а также и во всемирную паутину. Пингуется даже по &quot;site_name&quot; т.е. хост пингует сайт на виртуалке.<br /><br />Сеть настроена следующим образом:<br />В Vbox`e: Адаптер1 - Виртуальный адаптер хоста vboxnet0, Адаптер2 - NAT.<br />vboxnet0 : IPv4 адрес 192.168.100.1, IPv4 маска сети 255.255.255.0, DHCP сервер отключен<br /><br />В самом LAMP: /etc/network/interfaces<br /><br /> <pre><code>iface eth0 inet static
+ address 192.168.100.100
+ netmask 255.255.255.0
+ auto eth0
+
+ iface eth1 inet dhcp
+ auto eth1</code></pre><br />После запуска виртуалки на хосте выполняю следующие команды для установления соединения:<br /><br /><pre><code>sudo modprobe vboxdrv
+sudo modprobe vboxnetadp
+sudo modprobe vboxnetflt
+
+sudo ip link set dev vboxnet0 up
+sudo ip addr add 192.168.100.100/24 dev vboxnet0
+sudo ip route add 192.168.100.0/24 dev vboxnet0</code></pre><br />Уважаемые форумчане, Арчеводы, спецы, и все все все! Выручайте, работа стоит! Не могу понять как эту сеть еще настроить ((
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195195"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/195195/index.html">#</a>
+            4 года, 11 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 11 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2395
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В сетях не шибко разбираюсь, поэтому возник вопрос.<br /><br /><blockquote><em>dikoobraz</em><br>DHCP сервер отключен</blockquote>Почему он отключён если в LAMP: /etc/network/interfaces прописано iface eth1 inet dhcp?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195197"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/dikoobraz/index.html">
+                <span class="post-username">dikoobraz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/195197/index.html">#</a>
+            4 года, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/dikoobraz/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/dikoobraz/posts/index.html">
+                    102
+                </a>
+            </div>
+            <div>
+                Участник с: 14 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я тоже в сетях не бум-бум. Делал как написано <a href="../2731/index.html">здесь</a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195198"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/195198/index.html">#</a>
+            4 года, 11 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 11 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Непонятно, зачем такие сложности, почему нельзя установить все те же самые L, A, M и P на хост-машине, но тут уж дело хозяйское, каждый упражняется как хочет.<br /><br /><strong>RusWolf</strong>, за DHCP на eth1 отвечает сам VirtualBox, когда предоставляет виртуальную сеть типа &quot;NAT&quot;, через которую гостевая система попадает в интернет.<br />К интерфейсу <strong>vboxnet0</strong> (и <strong>eth0</strong> в виртуалке) это не имеет отношения.<br /><br /><blockquote><em>dikoobraz</em><br><pre><code>sudo ip link set dev vboxnet0 up
+sudo ip addr add 192.168.100.100/24 dev vboxnet0
+sudo ip route add 192.168.100.0/24 dev vboxnet0</code></pre></blockquote>Последняя команда <strong>ip route</strong> бессмысленна, роут на подсеть автоматически создается предыдущей командой <strong>ip addr</strong>.<br />Насколько я понимаю, она должна выдавать ошибку вида &quot;RTNETLINK answers: File exists&quot;.<br />Вы хотя бы следите за ответами этих команд, когда их выполняете?<br /><br />В VitrualBox на текущий момент я не обнаружил проблем, которые могли бы вам мешать. Я специально проверил у себя виртуалку с тремя виртуальными интерфейсами, из них два vboxnet, всё работает как положено.<br /><br />Чтобы разобраться в происходящем у вас, желательно знать не просто ваши настройки (в вашем представлении), а их результат.<br /><br />Пожалуйста, покажите вывод команд<br /><pre><code>ip addr
+ip route
+iptables-save</code></pre> на хост-машине и на гостевой. На всякий случай: iptables-save нужно выполнять из-под рута.<br /><br />Кроме того, неплохо было бы выяснить, действительно ли работают ваши веб, ssh и ftp сервисы на гостевой машине.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195200"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/dikoobraz/index.html">
+                <span class="post-username">dikoobraz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/195200/index.html">#</a>
+            4 года, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/dikoobraz/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/dikoobraz/posts/index.html">
+                    102
+                </a>
+            </div>
+            <div>
+                Участник с: 14 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Приходится работать на разных компах, вот и таскаю с собой образ виртуалки LAMP под VirtualBox.<br />На счет  <strong>ip route</strong> я понял, действительно выдает такое сообщение &quot;RTNETLINK answers: File exists&quot;, но я не подозревал что это ошибка, просто сообщение о существовании файла. Конечно я слежу за сообщениями консоли.<br /><br />вывод <strong> ip addr</strong><br /><pre><code>ip addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: enp3s0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc fq_codel state DOWN group default qlen 1000
+    link/ether 6c:62:6d:34:2d:9b brd ff:ff:ff:ff:ff:ff
+3: wlp4s0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether dc:a9:71:6d:16:a4 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.9/24 brd 192.168.1.255 scope global dynamic wlp4s0
+       valid_lft 62897sec preferred_lft 62897sec
+    inet6 fe80::917e:bd09:916d:e6a0/64 scope link
+       valid_lft forever preferred_lft forever
+4: vboxnet0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 0a:00:27:00:00:00 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.100.1/24 scope global vboxnet0
+       valid_lft forever preferred_lft forever
+    inet 192.168.100.100/24 scope global secondary vboxnet0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::800:27ff:fe00:0/64 scope link
+       valid_lft forever preferred_lft forever</code></pre><br />вывод <strong>ip route</strong><br /><pre><code>default via 192.168.1.1 dev wlp4s0 proto static metric 600
+192.168.1.0/24 dev wlp4s0 proto kernel scope link src 192.168.1.9 metric 600
+192.168.100.0/24 dev vboxnet0 proto kernel scope link src 192.168.100.1
+</code></pre><br /><strong>iptables-save</strong>  ничего не выводит (выполнял из под рута)<br /><br />вывод <strong>ip addr</strong> гостевая<br /><pre><code>1: lo &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default
+
+		link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+		inet 127.0.0.1/8 scope host lo
+			valid_lft forever preferred_lft forever
+		inet6 ::1/128 scope host
+			valid_lft forever preferred_lft forever
+2:	eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisk pfifo_fast state UP group default qlen 1000
+		link/ether 08:00:27:f0:8f:46 brd ff:ff:ff:ff:ff:ff
+		inet 192.168.100.100/24 brd 192.168.100.255 scope global eth0
+			valid_lft forever preferred_lft forever
+		inet6 fe80::a00:27ff:fef0:8f46/64 scope link
+			valid_lft forever preferred_lft forever
+3:	eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisk pfifo_fast state UP group default qlen 1000
+		link/ether 08:00:27:c8:ee:88 brd ff:ff:ff:ff:ff:ff
+		inet 10.0.3.15/24 brd 10.0.3.255 scope global eth1
+			valid_lft forever preferred_lft forever
+		inet6 fe80::a00:27ff:fec8:ee88/64 scope link
+			valid_lft forever preferred_lft forever
+</code></pre><br />вывод <strong>ip route</strong> гостевая<br /><pre><code>default via 10.0.3.2 dev eth1
+10.0.3.0/24 dev eth1 proto kernel scope link src 10.0.3.15
+192.168.100.0/24 dev eth0 proto kernel scope link src 192.168.100.100</code></pre><br />Надеюсь эта информация пригодится.<br />Большое спасибо за участие в решении моего вопроса!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195203"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/195203/index.html">#</a>
+            4 года, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Теперь всё очевидно.<br />У вашей гостевой системы адрес 192.168.100.100, а у хоста сразу два адреса: 192.168.100.1 и 192.168.100.100.<br />Первый присваивает VirtualBox согласно своих настроек, а второй вы присваиваете зачем-то сами.<br />Поскольку адрес совпадает, вместо гостевой системы вы коннектитесь к хосту, на котором нет веб и FTP, а SSH есть, но с другими учётными данными.<br /><br />Насколько я понимаю, вам не нужно ничего руками делать с интерфейсом vboxnet0, его поднимает сама VirtualBox, когда запускает виртуалку с гостевой системой. Тем более не стоит назначать ему адрес гостевой системы, тем самым блокируя себе к ней доступ.<br /><br />Загружать модули вручную командой modprobe тоже, насколько я понимаю, не требуется.<br />Если вы ставили эти модули пакетом <strong>virtualbox-host-dkms</strong>, то у вас уже есть файлик /usr/lib/modules-load.d/virtualbox-host-dkms.conf, загружающий их автоматически при старте системы.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195204"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/dikoobraz/index.html">
+                <span class="post-username">dikoobraz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/195204/index.html">#</a>
+            4 года, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/dikoobraz/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/dikoobraz/posts/index.html">
+                    102
+                </a>
+            </div>
+            <div>
+                Участник с: 14 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Natrio</strong> большое спасибо за участие и за помощь!<br />Заработало!<br />В самом LAMP на виртуалке: <strong>/etc/network/interfaces</strong><br />исправил следующее:<br /><pre><code>iface eth0 inet static
+ address 192.168.100.100
+ netmask 255.255.255.0
+ auto eth0
+
+ iface eth1 inet dhcp
+ auto eth1
+</code></pre><br /><strong>на</strong><br /><pre><code>iface eth0 inet static
+ address 192.168.100.1
+ netmask 255.255.255.0
+ auto eth0
+
+ iface eth1 inet dhcp
+ auto eth1</code></pre><br />на хосте все оставил как было, т.е.:<br /><pre><code>в файле /etc/hosts
+192.168.100.100 syte_name
+
+соединение ssh
+ssh <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="443137213604757d766a75727c6a7574746a757474">[email&#160;protected]</a></code></pre><br />Есть еще вопрос, можно ли прописать в автозапуск команды:<br /><pre><code>sudo ip link set dev vboxnet0 up
+sudo ip addr add 192.168.100.100/24 dev vboxnet0</code></pre>или проще каждый раз делать это в ручном режиме?<br />
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195205"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/dikoobraz/index.html">
+                <span class="post-username">dikoobraz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/195205/index.html">#</a>
+            4 года, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/dikoobraz/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/dikoobraz/posts/index.html">
+                    102
+                </a>
+            </div>
+            <div>
+                Участник с: 14 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Единственное боюсь, как бы после перезагрузки, опять что-нибудь не поломалось))
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195218"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/dikoobraz/index.html">
+                <span class="post-username">dikoobraz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/195218/index.html">#</a>
+            4 года, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/dikoobraz/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/dikoobraz/posts/index.html">
+                    102
+                </a>
+            </div>
+            <div>
+                Участник с: 14 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В итоге, после перезагрузки не работает...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195223"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/195223/index.html">#</a>
+            4 года, 11 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 11 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>dikoobraz</strong>, на гостевой системе НЕ НАДО БЫЛО ничего менять :)<br />Зачем вы пытаетесь прописать на двух узлах сети ОДИН АДРЕС? Вот потому и ОПЯТЬ не работает.<br /><br />Чтобы хост A мог общаться по сети с хостом B, их адреса, в общем случае, должны быть, как минимум, РАЗНЫМИ.<br /><br />В вашем случае, на хосте должно быть 192.168.100.1 <em>(указано в настройках VirtualBox, никаких команд не нужно!)</em>, а на госте 192.168.100.100 <em>(указано в файле interfaces Убунты)</em>.<br /><br />Подключаясь к вашему &quot;серверу&quot;, вы с адреса 192.168.100.1 (хост) обращаетесь к ДРУГОМУ адресу 192.168.100.100 (виртуалка).<br />В противном случае, если вы с обеих концов задатите хоть 192.168.100.1, хоть 192.168.100.100, ваш хост будет обращаться САМ К СЕБЕ, и разумеется, ничего не заработает.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index14cf.html?next=/forum/topic/17832/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'745e32e15b9e9d73',m:'lWOdeoCg3I6G_5GNQaV89agaYi9N6Lyr8Sfz9UE0u.0-1662372874-0-AV+8PXA1dFlHcKsdfI8CwXwI5h7RxYAtgq/xI+14EHb5JLznierenNLwI49KJIh7dUwzqP7IXLqVn/9bbzck1JcY34l00U4PrgqTYsTPta0ZAGlev9R6MtjaL8xl2GzcJr+7ITRCSNKhxTD1dTdHnQ0=',s:[0x087554cf0a,0xaba8b6c63f],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible5615.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17832/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:49:16 GMT -->
+</html>

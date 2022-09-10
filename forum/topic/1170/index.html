@@ -1,0 +1,1036 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/1170/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 09:09:16 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Странное поведение ip из iproute2
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/13/index.html">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Странное поведение ip из iproute2</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Странное поведение ip из iproute2</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11432"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/mango/index.html">
+                <span class="post-username">mango</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/11432/index.html">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c5/ab/c5ab59aeb9e60e219176c244dc66f6a8.png" alt="mango avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/mango/topics/index.html">
+                    43
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/mango/posts/index.html">
+                    1521
+                </a>
+            </div>
+            <div>
+                Участник с: 18 декабря 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>$ ip a</strong><br/><div class="code"><pre>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue state UNKNOWN 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eth1: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN qlen 1000
+    link/ether 01:00:94:a4:17:45 brd ff:ff:ff:ff:ff:ff
+3: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 01:00:94:a4:17:44 brd ff:ff:ff:ff:ff:ff</pre></div><br/><strong># ifconfig </strong><br/><div class="code"><pre>eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 192.168.0.51  netmask 255.255.255.0  broadcast 192.168.0.255
+        inet6 fe80::21d:92ff:fef4:164f  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether 01:00:94:a4:17:44  txqueuelen 1000  (Ethernet)
+        RX packets 112222  bytes 90857133 (86.6 MiB)
+        RX errors 0  dropped 7  overruns 0  frame 0
+        TX packets 83229  bytes 6081658 (5.7 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+eth1: flags=4098&lt;BROADCAST,MULTICAST&gt;  mtu 1500
+        ether 01:00:94:a4:17:45  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 16436
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;
+        loop  txqueuelen 0  (Local Loopback)
+        RX packets 2976  bytes 211697 (206.7 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 2976  bytes 211697 (206.7 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</pre></div><br/>Что за?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11433"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/11433/index.html">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А вы уверены, что это вывод именно <strong>ip addr</strong>, а не <strong>ip link</strong> ?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11434"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/bobart/index.html">
+                <span class="post-username">bobart</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/11434/index.html">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/bobart/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/bobart/posts/index.html">
+                    2537
+                </a>
+            </div>
+            <div>
+                Участник с: 28 ноября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ~$ ip a<br/><div class="code"><pre>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue state UNKNOWN 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 00:1d:7d:d0:d8:b9 brd ff:ff:ff:ff:ff:ff
+    inet 95.161.7.133/24 brd 95.161.7.255 scope global eth0</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11435"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sleepycat/index.html">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/11435/index.html">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sleepycat/topics/index.html">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sleepycat/posts/index.html">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            тоже плюсую и вывод<br/><div class="code"><pre>┌─[ Чт. авг. 09 ] :: [jinn] - [jinnlamp] :: [~]
+└─&gt;&gt; ip addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue state UNKNOWN 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc pfifo_fast state DOWN qlen 1000
+    link/ether 98:4b:e1:b7:6a:e7 brd ff:ff:ff:ff:ff:ff
+3: wlan0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP qlen 1000
+    link/ether e0:2a:82:de:3d:a0 brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.2/24 brd 10.10.10.255 scope global wlan0
+    inet6 fe80::e22a:82ff:fede:3da0/64 scope link 
+       valid_lft forever preferred_lft forever
+┌─[ Чт. авг. 09 ] :: [jinn] - [jinnlamp] :: [~]
+└─&gt;&gt; ip link
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue state UNKNOWN mode DEFAULT 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eth0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc pfifo_fast state DOWN mode DEFAULT qlen 1000
+    link/ether 98:4b:e1:b7:6a:e7 brd ff:ff:ff:ff:ff:ff
+3: wlan0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP mode DORMANT qlen 1000
+    link/ether e0:2a:82:de:3d:a0 brd ff:ff:ff:ff:ff:ff</pre></div>
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11436"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/mango/index.html">
+                <span class="post-username">mango</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/11436/index.html">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c5/ab/c5ab59aeb9e60e219176c244dc66f6a8.png" alt="mango avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/mango/topics/index.html">
+                    43
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/mango/posts/index.html">
+                    1521
+                </a>
+            </div>
+            <div>
+                Участник с: 18 декабря 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br/>А вы уверены, что это вывод именно <strong>ip addr</strong>, а не <strong>ip link</strong> ?</blockquote>Это вывод на рабочем компе:<br/><strong><a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="88e9e4f0c8e1fca5f9ffedb9babb">[email&#160;protected]</a> ~ $ ip addr</strong><br/><div class="code"><pre>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue state UNKNOWN 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP qlen 1000
+    link/ether bc:5f:f4:0c:27:0f brd ff:ff:ff:ff:ff:ff
+3: eth1: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN qlen 1000
+    link/ether bc:5f:f4:0c:27:0d brd ff:ff:ff:ff:ff:ff</pre></div><strong><a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="31505d497158451c404654000302">[email&#160;protected]</a> ~ $ ip link</strong> <br/><div class="code"><pre>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue state UNKNOWN mode DEFAULT 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP mode DEFAULT qlen 1000
+    link/ether bc:5f:f4:0c:27:0f brd ff:ff:ff:ff:ff:ff
+3: eth1: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN mode DEFAULT qlen 1000
+    link/ether bc:5f:f4:0c:27:0d brd ff:ff:ff:ff:ff:ff</pre></div><br/>Сколько себя помню <strong>ip a </strong> ВСЕГДА выводил полную информацию по всем интерфейсам.<br/>Вот вывод из дебиана:<br/><div class="code"><pre>Linux debian 2.6.38-hyperv #1 SMP Sun Jan 22 23:31:53 MSK 2012 i686
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+You have new mail.
+Last login: Thu Aug  2 17:20:56 2012 from it-qwe.qwe123.local
+<a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="90f1fce8d0f4f5f2f9f1fe">[email&#160;protected]</a> ~ $ ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue state UNKNOWN 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UNKNOWN qlen 1000
+    link/ether 00:15:5d:01:03:0e brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.6/24 brd 192.168.1.255 scope global eth0
+    inet6 fe80::215:5dff:fe01:30e/64 scope link 
+       valid_lft forever preferred_lft forever</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11437"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Volldemar/index.html">
+                <span class="post-username">Volldemar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/11437/index.html">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Volldemar/topics/index.html">
+                    96
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Volldemar/posts/index.html">
+                    557
+                </a>
+            </div>
+            <div>
+                Участник с: 19 октября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вот что у меня выводит:<br/><div class="code"><pre>$ ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue state UNKNOWN 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UNKNOWN qlen 1000
+    link/ether 00:50:fc:97:dd:4f brd ff:ff:ff:ff:ff:ff
+    inet 192.168.0.102/24 brd 192.168.0.255 scope global eth0
+    inet6 fe80::250:fcff:fe97:dd4f/64 scope link 
+       valid_lft forever preferred_lft forever</pre></div>вот с другого компа:<br/><div class="code"><pre>$ ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue state UNKNOWN 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UNKNOWN qlen 1000
+    link/ether 00:19:5b:ea:68:e1 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.0.6/24 brd 192.168.0.255 scope global eth1
+    inet6 fe80::219:5bff:feea:68e1/64 scope link 
+       valid_lft forever preferred_lft forever
+3: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UNKNOWN qlen 1000
+    link/ether 00:50:fc:f8:75:ae brd ff:ff:ff:ff:ff:ff
+    inet 10.10.1.11/24 brd 10.10.1.255 scope global eth0
+    inet6 fe80::250:fcff:fef8:75ae/64 scope link 
+       valid_lft forever preferred_lft forever
+6: ppp0: &lt;POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP&gt; mtu 1400 qdisc pfifo_fast state UNKNOWN qlen 3
+    link/ppp 
+    inet 195.66.65.141 peer 192.162.116.1/32 scope global ppp0</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11438"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/11438/index.html">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <div class="code"><pre>/usr/sbin/ip addr
+ip -d a
+alias
+pacman -Qi iproute2</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11439"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/mango/index.html">
+                <span class="post-username">mango</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/11439/index.html">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c5/ab/c5ab59aeb9e60e219176c244dc66f6a8.png" alt="mango avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/mango/topics/index.html">
+                    43
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/mango/posts/index.html">
+                    1521
+                </a>
+            </div>
+            <div>
+                Участник с: 18 декабря 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Добавлю: всё это в тестиг-ветке.<br/><strong> ~ $ yaourt iproute2</strong><br/> <div class="code"><pre>testing/iproute2 3.5.0-1 [installed]</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11440"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/11440/index.html">#</a>
+            10 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ой-ё!&#8230;. Предупреждать же надо :)<br/>Попробовал версию из тестинга – афи-фигительно! (ц) <div class="code"><pre>$ ip
+Usage: ip [ OPTIONS ] OBJECT { COMMAND | help }
+       ip [ -force ] -batch filename
+where  OBJECT := { link | addr | addrlabel | route | rule | neigh | ntable |
+                   tunnel | tuntap | maddr | mroute | mrule | monitor | xfrm |
+                   netns | l2tp }
+       OPTIONS := { -V[ersion] | -s[tatistics] | -d[etails] | -r[esolve] |
+                    -f[amily] { inet | inet6 | ipx | dnet | link } |
+                    -l[oops] { maximum-addr-flush-attempts } |
+                    -o[neline] | -t[imestamp] | -b[atch] [filename] |
+                    -rc[vbuf] [size]}
+$ ip addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UNKNOWN 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 50:e5:49:19:fc:5f brd ff:ff:ff:ff:ff:ff
+3: <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="daacaab6bbb49abfaeb2ea">[email&#160;protected]</a>: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP 
+    link/ether 50:e5:49:19:fc:5f brd ff:ff:ff:ff:ff:ff
+$ ip -f inet addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UNKNOWN 
+    inet 127.0.0.1/8 scope host lo
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    inet 192.168.5.2/16 brd 192.168.255.255 scope global eth0
+3: <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="3c4a4c505d527c5948540c">[email&#160;protected]</a>: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP 
+    inet 10.3.10.2/24 brd 10.3.10.255 scope global vplan
+$ ip -f inet6 addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 1500 
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qlen 1000
+    inet6 fe80::52e5:49ff:fe19:fc5f/64 scope link 
+       valid_lft forever preferred_lft forever
+3: <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="94e2e4f8f5fad4f1e0fca4">[email&#160;protected]</a>: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 
+    inet6 fe80::52e5:49ff:fe19:fc5f/64 scope link 
+       valid_lft forever preferred_lft forever
+$ ip -f link addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UNKNOWN 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 50:e5:49:19:fc:5f brd ff:ff:ff:ff:ff:ff
+3: <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="acdadcc0cdc2ecc9d8c49c">[email&#160;protected]</a>: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP 
+    link/ether 50:e5:49:19:fc:5f brd ff:ff:ff:ff:ff:ff</pre></div>В общем, диагноз более-менее ясен – это баг дефолта опции <strong>-f</strong> ( <strong>-family</strong> ) , которая по дефолту должна отсутствовать вовсе, а она явно работает с фильтром &ldquo;link&rdquo;<br/><br/><em>P.S.</em><br/>Посмотрел в багах – там <a href="https://bugs.archlinux.org/task/31052">уже есть</a>, и даже ссылка на <a href="https://marc.info/?l=linux-netdev&amp;m=134436646508341&amp;w=2">баг в апстриме</a>, как я и думал, там прямо говорится об упомянутой мною опции.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index54f7.html?next=/forum/topic/1170/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'745f30594a3e7a71',m:'oLwOQ2TrlU7p_ncSN_TahcUHYPEKEv8AoGU5VB4GBFE-1662383258-0-AY+kLPub4MJUPeB7yDXsTLGMF+0gliBHQDEOsSHfc47DdwyvpTmHjXOC+B4h9F6QYrn5MJhZ0IBKD7r19Ww5gpg3Gih64sv2R2V3DfUXNPHJYVNYYvq61g941BxBBExilaVL2LWuoMpq3gErv2g4RGQ=',s:[0xa12850d9c9,0x0f977dd05c],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible5615.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/1170/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 09:09:16 GMT -->
+</html>

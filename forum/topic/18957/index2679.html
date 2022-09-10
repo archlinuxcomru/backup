@@ -1,0 +1,1168 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18957/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:43:11 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Conky и странная нагрузка на одно ядро
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/9/index.html">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Conky и странная нагрузка на одно ядро</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Conky и странная нагрузка на одно ядро</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212172"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Koluchka/index.html">
+                <span class="post-username">Koluchka</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212172/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/7b/3f/7b3ffd725d47aa6f2d50f81b42dcad01.png" alt="Koluchka avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Koluchka/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Koluchka/posts/index.html">
+                    151
+                </a>
+            </div>
+            <div>
+                Участник с: 15 октября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Периодически у меня случается вот такая штука-<br /><br /><img src="https://media.giphy.com/media/9Dv2hdCN2BzlOfCnv4/giphy.gif"><br /><br />А странность в том, что эта стопроцентная нагрузка видна только в коньках, а top, htop, qps, ps и прочие мониторы никаких нагрузок на процессор не видят. полная перезагрузка эту фигню лечит, а перезагрузка иксов нет. Напрягает меня это уже не меньше года, то есть обновлялись и ядра, и коньки. Иногда несколько недель не вижу, а иногда каждый день всплывает... Чем и что можно ещё посмотреть, когда оно опять появится?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212174"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212174/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Koluchka</em><br>А странность в том, что эта стопроцентная нагрузка видна только в коньках, а top, htop, qps, ps и прочие мониторы никаких нагрузок на процессор не видят.</blockquote>Прежде чем мониторить посмотри этот <a href="../14368/index2679.html?page=1">старый топик</a>, не поможет, мониторь - к упомянутой там утилите <strong>dstat</strong> можно использовать и другие, например,  <strong>vmstat</strong> , <strong>sysstat</strong>, которые показывают более широкую статистику cpu (чем он конкретно занят)<br /><br /><strong>EDIT 1</strong> - а вообще conky в части мониторинга cpu показывает не совсем верно. И лучше его не использовать. Лично для меня важны 2 параметра - температура и память, хотя если не используется больших приложений, то и память не нужна. А на cpu вообще нет смысла смотреть, всеравно это выйдет на температуру.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212176"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Koluchka/index.html">
+                <span class="post-username">Koluchka</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212176/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/7b/3f/7b3ffd725d47aa6f2d50f81b42dcad01.png" alt="Koluchka avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Koluchka/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Koluchka/posts/index.html">
+                    151
+                </a>
+            </div>
+            <div>
+                Участник с: 15 октября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Тот топик имеет малое отношение к моей проблеме, поскльку там потребление ресурсов вызывалось самими conky и было видно в htop, а у меня - не видно, именно это и интересно. За dstat спасибо, попробую. Мониторить загрузку cpu по температуре у меня не получится, у меня процессор нагревается в диапазоне от 45 до 50 градусов, ну, может, до 55 летом при повышенных нагрузках.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212180"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212180/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Понятно. Не помню как считает нагрузку cpu conky, но помнится, что он обсчитывает ее упрощенно.<br />А вообще все серьезные утилиты парсят вывод <strong>/proc/stat</strong> (для процесса /proc/PID/stat) и показывают значения (время) чем занят cpu.<br />Наиболее используемые - dstat, mpstat, vmstat.<br />В принципе, top тоже дает этот вывод, если использовать <strong>top -b | grep Cpu</strong> (расшифровка есть в man), правда ни разу этот вывод не использовал и не сравнивал с другими утилитами.<br />И еще имеется много скриптов для подсчета нагрузки cpu, которые парсят вывод /proc/stat, например, наиболее простой  <a href="https://github.com/moisespsena/linux-cpu-usage/blob/master/cpu-usage-monitor.sh">cpu-usage-monitor.sh</a><br />Но у всех этих утилит и скриптов есть один, скажем так, нюанс - большие кратковременные скачки нагрузки при запуске приложений и др., не нужно этого пугаться, а потому лучше использовать усредненный вывод за определенный промежуток времени (по существу показывается все верно, так устроено - просто некоторые глядя на это говорят о неправильном выводе значений). А вот если conky показывает постоянно нагрузу под 100%, то да согласен, нужно промониторить данный cpu.<br /><br /><strong>UPD</strong> - А вообще я бы дал нагрузку cpu (например, запустил бы утилиту stress) и одновременно запустил бы какую-либо утилиту и сравнил с выводом conky.<br /><br /><strong>EDIT 1</strong> - кстати, <strong>vmstat</strong> уже стоит, эта утилита, как и <strong>top</strong>, входит в пакет <strong>procps-ng</strong>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212181"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Koluchka/index.html">
+                <span class="post-username">Koluchka</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212181/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/7b/3f/7b3ffd725d47aa6f2d50f81b42dcad01.png" alt="Koluchka avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Koluchka/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Koluchka/posts/index.html">
+                    151
+                </a>
+            </div>
+            <div>
+                Участник с: 15 октября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вообще, я подозреваю, что это какой-то баг в коньках, который начинается при каких-то условиях. Ведь если никто, кроме conky не видит этой нагрузки, такая мысль сама собой напрашивается. Можно было бы подозревать какого-то зловреда навроде майнера, который скрывается ото всех, но почему тогда его видят коньки? Ведь не самая хитрая мониторинговая утилита.<br /><br />Stress я запускала, в общем, вывод коньков похож на вывод htop. Да и вообще я иногда сравниваю их выводы и все более-менее похоже.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212184"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212184/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Привожу только для интереса.<br />Если использовать для мониторинга sysdig, то можно вообще прийти в ужас<br />1. Сумма по всем cpu - все как обычно,  изредка незначительные всплески - привожу вывод  одной top десятки (выбрал с наибольшими значениями)<br /><pre><code>CPU%                Process             PID
+--------------------------------------------------------------------------------
+3.04%               htop                18496
+2.03%               sysdig              18432
+2.03%               tilix               15987
+1.01%               Xorg                463
+0.00%               systemd             422</code></pre>примерно совпадает с выводом top<br />2. А вот если посмотреть вывод sysdig только для одного cpu (cpu0), то можно прийти в ужас - привожу 2 top десятки<br />2.1 нормальный вывод<br /><pre><code>CPU%                Process             PID
+--------------------------------------------------------------------------------
+1.99%               tilix               15987
+1.00%               spectrwm            467
+1.00%               at-spi2-registr     543
+1.00%               Xorg                463
+0.00%               oosplash            14889
+0.00%               systemd             422</code></pre>2.2 самый максимальный вывод<br /><pre><code>CPU%                Process             PID
+--------------------------------------------------------------------------------
+3369.28%            tilix               15987
+3369.28%            Xorg                463
+1684.64%            sysdig              16852
+0.00%               systemd             422
+0.00%               gpm                 400</code></pre>Вот и интерпретируй как хочешь, один плюс - это мгновенный замер и объяснить можно.<br />В твоем случае эта большая нагрузка идет постоянно, но, вероятность большая, что sysdig заметит этот процесс, если он, конечно, имеется.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212188"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Koluchka/index.html">
+                <span class="post-username">Koluchka</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212188/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/7b/3f/7b3ffd725d47aa6f2d50f81b42dcad01.png" alt="Koluchka avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Koluchka/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Koluchka/posts/index.html">
+                    151
+                </a>
+            </div>
+            <div>
+                Участник с: 15 октября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Да, с мгновенным замером это вполне объяснимо :) Но sysdig я тоже попробую когда эта штука опять проявится, спасибо.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212196"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212196/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Насчет фразы - <strong>А вообще все серьезные утилиты парсят вывод /proc/stat</strong><br /><u>был не прав</u>, вообщем то все утилиты парсят этот файл, как пример привожу вывода sysdig<br />- <strong>для conky</strong><br /><pre><code>conky (8105) &gt; read fd=5(&lt;f&gt;/proc/stat) size=1024
+conky (8105) &lt; read res=1024 data=cpu  36117 145 11151 706674 48449 1785 870 0 0 0.cpu0 8924 34 2759 215636 18839</code></pre>- <strong>для top</strong><br /><pre><code>top (8192) &gt; read fd=4(&lt;f&gt;/proc/stat) size=1024
+top (8192) &lt; read res=1024 data=cpu  37726 145 11731 755914 51976 1865 916 0 0 0.cpu0 9317 34 2898 227712 19958</code></pre>вот только обрабатывать считанные данные могут по разному (что то учтут, что то не учтут)
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212203"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Koluchka/index.html">
+                <span class="post-username">Koluchka</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212203/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/7b/3f/7b3ffd725d47aa6f2d50f81b42dcad01.png" alt="Koluchka avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Koluchka/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Koluchka/posts/index.html">
+                    151
+                </a>
+            </div>
+            <div>
+                Участник с: 15 октября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Может в линуксе это вообще единственный штатный механизм получения этой информации? :-)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212205"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212205/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Koluchka</em><br>Может в линуксе это вообще единственный штатный механизм получения этой информации? :-)</blockquote>Похоже единственный. В самом /proc/stat информации немного, а вот в файле /proc/PID/stat информации много. Если его распарсить, то получится следующее<br /> <pre><code>              pid: 1735
+               tcomm: (firefox)
+               state: R
+                ppid: 476
+                pgid: 1735
+                 sid: 1735
+              tty_nr: 0
+            tty_pgrp: -1
+               flags: 4194304
+             min_flt: 2642445
+            cmin_flt: 5683
+             maj_flt: 764
+            cmaj_flt: 19
+               utime: 603.330000
+               stime: 79.030000
+              cutime: 0.050000
+              cstime: 0.060000
+            priority: 20
+                nice: 0
+         num_threads: 57
+       it_real_value: 0.000000
+          start_time: 12.24 16:33 (7143.65s)
+               vsize: 9277476864
+                 rss: 181944
+              rsslim: 9223372036854775807
+          start_code: 94802000285696
+            end_code: 94802000434088
+         start_stack: 140727716884704
+                 esp: 0
+                 eip: 0
+             pending: 0000000000000000
+             blocked: 0000000000000000
+              sigign: 0000000000001000
+            sigcatch: 00000000020144ff
+               wchan: 0
+               zero1: 0
+               zero2: 0
+         exit_signal: 0000000000000011
+                 cpu: 1
+         rt_priority: 0
+              policy: 0</code></pre>И для каждого конкретного процесса conky считывает информацию из этого файла.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index8962-2.html?next=/forum/topic/18957/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18957/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:43:11 GMT -->
+</html>

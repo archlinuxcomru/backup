@@ -1,0 +1,1153 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Systemd-udevd активно потребляет ресурсы ЦП
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/12/">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Systemd-udevd активно потребляет ресурсы ЦП</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Systemd-udevd активно потребляет ресурсы ЦП</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201293"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Shatur/">
+                <span class="post-username">Shatur</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201293/">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4d/9f/4d9f0d3dcf63ba77a7f946a6cf39f1a3.png" alt="Shatur avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Shatur/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Shatur/posts/">
+                    323
+                </a>
+            </div>
+            <div>
+                Участник с: 26 марта 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Не пойму почему такая схема - то ли так и было, то ли что делал сам? Да, и вспомнил — год назад у тебя была проблема с аудио и, как помню, ты писал, что твое железо сборное. Может поэтому такая странная схема.</blockquote>К сожалению, изменить подключение клавиатуры и тачпада я не могу( Там они оба подключаются шлейфами напрямую к плате стандартно как немодифицированной модели.<br /><br />А ЦП грузит процесс systemd-udevd, я в первом посте писал об этом.<br /><br />Пока что сижу на старом ядре, может, потом исправят.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201294"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201294/">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Shatur</em><br>Пока что сижу на старом ядре, может, потом исправят.</blockquote>Когда будешь пробовать новое ядро и если проблема не уйдет, попробуй отключить тачпад таким спсособом<br /><strong># echo &#39;2:1.7.2&#39; &gt; /sys/bus/usb/drivers/usb/unbind</strong><br />и посмотри изменится ли нагрузка cpu , можно и проверить будет ли наблюдаться bind/unbind - вроде бы и не должно, но даже интересно, что будет.<br />Включить обратно - <strong># echo &#39;2:1.7.2&#39; &gt; /sys/bus/usb/drivers/usb/bind</strong>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201432"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Shatur/">
+                <span class="post-username">Shatur</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201432/">#</a>
+            4 года, 6 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4d/9f/4d9f0d3dcf63ba77a7f946a6cf39f1a3.png" alt="Shatur avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Shatur/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Shatur/posts/">
+                    323
+                </a>
+            </div>
+            <div>
+                Участник с: 26 марта 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br># echo &#39;2:1.7.2&#39; &gt; /sys/bus/usb/drivers/usb/unbind</blockquote>Вышло обновление systemd и я решил проверить, вдруг баг ушел. Ядро новое не вышло, все еще 4.14.18-1-lts. Но баг, к сожалению, остался(<br /><br />Никак не получается выключить устройство. Команда:<br /><pre><code># echo &#39;2:1.7.2&#39; &gt; /sys/bus/usb/drivers/usb/unbind</code></pre>выдает:<br /><pre><code>bash: echo: ошибка записи: Нет такого устройства</code></pre>хотя выполняю я это под root.<br />Но устройство такое есть, в этом выводе видно его:<br /><pre><code>lshw -businfo
+Bus info          Device    Class          Description
+======================================================
+                            system         M15x
+                            bus            Motherboard
+                            memory         118KiB BIOS
+                            bus            Motherboard
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="583b282d1868">[email&#160;protected]</a>                       processor      Intel(R) Core(TM) i7 CPU       Q 740  @ 1.73GHz
+                            memory         32KiB L1 cache
+                            memory         256KiB L2 cache
+                            memory         6MiB L3 cache
+                            memory         8GiB System Memory
+                            memory         SODIMM Synchronous [empty]
+                            memory         8GiB SODIMM DDR3 Synchronous 1333 MHz (0,8 ns)
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ec9c8f85acdcdcdcdc">[email&#160;protected]</a>:00:00.0            bridge         Core Processor DMI
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5525363c1565656565">[email&#160;protected]</a>:00:03.0            bridge         Core Processor PCI Express Root Port 1
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2252414b6212121212">[email&#160;protected]</a>:02:00.0            display        GK106M [GeForce GTX 765M]
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c9b9aaa089f9f9f9f9">[email&#160;protected]</a>:02:00.1            multimedia     GK106 HDMI Audio Controller
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ed9d8e84addddddddd">[email&#160;protected]</a>:00:08.0            generic        Core Processor System Management Registers
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="48382b210878787878">[email&#160;protected]</a>:00:08.1            generic        Core Processor Semaphore and Scratchpad Registers
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3c4c5f557c0c0c0c0c">[email&#160;protected]</a>:00:08.2            generic        Core Processor System Control and Status Registers
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7707141e3747474747">[email&#160;protected]</a>:00:08.3            generic        Core Processor Miscellaneous Registers
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a3d3c0cae393939393">[email&#160;protected]</a>:00:10.0            generic        Core Processor QPI Link
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="19697a705929292929">[email&#160;protected]</a>:00:10.1            generic        Core Processor QPI Routing and Protocol Registers
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b7c7d4def787878787">[email&#160;protected]</a>:00:19.0  enp0s25   network        82577LC Gigabit Network Connection
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e595868ca5d5d5d5d5">[email&#160;protected]</a>:00:1a.0            bus            5 Series/3400 Series Chipset USB2 Enhanced Host Controller
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="275254456716">[email&#160;protected]</a>             usb1      bus            EHCI Host Controller
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7c090f1e3c4d">[email&#160;protected]</a>:1                     bus            Integrated Rate Matching Hub
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8bfef8e9cbba">[email&#160;protected]</a>:1.4                   multimedia     Laptop_Integrated_Webcam_2M
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="80f0e3e9c0b0b0b0b0">[email&#160;protected]</a>:00:1b.0            multimedia     5 Series/3400 Series Chipset High Definition Audio
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="18687b715828282828">[email&#160;protected]</a>:00:1c.0            bridge         5 Series/3400 Series Chipset PCI Express Root Port 1
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e797848ea7d7d7d7d7">[email&#160;protected]</a>:00:1c.2            bridge         5 Series/3400 Series Chipset PCI Express Root Port 3
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b1c1d2d8f181818181">[email&#160;protected]</a>:00:1c.3            bridge         5 Series/3400 Series Chipset PCI Express Root Port 4
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b0c0d3d9f080808080">[email&#160;protected]</a>:07:00.0  wlp7s0b1  network        BCM43224 802.11a/b/g/n
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1d6d7e745d2d2d2d2d">[email&#160;protected]</a>:00:1d.0            bus            5 Series/3400 Series Chipset USB2 Enhanced Host Controller
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="364345547604">[email&#160;protected]</a>             usb2      bus            EHCI Host Controller
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a6d3d5c4e694">[email&#160;protected]</a>:1                     bus            Integrated Rate Matching Hub
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="acd9dfceec9e">[email&#160;protected]</a>:1.2                   input          Gaming Mouse G600
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6a1f19082a58">[email&#160;protected]</a>:1.4                   input          Mobiles
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b3c6c0d1f381">[email&#160;protected]</a>:1.7                   bus            BCM2046B1
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d8adabba98ea">[email&#160;protected]</a>:1.7.1                 input          Integrated Keyboard
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="364345547604">[email&#160;protected]</a>:1.7.2                 generic        Integrated Touchpad / Trackstick
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="740107163446">[email&#160;protected]</a>:1.7.3                 communication  Dell Wireless 370 Bluetooth Mini-card
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5e2e3d371e6e6e6e6e">[email&#160;protected]</a>:00:1e.0            bridge         82801 Mobile PCI Bridge
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8fffece6cfbfbfbfbf">[email&#160;protected]</a>:09:07.0            bus            R5C832 IEEE 1394 Controller
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="611102082151515151">[email&#160;protected]</a>:09:07.1            generic        R5C822 SD/SDIO/MMC/MS/MSPro Host Adapter
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b4c4d7ddf484848484">[email&#160;protected]</a>:09:07.2            generic        R5C592 Memory Stick Bus Host Adapter
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b1c1d2d8f181818181">[email&#160;protected]</a>:09:07.3            generic        xD-Picture Card Controller
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2a5a49436a1a1a1a1a">[email&#160;protected]</a>:00:1f.0            bridge         PM55 Chipset LPC Interface Controller
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1d1c2c8e191919191">[email&#160;protected]</a>:00:1f.2            storage        5 Series/3400 Series Chipset 6 port SATA AHCI Controller
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f9899a90b9c9c9c9c9">[email&#160;protected]</a>:00:1f.3            bus            5 Series/3400 Series Chipset SMBus Controller
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6616050f2656565656">[email&#160;protected]</a>:ff:00.0            bridge         Core Processor QuickPath Architecture Generic Non-Core Registers
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="18687b715828282828">[email&#160;protected]</a>:ff:00.1            bridge         Core Processor QuickPath Architecture System Address Decoder
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9cecfff5dcacacacac">[email&#160;protected]</a>:ff:02.0            bridge         Core Processor QPI Link 0
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="80f0e3e9c0b0b0b0b0">[email&#160;protected]</a>:ff:02.1            bridge         Core Processor QPI Physical 0
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cfbfaca68fffffffff">[email&#160;protected]</a>:ff:03.0            bridge         Core Processor Integrated Memory Controller
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="81f1e2e8c1b1b1b1b1">[email&#160;protected]</a>:ff:03.1            bridge         Core Processor Integrated Memory Controller Target Address Decoder
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a7d7c4cee797979797">[email&#160;protected]</a>:ff:03.4            bridge         Core Processor Integrated Memory Controller Test Registers
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4b3b28220b7b7b7b7b">[email&#160;protected]</a>:ff:04.0            bridge         Core Processor Integrated Memory Controller Channel 0 Control Registers
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0c7c6f654c3c3c3c3c">[email&#160;protected]</a>:ff:04.1            bridge         Core Processor Integrated Memory Controller Channel 0 Address Registers
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2757444e6717171717">[email&#160;protected]</a>:ff:04.2            bridge         Core Processor Integrated Memory Controller Channel 0 Rank Registers
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6313000a2353535353">[email&#160;protected]</a>:ff:04.3            bridge         Core Processor Integrated Memory Controller Channel 0 Thermal Control Registers
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f383909ab3c3c3c3c3">[email&#160;protected]</a>:ff:05.0            bridge         Core Processor Integrated Memory Controller Channel 1 Control Registers
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d9a9bab099e9e9e9e9">[email&#160;protected]</a>:ff:05.1            bridge         Core Processor Integrated Memory Controller Channel 1 Address Registers
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1464777d5424242424">[email&#160;protected]</a>:ff:05.2            bridge         Core Processor Integrated Memory Controller Channel 1 Rank Registers
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="116172785121212121">[email&#160;protected]</a>:ff:05.3            bridge         Core Processor Integrated Memory Controller Channel 1 Thermal Control Registers
+                            power          Intel Corporation
+                            system
+                            power          To Be Defined By O.E.M</code></pre>Т.е. вывод не зименился, вот в нем это устройство:<br /><pre><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0f7a7c6d4f3d">[email&#160;protected]</a>:1.7.2                 generic        Integrated Touchpad / Trackstick</code></pre>Подскажите, пожалуйста, что я не так делаю?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201434"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201434/">#</a>
+            4 года, 6 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Shatur</em><br>Никак не получается выключить устройство</blockquote>Судя по этому выводу<br /><blockquote><em>Shatur</em><br>bash: echo: ошибка записи: Нет такого устройства</blockquote>устройство уже отключено и, впринципе, тачпад не должен работать.<br />Вспомнил, у тебя же и в выводе идет постоянное переподключение bind/unbind - и то ли тачпад сдох, то ли, вероятнее всего,  как подметил <strong>Natrio</strong> не может загрузиться драйвер устройства.<br />Попробуй временно отключить физически тачпад до исправления бага.<br /><strike>Ну и можешь по экспериментировать - отключить клаву, может тачпад в этом случае нормально подключится. Но есть нюанс, если тачпад не подключится, то придется вырубать комп кнопкой питания. А потому, если надумаешь, то заверши все открытые приложения</strike><br />Виноват, это лишнее - когда писал, мой старый мозг посчитал, что тачпад это тоже клавиатура. Ну бывает со мной такое - пишу одно, думаю другое.<br /><br /><strong>EDIT 1</strong> - можно тупо попробовать выполнить <strong># echo &#39;2:1.7.2&#39; &gt; /sys/bus/usb/drivers/usb/<u>bind</u></strong> .... толку думаю не будет, но попробовать можно, хотя бы посмотреть, что напишет
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201436"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Shatur/">
+                <span class="post-username">Shatur</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201436/">#</a>
+            4 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4d/9f/4d9f0d3dcf63ba77a7f946a6cf39f1a3.png" alt="Shatur avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Shatur/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Shatur/posts/">
+                    323
+                </a>
+            </div>
+            <div>
+                Участник с: 26 марта 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>устройство уже отключено и, впринципе, тачпад не должен работать.</blockquote>При этом странно то, что тачпад работает, не смотря на bind/unbind в логах, магия какая-то. Наверное, Вы правы, скорее всего драйвер загрузится не может.<br /><blockquote><em>vasek</em><br>Попробуй временно отключить физически тачпад до исправления бага.</blockquote>Ох, попробую на днях.<br />У меня еще вот какая идея появилась. Могу ли я загрузится в Rescue mode и там его вырубить? А то нагрузка цп идет только после запуска ДЕ. Или в Rescue устройства не инициализируются?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201438"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vs220/">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201438/">#</a>
+            4 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vs220/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vs220/posts/">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А udev монитор показывает постоянное подключение?<br /><pre><code>udevadm monitor --property</code></pre>при подключении нового устройства выводит инфу
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201439"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Shatur/">
+                <span class="post-username">Shatur</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201439/">#</a>
+            4 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4d/9f/4d9f0d3dcf63ba77a7f946a6cf39f1a3.png" alt="Shatur avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Shatur/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Shatur/posts/">
+                    323
+                </a>
+            </div>
+            <div>
+                Участник с: 26 марта 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vs220</em><br>А udev монитор показывает постоянное подключение?</blockquote>Сейчас я откатился на старое ядро, как только выйдет обновление, сразу проверю)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201440"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201440/">#</a>
+            4 года, 6 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Shatur</em><br>Могу ли я загрузится в Rescue mode и там его вырубить? А то нагрузка цп идет только после запуска ДЕ. Или в Rescue устройства не инициализируются?</blockquote>Бесполезно. Можно только отключить всю шину 2:1.7 , но у тебя там сидит и клава и блютуз.<br />Я уже спрашивал, можешь ли подключить клаву в другое место, если сможешь и блютуз не нужен, то тогда можно всю шину.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201441"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Shatur/">
+                <span class="post-username">Shatur</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201441/">#</a>
+            4 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4d/9f/4d9f0d3dcf63ba77a7f946a6cf39f1a3.png" alt="Shatur avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Shatur/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Shatur/posts/">
+                    323
+                </a>
+            </div>
+            <div>
+                Участник с: 26 марта 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Бесполезно. Можно только отключить всю шину 2:1.7 , но у тебя там сидит и клава и блютуз.</blockquote>Получается, только одно устройство я выключить не смогу? А если до дисплейного менеджера это проделать?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201442"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201442/">#</a>
+            4 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Shatur</em><br>А если до дисплейного менеджера это проделать?</blockquote>Не в этом дело, а в том, что на шине 2:1.7 сидит 3 устройства<br /><pre><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bacfc9d8fa88">[email&#160;protected]</a>:1.7 bus BCM2046B1
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bdc8cedffd8f">[email&#160;protected]</a>:1.7.1 input Integrated Keyboard
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="790c0a1b394b">[email&#160;protected]</a>:1.7.2 generic Integrated Touchpad / Trackstick
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6d181e0f2d5f">[email&#160;protected]</a>:1.7.3 communication Dell Wireless 370 Bluetooth Mini-card</code></pre>и если эту шину отключить, то отключатся все устройства, сидящие на этой шине.<br />И еще не знаю что такое BCM2046B1? - а потому и писал раньше - странная схема подключения
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/18227/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747a44730de12de2',m:'ijoArbMbvOSmSwChSYNUxI3EWE5MJpUMyTUFqlqRO84-1662667209-0-AeS/wTsWvenVw2Q/GFkjf2hC8RU2yot90+PPwUKaJVLCCI4yZ4pta/nKb/6w2OocLJkVRmEINkaJzYmusRX2z192Sbt6mfdmRoRtMsq0ryrYo5EQaWjFq7hhkiAyR+RCycfhH78OFrchRkAqI63TSR4=',s:[0xd23a54da61,0x4c80a5de64],u:'/cdn-cgi/challenge-platform/h/g'};var _cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/cb/invisible.js?cb=747a44730de12de2',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

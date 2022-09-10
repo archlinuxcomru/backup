@@ -1,0 +1,1091 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        IDE против AHCI
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/12/">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>IDE против AHCI</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>IDE против AHCI</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155941"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/DeadMetaler/">
+                <span class="post-username">DeadMetaler</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155941/">#</a>
+            7 лет назад
+            
+                (отредактировано
+                
+                    7 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/fd/8bfdb52feaf4a48d730108419ad7b6a2.png" alt="DeadMetaler avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/DeadMetaler/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/DeadMetaler/posts/">
+                    166
+                </a>
+            </div>
+            <div>
+                Участник с: 11 августа 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Уже достаточно древняя тема, но возник вопрос.<br />Предыстория в том, что решил разогнать процесссор.<br /><br />Разогнать его можно только по шине, поднимаяя её частоту. Так вот особенность материнки или чего-то другого в том, что от 100 до 106 можно поднимать спокойно. Как только 107 и выше, то система не стартует, вроде как не находит накопители. В своё время уже этим занимался, долго гуглил и нашёл обзор, где говорится, чтоб поднимать частоты выше, пришлось переключить AHCI в IDE и переключить в последние SATA порты.<br />Сделал.<br />Теперь мне интересно, тем более у меня система на SSD и файлопомойка на HDD...<br />Какие минусы получаю я при переходе на IDE? Пишут про NCQ Trim и прочее.<br /><br />Смотрю dmesg<br /><br /><pre><code>dmesg | grep ahci
+[    0.800132] ahci 0000:00:11.0: version 3.0
+[    0.800354] ahci 0000:00:11.0: AHCI 0001.0300 32 slots 4 ports 6 Gbps 0xf impl SATA mode
+[    0.800357] ahci 0000:00:11.0: flags: 64bit ncq sntf ilck pm led clo pmp pio sxs
+[    0.801109] scsi host0: ahci
+[    0.801238] scsi host1: ahci
+[    0.801356] scsi host2: ahci
+[    0.801471] scsi host3: ahci
+</code></pre><br /><pre><code>dmesg | grep NCQ
+[    0.969624] ata5.00: 250069680 sectors, multi 16: LBA48 NCQ (depth 0/32)
+[    1.003057] ata6.00: 1465149168 sectors, multi 16: LBA48 NCQ (depth 0/32)
+</code></pre><br />Я так понимаю грузится в AHCI и NCQ работает. Это ядро программно как-то делает?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155946"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/elsonador/">
+                <span class="post-username">elsonador</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155946/">#</a>
+            7 лет назад
+            
+                (отредактировано
+                
+                    7 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c4/74/c4744210be47d6c1692ba03d7d1a5b83.png" alt="elsonador avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/elsonador/topics/">
+                    63
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/elsonador/posts/">
+                    996
+                </a>
+            </div>
+            <div>
+                Участник с: 09 апреля 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>lspci | grep -i ahci</strong> надо
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155948"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155948/">#</a>
+            7 лет назад
+            
+                (отредактировано
+                
+                    7 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            чтоб поднимать частоты выше, пришлось переключить AHCI в IDE???<br /><br />эт бред))(возможно конечно какое то совсем не каноничная ерессь. Но в целом бред)))
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155949"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/elsonador/">
+                <span class="post-username">elsonador</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155949/">#</a>
+            7 лет назад
+            
+                (отредактировано
+                
+                    7 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c4/74/c4744210be47d6c1692ba03d7d1a5b83.png" alt="elsonador avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/elsonador/topics/">
+                    63
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/elsonador/posts/">
+                    996
+                </a>
+            </div>
+            <div>
+                Участник с: 09 апреля 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Хренушки, это жестокая реальность. Тяжело поверить, но бывает.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155950"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155950/">#</a>
+            7 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Так а связь??(эт материнка одномоставая??, это же разные вещи))
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155952"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/elsonador/">
+                <span class="post-username">elsonador</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155952/">#</a>
+            7 лет назад
+            
+                (отредактировано
+                
+                    7 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c4/74/c4744210be47d6c1692ba03d7d1a5b83.png" alt="elsonador avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/elsonador/topics/">
+                    63
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/elsonador/posts/">
+                    996
+                </a>
+            </div>
+            <div>
+                Участник с: 09 апреля 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Есть, например, и такое: <strong>AHCI</strong> включено - через непродолжительное время все симптомы, что жёсткий диск сыплется. <strong>IDE</strong> включено - полный порядок. Какая связь - одним кетайцам известно.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155954"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155954/">#</a>
+            7 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Насколько я понимаю используется не реальный режим IDE, а режим эмуляции IDE — то есть SATA-контроллеры  позволяют работать в режиме эмуляции IDE для совместимости с операционными системами и программами, которые не поддерживают AHCI. Технология NCQ в этом случае не работает. И делается это через БИОС.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155968"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/binaryshadow/">
+                <span class="post-username">binaryshadow</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155968/">#</a>
+            6 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/de/3c/de3c388e2f57b6c49e7fe0bf2b2d118d.png" alt="binaryshadow avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/binaryshadow/topics/">
+                    16
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/binaryshadow/posts/">
+                    453
+                </a>
+            </div>
+            <div>
+                Участник с: 30 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Сколько лет уже пользуюсь AHCI, как для SSD так и для HDD и ни разу не знал об этом. Да еще и с разными ОС. Реально откровение.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155976"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/DeadMetaler/">
+                <span class="post-username">DeadMetaler</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155976/">#</a>
+            6 лет, 12 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 12 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/fd/8bfdb52feaf4a48d730108419ad7b6a2.png" alt="DeadMetaler avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/DeadMetaler/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/DeadMetaler/posts/">
+                    166
+                </a>
+            </div>
+            <div>
+                Участник с: 11 августа 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>elsonador</em><br><strong>lspci | grep -i ahci</strong> надо</blockquote><br />Это с IDE ничего не выдает.<br /><br />Тут кстати обнаружил, что с месяц назад я баловался этим переключением и так и забыл оставив в настройках IDE.<br /><br /> Вот уж где слепой тест. Никакой разницы не заметил, ничего не ускорилось и не замедлилось. Trim раз в неделю судя по журналу проходил успешно всегда. Что еще нужно тогда... Горячее переключение не требуется.<br /><br />Я этим вопросом давно задавался и тогда просто посчитал, что все эти статьи про триминг SSD только с AHCI, для винды расчитаны, а в линуксе и так и так работает.  Преимущество типа.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155988"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Vadim/">
+                <span class="post-username">Vadim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155988/">#</a>
+            6 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/72/22/7222132327ed41066e6514a2df7291c9.png" alt="Vadim avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Vadim/topics/">
+                    280
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Vadim/posts/">
+                    1912
+                </a>
+            </div>
+            <div>
+                Участник с: 20 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Не знаю как в Линуксе но в винде с этим AHCI в своё время намучился,практически каждый день ловил синий экран.Переключил в биос на IDE ,переустановил систему и про синий экран забыл.И никаких ,даже малейших преимуществ AHCI не даёт.Может если с секундомером неделю тестировать на полсекунды разницу в чём нибудь  и увидишь.<br />С тех пор как переключил на режим IDE больше не трогаю.И винду если кому по прсьбе устанавливаю первым делом переключаю на IDE.
+            
+                
+                    <div class="post-signature">
+                        Linux Forever!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/15171/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747af7ac3f5316c3',m:'6NYB3Sa5FVZBB27BSO9z6rVyK10aNipL7HVhwv4F8mY-1662674538-0-Affy/WxvGHOcVKpgI+xMv1TiLvCOqsSljUbFqBTe0m7pJ42nsvBPyB8DAtS2lqPcGfi49g4CvyI8Ja7Egarm2CO/NKpnx8sY21lsc+9ZAOZyH6+SoI0qqGAibSq1KcU0k8eSauNVnXiOTN5XnekQ8WQ=',s:[0xbe40832635,0x25ca6141fc],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

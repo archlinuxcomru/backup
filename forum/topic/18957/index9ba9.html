@@ -1,0 +1,1133 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18957/?page=3 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:43:12 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Conky и странная нагрузка на одно ядро
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/9/index.html">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Conky и странная нагрузка на одно ядро</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Conky и странная нагрузка на одно ядро</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index4658.html?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index9ba9.html?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="indexfdb0.html?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212289"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Koluchka/index.html">
+                <span class="post-username">Koluchka</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212289/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/7b/3f/7b3ffd725d47aa6f2d50f81b42dcad01.png" alt="Koluchka avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Koluchka/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Koluchka/posts/index.html">
+                    151
+                </a>
+            </div>
+            <div>
+                Участник с: 15 октября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Значит с большой долей вероятности можно предположить, что так называемой нагрузки на процессор нет и нет смысла ее мониторить.</blockquote><br />Какой-то странный у вас вывод, &quot;чего я не вижу, того не существует&quot; :) . Просто у меня довольно хороший вентилятор процнссора, который умеет менять свою скорость. В обычном состоянии температура процессора около 40 градусов и вентилятор может даже совсем остановиться, а под серьезной нагрузкой, например, когда я компилирую что-то большое вроде хромиума, вентилятор разгоняется на полную, и температура процессора при этом около 50 градусов. И что, это значит, что нагрузки нет? Еще как есть, вся система притормаживает!<br /><br />Я прекрасно понимаю, что точных значений нагрузки процессора добиться сложно, я и не использую абсолютные значения, мне достаточно приблизительных. А именно - если процессор совсем не занят, значит, можно запустить тяжелое многопоточное приложение, если занято несколько ядер, но не все, значит, можно продолжать работать в обычном режиме и даже видео запустить, если занято одно ядро, значит, можно занять ещё несколько, если занято все на полную, лучше сходить кофейку выпить. Часто у меня в фоне рендерятся несколько разных видео на разных ядрах, а иногда что-нибудь собирается многопоточно на всем процессоре сразу, и все это я мониторю одним взглядом на коньки. Так что мне представление нагрузки каждого ядра нужно, я этим пользуюсь!<br /><br />Извините за много букв)))<br /><br />PS Статья довольно интересная, но для меня лишена практического смысла, какая мне разница, показывает монитор фактическую нагрузку процессора или бутылочное горлышко в памяти? Все равно я рассматриваю это именно как комплексное показание загруженности всей системы.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212290"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/akorop/index.html">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212290/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/akorop/topics/index.html">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/akorop/posts/index.html">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>рекомендую ориентироваться на температуру</blockquote>Температура зависит от вентилятора, который может работать с разной скоростью, так что очень небольшая разница в температуре может быть следствием большой разницы в нагрузке. Но, поскольку скорость определяется температурой, в качестве индикатора загрузки проще всего использовать интенсивность гудения вентилятора :)<br />Я в conky вывожу главных виновников загрузки и процессора, и памяти (главный - внизу):<img src="http://i.piccy.info/i9/d87717375e72552cbde4fcf0a42bc841/1545931615/2533/1291515/1.png"><br />Конфиг загрузки:<pre><code>conky.config = {--#############################################
+-- conky configuration
+--#############################################
+
+	own_window = true,
+	own_window_type = &#39;override&#39;,
+	own_window_transparent = true,
+	own_window_argb_visual = true,
+	double_buffer = true,
+	draw_shades = false,
+
+	use_xft = false,
+	minimum_width = 180, minimum_height = 40,
+	maximum_width = 180,
+	alignment = &#39;bottom_left&#39;,
+	gap_x = 268,
+	gap_y = 0,
+--#############################################
+--  Output
+--#############################################
+};
+
+conky.text = [[
+${color 103838}${font -*-liberation mono-medium-r-*-*-28-*-*-*-*-*-*-*}${goto 30}Mem ${memperc}%\
+${font sans-serif:normal:size=8}${goto 5}\
+${color grey}${top_mem name 4}${alignr}${color white}${top_mem mem 4}
+${color grey}${top_mem name 3}${alignr}${color white}${top_mem mem 3}
+${color grey}${top_mem name 2}${alignr}${color white}${top_mem mem 2}
+${color grey}${top_mem name 1}${alignr}${color white}${top_mem mem 1}
+${color grey}${memgraph 12,180 FFFFFF FFFFFF}
+]];</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212291"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212291/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>akorop</em><br>Но, поскольку скорость определяется температурой, в качестве индикатора загрузки проще всего использовать интенсивность гудения вентилятора :)</blockquote>Я обороты чувствую на слух. а также знаю ступеньки показаний температуры при достижении которых вентилятор переходит на следующий уровень.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212292"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/zsx/index.html">
+                <span class="post-username">zsx</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212292/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/zsx/topics/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/zsx/posts/index.html">
+                    145
+                </a>
+            </div>
+            <div>
+                Участник с: 08 августа 2018
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня когда-то был сюрпрайз:<br />на двухъядерном отображалось три ядра до тех пор, пока не прочитал, что cpu0 is the total usage. :))
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212293"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212293/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Koluchka</em><br>Просто у меня довольно хороший вентилятор процессора, который умеет менять свою скорость.</blockquote>То что хороший вентилятор, это хорошо.<br /><blockquote><em>Koluchka</em><br>вентилятор разгоняется на полную, и температура процессора при этом около 50 градусов.</blockquote>А вот это на мой взгляд не есть хорошо - при длительной работе на максимальных оборотах температура должна быть близка к <strike>критеческой</strike> максимальной (Tcase, Tjunction), а вот какая она у тебя, смотри в документации (должно быть два значения, например, мои значения - Tjunction = 85, Tcrit = 128). Стараюсь не допускать длительной работы на 80 град, нормальная 50-55.<br />И не понял два момента<br />1. При высоких значениях показаний cpu (измеренных conky) наблюдается торможение?<br />2. Если отключить conky торможения всеравно наблюдаются?<br />И разумеется не понятно - почему это не видят нормальные утилиты, которым доверия больше, чем conky.<br />И последнее, если действительно наблюдается торможение системы, то нужно искать причину.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212294"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212294/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>zsx</em><br>cpu0 is the total usage</blockquote>Если не изменяет память, то в conky cpu0 означает total - суммарное
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212295"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212295/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Koluchka</em><br>Еще как есть, вся система притормаживает!</blockquote>Не заметил эту фразу. Тогда точно нужно искать, виновника.<br /><br /><strong>EDIT 1</strong> - А не пробовала смотреть чем заняты cpu, например, так dstat --cpu -C 0,1,2,3 (при желании можно добавить и total - dstat --cpu -C 0,1,2,3,total)
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212298"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Koluchka/index.html">
+                <span class="post-username">Koluchka</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212298/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/7b/3f/7b3ffd725d47aa6f2d50f81b42dcad01.png" alt="Koluchka avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Koluchka/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Koluchka/posts/index.html">
+                    151
+                </a>
+            </div>
+            <div>
+                Участник с: 15 октября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Не заметил эту фразу. Тогда точно нужно искать, виновника.</blockquote><br />Или это я так непонятно пишу, или это вы ну очень невнимательно читаете :) Торможение системы наблюдается когда система по горло занята, например, компиляцией на всех ядрах. Тогда стопроцентная загрузка всех ядер показывается и в conky, и в прочих утилитах, htop, top, qps. И да, если в этом случае conky выключить, торможение все равно будет продолжаться))) А баг, описанный в первом посте, систему не тормозит, и вообще никак не проявляется, кроме как в коньках.<br /><br /><blockquote><em>vasek</em><br>при длительной работе на максимальных оборотах температура должна быть близка к максимальной</blockquote><br />Не поняла, это почему? Вроде система охлаждения должна поддерживать не максимальную температуру, а оптимальную? Tjunction это вроде бы температура, при которой начинается троттлинг, доводить до нее хорошая система охлаждения никак не должна, а уж тем более до критической.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212300"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212300/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Koluchka</em><br>Вроде система охлаждения должна поддерживать не максимальную температуру, а оптимальную? Tjunction это вроде бы температура, при которой начинается троттлинг, доводить до нее хорошая система охлаждения никак не должна,</blockquote>Оптимальная температура понятие относительное. Не ставят на ноутбуки такие вентиляторы, которые при полной загруженности процессора обеспечат нормальную температуру при его длительной работе.<br />Как правило вентиляторы настраивают так, что максимальные обороты достигаюся на последней ступеньке перед максимальной температурой, выше которой уже может начаться тротлинг (снижение производительности процессора за счет пропуска тактов) и обычно не расчитывают длительную работу процессора при его полной загруженности, это же ноутбук.<br /><br />UPD - Tjunction Max обычно в пределах 85 -95.<br />В части AMD - нашел у себя в одной из статей<br /><pre><code>У Ryzen максимальная температура составляет 95°, при ней начинается дросселирование тактов. Но по первым тестам процессоры работали даже на 105° без троттлинга. Позже сотрудники AMD рассказали, что намеренно завышают температуру на 20°, и на данный момент это пофикшено.</code></pre><br /><blockquote><em>Koluchka</em><br>Или это я так непонятно пишу, или это вы ну очень невнимательно читаете :)</blockquote>Пишешь понятно, просто я уже многое забываю, когда начинаю писать. Возможно что и сейчас, что-нибудь да забыл, хотя проверял трижды и всегда добавлял.<br /><blockquote><em>Koluchka</em><br>Торможение системы наблюдается когда система по горло занята, например, компиляцией на всех ядрах.</blockquote>Значит у тебя проблем нет, а чтобы оцениться как с нагрузкой ядер, запусти для надежности dstat или что похожее, если conky врет.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-212302"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Koluchka/index.html">
+                <span class="post-username">Koluchka</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/212302/index.html">#</a>
+            3 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/7b/3f/7b3ffd725d47aa6f2d50f81b42dcad01.png" alt="Koluchka avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Koluchka/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Koluchka/posts/index.html">
+                    151
+                </a>
+            </div>
+            <div>
+                Участник с: 15 октября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Не ставят на ноутбуки такие вентиляторы, которые при полной загруженности процессора обеспечат нормальную температуру.</blockquote><br />Понятно, вот только у меня вовсе не ноутбук, а обычный десктоп))) И обороты вентилятора регулируются не скачками, а плавно, вот сейчас, наапример - 1991 RPM, два ядра загружено, температура процессора 45 градусов.<br /><br /><blockquote><em>vasek</em><br>запусти для надежности dstat или что похожее, если conky врет.</blockquote><br />Именно это я и собираюсь сделать, когда баг снова появится. Именно про это я в первом посте и спрашивала, помните? Про дополнительные мониторинговые утилиты.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index4658.html?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index9ba9.html?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="indexfdb0.html?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index8962-2.html?next=/forum/topic/18957/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18957/?page=3 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:43:12 GMT -->
+</html>

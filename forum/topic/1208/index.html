@@ -1,0 +1,961 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [Решено]Обработка php/python в nginx
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[Решено]Обработка php/python в nginx</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[Решено]Обработка php/python в nginx</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11947"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/redVi/">
+                <span class="post-username">redVi</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11947/">#</a>
+            10 лет, 1 месяц назад
+            
+                (отредактировано
+                
+                    9 лет, 11 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/95/48/95487f0c49ae21d7c82870966b5d4443.png" alt="redVi avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/redVi/topics/">
+                    17
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/redVi/posts/">
+                    396
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Как-то не получается с nginx'ом подружиться. Не обрабатывает, либо не распознаёт php-файлы. Вики не добавила просветления.<br/>Что установлено:<br/>nginx php php-fpm spawn-fcgi-php<br/>Конфиг nginx: <br/><div class="code"><pre>location ~ \.php$ {
+ 66            # root           html;
+ 67             root            /srv/http;
+ 68             fastcgi_pass   127.0.0.1:9000;
+ 69             #fastcgi_pass   unix:/var/run/php-fpm/php-fpm.sock;
+ 70             #fastcgi_pass   unix:/var/run/spawn-fcgi-php.sock;
+ 71             fastcgi_index  index.php;
+ 72             fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+ 73             #include        fastcgi_params;
+ 74             include         fastcgi.conf;
+ 75 
+ 76 
+ 77             fastcgi_param  QUERY_STRING       $query_string;
+ 78             fastcgi_param  REQUEST_METHOD     $request_method;
+ 79             fastcgi_param  CONTENT_TYPE       $content_type;
+ 80             fastcgi_param  CONTENT_LENGTH     $content_length;
+fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;
+ 83             fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_    name;
+ 84             fastcgi_param  REQUEST_URI        $request_uri;
+ 85             fastcgi_param  DOCUMENT_URI       $document_uri;
+ 86             fastcgi_param  DOCUMENT_ROOT      $document_root;
+ 87             fastcgi_param  SERVER_PROTOCOL    $server_protocol;
+ 88 
+ 89             fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;
+ 90             fastcgi_param  SERVER_SOFTWARE    nginx;
+ 91 
+ 92             fastcgi_param  REMOTE_ADDR        $remote_addr;
+ 93             fastcgi_param  REMOTE_PORT        $remote_port;
+ 94             fastcgi_param  SERVER_ADDR        $server_addr;
+ 95             fastcgi_param  SERVER_PORT        $server_port;
+ 96             fastcgi_param  SERVER_NAME        $server_name;
+ 97 
+ 98        }</pre></div><br/>При  <em>fastcgi_pass   127.0.0.1:9000;</em> - читает только html, .php и вставки .php в html страницу игнорирует<br/>При <em>fastcgi_pass   unix:/var/run/php-fpm/php-fpm.sock;</em> - .php не видит (file not found), вставки .php в html страницу игнорирует<br/>При <em>fastcgi_pass   unix:/var/run/spawn-fcgi-php.sock;</em> - .php не обрабатывает (The page you are looking for is temporarily unavailable.<br/>Please try again later), вставки .php в html страницу игнорирует<br/>С nginx встречаюсь впервые, хотелось бы использовать без apache. Если кто-то с ним успешно работал на арче, подскажите решение
+            
+                
+                    <div class="post-signature">
+                        HP Pavilion g6-1054er<br />DualCore Intel Core i5-2410M, 8GB DDR3 SDRAM, Mobile Intel HD Graphics, ATI Radeon HD 6470M
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11948"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/cryptspirit/">
+                <span class="post-username">cryptspirit</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11948/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/cryptspirit/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/cryptspirit/posts/">
+                    262
+                </a>
+            </div>
+            <div>
+                Участник с: 11 июня 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Настройки виртуального сервера Nginx (одна из минимальных настроек):<br/><div class="code"><pre>location ~ \.php$ {
+        include /etc/nginx/fastcgi_params;
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $document_root;
+        }
+    }</pre></div>С условием что скрипты находятся в document_root. Я рекомендую через сокет а не TCP. php-fpm удобнее управлять и настраивать нежили spawn-fcgi-php, а на деле то же самое.<br/><br/>Осталось правильно настроить php-fpm. Желательно создать отдельный пул, и не протупить с настройкой группы и пользователя для процессов php. <br/><br/>Для питона используйте uWSGI. Конфиг nginx:<br/><br/><div class="code"><pre>location /mypython {
+	uwsgi_pass unix:/tmp/wsgi.sock;
+	include uwsgi_params;
+	uwsgi_param             UWSGI_CHDIR             /srv/myhost;
+	}</pre></div>Остальное читаем маны по настройке uWSGI.<br/><br/>P.S. Я запускаю uWSGI через supervisor. Мне проще было написать свои конфиги чем включать libastral)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11949"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/redVi/">
+                <span class="post-username">redVi</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11949/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/95/48/95487f0c49ae21d7c82870966b5d4443.png" alt="redVi avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/redVi/topics/">
+                    17
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/redVi/posts/">
+                    396
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Спасибо! Буду пробовать
+            
+                
+                    <div class="post-signature">
+                        HP Pavilion g6-1054er<br />DualCore Intel Core i5-2410M, 8GB DDR3 SDRAM, Mobile Intel HD Graphics, ATI Radeon HD 6470M
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11950"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/redVi/">
+                <span class="post-username">redVi</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11950/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/95/48/95487f0c49ae21d7c82870966b5d4443.png" alt="redVi avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/redVi/topics/">
+                    17
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/redVi/posts/">
+                    396
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Забываю отписаться и выразить свою благодарность за помощь. С php-fpm была небольшая проблема при обработке php в html-документе, решилась прописыванием строки security.limit_extensions = .php .html в php-fpm.conf.
+            
+                
+                    <div class="post-signature">
+                        HP Pavilion g6-1054er<br />DualCore Intel Core i5-2410M, 8GB DDR3 SDRAM, Mobile Intel HD Graphics, ATI Radeon HD 6470M
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11951"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11951/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            nginx хорош для статики и как фронтенд к апачу&#8230; <br/>Но что бы к нему php прикручивать это изврат&#8230;ИМХО
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11952"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11952/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br/>nginx хорош для статики и как фронтенд к апачу&#8230; <br/>Но что бы к нему php прикручивать это изврат&#8230;ИМХО</blockquote>NginX предназначен для высоконагруженных либо ресурсодефицитных серверов, на которых Апач даже с фронтэндом сожрёт всю память и повесится, поскольку выделяет её вагонами, форкаясь на каждый запрос.<br/>php-fpm с nginx позволяет добиться ограничения количества процессов php и выстраивания запросов в очередь, кроме того, можно запускать php не от пользователя вер-сервера, а от другого, в том числе разного для каждого хоста, а для особых параноиков – каждого в отдельном чруте :)<br/><br/>А изврат это только для новичков и веб-разработчиков, которым совсем не обязательно заниматься такими сложностями у себя дома :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11953"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/redVi/">
+                <span class="post-username">redVi</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11953/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/95/48/95487f0c49ae21d7c82870966b5d4443.png" alt="redVi avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/redVi/topics/">
+                    17
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/redVi/posts/">
+                    396
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>nafanja</strong>, <strong>Natiro</strong>, да всё гораздо хуже! Была необходимость тестить два сайта: один на пыхах, другой с django. Django с апачевским модулем ещё уметь надо подружить, а апач ради одного &ldquo;php-шного&rdquo; сайта заводить - зачем, если nginx может справиться? Связка nginx + uwsgi настраивается проще, как по мне. Вот и извращаюсь :)
+            
+                
+                    <div class="post-signature">
+                        HP Pavilion g6-1054er<br />DualCore Intel Core i5-2410M, 8GB DDR3 SDRAM, Mobile Intel HD Graphics, ATI Radeon HD 6470M
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11954"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11954/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            Natrio, вот я про то и говорю что изврат. Так как большинство движков и фрейвоков активно юзают плюшки апача, а найти хостинг с чистым nginx и движ для сайта поддерживающий хотя бы чпу под nginx практически не реально. nginx имеет смысл юзать только под конкретную задачу высоконагруженного специально заточенного проекта. Ну или как в данном случае ли ж бы заработал Django )))
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11955"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11955/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ну для меня nginx это средство исправления одного недостатка как минимум апача, т.е. без него юзать хоть както нагружаемый проект на апаче не особо выгодно, но и юзать этот прокси как серверное решение для веб задач, ну также, если для себя и двух соседей да, когда много не нужно, но в остальном такой же малополезный способ. Так что я за nafanja.
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/1208/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747a72e92d893a65',m:'Y4DwU6dLAM4_djjLOa87fhLq7kmf1BjHXxyv5UmThHc-1662669109-0-AVJ4IWSo/x7Zc9Gu3FU0DsJnCu4l4VqV+Gf7GtqhMRaPWx/xz0PzXc/5DiY1rtu9iLvmFnkyEK3L5yEw5G5gmZEdtrZ0tM64e6kY1SJnMBIXKIzx7W6Vy+SmWqHgu2AguJGRTUrbr3d+hkiLzLzmvPk=',s:[0x59558e2031,0x3b6ea00577],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

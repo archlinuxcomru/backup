@@ -1,0 +1,732 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20266/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 07:53:18 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [РЕШЕНО] Достижение нормальной работы firejail и apparmor.
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/9/index.html">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[РЕШЕНО] Достижение нормальной работы firejail и apparmor.</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[РЕШЕНО] Достижение нормальной работы firejail и apparmor.</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+            
+
+<div class="poll">
+  <h2>Опрос</h2>
+  <table class="table table-bordered poll">
+    <thead>
+    <tr class="poll-question">
+      <th colspan="2">
+        Вы используете подобные программы для выхода в Интернет?
+      </th>
+    </tr>
+    </thead>
+
+    <tbody class="poll-answers">
+    
+      
+        <tr class="poll-answer">
+          <td colspan="2">Да.</td>
+        </tr>
+      
+        <tr class="poll-answer">
+          <td colspan="2">Нет.</td>
+        </tr>
+      
+        <tr class="poll-answer">
+          <td colspan="2">Не всегда.</td>
+        </tr>
+      
+        <tr class="poll-answer">
+          <td colspan="2">Ни один из предложенных ответов не подходит.</td>
+        </tr>
+      
+    
+    </tbody>
+  </table>
+</div>
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-235888"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/azaqthoth/index.html">
+                <span class="post-username">azaqthoth</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/235888/index.html">#</a>
+            1 год, 10 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/azaqthoth/topics/index.html">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/azaqthoth/posts/index.html">
+                    112
+                </a>
+            </div>
+            <div>
+                Участник с: 08 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>в части firejail - ничего сказать не могу &#8230; не нравится мне эта примочка &#8230;</blockquote><strong>Аpparmor</strong> включен в дистрибутив (например) ubuntu, что предназначен изначально для бытовых персональных компьютеров, на замену windows. (Насколько я понимаю) Я же вижу в нём обеспечение безопасности работы главным образом серверных приложений. И, насколько я понимаю, ubuntu из коробки содержит много чего &quot;на всякий случай&quot;. (Известно, это замедляет машину). У меня простой компьютер, just for entertainment (извините), спрятанный за провайдерским роутером, никакой ценной для других пользователей Интернета информации не содержит, да и встраивать в мою систему некий активный вредоносный программный код, думаю, несообразно и проблематично.<br />Загружать модуль безопасности в ядро значит замедлять, включать сервис безопасности в systemd — замедлять подавно.<br />Исходя из таких соображений мне понравилась идея &quot;песочницы&quot;. Почему песочница требует установленного в систему <strong>apparmor</strong> (пусть даже не запущенного) я не знаю, значит, так надо. Но ведь на глаз никакой разницы работы браузеров не видно, поэтому можно пожертвовать и &quot;песочницей&quot;. Единственное, она может запускать приложения так, чтобы не оставлять никаких следов на жестком диске и что-то подобное.<br />Благодарю за внимание.
+            
+                
+                    <div class="post-signature">
+                        немного денег и не попадать за решётку вот и всё, что требуется для жизни
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-235901"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/azaqthoth/index.html">
+                <span class="post-username">azaqthoth</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/235901/index.html">#</a>
+            1 год, 10 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/azaqthoth/topics/index.html">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/azaqthoth/posts/index.html">
+                    112
+                </a>
+            </div>
+            <div>
+                Участник с: 08 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>reboot - при перегрузке зашел в меню grub и прописал apparmor=1 security=apparmor</blockquote><pre><code>systemctl status apparmor.service
+● apparmor.service - Load AppArmor profiles
+     Loaded: loaded (/usr/lib/systemd/system/apparmor.service; enabled; vendor preset: disabled)
+     Active: active (exited)</code></pre>Действительно всё работает. (Дело в перезагрузке. Я <em>сначала</em> установил параметры ядра, перезапустил систему и после установил и запустил apparmor.service.)<br /><br />Добавил:<br />Нет, не в перезагрузке. После того, как попытался интегрировать firejail, сервис снова не запускается.<br />Команды <strong>apparmor_parser -C firejail-default</strong> и <strong>-R</strong> отвечают, что такого файла нет. Я действительно удалил такой файл, после этого <strong>apparmor.service</strong> нормально запустился.
+            
+                
+                    <div class="post-signature">
+                        немного денег и не попадать за решётку вот и всё, что требуется для жизни
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-235907"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vall/index.html">
+                <span class="post-username">vall</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/235907/index.html">#</a>
+            1 год, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/75/16/7516abe53f0b63051ad4cbbbc3b45af7.png" alt="vall avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vall/topics/index.html">
+                    45
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vall/posts/index.html">
+                    1786
+                </a>
+            </div>
+            <div>
+                Участник с: 28 марта 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Одно время пробовал использовать firejail , но как-то не зашло. А почти четрые года назад, когда приложение подверглось <a href="https://www.opennet.ru/opennews/art.shtml?num=45824">критике</a>, отказался от этой идеи полностью.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-235973"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/azaqthoth/index.html">
+                <span class="post-username">azaqthoth</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/235973/index.html">#</a>
+            1 год, 10 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/azaqthoth/topics/index.html">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/azaqthoth/posts/index.html">
+                    112
+                </a>
+            </div>
+            <div>
+                Участник с: 08 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vall</em><br>отказался от этой идеи полностью.</blockquote>А сейчас используете &quot;песочницу&quot;?<br /><blockquote><em>azaqthoth</em><br>После того, как попытался интегрировать firejail, сервис снова не запускается.</blockquote>Сегодня <strong>firejail</strong> обновился, создал файл firejail-default в папке /etc/apparmor.d (который я удалил ранее). &quot;sudo aa-status&quot; показывает загруженные 50 профилей, среди них — firejail. Теперь больше нет зомби процессов после выполнения &quot;firejail --apparmor google-chrome-stable %U &amp;&quot;. Кажется, всё работает, как предусмотрено.<br />Теперь удалю ненужные apparmor профили командой apparmor_parser -R, и будет то, что написано в названии темы. Я надеюсь)
+            
+                
+                    <div class="post-signature">
+                        немного денег и не попадать за решётку вот и всё, что требуется для жизни
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-235978"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vall/index.html">
+                <span class="post-username">vall</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/235978/index.html">#</a>
+            1 год, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/75/16/7516abe53f0b63051ad4cbbbc3b45af7.png" alt="vall avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vall/topics/index.html">
+                    45
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vall/posts/index.html">
+                    1786
+                </a>
+            </div>
+            <div>
+                Участник с: 28 марта 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>azaqthoth</em><br>А сейчас используете &quot;песочницу&quot;?</blockquote>Нет, не использую.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index2679.html?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index4658.html?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index1eee.html?next=/forum/topic/20266/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20266/?page=2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 07:53:18 GMT -->
+</html>

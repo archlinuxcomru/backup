@@ -1,0 +1,1088 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20418/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:13:54 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        BUG: kernel NULL pointer dereference
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/12/index.html">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>BUG: kernel NULL pointer dereference</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>BUG: kernel NULL pointer dereference</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-238634"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/safocl/index.html">
+                <span class="post-username">safocl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/238634/index.html">#</a>
+            1 год, 8 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/safocl/topics/index.html">
+                    121
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/safocl/posts/index.html">
+                    1570
+                </a>
+            </div>
+            <div>
+                Участник с: 08 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            имеется арч, i3wm, i5 3330, nvidia gtx 1650, drivers nvidia 460.27<br />на радостях обновился до беты через АУР...<br /><br />но во время поигрывания в европку комп просто завис и не реагировал ни на что -- даже на alt+ctrl+Fx<br /><br />после ребута прочел <a href="http://ix.io/2JkZ">логи</a> и чот я снова думаю чо енто все нвидиа драйвер виновен...<br />кто нить может объяснить чо там произошло по логам? -- то что какая то ошибка связанная с разыменованием нулевого указателя я и так понял из логов... но как она привела к таким последствиям?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-238638"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/238638/index.html">#</a>
+            1 год, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>safocl</em><br>думаю чо енто все нвидиа драйвер виновен&#8230;</blockquote>Ясно одно, что перед ошибкой вызывалась функция/модуль nvidia. Что там произошло конкретно, нужно смотреть дамп падения, а это, считай, не возможно.<br />Можно еще отметить, что ошибка в user space (ядро не при делах) и что то там не понятное с процессом PID=769, для работы с которым и вызывался модуль nvidia.<br />Раз получил OOPS, нужно было выжать максимум информации из этого (распределение памяти, список процессов, зависшие процессы), хотя бы мог оцениться, что это за процесс PID=769.<br /><br /><strong>PS</strong> - а вообще, рекомендую почитать расшифровку малых дампов OOPS, kernel panic
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-238640"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/238640/index.html">#</a>
+            1 год, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            а на стандартном ядре и на лтс, ошибка тоже появляется?
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-238642"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/238642/index.html">#</a>
+            1 год, 8 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Сначала тоже подумал на ядро (linux-zen), но больше склоняюсь, что к этому имеет отношение <strong>supervisor</strong>.<br />При нормальном малом дампе обычно сразу после строки  <strong>BUG</strong> должна идти строка с указанием <strong>IP</strong> (указатель инструкции в момент неисправности), типа такого (осталось из старых логов)<br /><pre><code>[   31.659749] BUG: unable to handle kernel NULL pointer dereference at           (null)
+[   31.662668] IP: [&lt;ffffffff8139f166&gt;] sysrq_handle_crash+0x16/0x20
+[   31.662668] PGD 3bfb9067 PUD 368a7067 PMD 0
+[   31.662668] Oops: 0002 [#1] SMP</code></pre>а у <strong>safocl</strong> картинка другая<br /><pre><code>kernel: BUG: kernel NULL pointer dereference, address: 0000000000000020
+kernel: #PF: supervisor read access in kernel mode
+kernel: #PF: error_code(0x0000) - not-present page
+kernel: PGD 8000000212141067 P4D 8000000212141067 PUD 20507d067 PMD 0
+kernel: Oops: 0000 [#1] PREEMPT SMP PTI</code></pre>правда никогда не приходилось анализировать с этим <strong>supervisor</strong> - может оно так и должно быть ....<br />А вообще зачем нужен этот <strong>supervisor</strong> ???
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-238659"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/safocl/index.html">
+                <span class="post-username">safocl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/238659/index.html">#</a>
+            1 год, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/safocl/topics/index.html">
+                    121
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/safocl/posts/index.html">
+                    1570
+                </a>
+            </div>
+            <div>
+                Участник с: 08 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>А вообще зачем нужен этот supervisor ???</blockquote>если чесна я ваще не понимаю чо тут имеется ввиду под супервизором.<br /><blockquote><em>nafanja</em><br>а на стандартном ядре и на лтс, ошибка тоже появляется?</blockquote>я хз -- но енто именно после обновы дров так крашнулась система -- проявлялось ентот единственный раз за несколько дней всего. Посему о воспроизводимости говорить низя -- но склоняюся к ошибке в драйвере нвидии... -- все же после обновы его так всутулилося...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-238660"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/238660/index.html">#</a>
+            1 год, 8 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>safocl</em><br>если чесна я ваще не понимаю чо тут имеется ввиду под супервизором.</blockquote>Разобрался:  просто давно не видел дамп OOPS новых cpu ….  строчка в логе<br /> <pre><code>supervisor read access in kernel mode</code></pre>говорит о том, что твой cpu имеет технологию SMAP (Supervisor Mode Access Prevention) - проверить можно по наличию флага в выводе<br /><pre><code>grep --color=auto smap /proc/cpuinfo</code></pre><br /><strong>EDIT 1</strong> - в части<br /><blockquote><em>safocl</em><br>но склоняюся к ошибке в драйвере нвидии&#8230; &ndash; все же после обновы его так всутулилося&#8230;</blockquote>не все так однозначно - прямого бага в драйвере может и не быть, а вот иметь косвенное отношение к OOPS вполне может. Как пишут в DOC:<br /><pre><code> ... вполне возможно, что недавно выгруженный модуль не очистился и оставил некоторый остаток (например, таймер или обратный вызов) в ядре - что является классическим случаем для oops или паники</code></pre>А последним выгруженным модулем, согласно логу, и был модуль nvidia.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-238665"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/safocl/index.html">
+                <span class="post-username">safocl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/238665/index.html">#</a>
+            1 год, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/safocl/topics/index.html">
+                    121
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/safocl/posts/index.html">
+                    1570
+                </a>
+            </div>
+            <div>
+                Участник с: 08 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>говорит о том, что твой cpu имеет технологию SMAP (Supervisor Mode Access Prevention) - проверить можно по наличию флага в выводе</blockquote><img src="https://i.imgur.com/bgWebwy.png"> -- нету такого вроде ...<br /><blockquote><em>vasek</em><br>А последним выгруженным модулем, согласно логу, и был модуль nvidia.</blockquote>ааа ну вот енто я думаю может и было... пока больше трабблов нету вроде...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-238672"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/238672/index.html">#</a>
+            1 год, 8 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>safocl</em><br>нету такого вроде &#8230;</blockquote>Вполне возможно, что данный флаг не высвечивается, нужно смотреть полный вывод<br /><strong>cpuid -1 | grep -i SMAP</strong><br /><pre><code>      SMAP: supervisor mode access prevention  = false</code></pre>даже стало интересно - что там у тебя покажет<br /><br /><strong>PS</strong> - cpuid в AUR, но если стоит пакет msr-tools, то нужно его удалить<br /><br /><strong>EDIT 1</strong> - не обязательно SMAP, а что то другое, связанное с supervisor, например, SMEP<br /><strong>cpuid -1 | grep -i smep</strong><br /><pre><code>      SMEP supervisor mode exec protection     = false</code></pre>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-238679"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/safocl/index.html">
+                <span class="post-username">safocl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/238679/index.html">#</a>
+            1 год, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/safocl/topics/index.html">
+                    121
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/safocl/posts/index.html">
+                    1570
+                </a>
+            </div>
+            <div>
+                Участник с: 08 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>cpuid -1 | grep -i SMAP</blockquote><img src="https://i.imgur.com/Edj8bgh.png"> -- как то так...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-238682"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/238682/index.html">#</a>
+            1 год, 8 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ну вот, оказался прав. Но по идее должно сработать и grep --color=auto smep /proc/cpuinfo , но cpuid мне нравится больше, хотя это дело вкуса.<br />Ядро поддерживает эти технологии smap и smep , а если их поддерживает и cpu, то их можно и отключить, используя опции: <strong>nosmap</strong>, <strong>nosmep</strong> - отключив тем самым режим supervisor .... можешь поэкспериментировать в части изменения быстродействия ... ломать тебя вряд ли кто будет.<br /><br /><strong>PS</strong> - не исключаю, что этот supervisor имел какое то отношение к OOPS ... что то пошло не так с областями памяти kernel и userspace<br /><pre><code>SMEP (Supervisor Mode Execution Prevention — предотвращение исполнения кода в режиме супервизора) - это технология, разработанная компанией Intel для защиты компьютера от хакерских атак и других угроз, использующих так называемый &quot;режим супервизора&quot;.
+Режим супервизора – это привилегированный режим работы процессора, который используется ядром операционной системы. Этот режим также называют режимом ядра. Противоположным ему является режим пользователя, в котором работают пользовательские приложения.
+Используя уязвимости режима ядра, опытный хакер способен получить полный контроль над системой. Но если на компьютере используется SMEP, пользовательские приложения теряют возможность выполнять привилегированные операции, например, получать доступ к портам ввода-вывода, управляющим регистрами процессора, и др. Кроме того, память, используемая в режиме ядра, защищается от доступа из пользовательского режима.
+Любая попытка выполнить код, находящийся в памяти пользовательского приложения, приводит к ошибке страницы и компьютер &quot;выпадает&quot; в синий экран смерти (так и не выполнив требуемые атакующему действия).</code></pre><br /><strong>EDIT 1</strong> - сразу уж добавлю отличие smep от smap - пусть все будет в одном месте<br /><pre><code>SMEP хотя и значительно усложняет задачу взлома системы, все же не гарантирует полной ее защиты. Поэтому позже (в процессорах архитектуры Broadwell) в целях повышения безопасности и защиты от уязвимостей, не устраненных SMEP, дополнительно была внедрена технология SMAP (Supervisor Mode Access Prevention). Она предотвращает запись в память и чтение из нее кода, несанкционированно использующего режим супервизора, тогда как SMEP только предупреждает выполнение этого кода.</code></pre>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index86ff.html?next=/forum/topic/20418/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20418/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:13:54 GMT -->
+</html>

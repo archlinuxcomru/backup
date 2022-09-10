@@ -1,0 +1,1091 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19180/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:14:50 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        openvpn-client не дружит с systemd-networkd [SOLVED]
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/13/index.html">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>openvpn-client не дружит с systemd-networkd [SOLVED]</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>openvpn-client не дружит с systemd-networkd [SOLVED]</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-216399"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/impatt/index.html">
+                <span class="post-username">impatt</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/216399/index.html">#</a>
+            3 года, 4 месяца назад
+            
+                (отредактировано
+                
+                    3 года, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/impatt/topics/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/impatt/posts/index.html">
+                    100
+                </a>
+            </div>
+            <div>
+                Участник с: 04 июня 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Всем привет.<br />Столкнулся со странной проблемой (странная потому, что без каких-то кастомизаций на одном ноуте проблемы нет, на другом есть): при старте openvpn-client,   systemd-networkd мешает назначать IP адрес и маршруты. Если настроить сеть без systemd-networkd, то openvpn-client работает нормально. systemd-networkd настраивает адрес по DHCP на беспроводной контроллер для доступа в интернет - совершенно стандартная тема; openvpn-client цепляется к корпоративному серверу, получает маршруты до внутренних сетей, но назначить не может. Ниже подробности.<br />Запускаю openvpn так для примера:<br />/usr/bin/openvpn --suppress-timestamps --nobind --config corp.conf --verb 4<br />Он подключается, всё ОК, далее пишет:<br />-------<br />/usr/bin/ip link set dev tun0 up mtu 1500<br />/usr/bin/ip addr add dev tun0 local 10.200.200.18 peer 10.200.200.17<br />/usr/bin/ip route add 10.100.0.0/16 via 10.200.200.17<br />/usr/bin/ip route add 10.101.0.0/16 via 10.200.200.17<br />Error: Nexthop has invalid gateway.<br />ERROR: Linux route add command failed: external program exited with error status: 2<br />/usr/bin/ip route add 10.200.9.0/24 via 10.200.200.17<br />Error: Nexthop has invalid gateway.<br />----<br />Я гляжу - на tun0 никаких адресов не назначено. И вообще, видно, что сначала адрес и часть маршрутов даже назначилось, и потом адрес на tun0 пропал и маршруты уже не могут добавляться.<br /><br />Пробую отключить systemd-networkd, настроить интернет вручную и запустить openvpn снова - запускается идеально.<br />В каталоге /etc/systemd/network только файл .network, относящейся к беспроводной сети, в котором [Match] содержит name=wlp7s0, думаю, это гарантирует от пересечением с tun0.<br /><br />Подскажите, плз, куда копать.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-216440"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/216440/index.html">#</a>
+            3 года, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>impatt</em><br>invalid gateway.</blockquote>сюда
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-216447"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/impatt/index.html">
+                <span class="post-username">impatt</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/216447/index.html">#</a>
+            3 года, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/impatt/topics/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/impatt/posts/index.html">
+                    100
+                </a>
+            </div>
+            <div>
+                Участник с: 04 июня 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br><blockquote><em>impatt</em><br>invalid gateway.</blockquote>сюда</blockquote>Не очень понял, что вы хотели сказать. Скажите поподробнее, плз.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-216454"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/216454/index.html">#</a>
+            3 года, 4 месяца назад
+            
+                (отредактировано
+                
+                    3 года, 4 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            а что у вас в в .network прописано? Указываете второй шлюз когда в &#39;ручную&#39; подключаетесь.<br /><br /><a href="https://serverfault.com/questions/953198/why-nexthop-has-invalid-gateway-when-it-seems-to-be-defined">ссылка</a><br /><a href="https://bbs.archlinux.org/viewtopic.php?id=236554">ссылка</a>
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-216457"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/impatt/index.html">
+                <span class="post-username">impatt</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/216457/index.html">#</a>
+            3 года, 4 месяца назад
+            
+                (отредактировано
+                
+                    3 года, 4 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/impatt/topics/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/impatt/posts/index.html">
+                    100
+                </a>
+            </div>
+            <div>
+                Участник с: 04 июня 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br>а что у вас в в .network прописано? Указываете второй шлюз когда в &#39;ручную&#39; подключаетесь.<br /><br /><a href="https://serverfault.com/questions/953198/why-nexthop-has-invalid-gateway-when-it-seems-to-be-defined">ссылка</a><br /><a href="https://bbs.archlinux.org/viewtopic.php?id=236554">ссылка</a></blockquote>Насколько понял, это мимо.<br />Когда &quot;вручную&quot; - это значит, что я запускаю dhcpcd на wlp7s0, вот и вся ручная настройка.<br />В приведённых ссылках, как я понял, люди пытались менять или назначать default gw за пределами поключенного напрямую сегмента сети.<br />В моём случае предполагается два интерфейса:<br />1. Беспроводной (вайфай) - на него самым рядовым образом через DHCP навешивается сеть 192.168.0.0/24, default gw -<br />это всё работает.<br />2. Запускается openvpn, создаётся tun0, на него навешивается адресация, не пересекающаяся с адрсацией в wifi, вот что делает openvpn:<br />/usr/bin/ip link set dev tun0 up mtu 1500<br />/usr/bin/ip addr add dev tun0 local 10.200.200.18 peer 10.200.200.17<br />Далее, openvpn добавляет маршруты в корпоративную сеть, нумерация не пересекается ни с какими другими сетями:<br />/usr/bin/ip route add 10.100.0.0/16 via 10.200.200.17<br />/usr/bin/ip route add 10.101.0.0/16 via 10.200.200.17<br />и тд.<br />После старта openvpn я проверяю адрес на tun0: его там нет, кто-то удалил. Иногда это призрачное удаление происходит настолько шустро, что часть маршрутов в корпоративную сеть не может добавиться (в оригинальном посте).<br />Всех этих проблем нет, если настройку wifi делает не systemd-networkd, поэтому грешу на него.<br />Содержиме /etc/systemd/network/01-wireless.network:<br />----------<br />[Link]<br />Unmanaged=no<br /><br />[Match]<br />name=wlp7s0<br /><br />[Network]<br />DHCP=ipv4<br />Domains=domain.tld<br />DNS=8.8.8.8<br />UseDNS=no<br />--------<br /><br />В общем, вот.<br />И ещё: если после старта openvpn я через некоторое время добавляю адреса и маршруты вручную - они добавляются и уже не исчезают.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-216459"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/216459/index.html">#</a>
+            3 года, 4 месяца назад
+            
+                (отредактировано
+                
+                    3 года, 4 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            да, сори что то-то я не туда глянул...<br />создайте:<br /><pre><code>/etc/systemd/network/90-tun-ignore.network
+[Match]
+Name=tun*
+
+[Link]
+Unmanaged=true</code></pre>вообще это в wiki было где-то
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-216460"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/impatt/index.html">
+                <span class="post-username">impatt</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/216460/index.html">#</a>
+            3 года, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/impatt/topics/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/impatt/posts/index.html">
+                    100
+                </a>
+            </div>
+            <div>
+                Участник с: 04 июня 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br>да, сори что то-то я не туда глянул&#8230;<br />создайте:<br /><pre><code>/etc/systemd/network/90-tun-ignore.network
+[Match]
+Name=tun*
+
+[Link]
+Unmanaged=true</code></pre>вообще это в wiki было где-то</blockquote>Да, я почти с этого и начал сам копать - только параметр Name приравнивал tun0, не tun*.<br />ОК, я создал снова этот файл с указанным вами содержимым, перезапустил systemd-networkd, запускаю openvpn - симптомы те же. То есть, не работает так, как нужно.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-216461"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/216461/index.html">#</a>
+            3 года, 4 месяца назад
+            
+                (отредактировано
+                
+                    3 года, 4 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <a href="https://wiki.archlinux.org/index.php/OpenVPN">wiki</a><br /><blockquote>To verify that the changes took effect, start the previously problematic OpenVPN connection and run networkctl.</blockquote>
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-216462"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/impatt/index.html">
+                <span class="post-username">impatt</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/216462/index.html">#</a>
+            3 года, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/impatt/topics/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/impatt/posts/index.html">
+                    100
+                </a>
+            </div>
+            <div>
+                Участник с: 04 июня 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br><a href="https://wiki.archlinux.org/index.php/OpenVPN">wiki</a><br /><blockquote>To verify that the changes took effect, start the previously problematic OpenVPN connection and run networkctl.</blockquote></blockquote><pre><code>[root@dell-mini ~]# networkctl
+IDX LINK             TYPE               OPERATIONAL SETUP
+  1 lo               loopback           carrier     configured
+  2 enp5s0           ether              no-carrier  configuring
+  3 wlp7s0           wlan               routable    configured
+ 22 tun0             none               degraded    configuring
+</code></pre>Что нибудь из этой инфы можно извлечь ?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-216463"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/216463/index.html">#</a>
+            3 года, 4 месяца назад
+            
+                (отредактировано
+                
+                    3 года, 4 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>impatt</em><br>22 tun0             none               degraded    configuring</blockquote>да что systemd-networkd по прежнему управляет tun0<br /><br />p.s. интересно а почему у вас и lo в configured, так быть не должно.
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexa5ef.html?next=/forum/topic/19180/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19180/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:14:50 GMT -->
+</html>

@@ -1,0 +1,1080 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19365/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:13:24 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        systemd сервис для запуска контейнера docker с dhcpd (РЕШЕНО)
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/23/index.html">Демоны и загрузка системы</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>systemd сервис для запуска контейнера docker с dhcpd (РЕШЕНО)</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>systemd сервис для запуска контейнера docker с dhcpd (РЕШЕНО)</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219064"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Anton8830/index.html">
+                <span class="post-username">Anton8830</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/219064/index.html">#</a>
+            3 года, 1 месяц назад
+            
+                (отредактировано
+                
+                    3 года, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Anton8830/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Anton8830/posts/index.html">
+                    175
+                </a>
+            </div>
+            <div>
+                Участник с: 16 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Доброго дня.<br /><br />Прошу помощи у знающих товарищей по systemd.<br /><br /><strong>Задача</strong><br />настроить запуск и работу dhcpd, находящегося в контейнере docker через сервис systemd<br /><br /><strong>Сделано</strong><br /><br />1. Создан образ на основе archlinux/base с dhpcd и его конфигом внутри<br /><em>Dockerfife</em><br /><pre><code>FROM archlinux/base
+RUN echo &quot;y&quot; | pacman -Sy dhcp
+COPY ./dhcpd.conf /etc
+EXPOSE 67
+CMD [&quot;/usr/sbin/dhcpd&quot;, &quot;-f&quot;, &quot;-4&quot;]</code></pre><pre><code>docker build -t dhcpd .</code></pre><br />2. Образ запущен в контейнере с именем dhcpd<br /><pre><code>docker run -d -p 67:67 --name dhcpd dhcpd
+docker ps
+...
+be1ab5c28f70    dhcpd:latest    &quot;/usr/sbin/dhcpf -f ...&quot;    17 hours ago    Up 1 second    0.0.0.0:67-&gt;67/tcp    dhcpd
+
+ps -ef | grep dhcp
+...
+root    1178    1161    9    09:25    ?    00:00:01 /usr/sbin/dhcpd -f -4</code></pre><br />3. Cоздан сервис<br /><em>/etc/systemd/system/docker_dhcpd.service</em><br /><br /><pre><code>[Unit]
+Description=DHCP server in docker container
+Requires=docker.service
+Conflicts=dhcpd4.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/docker start dhcpd
+ExecStop=/usr/bin/docker stop dhcpd
+
+[Install]
+WantedBy=multi-user.target</code></pre><br />4. Сервис включен.<br /><br /><strong>Проблема</strong><br />Запуск и остановка сервиса делают то, что и планировалось, но при падении процесса dhcpd ничего не происходит, сервис остается запущенным.<br /><br /><strong>Предпринятые действия</strong><br />В сервисе изменил тип Type=forking - получил цикличный перезапуск сервиса... Т. е. при старте, запускается контейнер, процесс умирает и systemd считает, что сервис упал, запускает ExecStop, в результате контейнер останавливается.<br /><br /><strong>Вопрос</strong><br />Как правильно настроить сервис, чтобы он отслеживал процесс dhcpd?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219066"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/219066/index.html">#</a>
+            3 года, 1 месяц назад
+            
+                (отредактировано
+                
+                    3 года, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Anton8830</em><br>Type=forking - получил цикличный перезапуск сервиса.</blockquote> PIDFile указывать не пробовали?<br />что то вроде<br /><pre><code>[Service]
+Type=forking
+PIDFile=/run/dhcpcd-%I.pid</code></pre>и рестарт при отсутствии процесса /run/dhcpcd-%I.pid<br /><pre><code>Restart=always</code></pre><blockquote>PIDFile=¶<br />Takes a path referring to the PID file of the service. Usage of this option is recommended for services where Type= is set to forking. The path specified typically points to a file below /run/. If a relative path is specified it is hence prefixed with /run/. The service manager will read the PID of the main process of the service from this file after start-up of the service. The service manager will not write to the file configured here, although it will remove the file after the service has shut down if it still exists. The PID file does not need to be owned by a privileged user, but if it is owned by an unprivileged user additional safety restrictions are enforced: the file may not be a symlink to a file owned by a different user (neither directly nor indirectly), and the PID file must refer to a process already belonging to the service.</blockquote><br />Из закладок<br /><a href="https://habr.com/ru/company/southbridge/blog/255845/">https://habr.com/ru/company/southbridge/blog/255845/</a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219067"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Anton8830/index.html">
+                <span class="post-username">Anton8830</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/219067/index.html">#</a>
+            3 года, 1 месяц назад
+            
+                (отредактировано
+                
+                    3 года, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Anton8830/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Anton8830/posts/index.html">
+                    175
+                </a>
+            </div>
+            <div>
+                Участник с: 16 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>vs220</strong> PIDFile пробовал, но проблема в том, что он не создается. Принудительно его создавать тоже пробовал - не прокатило.<br />Restart=always приводит к тому, что сервис запускается, через секунду останавливается, запускается снова, останавливается и так по кругу...<br /><br />Реальный PIDFile, насколько я понимаю, создается внутри контейнера...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219068"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/219068/index.html">#</a>
+            3 года, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Anton8830</em><br>что он не создается</blockquote>Ну его как бы процесс должен создавать, может как то с контейнером связано что системд его не видит<br />Не  имел дела с контейнерами посмотрите →<br />Может при запуске в контейнере он находится не в /run  а в /run контейнера<br /><pre><code>ls /run | grep pid
+ls путь/run | grep pid</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219071"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Anton8830/index.html">
+                <span class="post-username">Anton8830</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/219071/index.html">#</a>
+            3 года, 1 месяц назад
+            
+                (отредактировано
+                
+                    3 года, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Anton8830/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Anton8830/posts/index.html">
+                    175
+                </a>
+            </div>
+            <div>
+                Участник с: 16 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>vs220</strong> Эмм... Есть <pre><code>/run/docker/containerd/daemon/io.containerd.runtime.v1.linux/mody/be1ab5c28f70e78f57af90e84afd04b65f80e0359c2b15789092cb577e7ce1a9/init.pid</code></pre> В нём реальный pid dhcpd.<br /><br />В таком подходе проблема следующая: при обновлении контейнера - этот путь изменится, тогда и сервис придётся переделывать...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219072"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/219072/index.html">#</a>
+            3 года, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Anton8830</em><br>В таком подходе</blockquote>Может тогда менять подход, запускать  системд в контейнере и его сервисом  dhcpd  или еще как<br /><br />Интересно а так не прокатит? /run/docker/containerd/daemon/*/init.pid
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219073"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Anton8830/index.html">
+                <span class="post-username">Anton8830</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/219073/index.html">#</a>
+            3 года, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Anton8830/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Anton8830/posts/index.html">
+                    175
+                </a>
+            </div>
+            <div>
+                Участник с: 16 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>vs220</strong> Запускать systemd внутри контейнера, конечно, можно, но тогда весь смысл контейнера нивелируется... Образы получаются тяжелыми и бессмысленными.<br /><br />/run/docker/containerd/daemon/*/init.pid может и прокатит, но только когда контейнер один. А если добавить второй, например с bind? Тогда - уже нет...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219074"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/219074/index.html">#</a>
+            3 года, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Anton8830</em><br>нет</blockquote>¯ \ _ (..) _ / ¯<br />Может  кто еще что подскажет<br /><br />Пойти другим путем? <a href="https://habr.com/ru/post/270165/">https://habr.com/ru/post/270165/</a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219075"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Anton8830/index.html">
+                <span class="post-username">Anton8830</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/219075/index.html">#</a>
+            3 года, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Anton8830/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Anton8830/posts/index.html">
+                    175
+                </a>
+            </div>
+            <div>
+                Участник с: 16 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>vs220</strong> Ну, docker вообще не совсем для ограничения прав (или совсем не для того). Он позволяет создать изолированную область, где работает нужное приложение, минимально зависимое от системы, позволяет не устанавливать в систему само приложение. Т. е. есть только базовая система и docker, а все остальное изолировано друг от друга в контейнерах. Не знаю, как ещё объяснить...<br /><br />Для меня dhcp и bind внутри контейнеров - просто для практики. Создать образ, запустить контейнер - у меня получилось. Теперь я пытаюсь сделать так, чтобы контейнеры запускались и процессы контролировались через systemd
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-219076"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/219076/index.html">#</a>
+            3 года, 1 месяц назад
+            
+                (отредактировано
+                
+                    3 года, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Не работаю с docker (вещь, конечно, очень интересная), но насколько мне известно, в данной ситуации, когда важно состояние одной ключевой службы/процесса (точнее, работа зависит от одного процесса), то создают docker-контейнер таким образом, чтобы он падал (завершал работу) с падением (завершением работы) этого основного процесса. А далее, если это необходимо, простой перезапуск контейнера (что то типа --restart=always).<br />Хотя все зависит от поставленной задачи - иногда проще создать отдельный docker контейнер dhcpd (тогда проще и перезапуск).<br /><br /><strong>PS</strong> - хотя встречались и статейки с описанием контроля за процессами внутри контейнера, запуска приложений ... и возможен даже просмотр логов.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index931e.html?next=/forum/topic/19365/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19365/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:13:24 GMT -->
+</html>

@@ -1,0 +1,854 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17032/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:24:46 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        systemd и openvpn запуск юнита
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/23/index.html">Демоны и загрузка системы</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>systemd и openvpn запуск юнита</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>systemd и openvpn запуск юнита</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180183"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/noideal/index.html">
+                <span class="post-username">noideal</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180183/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/d1/8bd1f4af62f28e321d537da0d6ebc4c3.png" alt="noideal avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/noideal/topics/index.html">
+                    9
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/noideal/posts/index.html">
+                    55
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Здравствуйте, в общем проблема в том что ранее все работало без проблем. Но не заметил как, перестал работать openvpn в качестве демона.<br />РАботает только если запустить руками. А через systemctl нет. Не могу понять что послужило причиной и как бороться. Нигде ничего не менял.<br /><br />В общем если руками запустить:<br />sudo openvpn blacksrv.conf<br /><br />Все работает замечательно. Но если<br /><br /><pre><code>archhome /etc/openvpn $ systemctl start openvpn@blacksrv.conf
+Failed to start openvpn@blacksrv.conf.service: Unit openvpn@blacksrv.conf.service not found.
+archhome /etc/openvpn $ systemctl start openvpn@blacksrv
+Failed to start openvpn@blacksrv.service: Unit openvpn@blacksrv.service not found.</code></pre><br />Вот так правильно вроде<br />systemctl start openvpn-client@blacksrv.service<br />но:<br /><pre><code>Job for openvpn-client@blacksrv.service failed because the control process exited with error code.
+See &quot;systemctl status openvpn-client@blacksrv.service&quot; and &quot;journalctl -xe&quot; for details.</code></pre><br />А если посмотреть systemctl status openvpn-client@blacksrv.service<br />то:<br /><pre><code>
+● openvpn-client@blacksrv.service - OpenVPN tunnel for blacksrv
+   Loaded: loaded (/usr/lib/systemd/system/openvpn-client@.service; disabled; vendor preset: disabled)
+   Active: failed (Result: exit-code) since Tue 2017-01-24 01:17:08 MSK; 15s ago
+     Docs: man:openvpn(8)
+           <a href="https://community.openvpn.net/openvpn/wiki/Openvpn24ManPage">https://community.openvpn.net/openvpn/wiki/Openvpn24ManPage</a>
+           <a href="https://community.openvpn.net/openvpn/wiki/HOWTO">https://community.openvpn.net/openvpn/wiki/HOWTO</a>
+  Process: 20332 ExecStart=/usr/sbin/openvpn --suppress-timestamps --nobind --config %i.conf (code=exited
+ Main PID: 20332 (code=exited, status=1/FAILURE)
+
+янв 24 01:17:08 archhome systemd: Starting OpenVPN tunnel for blacksrv...
+янв 24 01:17:08 archhome openvpn: Options error: In :1: Error opening configuration file
+янв 24 01:17:08 archhome openvpn: Use --help for more information.
+янв 24 01:17:08 archhome systemd: openvpn-client@blacksrv.service: Main process exited, code=exited, s
+янв 24 01:17:08 archhome systemd: Failed to start OpenVPN tunnel for blacksrv.
+янв 24 01:17:08 archhome systemd: openvpn-client@blacksrv.service: Unit entered failed state.
+янв 24 01:17:08 archhome systemd: openvpn-client@blacksrv.service: Failed with result &#39;exit-code&#39;.
+lines 1-16/16 (END)</code></pre><br />На всякий случай. Конфиг openvpn<br /><pre><code>client
+dev tun
+proto udp
+remote XX.XX 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+ca ca.crt
+cert samvpn.crt
+key samvpn.key
+tls-auth ta.key 1
+comp-lzo
+verb 3
+</code></pre><br />Подскажите ребята пожалуйста хоть с чего начать.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180187"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/teplovoz/index.html">
+                <span class="post-username">teplovoz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180187/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a3/d5/a3d5377868dad212636a6c6b23eaf059.png" alt="teplovoz avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/teplovoz/topics/index.html">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/teplovoz/posts/index.html">
+                    1045
+                </a>
+            </div>
+            <div>
+                Участник с: 28 мая 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>noideal</em><br>Вот так правильно вроде<br />systemctl start openvpn-client@blacksrv.service</blockquote>Может так -  <pre><code>sudo systemctl start openvpn-client@blacksrv.service</code></pre>и в автозагрузку -<br /><pre><code>sudo systemctl enable openvpn-client@blacksrv.service</code></pre>?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180189"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/kurych/index.html">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180189/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/kurych/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/kurych/posts/index.html">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В /etc/openvpn/ появились директории client и server. Нужно файл конфигурации перенести в соответствующее место.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180190"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/binaryshadow/index.html">
+                <span class="post-username">binaryshadow</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180190/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/de/3c/de3c388e2f57b6c49e7fe0bf2b2d118d.png" alt="binaryshadow avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/binaryshadow/topics/index.html">
+                    16
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/binaryshadow/posts/index.html">
+                    453
+                </a>
+            </div>
+            <div>
+                Участник с: 30 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А по моему мнению просто проблема с правами доступа к файлу конфигурации:<br /><pre><code>Options error: In :1: Error opening configuration file</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180191"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/teplovoz/index.html">
+                <span class="post-username">teplovoz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180191/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a3/d5/a3d5377868dad212636a6c6b23eaf059.png" alt="teplovoz avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/teplovoz/topics/index.html">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/teplovoz/posts/index.html">
+                    1045
+                </a>
+            </div>
+            <div>
+                Участник с: 28 мая 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            О ,  и в новостях присутствует -  <a href="../16919/index.html">http://archlinux.org.ru/forum/topic/16919/</a><br /><pre><code>[v@arch ~]$ ls /etc/openvpn/
+client  server</code></pre> .
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180194"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/noideal/index.html">
+                <span class="post-username">noideal</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180194/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/d1/8bd1f4af62f28e321d537da0d6ebc4c3.png" alt="noideal avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/noideal/topics/index.html">
+                    9
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/noideal/posts/index.html">
+                    55
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>teplovoz</em><br>О ,  и в новостях присутствует -  <a href="../16919/index.html">http://archlinux.org.ru/forum/topic/16919/</a><br /><pre><code>[v@arch ~]$ ls /etc/openvpn/<br />client  server</code></pre> .</blockquote>Ах вот в чем дело. Скорее всего так и  есть. Попробую отпишусь.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180203"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Velesich/index.html">
+                <span class="post-username">Velesich</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180203/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/de/05/de0576f8b854d1c6d989bb44f030c649.png" alt="Velesich avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Velesich/topics/index.html">
+                    14
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Velesich/posts/index.html">
+                    784
+                </a>
+            </div>
+            <div>
+                Участник с: 23 апреля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я перенес конфиг, но старый оставил на месте. При запуске openvpnclient@... связи нет, зато стандартный вызов работает, т.е. запускающий скрипт можно не менять.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180260"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/noideal/index.html">
+                <span class="post-username">noideal</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180260/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/d1/8bd1f4af62f28e321d537da0d6ebc4c3.png" alt="noideal avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/noideal/topics/index.html">
+                    9
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/noideal/posts/index.html">
+                    55
+                </a>
+            </div>
+            <div>
+                Участник с: 28 июля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            1. Перенес все из папки /etc/openvpn в /etc/openvpn/client<br />2. удалил не рабочие юниты openvpn<br />3. sudo systemctl start openvpn-client@blacksrv.service<br />4. sudo systemctl enable openvpn-client@blacksrv.service<br /><br />Все взлетело. Всем спасибо.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index1314.html?next=/forum/topic/17032/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17032/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:24:46 GMT -->
+</html>

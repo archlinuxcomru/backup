@@ -1,0 +1,1146 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18855/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:12:47 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Ручной бэкап encrypted LVM on LUKS
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/11/index.html">Установка</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Ручной бэкап encrypted LVM on LUKS</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Ручной бэкап encrypted LVM on LUKS</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210511"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Singletary/index.html">
+                <span class="post-username">Singletary</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/210511/index.html">#</a>
+            3 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Singletary/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Singletary/posts/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Доброго времени суток.<br />Проконсультируйте как грамотно забэкапить/заснапшотить (и как восстанавливать из резервной копии/снапшота), а то боязно криво сделать, хоть и читал &quot;вику&quot;:<br /><br />Arch at LVM on LUKS (f2fs)<br />sda                     8:0    0 111,8G  0 disk<br />└─sda1                8:1    0 111,8G  0 part<br />  └─cryptlvm       254:0    0 111,8G  0 crypt<br />    ├─V00-lvolroot 254:1    0    40G  0 lvm   /<br />    ├─V00-lvolswap 254:2    0     3G  0 lvm   [SWAP]<br />    └─V00-lvolhome 254:3    0  68,8G  0 lvm   /home<br />sdb                     8:16   1   983M  0 disk<br />└─sdb1               8:17   1   300M  0 part  /boot<br /> (бут на флэхе, груб)<br /><br />Как сделать бэкап всего LVM (снапшоты) на отдельную флэху, также отформатированную в f2fs?<br />Нужно ей дать LUKS ключи к cryptlvm? Если можно подробнее.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210575"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Singletary/index.html">
+                <span class="post-username">Singletary</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/210575/index.html">#</a>
+            3 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Singletary/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Singletary/posts/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Проверьте, компетентные люди:<br /><pre><code>
+#гружуcь с live флэшки, распароливаю хард, не монтирую ничего
+
+#т.к. весь хард занят одним LVМ, удаляю своп-раздел
+lvremove lvol-swap
+#создаю lvol-swap 1G
+lvcreate /dev/mapper/lvol-swap
+#заново создаю своп-раздел lvol-swap меньшего размера - 1G
+#создаю снэпшоты корня и хомяка
+sync
+lvcreate  -L 1G /dev/mapper/lvol-swap
+lvcreate -s -n root-snap-lv -L 1G /dev/mapper/V00-lvolroot
+lvcreate -s -n home-snap-lv -L 1G /dev/mapper/V00-lvolhome
+
+#в mnt создаю точки монтирования для новых лог. томов
+mkdir /mnt/backups/root-snap
+mkdir /mnt/backups/home-snap
+
+# монтирую
+mount /dev/mapper/root-snap-lv /mnt/backups/root-snap
+mount /dev/mapper/home-snap-lv /mnt/backups/home-snap
+
+#на внешней флэхе создаю 2 раздела по 1G, формат в f2fs (sdc1, sdc2)
+#1 раздел 500М для бута на флэхе (sdc3)
+#монтирую в
+/mnt/USB/root-backup
+/mnt/USB/home-backup
+/mnt/USB/boot-backup
+
+#копирую на флэшку
+dd if=/dev/mapper/root-snap-lv of=/dev/sdc1/snap_root bs=20M
+dd if=/dev/mapper/home-snap-lv of=/dev/sdc2/snap_home bs=20M
+rsync -a /boot/ /dev/sdс3/boot-backup/
+
+#восстановление:
+# при крахе системы в ту же (такую же) группу V00 - текущего или нового харда
+# создаю разделы для рута и хомяка, форматирую в f2fs
+lvconvert --merge /dev/mapper/root-snap-lv
+lvconvert --merge /dev/mapper/home-snap-lv
+#удаление LV
+lvremove /dev/mapper/root-snap-lv
+lvremove /dev/mapper/home-snap-lv
+</code></pre><br />Все корректно и что надо использовать dev/mapper/root-snap-lv или /dev/V00/root-snap-lv ?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210590"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/210590/index.html">#</a>
+            3 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Давно не занимался шифрованием HDD, пока не понял, что это баловство и абсолютно лишнее.  Имеются более надежные и  простые способы хранения ценной информации. Но, как говорится, хозяин барин.<br /><strike>Если честно не совсем понял, что описано, да и не понятно назначение backup.</strike><br /><strong>PS</strong> - <u>В принципе, по идее все правильно</u>, но тщательно не проверял<br />Мало кто шифрует разделы, тем более диски.  НО backup в этом случае обязательно нужен и он нужнее, чем в обычной системе.<br />Но все зависит от объема и периодичности backup, правда, как правило, стараются делать backup как можно реже, да и если шифруется HDD/раздел, то обычно назначение у них другое и обновление не значительное, а потому и нет смысла делать это часто.<br />Насчет способов - есть неплохие утилиты - удобно и никаких проблем.<br />Ручные способы - как правило, backup делается для надежности и сохранности информации, а значит используются и простые, надежные способы - дешифровка, копирование, раздел/файл Tryecrypt …  можно и другие, например dd, rsync.<br /><br />А вообще, с шифрованными данными обращаются осторожно. И раньше, когда этим занимался, перед тем как что то забэкапить, дважды проверял на небольшом объеме. Что и тебе рекомендую сделать.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210596"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Singletary/index.html">
+                <span class="post-username">Singletary</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/210596/index.html">#</a>
+            3 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Singletary/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Singletary/posts/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Давно не занимался шифрованием HDD, пока не понял, что это баловство и абсолютно лишнее.  Имеются более надежные и  простые способы хранения ценной информации. Но, как говорится, хозяин барин.<br /><strike>Если честно не совсем понял, что описано, да и не понятно назначение backup.</strike><br /><strong>PS</strong> - <u>В принципе, по идее все правильно</u>, но тщательно не проверял<br />Мало кто шифрует разделы, тем более диски.  НО backup в этом случае обязательно нужен и он нужнее, чем в обычной системе.<br />Но все зависит от объема и периодичности backup, правда, как правило, стараются делать backup как можно реже, да и если шифруется HDD/раздел, то обычно назначение у них другое и обновление не значительное, а потому и нет смысла делать это часто.<br />Насчет способов - есть неплохие утилиты - удобно и никаких проблем.<br />Ручные способы - как правило, backup делается для надежности и сохранности информации, а значит используются и простые, надежные способы - дешифровка, копирование, раздел/файл Tryecrypt …  можно и другие, например dd, rsync.<br /><br />А вообще, с шифрованными данными обращаются осторожно. И раньше, когда этим занимался, перед тем как что то забэкапить, дважды проверял на небольшом объеме. Что и тебе рекомендую сделать.</blockquote>Вот поэтому про ручной способ и пишу - что максимально надёжно, а LVM позволяет сделать снимок всего раздела, а не по отдельности rsync-ом дергать, исключая ненужное, тем более что места снимок занимает в разы меньше самого раздела. Раз в неделю такого бэкапа мне достаточно, т.к. основные доки бэкаплю отдельно. Настраивать все не хотелось бы заново - софт для человека, а не человек для софта. Зарыта ошибка в DMA у меня - то ли северный мост на материнке, то ли разъем барахлят. 2 SSD сменил, 2 HDD проверял - одна и та же история. Приходит время апгрейда, но пока не до него.  А ошибка такая:<br /><pre><code>
+        ata1.00: exception Emask 0x50 SAct 0x0 SErr 0x40d0802 action 0xe frozen
+kernel: ata1.00: SError: { RecovComm HostInt PHYRdyChg CommWake 10B8B DevExch }
+kernel: ata1.00: failed command: READ DMA
+kernel: ata1.00: cmd c8/00:08:68:89:d2/00:00:00:00:00/ed tag 0 dma 4096 in
+                              res 40/00:00:00:4f:c2/00:00:00:00:00/00 Emask 0x54 (ATA bus error)
+12:02:37 kernel: ata1.00: status: { DRDY }
+</code></pre>Поэтому бэкап необходим.<br />Что можно более надежное и простое использовать для хранения ценной информации?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210599"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/210599/index.html">#</a>
+            3 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Singletary</em><br>Раз в неделю такого бэкапа мне достаточно, т.к. основные доки бэкаплю отдельно.</blockquote>Все понятно. Но все-таки зря не обратишь взор на утилиты, есть довольно хорошие, правда из винды. Из под Linux раньше, если не ошибаюсь, с шифрованными дисками нормально работал PartImage. Как сейчас, не знаю.<br /><br />В части <strong>сообщений libata</strong> - немного расшифрую вывод, может пригодится, когда будешь анализировать<br /><strong>1. Eception line</strong><br />ata1.00: exception <strong>Emask 0x50</strong> SAct 0x0 SErr 0x40d0802 action 0xe <strong>frozen</strong><br /><strong>Emask 0x50</strong> - точно не помню, но обычно на это не смотрят<br /><strong>frozen</strong> - if present, indicates the port was frozen for EH (Error Handler)<br /><strong>2. Расширенный вывод Serror</strong> - в данном случае намного интереснее<br />ata1.00: SError: { <strong>RecovComm HostInt PHYRdyChg CommWake 10B8B DevExch</strong> }<br /><pre><code>RecovComm - Communications between device and host temporarily lost, but regained
+HostInt - Host bus adapter internal error
+PHYRdyChg - PhyRdy signal changed state
+CommWake - COMWAKE detected by PHY (PHY woken up)
+10B8B - 10b to 8b decoding error occurred
+DevExch - Device presence has changed</code></pre>и указывает на проблему аппаратного обеспечения, точнее временное отсоединение привода - как правило, это плохой кабель SATA, плохой  источник питания).<br /><strong>3. cmd</strong> - вообщем то ничего не выудим, кроме как видим, что <strong>отключен/не активен NCQ</strong><br />ata1.00: cmd c8/00:08:68:89:d2/00:00:00:00:00/ed <strong>tag 0</strong><br /><strong>tag 0</strong> - NCQ tag number, or listed as zero if NCQ is not active/applicable<br /><strong>4. error summary</strong>, еще раз подтверждает аппаратную проблему, указанную выше<br />res 40/00:00:00:4f:c2/00:00:00:00:00/00 Emask 0x54 (<strong>ATA bus error</strong>)<br /><strong>ATA bus error</strong> - chip&lt;-&gt;device bus error<br /><br /><strong>UPD</strong> - забыл status: { DRDY } ....<strong> DRDY</strong> - Device ready. Normally 1, when all is OK.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210601"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Singletary/index.html">
+                <span class="post-username">Singletary</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/210601/index.html">#</a>
+            3 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Singletary/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Singletary/posts/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br><blockquote><em>Singletary</em><br>Раз в неделю такого бэкапа мне достаточно, т.к. основные доки бэкаплю отдельно.</blockquote>Все понятно. Но все-таки зря не обратишь взор на утилиты, есть довольно хорошие, правда из винды. Из под Linux раньше, если не ошибаюсь, с шифрованными дисками нормально работал PartImage. Как сейчас, не знаю.<br /><br />В части <strong>сообщений libata</strong> - немного расшифрую вывод, может пригодится, когда будешь анализировать<br /><strong>1. Eception line</strong><br />ata1.00: exception <strong>Emask 0x50</strong> SAct 0x0 SErr 0x40d0802 action 0xe <strong>frozen</strong><br /><strong>Emask 0x50</strong> - точно не помню, но обычно на это не смотрят<br /><strong>frozen</strong> - if present, indicates the port was frozen for EH (Error Handler)<br /><strong>2. Расширенный вывод Serror</strong> - в данном случае намного интереснее<br />ata1.00: SError: { <strong>RecovComm HostInt PHYRdyChg CommWake 10B8B DevExch</strong> }<br /><pre><code>RecovComm - Communications between device and host temporarily lost, but regained
+HostInt - Host bus adapter internal error
+PHYRdyChg - PhyRdy signal changed state
+CommWake - COMWAKE detected by PHY (PHY woken up)
+10B8B - 10b to 8b decoding error occurred
+DevExch - Device presence has changed</code></pre>и указывает на проблему аппаратного обеспечения, точнее временное отсоединение привода - как правило, это плохой кабель SATA, плохой  источник питания).<br /><strong>3. cmd</strong> - вообщем то ничего не выудим, кроме как видим, что <strong>отключен/не активен NCQ</strong><br />ata1.00: cmd c8/00:08:68:89:d2/00:00:00:00:00/ed <strong>tag 0</strong><br /><strong>tag 0</strong> - NCQ tag number, or listed as zero if NCQ is not active/applicable<br /><strong>4. error summary</strong>, еще раз подтверждает аппаратную проблему, указанную выше<br />res 40/00:00:00:4f:c2/00:00:00:00:00/00 Emask 0x54 (<strong>ATA bus error</strong>)<br /><strong>ATA bus error</strong> - chip&lt;-&gt;device bus error<br /><br /><strong>UPD</strong> - забыл status: { DRDY } &#8230;.<strong> DRDY</strong> - Device ready. Normally 1, when all is OK.</blockquote>Точно, скорее всего кабель/скачки напряжения. Спасибо.<br />Так а более надежное и простое для хранения ценной информации что рекомендуешь?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210603"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/210603/index.html">#</a>
+            3 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Singletary</em><br>Что можно более надежное и простое использовать для хранения ценной информации?</blockquote>Забыл ответить в прошлом посту, увлекся сообщениями libata.<br /><br />Вот зачем шифровать весь диск? Он же не содержит 100% важной информации. Это же можно сказать, в принципе, и о разделе.<br />Все зависит от объема и вида информации. Вкратце.<br />Например, вот зачем хранить важные пароли и им подобное (например, номера счетов, pin-коды, номера телефонов и др.) в зашифрованном диска. Например, я часто использую online-bank (платежи, переводы - все не выходя из дома), а если куда уезжаю, беру эту инфу с собой (всегда может понадобиться, могу даже использовать на компе с виндой). Использую для этого KeePass. Плюс еще и в том, что можно назначать время хранения в памяти при копировании (например 30с, после чего удаляется из памяти, что очень важно при использовании на чужом компе. Для хранения паролей можно использовать и другие способы, о которых вообще мало кто знает.<br />Текстовую/графическую информацию большого объема лучше хранить в зашифрованных файлах-контейнерах - способов несколько, при этом все работает динамически.<br /><br />UPD - не нужно приводить всю ссылку, лучше только нужное. Меньше занимает места и легче читается.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210607"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Singletary/index.html">
+                <span class="post-username">Singletary</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/210607/index.html">#</a>
+            3 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Singletary/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Singletary/posts/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Вот зачем шифровать весь диск?</blockquote>Иногда это необходимо, например, при накоплении тысяч файлов на сотни мегабайт. И наличие автологина компенсируется распароливанием/ключами. Да, вскрывается при большом желании и все же для основной деятельности более менее надежно. По отдельности делать файл-контейнеры несколько трудозатратно. KeePass удобная утилита, юзаю.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210609"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/210609/index.html">#</a>
+            3 года, 10 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Singletary</em><br>Иногда это необходимо, например, при накоплении тысяч файлов на сотни мегабайт.</blockquote>А не проще воспользоваться<strong> ecryptfs</strong> (модуль ecryptfs встроен в ядро) -  шифрование на уровне файловой системы. Создаешь директорию, закидываешь туда кучу файлов и вперед. Преимущества - скорость, инкрементальный бэкап и др. Описывать не буду - смотри Wiki, googl.<br /><br /><strong>UPD</strong> - довольно надежное шифрование (по умолчанию 128-битный вариант)
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-210610"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Singletary/index.html">
+                <span class="post-username">Singletary</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/210610/index.html">#</a>
+            3 года, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Singletary/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Singletary/posts/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Участник с: 22 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>А не проще воспользоваться ecryptfs</blockquote>Спасибо, гляну. Пока надо с бэкапами разобраться.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index8954.html?next=/forum/topic/18855/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18855/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:12:47 GMT -->
+</html>

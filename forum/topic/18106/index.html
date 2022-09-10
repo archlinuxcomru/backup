@@ -1,0 +1,635 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18106/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:13:27 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        dbus одновременно от пользователя и от системы
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/23/index.html">Демоны и загрузка системы</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>dbus одновременно от пользователя и от системы</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>dbus одновременно от пользователя и от системы</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199046"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/safocl/index.html">
+                <span class="post-username">safocl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/199046/index.html">#</a>
+            4 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/safocl/topics/index.html">
+                    121
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/safocl/posts/index.html">
+                    1570
+                </a>
+            </div>
+            <div>
+                Участник с: 08 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            почемуто у меня в системе одновременна присутствуют два процесса dbus, от юзера и от систем...<br /><pre><code>`--&gt; systemctl --user -t service
+UNIT                                LOAD   ACTIVE SUB     DESCRIPTION
+at-spi-dbus-bus.service             loaded active running Accessibility services bus
+dbus.service                        loaded active running D-Bus User Message Bus
+gvfs-daemon.service                 loaded active running Virtual filesystem service
+gvfs-udisks2-volume-monitor.service loaded active running Virtual filesystem service - disk device monitor
+pulseaudio.service                  loaded active running Sound Service
+</code></pre><pre><code>`--&gt; systemctl --system -t service
+  UNIT                                                LOAD   ACTIVE SUB     DESCRIPTION
+  bumblebeed.service                                  loaded active running Bumblebee C Daemon
+  dbus.service                                        loaded active running D-Bus System Message Bus
+  getty@tty1.service                                  loaded active running Getty on tty1
+  getty@tty2.service                                  loaded active running Getty on tty2
+  getty@tty3.service                                  loaded active running Getty on tty3
+  kmod-static-nodes.service                           loaded active exited  Create list of required static device nodes for the current kernel
+  ldconfig.service                                    loaded active exited  Rebuild Dynamic Linker Cache
+  lvm2-lvmetad.service                                loaded active running LVM2 metadata daemon
+  lvm2-monitor.service                                loaded active exited  Monitoring of LVM2 mirrors, snapshots etc. using dmeventd or progress polling
+  netctl@inet.service                                 loaded active exited  A basic dhcp ethernet connection
+  polkit.service                                      loaded active running Authorization Manager
+  rtkit-daemon.service                                loaded active running RealtimeKit Scheduling Policy Service
+  systemd-backlight@backlight:acpi_video0.service     loaded active exited  Load/Save Screen Backlight Brightness of backlight:acpi_video0
+  systemd-backlight@backlight:acpi_video1.service     loaded active exited  Load/Save Screen Backlight Brightness of backlight:acpi_video1
+  systemd-backlight@backlight:intel_backlight.service loaded active exited  Load/Save Screen Backlight Brightness of backlight:intel_backlight
+  systemd-binfmt.service                              loaded active exited  Set Up Additional Binary Formats
+  systemd-hwdb-update.service                         loaded active exited  Rebuild Hardware Database
+  systemd-journal-catalog-update.service              loaded active exited  Rebuild Journal Catalog
+  systemd-journal-flush.service                       loaded active exited  Flush Journal to Persistent Storage
+  systemd-journald.service                            loaded active running Journal Service
+  systemd-logind.service                              loaded active running Login Service
+● systemd-modules-load.service                        loaded failed failed  Load Kernel Modules
+  systemd-random-seed.service                         loaded active exited  Load/Save Random Seed
+  systemd-remount-fs.service                          loaded active exited  Remount Root and Kernel File Systems
+  systemd-sysctl.service                              loaded active exited  Apply Kernel Variables
+  systemd-sysusers.service                            loaded active exited  Create System Users
+  systemd-tmpfiles-setup-dev.service                  loaded active exited  Create Static Device Nodes in /dev
+  systemd-tmpfiles-setup.service                      loaded active exited  Create Volatile Files and Directories
+  systemd-udev-trigger.service                        loaded active exited  udev Coldplug all Devices
+  systemd-udevd.service                               loaded active running udev Kernel Device Manager
+  systemd-update-done.service                         loaded active exited  Update is Completed
+  systemd-update-utmp.service                         loaded active exited  Update UTMP about System Boot/Shutdown
+  systemd-user-sessions.service                       loaded active exited  Permit User Sessions
+  udisks2.service                                     loaded active running Disk Manager
+  upower.service                                      loaded active running Daemon for power management
+  user@1000.service                                   loaded active running User Manager for UID 1000
+</code></pre><br />енто норм или надо чото одно убрать?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199055"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/199055/index.html">#</a>
+            4 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>safocl</em><br>● systemd-modules-load.service                        loaded failed failed  Load Kernel Modules</blockquote>А это не волнует?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199064"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/R.V/index.html">
+                <span class="post-username">R.V.</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/199064/index.html">#</a>
+            4 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/R.V/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/R.V/posts/index.html">
+                    1100
+                </a>
+            </div>
+            <div>
+                Участник с: 10 января 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <pre><code>if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+   for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+     [ -x &quot;$f&quot; ] &amp;&amp; . &quot;$f&quot;
+   done
+   unset f
+fi
+</code></pre>Вот это из ~/.xinitrc запускает dbus от юзера, а от системы она сама. Так и должно быть.<br />А вот failed systemd-modules-load.service - это совсем нехорошо.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199068"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/safocl/index.html">
+                <span class="post-username">safocl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/199068/index.html">#</a>
+            4 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/safocl/topics/index.html">
+                    121
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/safocl/posts/index.html">
+                    1570
+                </a>
+            </div>
+            <div>
+                Участник с: 08 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>RusWolf</em><br>А это не волнует?</blockquote>нет, енто модуль виртуалбокса не ставился при отсутствии хеадеров ядра)) вухахааха<br /><br /><blockquote><em>R.V.</em><br>А вот failed systemd-modules-load.service - это совсем нехорошо.</blockquote>да ну ент ересь, обычная ситуация отсутствия собранного модуля виртуалбокса
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199074"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/199074/index.html">#</a>
+            4 года, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>safocl</em><br>обычная ситуация отсутствия</blockquote>Ну может для кого и обычная ситуация :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index2f5f.html?next=/forum/topic/18106/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18106/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:13:27 GMT -->
+</html>

@@ -1,0 +1,971 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Сборка ядра
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/12/">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Сборка ядра</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Сборка ядра</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-129980"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/129980/">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Если честно, это очень огромные дебри, лучше туда не лезти. Литературу очень трудно найти, а если и находишь, то eng. Я в молодости так и не осилил.<br />Название ARCH_<strong>HWEIGHT</strong>_CFLAGS от <strong>Hamming weight function</strong> (весовая функция Хэмминга).<br />Вдобавок все это связано с быстрыми системными вызовами, popcnt, регистрами и прочей ерундой - без обид, но одному без помощи спеца эту тему очень трудно осилить.<br />Ну и что полегче — если заглянешь в файл <strong>Linux-xxxxx/arch/x86/Kconfig</strong>, то увидишь<br /><em>config ARCH_HWEIGHT_CFLAGS<br />	string<br />	<strong>default</strong> &quot;-fcall-saved-ecx -fcall-saved-edx&quot; <strong>if X86_32</strong><br />	<strong>default</strong> &quot;-fcall-saved-rdi -fcall-saved-rsi -fcall-saved-rdx -fcall-saved-rcx -fcall-saved-r8 -fcall-saved-r9 -fcall-saved-r10 -fcall-saved-r11&quot;<strong> if X86_64</strong></em><br />Поэтому тебе сказали правильно — все ставится по дефолту и лучше ничего не трогать.<br />
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-130019"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/130019/">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>castanel</em><br>хотя параметры такие встречаются, что даже гугль не поможет</blockquote> Не правильно, наверное, еще и гуглишь - попробуй <strong>-fcall-saved-reg</strong> (или <strong>-fcall-saved-регистр</strong>) —  в крайнем случае попадешь на описание компилятора и узнаешь, хотя бы немного для чего это. Если не найдешь — пиши, дам перевод этой опции из компилятора — но, но, но — толку от этого определения мало — смысл уловить трудно.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-130021"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Perfect_Gentleman/">
+                <span class="post-username">Perfect_Gentleman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/130021/">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Perfect_Gentleman/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Perfect_Gentleman/posts/">
+                    1039
+                </a>
+            </div>
+            <div>
+                Участник с: 29 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            castanel, в xconfig&#39;e он нередакутирумеый.<br />а ну ка, покажи, как ты его можешь подредактировать.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-130023"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/dartsergius/">
+                <span class="post-username">dartsergius</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/130023/">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/47/b1/47b1569c53f72c00e18f2080a1489d83.png" alt="dartsergius avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/dartsergius/topics/">
+                    18
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/dartsergius/posts/">
+                    238
+                </a>
+            </div>
+            <div>
+                Участник с: 15 декабря 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>-fcall-saved-reg</blockquote>на запрос fcall-saved выдало<br /><a href="https://gcc.gnu.org/onlinedocs/gcc-4.1.2/gcc/Interoperation.html">http://gcc.gnu.org/onlinedocs/gcc-4.1.2/gcc/Interoperation.html</a><br /><a href="https://gcc.gnu.org/onlinedocs/gcc/Code-Gen-Options.html">http://gcc.gnu.org/onlinedocs/gcc/Code-Gen-Options.html</a><br />Из описания сразу же понятно, что это эта функция сохраняет регистрыв неизменном виде( которые ты укажешь ) при вызове API. А надо это для совместимости компиляторов. Ибо кто-то может модифицировать те или иные регистры во время вызовов. И менять что-то там я не думаю что требуеться, Если добавишь &quot;безопасный регистр&quot;, то система будет работать медленнее, и требовать больше памяти( стек скорее всего, но все же ).<br />Если уберешь &quot;лишнее&quot; не подумав, и не подготовив систему к этому, то встретишь kernel panic с вероятностью 99,(9) %
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-130045"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/130045/">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>dartsergius</strong>, мне это все понятно- а если подумать, как знатоки на следствии, то половину можно понять и из названия. Но хотел, чтобы ТС сам дошел до этого - так лучше схватывается на будущее. И еще, я ему дал прямой намек на компилятор - привожу <u>не совсем удачный перевод</u> из описания к нему<br /><strong>-fcall-saved-reg</strong><br /><em>Обращается с регистром с именем &#39;reg&#39; как с регистром, подходящим для распределения, который сохраняется функциями. Он может выделяться даже для временных переменных или обычных переменных, которые переживают вызов функции. Функции, откомпилированные с этой опцией, будут сохранять и восстанавливать регистр &#39;reg&#39;, если они его используют.<br />Использование этого флага для регистра, который имеет фиксированную роль в машинной модели исполнения такую, как указатель стека или указатель фрейма, порождает разрушительный результат.<br />Различные бедствия могут произойти от использования этого флага для регистров, в которых могут возвращаться значения функций.<br />Эта опция не имеет отрицательной формы, потому что она определяет выбор из трех альтернатив. </em><br />Мне не понятно другое<br />1. как это сказывается на быстродействии - пишут, что значительно.<br />2. причем здесь весовая функция Хэмминга.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-130048"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/dartsergius/">
+                <span class="post-username">dartsergius</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/130048/">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/47/b1/47b1569c53f72c00e18f2080a1489d83.png" alt="dartsergius avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/dartsergius/topics/">
+                    18
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/dartsergius/posts/">
+                    238
+                </a>
+            </div>
+            <div>
+                Участник с: 15 декабря 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>1. как это сказывается на быстродействии - пишут, что значительно.</blockquote>Ты знаком с асмом? Если да, то поймешь.<br />1 У тебя есть некоторый набор функций. Допустим их 100 000.<br />Все они оперируют регистрами.<br />Указывая -fcall-saved мы показываем компилятору какие регистры можно использовать другим функциям совершенно свободно.<br />Таким образом у нас эти все 100 000 функций умеют работать например с ebx, edx, esp. Нам надо сохранить с стеке только 3 значения, чтобы перейти к другой функции. И недостатка памяти у нас не будет.<br />Если мы увеличим коилчество регистров до ebx, ecx, edx, esi, edi, eax. Количество памяти при увеличении стека вызово увеличивается в 2 раза( 6 регистра сохраняем против 3-х ). НО! В функции мы можем использовать в своих нуждах уже 6 регистров! что даст огромный прирост производительности, потому что нам ненадо будет лишний раз обращаться к памяти за переменной( пусть даже к кеш памяти). Ну и соответсвенно хоть малый оверклок уже будет заметен.<br />Но если у нас кончается память, то никто нам не поможет.<br />2. насчет весовой функции точно не скажу, но думаю связано с потреблением памяти. Ну и эту весовую функцию не изучал пока( неродивый студент, который только собирается восстановиться на матфак).
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-130053"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/130053/">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>dartsergius</em><br>Таким образом у нас эти все 100 000 функций умеют работать например с ebx, edx, esp. Нам надо сохранить с стеке только 3 значения, чтобы перейти к другой функции. И недостатка памяти у нас не будет.</blockquote><strong>dartsergius</strong>, спасибо за ответ и пояснение. Но, похоже из-за моего возраста и отсталости (давно не занимаюсь всем этим), все это не очень строго укладывается в моей голове — ну не вижу я такого большого увеличения быстродействия на 32 битной системе (всего два регистра - &quot;-fcall-saved-ecx -fcall-saved-edx&quot;) — вообщем не робщи на деда, такова уже видно моя участь.<br />Ну а тебе от чистого сердца желаю успешно восстановиться на матфак.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-130226"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/castanel/">
+                <span class="post-username">castanel</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/130226/">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/castanel/topics/">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/castanel/posts/">
+                    33
+                </a>
+            </div>
+            <div>
+                Участник с: 13 января 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Perfect_Gentleman</em><br>а ну ка, покажи, как ты его можешь подредактировать.</blockquote>когда на параметр пару раз щёлкаешь, внизу появляется строка редактирования.
+            
+                
+                    <div class="post-signature">
+                        Не знаешь, что делать, делай шаг вперёд!..
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-130247"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Perfect_Gentleman/">
+                <span class="post-username">Perfect_Gentleman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/130247/">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Perfect_Gentleman/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Perfect_Gentleman/posts/">
+                    1039
+                </a>
+            </div>
+            <div>
+                Участник с: 29 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            скрины покажи: до и после
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/11862/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747c3df18bb40c42',m:'MmyKc819R7Yd..9DjGyBiMxUgkd6OW9F4oJ4ejBRg40-1662687901-0-AYlV+9O8cMJbhKuw5qzSYg6o50a6FUR5cZ5klP/vCYZQAT8uSaf+FapyK/NK7ehdeY+CaSZnWGVD8ImmzuIV/x3JUWvdohFmLDpwlL1hoBoZTOOsCfgS3tWFjLl6RLfcwGcntcbmg3JYRAS58vreHEw=',s:[0x9f4eedb1e5,0xc78a266b22],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

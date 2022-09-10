@@ -1,0 +1,1103 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/6289/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:03:28 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        BASH - скрипт для пересборки пакетов
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/5/index.html">Разное</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/4/index.html">/dev/null</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>BASH - скрипт для пересборки пакетов</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>BASH - скрипт для пересборки пакетов</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-60808"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/pztrn/index.html">
+                <span class="post-username">pztrn</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/60808/index.html">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/pztrn/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/pztrn/posts/index.html">
+                    1436
+                </a>
+            </div>
+            <div>
+                Участник с: 20 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Появилась необходимость в таком скрипте. Итак, что нужно:<br/><ol><li>Взять из файла одну строчку, в которой прописано название пакета (строчек в файле,скажем, ~20)<br/></li><li>С помощью нехитрых операций запустить makepkg<br/></li><li>Скопировать собранный пакет в директорию локального репа<br/></li><li>Взять из файла следующую строчку и GOTO 2<br/><br/>Как такое реализовать? :&lt;</li></ol>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-60809"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/amigo/index.html">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/60809/index.html">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/amigo/topics/index.html">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/amigo/posts/index.html">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <div class="code"><pre>yaourt -b package1 package2 ...
+man yaourtrc</pre></div>
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-60810"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sirocco/index.html">
+                <span class="post-username">sirocco</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/60810/index.html">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sirocco/topics/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sirocco/posts/index.html">
+                    2501
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Если важно ограничиться bash-ем - то, например, aurget<br/><a href="http://aur.archlinux.org/packages.php?ID=31933">http://aur.archlinux.org/packages.php?ID=31933</a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-60811"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/pztrn/index.html">
+                <span class="post-username">pztrn</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/60811/index.html">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/pztrn/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/pztrn/posts/index.html">
+                    1436
+                </a>
+            </div>
+            <div>
+                Участник с: 20 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Amigo</em><br/><div class="code"><pre>yaourt -b package1 package2 ...
+man yaourtrc</pre></div></blockquote>Блин, решение очевидно :D Спасибо<br/>Однако, мне же нужно чтобы скрипт сам копировал собранный пакет в определенную директорию и потом обновлял БД репа&#8230;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-60812"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/pztrn/index.html">
+                <span class="post-username">pztrn</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/60812/index.html">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/pztrn/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/pztrn/posts/index.html">
+                    1436
+                </a>
+            </div>
+            <div>
+                Участник с: 20 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В yaourtrc есть переменная:<br/><div class="code"><pre>EXPORTDIR="/path/to/dir"</pre></div>Как мне взять путь?<br/><br/>З.Ы. - да, я в баше не особо :&gt;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-60813"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/bobart/index.html">
+                <span class="post-username">bobart</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/60813/index.html">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/bobart/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/bobart/posts/index.html">
+                    2537
+                </a>
+            </div>
+            <div>
+                Участник с: 28 ноября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <div class="code"><pre>EXPORTDIR="/путь/к/каталогу"</pre></div>такой вариант устроит?<br/>у меня, например, там<br/><div class="code"><pre>EXPORTDIR="/media/multimedia/localrepo"</pre></div>сюда перемещаются <strong>установленные</strong> пакеты.<br/><br/>В /etc/makepkg.conf, чтобы <strong>собранные</strong> пакеты перемещались куда желаете, надо раскомментировать строку<br/><div class="code"><pre>#PKGDEST=/home/packages </pre></div>вместо /home/packages путь к выбранному каталогу. Это в секции PACKAGE OUTPUT, если что. Это то, что вы ищете?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-60814"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/pztrn/index.html">
+                <span class="post-username">pztrn</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/60814/index.html">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/pztrn/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/pztrn/posts/index.html">
+                    1436
+                </a>
+            </div>
+            <div>
+                Участник с: 20 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Иронизируем? гг<br/>Для начала man yaourtrc:<br/><blockquote><em>man yaourtrc</em><br/>EXPORTDIR=&ldquo;&rdquo;<br/>Specify the folder where yaourt export built packages for local repository This option<br/>export .pkg.tar.gz + PKGBUILD + local sources files.</blockquote>Конечно, я могу и сам прописать для себя путь, но что если мне придется дать кому-то совсем разбирающемуся в баше? Да и для себя так будет удобнее&#8230;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-60815"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/amigo/index.html">
+                <span class="post-username">amigo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/60815/index.html">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/dc/5e/dc5efbd987b6618a42ed850a73772c27.png" alt="amigo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/amigo/topics/index.html">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/amigo/posts/index.html">
+                    2126
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня makepkg складывает собранные пакеты в /home/packages, там же repo-add делает репку. В чем у тебя проблема?
+            
+                
+                    <div class="post-signature">
+                        Разберемся, голубчик!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-60816"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/pztrn/index.html">
+                <span class="post-username">pztrn</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/60816/index.html">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/pztrn/topics/index.html">
+                    23
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/pztrn/posts/index.html">
+                    1436
+                </a>
+            </div>
+            <div>
+                Участник с: 20 сентября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Так опять возвращаемся к первому вопросу :&gt;<br/>Примерная схема работы моего скрипта:<br/><ol><li>Читаем первую строчку из списка пакетов и подставляем ее makepkg/yaourt<br/></li><li>Запускаем makepkg/yaourt<br/></li><li>Удаляем пакет и репозитория простым rm<br/></li><li>Копируем только что собранный пакет<br/></li><li>Читаем следующую строчку списка пакетов и подставляем ее makepkg<br/></li><li>2 ()<br/></li><li>По завершении пересборки всего обновляем репозиторий<br/><br/>Я реализовал пока что только возможность пересобрать 1 пакет (да, иногда необходимо такое). Вот мой скрипт:<br/><br/><div class="code"><pre>#!/bin/bash
+################################################### CONFIGURATION ######
+PKGBUILDSPATH=/data/etc/PKGBUILDS
+PACKAGETEMP=/data/TEMP/PackTemp
+REPOPATH=/data/WWW/pozitpoh.is-a-geek.org/repo/i686
+REPONAME=pozitpoh
+########################################################################
+################################################### Main code ##########
+# Change terminal window name
+if [ "$SHELL" = '/bin/bash' ]
+then
+    case $TERM in
+         rxvt|*term)
+            set -o functrace
+            trap 'echo -ne "\e]0;Arch Linux local repository rebuild script\007"' DEBUG
+            export PS1="\e]0;$TERM\007$PS1"
+         ;;
+    esac
+fi
+case "$1" in
+build)
+	if [ "$SHELL" = '/bin/bash' ]
+	then
+	    case $TERM in
+	         rxvt|*term)
+	            set -o functrace
+	            trap 'echo -ne "\e]0;Arch Linux local repository rebuild script - rebuilding $2\007"' DEBUG
+	            export PS1="\e]0;$TERM\007$PS1"
+	         ;;
+	    esac
+	fi
+	echo -e "\033[1;36m===&gt;\033[0m Rebuild package: \033[1;31m$2\033[0m"
+	cd $PKGBUILDSPATH/$2
+	makepkg $3
+	echo -e "\033[1;36m===&gt; Rebuild complete. Moving package to repository and update it..."
+	rm $REPOPATH/$2-*.pkg.tar.* &amp;&gt; /dev/null
+	mv $PKGBUILDSPATH/$2/$2-*.pkg.tar.* $REPOPATH &amp;&gt; /dev/null
+	cd $REPOPATH &amp;&amp; rm $REPONAME.db.tar.gz &amp;&amp; repo-add $REPONAME.db.tar.gz *.pkg.tar.gz *.pkg.tar.xz &amp;&gt; /dev/null
+	echo -e "\033[1;36m===&gt;\033[0m \033[1;33mAll done.\033[0m"	
+	;;
+esac
+exit</pre></div>Но опять же - я пока что говорю про локальные пкгбилды<br/>Также хотелось бы реализовать возможность приостаносить выполнение скрипта, если вдруг makepkg не удалось собрать пакет, или же записать это в лог.<br/>Конечно, как закончу скрипт - перепишу его на нормальный манер (с использованием функций), а пока что и так сойдет :&gt;</li></ol>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-60817"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/villi/index.html">
+                <span class="post-username">villi</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/60817/index.html">#</a>
+            12 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/villi/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/villi/posts/index.html">
+                    144
+                </a>
+            </div>
+            <div>
+                Участник с: 07 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <div class="code"><pre> makepkg "$3"
+declare -i intFlg=$?
+case $intFlg in
+ 0) //Продолжаем выполнение скрипта;;
+ 1) //В зависимости от фаз луны, выполняем rm -Rf ${PkgName}, что-нить другое и 
+exit 2;;
+ 2)//Зависит от Ваших фантазии и знаний :);;
+esac</pre></div>?<br/>З.Ы: объявить целочисленнную переменную, ИМХО, лучше в начале скрипта.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexa8ad.html?next=/forum/topic/6289/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/6289/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:03:28 GMT -->
+</html>

@@ -1,0 +1,1039 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/11943/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:28:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Аппаратные прерывания на linux-3.6.11-11-ARCH 
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/6/index.html">Разработка</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/19/index.html">Уголок разработчика</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Аппаратные прерывания на linux-3.6.11-11-ARCH </li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Аппаратные прерывания на linux-3.6.11-11-ARCH </h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-114220"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Klim/index.html">
+                <span class="post-username">Klim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/114220/index.html">#</a>
+            9 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Klim/topics/index.html">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Klim/posts/index.html">
+                    14
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Для написания программы обработки аппаратных прерываний на Си возникла необходимость подключения<br/>файла interrupt.h. Он находится в каталоге /usr/src/linux-3.6.11-11-ARCH+/include/linux/.<br/>Как правильно написатьпуть к этому файлу в программе?<br/>Будет ли он работать вообще, так как это исходные файлы ядра.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-114222"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/114222/index.html">#</a>
+            9 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Необходимо обеспечить ещё символические ссылки на функции, заголовки которых прописаны в этом ашнике. Иначе при попытке их вызова в коде вас ждет мат линковщика<br/><br/>Если вам нужны типы или константы, описаные там, работать будет. А для вызова функций необходимо компилятору сказать, где искать тело этой функции. Они могут быть описаны в соответствующем *.c файле, который надо добавить в зависимости сборки. Или в библиотеке, *.a, *.so которую надо скомпоновать с вашей программой, но в библиотеке вряд ли, раз речь идет о ядре
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-114229"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/kurych/index.html">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/114229/index.html">#</a>
+            9 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/kurych/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/kurych/posts/index.html">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В программе правильно писать как включение файла стандартных библиотек<br/><div class="code"><pre>#include &lt;linux/interrupt.h&gt;</pre></div>А уже компилятору тем или иным образом указывать (ключ -I ), где находится $kernel_src/include. К примеру, в Makefile<br/><div class="code"><pre>...
+KERNEL_VER  := $(shell uname -r)
+KERNEL_SRC := /lib/modules/$(KERNEL_VER)/build
+EXTRA_CFLAGS += -I$(KERNEL_SRC)/include
+...</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-114543"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Klim/index.html">
+                <span class="post-username">Klim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/114543/index.html">#</a>
+            9 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Klim/topics/index.html">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Klim/posts/index.html">
+                    14
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>kurych</em><br/>В программе правильно писать как включение файла стандартных библиотек<br/><div class="code"><pre>#include &lt;linux/interrupt.h&gt;</pre></div>А уже компилятору тем или иным образом указывать (ключ -I ), где находится $kernel_src/include. К примеру, в Makefile<br/><div class="code"><pre>...
+KERNEL_VER  := $(shell uname -r)
+KERNEL_SRC := /lib/modules/$(KERNEL_VER)/build
+EXTRA_CFLAGS += -I$(KERNEL_SRC)/include
+...</pre></div></blockquote><br/>Скопировал около 100 файлов необходимых файлу interrupt.h в отдельный каталог и запустил<br/>gcc -o test-isr test-isr.c -I /home/include/ -l WiringPi<br/>Выдала много ошибок об отсутствии большого количества переменных и типов данных.<br/>Возможности разбиратся в таком количестве подключаемых файлов нет.<br/>     Это все делается на Raspbery Pi c системой linux-3.6.11-11-ARCH+.<br/>Необходимо подмонтирновать обработку аппаратный прерываний. Подскажите как это сделать и какие файлы<br/>и библиотеки для этого необходимы.<br/><br/>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-114552"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/kurych/index.html">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/114552/index.html">#</a>
+            9 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/kurych/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/kurych/posts/index.html">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Откуда и куда скопировал? Совпадают ли версии ядра скопированных исходников и текущего ядра в системе, на которой идет компиляция? Соблюдены ли требования к минимальной версии glibc? На каком этапе компиляции возникают ошибки? Синт. анализ, собственно, компиляция, или линковка?<br/>Вникайте в смысл сообщений об ошибках и исправляйте. Никто за Вас эту работу делать не станет.<br/>Фраза "подмонтирновать обработку аппаратный прерываний" - вообще странно звучит. Мой совет: найдите исходники приложения, в котором используется что-то подобное, и изучите, как это там сделано.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-114579"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Klim/index.html">
+                <span class="post-username">Klim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/114579/index.html">#</a>
+            9 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Klim/topics/index.html">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Klim/posts/index.html">
+                    14
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>kurych</em><br/>Откуда и куда скопировал? Совпадают ли версии ядра скопированных исходников и текущего ядра в системе, на которой идет компиляция? Соблюдены ли требования к минимальной версии glibc? На каком этапе компиляции возникают ошибки? Синт. анализ, собственно, компиляция, или линковка?<br/>Вникайте в смысл сообщений об ошибках и исправляйте. Никто за Вас эту работу делать не станет.<br/>Фраза "подмонтирновать обработку аппаратный прерываний" - вообще странно звучит. Мой совет: найдите исходники приложения, в котором используется что-то подобное, и изучите, как это там сделано.</blockquote><br/>Исходники (.h файлы) находятся: <em>/<strong>user/linux-3.6.11-11-ARCH+/include ../.</strong></em> я создал подкаталог  <em>/<strong>home/include/</strong> </em>и туда переместил файлы которые подгружаются в файле <em><strong>interrupt.h</strong></em> дерективой #include.<br/>Версии ядра  и исходников совпадают.<br/>       Ошибки возникают на этапе подключения h файлов. В программе я указал только #include interrupt.h, а остальные файлы  подгружаются из interrupt.h.<br/>Появляются неопределенные типы, переменные, структуры и где они в каких файлах определены, я не знаю.<br/>        То что я попробовал сделать вручную - это все делается при сборке ядра. В сборках linux на RaspberryPi я не увидел чтобы эти модули были включены в сборку.<br/>Как сделать сборку ядра linux ARCH с прерываниями для RaspberyPi, я не знаю. Если кто то этим занимался помогите советом или скинте ссылочку на информацию.<br/>        Возможно кто то знает как определить номер прерывания по событию (по переднему или заднему фронту импульса) на ножке GPIO - соответствие номера порта на плате и номера прерывания в линукс например:  GPIO1 - IRQ25, GPIO2 - IRQ32 и т.д.<br/>        Работа с прерываниями необходима для управлениями устройствами в реальном времени.<br/>Опита работы в многозадачной среде с системами управления в реальном времени у меня нет и буду благодарен за любую помощь, информацию в этом плане.<br/>До этого работал с контролерами АТМЕГА.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-114586"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/kurych/index.html">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/114586/index.html">#</a>
+            9 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/kurych/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/kurych/posts/index.html">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Klim</em><br/>я создал подкаталог  <em>/<strong>home/include/</strong> </em>и туда переместил файлы которые подгружаются в файле <em><strong>interrupt.h</strong></em> дерективой #include.<br/></blockquote>А файлы, которые #include из тех файлов, которые #include из <em><strong>interrupt.h</strong></em> где будут искаться? Процесс-то рекурсивный. Почему бы не перестать усложнять себе жизнь и просто не указать, где нужные файлы лежат, а не копировать вручную частями?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-114588"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/ivand/index.html">
+                <span class="post-username">ivand</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/114588/index.html">#</a>
+            9 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/ivand/topics/index.html">
+                    9
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/ivand/posts/index.html">
+                    477
+                </a>
+            </div>
+            <div>
+                Участник с: 04 января 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>Это все делается на Raspbery Pi c системой linux-3.6.11-11-ARCH+.</blockquote>Ознакомьтесь с кросскомпиляцией<br/>Так ни чего не получится -- разные ABI-- бигендиан/литолендиан<br/>Уще проще -- PIDORA
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-114593"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Klim/index.html">
+                <span class="post-username">Klim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/114593/index.html">#</a>
+            9 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Klim/topics/index.html">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Klim/posts/index.html">
+                    14
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>kurych</em><br/>А файлы, которые #include из тех файлов, которые #include из <em><strong>interrupt.h</strong></em> где будут искаться? Процесс-то рекурсивный. Почему бы не перестать усложнять себе жизнь и просто не указать, где нужные файлы лежат, а не копировать вручную частями?</blockquote><br/>Файлы ищутся там где указывает опция -I в команде gcc.<br/>Указать путь там где они лежат можно только для некоторых файлов потому, что несовпадают имена директорий и возникает необходимость править пути в h файлах.<br/>Например в исходниках нет /asm/ подкаталога и я не хотел править подкаталог user/src.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-114595"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Klim/index.html">
+                <span class="post-username">Klim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/114595/index.html">#</a>
+            9 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Klim/topics/index.html">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Klim/posts/index.html">
+                    14
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>ivand</em><br/>Ознакомьтесь с кросскомпиляцией<br/>Так ни чего не получится -- разные ABI-- бигендиан/литолендиан<br/>Уще проще -- PIDORA</blockquote>Она перегружена ненужными мне модулями, долго грузится 40-50 секунд проти в 7-10 АRСН,<br/>и я решил, что проще работать с чистого листа, а не удалять ненужные модули.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index3bbd.html?next=/forum/topic/11943/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/11943/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:28:43 GMT -->
+</html>

@@ -1,0 +1,830 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18136/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:14:56 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        L2TP/IPsec посредством Openswan
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/13/index.html">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>L2TP/IPsec посредством Openswan</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>L2TP/IPsec посредством Openswan</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199550"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Indy/index.html">
+                <span class="post-username">Indy</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/199550/index.html">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Indy/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Indy/posts/index.html">
+                    20
+                </a>
+            </div>
+            <div>
+                Участник с: 23 мая 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Приветствую!<br />Есть железка Mikrotik<br />На нем поднят сервер по вот <a href="https://bozza.ru/art-248.html">этому</a> мануалу<br /><br />Виндой и андроидом проверено - работает.<br />Пытаюсь подключиться линуксом<br />Вики привела меня к статье Openswan L2TP/IPsec VPN client setup<br />Установил xl2tpd, openswan<br />стартанул сервис опенсвана - всё ок, без ошибок<br /><br />ipsecverify выдал<br /><br /><pre><code>Checking if IPsec got installed and started correctly:
+
+Version check and ipsec on-path                           [OK]
+Openswan U2.6.49.1/K(no kernel code presently loaded)
+See `ipsec --copyright&#39; for copyright information.
+Checking for IPsec support in kernel                      [FAILED]
+
+ The ipsec service should be started before running &#39;ipsec verify&#39;
+
+Hardware random device check                              [N/A]
+Checking rp_filter                                        [ENABLED]
+ /proc/sys/net/ipv4/conf/all/rp_filter                    [ENABLED]
+Checking that pluto is running                            [FAILED]
+Checking NAT and MASQUERADEing                            [TEST INCOMPLETE]
+Checking &#39;ip&#39; command                                     [OK]
+Checking &#39;iptables&#39; command                               [OK]
+
+ipsec verify: encountered errors</code></pre>Дальше<br /><pre><code>/etc/ipsec.conf
+config setup
+    virtual_private=%v4:10.0.0.0/8,%v4:192.168.0.0/16,%v4:172.16.0.0/12 [b]- Честно говоря не совсем понимаю как правильно заполнить эту строку, но нужно чтоб машина получала адресацию от VPN сервера[/b]
+    nat_traversal=yes
+    protostack=netkey
+    oe=no
+# Replace eth0 with your network interface
+    plutoopts=enps0 [b]- Так светится мой сетевой интерфейс командой ip addr[/b]
+conn L2TP-PSK
+    authby=secret
+    pfs=no
+    auto=add
+    keyingtries=3
+    dpddelay=30
+    dpdtimeout=120
+    dpdaction=clear
+    rekey=yes
+    ikelifetime=8h
+    keylife=1h
+    type=transport
+# Replace %any below with your local IP address (private, behind NAT IP is okay as well)
+    left=10.47.1.1 [b]- Локальный IP моей машины[/b]
+    leftprotoport=17/1701
+# Replace IP address with your VPN server&#39;s IP
+    right=1.1.1.1 [b]- ip vpn сервера, моего микротика[/b]
+    rightprotoport=17/1701
+</code></pre><br />Дальше следует<br />Create the file /etc/ipsec.secrets: It should contain the following line:<br />%any 68.68.32.79 : PSK &quot;your_pre_shared_key&quot;<br /><br />Что и было сделано, адрес 68.68.32.79 заменил на адрес микротика, ввел PSK (без кавычек, верно?)<br /><br />Следующий шаг закончился с ошибкой<br />Add the connection, so it&#39;s available to use:<br /> $ ipsec auto --add L2TP-PSK<br /><br /><pre><code>[root@WorkArch etc]# ipsec auto --add L2TP-PSK
+/usr/lib/openswan/auto: строка 155: 12308 Ошибка сегментирования                   (стек памяти сброшен на диск) ipsec addconn $config $options $names</code></pre>Затем перешел к xl2tpd<br />/etc/xl2tpd/xl2tpd.conf<br /><br /><pre><code>[lac vpn-connection]
+lns = 1.1.1.1
+ppp debug = yes
+pppoptfile = /etc/ppp/options.l2tpd.client
+length bit = yes</code></pre><pre><code>/etc/ppp/options.l2tpd.client
+pcp-accept-local
+ipcp-accept-remote
+refuse-eap
+require-mschap-v2
+noccp
+noauth
+idle 1800
+mtu 1410
+mru 1410
+defaultroute
+usepeerdns
+debug
+connect-delay 5000
+name мой_логин
+password мой_пароль</code></pre><br />Затем выполнил<br /><pre><code>Create the control file for xl2tpd:
+$ mkdir -p /var/run/xl2tpd
+$ touch /var/run/xl2tpd/l2tp-control</code></pre><br />И запустил<br />systemctl start openswan<br /><br />На выходе получил<br /><pre><code>[root@WorkArch xl2tpd]# systemctl start openswan
+Job for openswan.service failed because the control process exited with error code.
+See &quot;systemctl status openswan.service&quot; and &quot;journalctl -xe&quot; for details</code></pre><pre><code>[root@WorkArch ~]# systemctl status openswan.service
+? openswan.service - Openswan daemon
+   Loaded: loaded (/usr/lib/systemd/system/openswan.service; disabled; vendor preset: disabled)
+   Active: failed (Result: exit-code) since Mon 2018-01-08 11:14:04 +11; 1min 1s ago
+  Process: 10371 ExecStop=/usr/lib/systemd/scripts/ipsec --stop (code=exited, status=0/SUCCESS)
+  Process: 13673 ExecStart=/usr/lib/systemd/scripts/ipsec --start (code=exited, status=139)
+
+янв 08 11:14:04 MyArch systemd[1]: openswan.service: Service hold-off time over, scheduling restart.
+янв 08 11:14:04 MyArch systemd[1]: openswan.service: Scheduled restart job, restart counter is at 5.
+янв 08 11:14:04 MyArch systemd[1]: Stopped Openswan daemon.
+янв 08 11:14:04 MyArch systemd[1]: openswan.service: Start request repeated too quickly.
+янв 08 11:14:04 MyArch systemd[1]: openswan.service: Failed with result &#39;exit-code&#39;.
+янв 08 11:14:04 MyArch systemd[1]: Failed to start Openswan daemon.
+
+</code></pre><br />Собственно - что я делаю не так? Насколько я понимаю - у ядра не включена поддержка IPSec. Как ее включить (и надо ли?) - не нашел.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199554"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/199554/index.html">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Indy</em><br>Насколько я понимаю - у ядра не включена поддержка IPSec. Как ее включить (и надо ли?) - не нашел.</blockquote>Поддержка по дефолту включена. Не использую vpn, но в части IP Security, насколько я помню, рекомендуют отключить отправку и прием ICMP пакетов (по умолчанию опции send_redirects, accept_redirects равны 1, нужно установить их значение равным 0). Возможно сейчас все и изменилось.<br />Попробуй.<br /><strong>EDIT 1</strong> -  кстати, у нас есть пакет <strong>ipsec-tools</strong>, никогда его не использовал, почитай, что он может - возможно и пригодится.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199555"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Indy/index.html">
+                <span class="post-username">Indy</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/199555/index.html">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Indy/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Indy/posts/index.html">
+                    20
+                </a>
+            </div>
+            <div>
+                Участник с: 23 мая 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <pre><code></code></pre><blockquote><em>vasek</em><br>Поддержка по дефолту включена.</blockquote>Хм.. Странно, потому что я то как раз получил<br /><strong>Checking for IPsec support in kernel                      [FAILED]</strong><br />Или это не то?<br /><br /><pre><code> опции send_redirects, accept_redirects равны 1, нужно установить их значение равным 0</code></pre>Эммм.. Подскажи, пожалуйста, где это?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199557"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/199557/index.html">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Или в ручную (смотри в папках ls /proc/sys/net/ipv4/conf/.../ файлы send_redirects и accept_redirects) или прописать в /etc//sysctl.d/99-sysctl.conf или следуя совету этой <a href="https://karamba.me/?p=127">статьи</a> (используя скрипт, взятый на офф. сайте), в которой как раз и описано как избежать ошибки<br /><blockquote><em>Indy</em><br>Checking for IPsec support in kernel [FAILED]</blockquote>В догонку посмотри еще и эту <a href="http://rus-linux.net/MyLDP/sec/vpn-tunnel.html">статью</a> (в которой то же советуют, чтобы <u>IP redirects был постоянно отключен</u>) - но это все, как писал, возможно уже и устарело, так что советую погуглить.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199558"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Indy/index.html">
+                <span class="post-username">Indy</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/199558/index.html">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Indy/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Indy/posts/index.html">
+                    20
+                </a>
+            </div>
+            <div>
+                Участник с: 23 мая 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ок, спс, погуглю.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-206850"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Indy/index.html">
+                <span class="post-username">Indy</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/206850/index.html">#</a>
+            4 года, 1 месяц назад
+            
+                (отредактировано
+                
+                    4 года, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Indy/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Indy/posts/index.html">
+                    20
+                </a>
+            </div>
+            <div>
+                Участник с: 23 мая 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Поскольку по поиску &quot;l2tp ipsec arch&quot; в первых рядах гуглится и этот топик - оставлю тут. Работает по <a href="https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md#linux">этому</a> рецепту (слава Максу, который навел меня на него ;-)). Делать скидку на арч (ибо мануал для центос/редхат и дебиана). Шаги &quot;редхат/центось онли&quot; - не выполнять.<br />Вдруг кому пригодится :-)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-206858"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/LuD/index.html">
+                <span class="post-username">LuD</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/206858/index.html">#</a>
+            4 года, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/LuD/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/LuD/posts/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Участник с: 07 апреля 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я решил легко все вопросы с помощью strongswan. Те же яица, только удобнее.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index1fa2.html?next=/forum/topic/18136/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/18136/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:14:56 GMT -->
+</html>

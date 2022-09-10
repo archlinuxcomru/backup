@@ -1,0 +1,1209 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        systemd mini FAQ
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/11/">Установка</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>systemd mini FAQ</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>systemd mini FAQ</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=9">9</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-13152"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/13152/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Перехожу на сабж. Честно говоря черт ногу сломит, но чувствуется , что после понятия методов работы, станет немного даже лучше.<br/>От этого сразу несколько вопросов бывалым(перед последующей медитацией над манами).<br/>нету ли команды для просмотра всех унитов пускаемых в автозапуске.<br/>нет ли команды для просмотра списка всех юнитов?<br/>что значит static в выхлопе вместо логически ожидаемого enable/disabe?<br/><div class="code"><pre>sudo systemctl is-enabled dbus.service
+static</pre></div>Как добавить информативности при загрузки. Меня чуть Кондратий не хватил, когда я пять секунд смотрел на черный экран, подозревая всякое ))) . Как сделать чтото похожее на олдскул? :-) <br/>что с датой, часы слетели, верю что Ленард тут ни причем, но у др. может тоже появится, так что спросил здесь.<br/>на часах 18 часов вместо 14.<br/><div class="code"><pre>la /etc/ | grep local
+-rw-r--r--  1 root root   18 июля  25 12:23 locale.conf
+-rw-r--r--  1 root root 9,0K июля  17 01:50 locale.gen
+-rw-r--r--  1 root root 9,0K июля   2 19:27 locale.gen.pacnew
+-rw-r--r--  1 root root 9,0K февр. 11 00:25 locale.gen.pacsave
+lrwxrwxrwx  1 root root   33 марта 28 15:04 localtime -&gt; /usr/share/zoneinfo/Europe/Moscow</pre></div><div class="code"><pre> cat /etc/timezone 
+Europe/Moscow</pre></div>Что я забыл?
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-13153"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/malody/">
+                <span class="post-username">malody</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/13153/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/malody/topics/">
+                    39
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/malody/posts/">
+                    321
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sleepycat</em><br/>lrwxrwxrwx  1 root root   33 марта 28 15:04 localtime -&gt; /usr/share/zoneinfo/Europe/Moscow<br/><div class="code"><pre> cat /etc/timezone 
+Europe/Moscow</pre></div>Что я забыл?</blockquote>Попробуйте в <strong>etc/rc.conf</strong> прописать:<br/><div class="code"><pre>HARDWARECLOCK="localtime"
+TIMEZONE="Europe/Moscow"</pre></div>
+            
+                
+                    <div class="post-signature">
+                        <a href="https://wiki.archlinux.org/index.php/ArchWiki_Translation_Team_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Русская команда переводчиков ArchWiki</a><br /><a href="https://wiki.archlinux.org/index.php/User:Vladimir_Shatalin">скромный вклад</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-13154"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/13154/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            initscripts удален изза конфикта чистого системд, который ,насколько я сейчас могу предполагать из прочитанного, сам по себе без костыля в него не смотрит и все мануалы призывают пользовать стандартные (для системд) методы установки дат и времени, которые я видно еще не изучил до конца.
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-13155"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/malody/">
+                <span class="post-username">malody</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/13155/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/malody/topics/">
+                    39
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/malody/posts/">
+                    321
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sleepycat</em><br/>initscripts удален изза конфикта чистого системд, который ,насколько я сейчас могу предполагать из прочитанного, сам по себе без костыля в него не смотрит и все мануалы призывают пользовать стандартные (для системд) методы установки дат и времени, которые я видно еще не изучил до конца.</blockquote>Хм, я вчера ставил с нового образа 2012.07.15. rc.conf в системе есть. И в тестовой ветке он есть, только там он немного опустел.
+            
+                
+                    <div class="post-signature">
+                        <a href="https://wiki.archlinux.org/index.php/ArchWiki_Translation_Team_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Русская команда переводчиков ArchWiki</a><br /><a href="https://wiki.archlinux.org/index.php/User:Vladimir_Shatalin">скромный вклад</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-13156"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/13156/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            значит у вас не чистый системд или стоит чтото вроде<br/><div class="code"><pre>5 community/initscripts-systemd 20120704.1-1
+    Arch specific systemd initialization/bootup scripts for systemd</pre></div>
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-13157"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/hard/">
+                <span class="post-username">hard</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/13157/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/hard/topics/">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/hard/posts/">
+                    49
+                </a>
+            </div>
+            <div>
+                Участник с: 11 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sleepycat</em><br/>&#8230;нету ли команды для просмотра всех унитов пускаемых в автозапуске.<br/>нет ли команды для просмотра списка всех юнитов?<br/>&#8230;</blockquote>Не знаю поможет ли но:<br/><div class="code"><pre>ls /usr/lib/systemd/system/</pre></div>здесь куча юнитов<br/><div class="code"><pre>systemctl</pre></div>или <div class="code"><pre>systemctl list-units</pre></div>запущенные юниты<br/><div class="code"><pre>systemctl --failed</pre></div>которые не запустились<br/><div class="code"><pre>systemd-analyze </pre></div>сколько грузились<br/>У меня примерно <br/><div class="code"><pre>Startup finished in 5414ms (kernel) + 7578ms (userspace) = 12993ms</pre></div><div class="code"><pre>systemd-analyze blame</pre></div>сколько по отдельности<br/><div class="code"><pre>2817ms NetworkManager.service
+  2367ms avahi-daemon.service
+  2329ms systemd-udev-settle.service
+  2122ms systemd-modules-load.service
+  1981ms systemd-logind.service
+   765ms systemd-remount-fs.service
+   679ms systemd-vconsole-setup.service
+   517ms console-kit-log-system-start.service
+   396ms tmp.mount
+   373ms systemd-udev-trigger.service
+   347ms systemd-udevd.service
+   286ms lm_sensors.service
+   251ms dev-hugepages.mount
+   248ms dev-mqueue.mount
+   166ms systemd-tmpfiles-setup.service
+   128ms boot.mount
+    85ms systemd-sysctl.service
+    79ms systemd-user-sessions.service
+    78ms upower.service
+    46ms sys-kernel-debug.mount
+    44ms console-kit-daemon.service
+    32ms media-disk1.mount
+    29ms ntpd.service
+    26ms home.mount
+     7ms rtkit-daemon.service
+     1ms sys-fs-fuse-connections.mountх</pre></div> <a href="https://archlinux.org.ru/forum/viewtopic.php?f=2&amp;t=9134&amp;start=90">viewtopic.php?f=2&amp;t=9134&amp;start=90</a> - здесь вот вчера сегодня кувыркался с консольным шрифтом, слетал&#8230;<br/><br/>Перешел тоже не так давно на этот systemd, но часы не слетели&#8230;, вроде все как у тебя настроено.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-13158"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/leonardo19/">
+                <span class="post-username">leonardo19</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/13158/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a9/6a/a96a10f640be017dcd017364aa690659.png" alt="leonardo19 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/leonardo19/topics/">
+                    40
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/leonardo19/posts/">
+                    848
+                </a>
+            </div>
+            <div>
+                Участник с: 25 ноября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sleepycat</em><br/>что с датой, часы слетели, верю что Ленард тут ни причем, но у др. может тоже появится, так что спросил здесь.</blockquote>Часы. В /etc/adjtime должно быть третьей строкой указано UTC или localtime. Лучше UTC.<br/><blockquote>Как добавить информативности при загрузки. Меня чуть Кондратий не хватил, когда я пять секунд смотрел на черный экран, подозревая всякое ))) . Как сделать чтото похожее на олдскул? :-) </blockquote>По умолчанию очень бодренько бежит информация о процессе загрузки.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-13159"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/13159/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sleepycat</em><br/>нету ли команды для просмотра всех унитов пускаемых в автозапуске.</blockquote>Те что не явно включенные но запущены и есть список автозапускаемых! Логично?<br/><blockquote><em>sleepycat</em><br/>что значит static в выхлопе вместо логически ожидаемого enable/disabe?</blockquote>Статики полный автомат, но что бы не загружать, их можно замаскировать&#8230;<br/><blockquote><em>sleepycat</em><br/>что с датой, часы слетели, верю что Ленард тут ни причем, но у др. может тоже появится, так что спросил здесь.<br/>на часах 18 часов вместо 14.</blockquote>Попробуй найти и грохнуть <strong>adjtime</strong><br/>А потом создать такой <strong>/etc/adjtime</strong><br/><div class="code"><pre>0.0 0.0 0.0
+0
+UTC</pre></div><blockquote><em>sleepycat</em><br/>нет ли команды для просмотра списка всех юнитов?</blockquote><strong>systemctl list-unit-files</strong><br/><br/><blockquote><em>HarD</em><br/>systemd-analyze <br/><br/>сколько грузились</blockquote>Ну что бы узнать более точно нужно добавить хук timestamp в mkinitcpio.conf<br/><br/><blockquote><em>sleepycat</em><br/>Как добавить информативности при загрузки. Меня чуть Кондратий не хватил, когда я пять секунд смотрел на черный экран, подозревая всякое ))) . Как сделать чтото похожее на олдскул? :-) </blockquote>Убрать из параметра загрузки ядра <strong>quiet</strong>
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-13160"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Quark_p/">
+                <span class="post-username">Quark_p</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/13160/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f6/1f/f61f4deeb80fe862541892288c18a67c.png" alt="Quark_p avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Quark_p/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Quark_p/posts/">
+                    119
+                </a>
+            </div>
+            <div>
+                Участник с: 15 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вчера только кувыркался с systemd  в виртуалке. systemd+syslinux = шустрая парочка по ощущениям. Вот только конфиги раскидали по всей системе, а так было удобно с rc.conf, все в одном месте. Дополнительные юниты в пакете systemd-arch-units.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-13161"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Ostland/">
+                <span class="post-username">Ostland</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/13161/">#</a>
+            10 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/eb/d2/ebd2103f330fc91a7a04926cbeafdedd.png" alt="Ostland avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Ostland/topics/">
+                    34
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Ostland/posts/">
+                    389
+                </a>
+            </div>
+            <div>
+                Участник с: 22 сентября 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Почитал арчвики и не совсем понял, как до кучи при старте системы запускать демоны ака сервисы: прописать их один раз командой # systemctl enable &lt;unit&gt; и все? Или еще как?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=9">9</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/1301/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747c7b0f88b37b63',m:'VOil0RTX9XpSBx6asQL6tNHg9L6ba85kT0ccHp4Rbg4-1662690415-0-Ae5NVfMomkD+Y5nN914T6ZO+IA8onsT1LjIIHVKQhNSyUs8GpDg+4BnQWU0klUo6Z5gCBEJHOecyY8jrmD1Ao/j8WtT4P1DjUlEbJJLpF+hhyI8H4lCYS+EkTMBlx0INF/k9UR3ZrfGKB+cJXcOfneI=',s:[0x782936177b,0xd75f854ece],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

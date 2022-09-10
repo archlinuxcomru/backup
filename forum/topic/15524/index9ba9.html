@@ -1,0 +1,1093 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Оптимизация ядра под свой процессор
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/12/">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Оптимизация ядра под свой процессор</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Оптимизация ядра под свой процессор</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160801"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Xts/">
+                <span class="post-username">Xts</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160801/">#</a>
+            6 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/3f/87/3f87893d757d80855bcd79de6d5c0854.png" alt="Xts avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Xts/topics/">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Xts/posts/">
+                    973
+                </a>
+            </div>
+            <div>
+                Участник с: 13 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            sandybridge	+79.7 ms<br />мда, действительно бесполезное занятие
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160805"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Perfect_Gentleman/">
+                <span class="post-username">Perfect_Gentleman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160805/">#</a>
+            6 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Perfect_Gentleman/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Perfect_Gentleman/posts/">
+                    1039
+                </a>
+            </div>
+            <div>
+                Участник с: 29 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>safocl</em><br>вот один из вас, марлок, взял и просто ответил на вопрос...</blockquote>просто он очень злой.<br /><br />ты просто реально не догоняешь, нафига тебе это надо и что это. в бинарном дистре, в большинстве случаев это Арч, только такие мамкины какиры, как ты, дефолтное ядро пересобирают. из-за тебя этот дистр и считают поделкой для школоты.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160809"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vdemin/">
+                <span class="post-username">vdemin</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160809/">#</a>
+            6 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/2a/e3/2ae3c3ef2445b4fba1c6e557e16ab155.png" alt="vdemin avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vdemin/topics/">
+                    54
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vdemin/posts/">
+                    1615
+                </a>
+            </div>
+            <div>
+                Участник с: 24 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            @<strong>Perfect_Gentleman</strong>, давайте без переходов на личности.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160852"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/maisvendoo/">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160852/">#</a>
+            6 лет, 8 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/maisvendoo/topics/">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/maisvendoo/posts/">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>safocl</em><br>по заданному вопросу вечно на форумах начинается толпа встречных вопросов типа: &quot;зачем тебе енто делать&quot;, &quot;ведь есть уже собранные ядра&quot;, и т.д.</blockquote><br />Потому и спрашивают, что, как я уже писал выше, польза от этого дела только лишь в том, чтобы научится собирать ядро с указанием желаемых ключей. Практически значимого выигрыша в производительности не будет. Те кто в этом разбираются Вам на это и указывают. Это добрый совет направить свой энтузиазм и энергию на более полезные вещи (например чтение документации и изучение английского языка, раз с этим всё плохо)<br /><br />Можно взять и открыть книжку (на русском языке) Зубкова &quot;Ассемблер для DOS, Windows и UNIX&quot;, где написано, что наибольший эффект дает оптимизация на уровне алгоритма. Доля низкоуровневой оптимизации под конкретную архитектуру значительно меньше. А учитывая, что в арче бинарные сборки всегда самые свежие, то и собраны они с учетом актуальных на текущий момент архитектур и занимаетесь Вы ловлей микросекундных блох.<br /><br />К тому же, кроме ядра в ОС есть ещё и окружение, есть конкретные приложения которые вы запускаете в системе, так  что пересобирать нужно тупо ВСЁ.  Если Вы, хотябы по диагонали просмотрите книгу LFS, то заметите что 90% работы по ручной сборки системы - сборка и настройка её окружения, а ядро собирается в последнюю очередь и очень быстро.
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160855"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/safocl/">
+                <span class="post-username">safocl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160855/">#</a>
+            6 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/safocl/topics/">
+                    121
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/safocl/posts/">
+                    1570
+                </a>
+            </div>
+            <div>
+                Участник с: 08 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>maisvendoo</em><br><blockquote><em>safocl</em><br>по заданному вопросу вечно на форумах начинается толпа встречных вопросов типа: &quot;зачем тебе енто делать&quot;, &quot;ведь есть уже собранные ядра&quot;, и т.д.</blockquote><br />Потому и спрашивают, что, как я уже писал выше, польза от этого дела только лишь в том, чтобы научится собирать ядро с указанием желаемых ключей. Практически значимого выигрыша в производительности не будет. Те кто в этом разбираются Вам на это и указывают. Это добрый совет направить свой энтузиазм и энергию на более полезные вещи (например чтение документации и изучение английского языка, раз с этим всё плохо)<br /><br />Можно взять и открыть книжку (на русском языке) Зубкова &quot;Ассемблер для DOS, Windows и UNIX&quot;, где написано, что наибольший эффект дает оптимизация на уровне алгоритма. Доля низкоуровневой оптимизации под конкретную архитектуру значительно меньше. А учитывая, что в арче бинарные сборки всегда самые свежие, то и собраны они с учетом актуальных на текущий момент архитектур и занимаетесь Вы ловлей микросекундных блох.<br /><br />К тому же, кроме ядра в ОС есть ещё и окружение, есть конкретные приложения которые вы запускаете в системе, так  что пересобирать нужно тупо ВСЁ.  Если Вы, хотябы по диагонали просмотрите книгу LFS, то заметите что 90% работы по ручной сборки системы - сборка и настройка её окружения, а ядро собирается в последнюю очередь и очень быстро.</blockquote><br />ну во первых, пересобираю ядро я оприоре, т.к. много всякой фигни от туда повыковырять.... оставляю толька нужные дрова и т.д. если еще есть вариант улучшить производительность простым вписыванием еще одного параметра, набрав 5 букавак на клаве, то почему бы енто не сделать? енто ж не теорему решить блин...<br />при чем я и стараюсь почти все пересобрать в системе... даже иксы пересобрал... и т.д.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160859"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/maisvendoo/">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160859/">#</a>
+            6 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/maisvendoo/topics/">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/maisvendoo/posts/">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>safocl</em><br>вариант улучшить производительность простым вписыванием еще одного параметра, набрав 5 букавак на клаве, то почему бы енто не сделать? енто ж не теорему решить блин...<br />при чем я и стараюсь почти все пересобрать в системе... даже иксы пересобрал... и т.д.</blockquote><br />Потому что собирая пакеты руками Вы лишаете себя основного преимущества пакетного дистрибутива - обновления пакетов путем набора 5 букв на клаве. Пересобирать придется заново, так как время идет, версии библиотек и драйверов меняются, становятся несовместимыми.<br /><br />Есть специфические дистрибутивы, установка и обновление которых идет как раз через пересборку из исходников. Там это актуально, там всё для этого есть и описано подробнейшим образом. Например Gentoo. А в случае с арчем выходит как на известной картинке про буханку хлеба и троллейбус
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160861"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/midnight_walker/">
+                <span class="post-username">midnight_walker</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160861/">#</a>
+            6 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/33/e6/33e67db1785a90198f04e22a77a3afe8.png" alt="midnight_walker avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/midnight_walker/topics/">
+                    17
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/midnight_walker/posts/">
+                    106
+                </a>
+            </div>
+            <div>
+                Участник с: 28 апреля 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>maisvendoo</em><br>Потому что собирая пакеты руками Вы лишаете себя основного преимущества пакетного дистрибутива - обновления пакетов путем набора 5 букв на клаве. Пересобирать придется заново, так как время идет, версии библиотек и драйверов меняются, становятся несовместимыми.<br /><br />Есть специфические дистрибутивы, установка и обновление которых идет как раз через пересборку из исходников. Там это актуально, там всё для этого есть и описано подробнейшим образом. Например Gentoo. А в случае с арчем выходит как на известной картинке про буханку хлеба и троллейбус</blockquote>+ к этому бы ещё ответ на вопрос топикстартера и был бы золотой псто.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160865"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Xts/">
+                <span class="post-username">Xts</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160865/">#</a>
+            6 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/3f/87/3f87893d757d80855bcd79de6d5c0854.png" alt="Xts avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Xts/topics/">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Xts/posts/">
+                    973
+                </a>
+            </div>
+            <div>
+                Участник с: 13 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>safocl</em><br>если еще есть вариант улучшить производительность простым вписыванием еще одного параметра, набрав 5 букавак на клаве, то почему бы енто не сделать?</blockquote>еслиб вам это дало какой то значительный прирост и с дальнейшем в сумме сэкономило вам время, то может и есть смысл, но ради 80 миллисекунд, это пустая трата времени, ибо прирост это вообще не реально заметить на практите
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160970"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/safocl/">
+                <span class="post-username">safocl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160970/">#</a>
+            6 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/safocl/topics/">
+                    121
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/safocl/posts/">
+                    1570
+                </a>
+            </div>
+            <div>
+                Участник с: 08 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>maisvendoo</em><br><blockquote><em>safocl</em><br>вариант улучшить производительность простым вписыванием еще одного параметра, набрав 5 букавак на клаве, то почему бы енто не сделать? енто ж не теорему решить блин...<br />при чем я и стараюсь почти все пересобрать в системе... даже иксы пересобрал... и т.д.</blockquote><br />Потому что собирая пакеты руками Вы лишаете себя основного преимущества пакетного дистрибутива - обновления пакетов путем набора 5 букв на клаве. Пересобирать придется заново, так как время идет, версии библиотек и драйверов меняются, становятся несовместимыми.<br /><br />Есть специфические дистрибутивы, установка и обновление которых идет как раз через пересборку из исходников. Там это актуально, там всё для этого есть и описано подробнейшим образом. Например Gentoo. А в случае с арчем выходит как на известной картинке про буханку хлеба и троллейбус</blockquote>ну вопервых, я хз почему вы взяли чо у меня арч стоит... отписался тут т.к. сборка ядра везде одинакова!!!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160971"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/safocl/">
+                <span class="post-username">safocl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160971/">#</a>
+            6 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/safocl/topics/">
+                    121
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/safocl/posts/">
+                    1570
+                </a>
+            </div>
+            <div>
+                Участник с: 08 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>midnight_walker</em><br><blockquote><em>maisvendoo</em><br>Потому что собирая пакеты руками Вы лишаете себя основного преимущества пакетного дистрибутива - обновления пакетов путем набора 5 букв на клаве. Пересобирать придется заново, так как время идет, версии библиотек и драйверов меняются, становятся несовместимыми.<br /><br />Есть специфические дистрибутивы, установка и обновление которых идет как раз через пересборку из исходников. Там это актуально, там всё для этого есть и описано подробнейшим образом. Например Gentoo. А в случае с арчем выходит как на известной картинке про буханку хлеба и троллейбус</blockquote>+ к этому бы ещё ответ на вопрос топикстартера и был бы золотой псто.</blockquote><br />именно!!!... все льют воду да не по делу))
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/15524/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747c06801ad17a79',m:'gep7U7TUN9ZpWuqgnVNm4r0NEW7Rq1bEeJbdaYr9Ykg-1662685633-0-ASFOQggN13NAGVr5JNxvr+OMGGY8dsm3q3avuXMc3ORMfB3VjQLdwlJKAIWEn5WS6rIPAsinglRYGJuXFolGQH2aLmzlyeIyL8ot7YYQSKPVb+lAVXaQnoORf3Moho04LDXt0dtjr0jCUp+jilIhEdQ=',s:[0x81d1e3e7b6,0x6547fc885e],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

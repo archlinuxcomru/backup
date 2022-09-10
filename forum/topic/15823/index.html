@@ -1,0 +1,1111 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Отключение выхода монитора на уровне ядра при старте системы
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Отключение выхода монитора на уровне ядра при старте системы</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Отключение выхода монитора на уровне ядра при старте системы</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165285"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/danil/">
+                <span class="post-username">danil</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165285/">#</a>
+            6 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/danil/topics/">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/danil/posts/">
+                    32
+                </a>
+            </div>
+            <div>
+                Участник с: 04 марта 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Имеется старый ноутбук, верней то что от него осталось, работает в качестве системного блока, т.е. штатный монитор отсутствует совсем и в настройки БИОСа попасть не получается, так как инициализация внешнего монитора происходит при загрузке дров уже после старта системы.<br /><br />Возможно ли какими-либо средствами OS получить доступ к настройкам БИОС, дабы основным выходом назначить VGA, если это вообще реально?  Железка Samsung R519, модификацию сказать не смогу, так как живая осталась лишь мать )<br /><br />Как отключить выход штатного монитора при инициализации ядра? Проблема в том, что если не запущен Xserver, то изображение на оба монитора дублируется, а разрешение внешнего монитора на порядок выше и системой используется лишь его часть, т.е. картинка выводится на меньшей части экрана, соответствующей разрешению монитора ноутбука.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165287"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Aivar/">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165287/">#</a>
+            6 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Aivar/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Aivar/posts/">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>danil</em><br>если не запущен Xserver, то изображение на оба монитора дублируется, а разрешение внешнего монитора на порядок выше и системой используется лишь его часть, т.е. картинка выводится на меньшей части экрана, соответствующей разрешению монитора ноутбука.</blockquote>А вы используете его без иксов? В противном случае все просто:<br /><pre><code>$ xrandr --output LVDS --off</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165288"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/danil/">
+                <span class="post-username">danil</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165288/">#</a>
+            6 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/danil/topics/">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/danil/posts/">
+                    32
+                </a>
+            </div>
+            <div>
+                Участник с: 04 марта 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            с иксами то вопросов не возникает<br /><blockquote><em>Aivar</em><br>А вы используете его без иксов? В противном случае все просто:<br /><pre><code>$ xrandr --output LVDS --off</code></pre></blockquote>с иксами то вопросов не возникает
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165289"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165289/">#</a>
+            6 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Выполняем команду <strong>xrandr</strong> и смотрим, как у вас обозначаются выходы видео.<br /><br />Допустим, LVDS1 это встроенный экран, VGA1 это выход VGA <em>(у вас могут быть другие, например, если будет VGA-1, то минус тоже важен)</em>.<br />Тогда добавляем <em>(в настройках загрузчика)</em> в строку параметров ядра <pre><code>video=LVDS1:d video=VGA1:e</code></pre> и загружаемся.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165294"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/akorop/">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165294/">#</a>
+            6 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/akorop/topics/">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/akorop/posts/">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br>Выполняем команду <strong>xrandr</strong> и смотрим, как у вас обозначаются выходы видео.<br /><br />Допустим, LVDS1 это встроенный экран, VGA1 это выход VGA <em>(у вас могут быть другие, например, если будет VGA-1, то минус тоже важен)</em>.<br />Тогда добавляем <em>(в настройках загрузчика)</em> в строку параметров ядра <pre><code>video=LVDS1:d video=VGA1:e</code></pre> и загружаемся.</blockquote>Стало интересно, захотел попробовать. У меня xrandr показывает VGA-0 и HDMI-0 (реально это монитор и телевизор). Добавил параметры ядра, перезагрузился, поглядывая на оба экрана, - ничего не изменилось, оба задействованы. Сделал :d и :e наоборот - точно так же ничем не отличается от обычной загрузки.<br />В результате RTFM нарыл следующее:<pre><code>
+video
+
+This kernel boot options tells the kernel KMS driver on what resolution and/or frequency to use. For this to work, KMS must not be disabled (see above). The format of the option is as follows:
+
+video=conn:res[M][R][-bpp][@refresh][i][m][eDd]
+
+This option can be specified multiple times, one for each different connection name - so you can have on settings for VGA, one for HDMI, etc.
+
+    conn means the connection name, which depends how your monitor is connected to the system. Listed are some common connection names, their names are self-explanatory:
+        VGA (VGA connector)
+        DVI-I (DVI connector, supporting both digital and analog - rare)
+        DVI-D (DVI connector, digital only)
+        DVI-A (DVI connector, analog only - rare)
+        composite (composite video)
+        s-video (S-video output)
+        LVDS (Laptop panel)
+        component (component video output)
+        displayport (Mac display)
+        HDMI-A (the first HDMI port)
+        HDMI-B (the second HDMI port)
+        TV (TV output)
+    res stands for the resolution. It is specified as widthxheight, in pixels (e.g. 800x600).
+    M if specified, means that the display timing frequency will be computed using VESA CVT standard, otherwise a hard-coded timing table will be used.
+    R if specified, means that a &quot;reduced blanking&quot; display timing frequency will be used. This is useful for digital displays (LVDS, DVI or HDMI). Otherwise standard timing will be used.
+    -bpp stands for bit-per-pixel, that is, the bit-depth of the display, that is, the number of colours to be used. If not specified, the driver will choose the highest supported one. Common values are:
+        -32 (32-bit per pixel: 16million colours)
+        -24 (24-bit per pixel: 16million colours)
+        -16 (16-bit per pixel: 64thousand colours) - you&#39;re unlike to use this nowadays
+        -15 (15-bit per pixel: 32thousand colours) - you&#39;re unlike to use this nowadays
+        -8 (8-bit per pixel: 256 colours) - you&#39;re unlike to use this nowadays
+        -4 (4-bit per pixel: 16 colours) - you&#39;re unlike to use this nowadays
+    @refresh specifies display refresh rate (also known as the vertical frequency refresh rate). Usually @60 or @59 for digital displays, you can specify others for analog / CRT monitors. If not specified the highest supported rate will be used.
+    i, if specified, means to use interlaced mode for calculation. Only makes sense for analog / CRT monitors.
+    m, if specified, means add some margins to the display timing calcuation (add 1.8% margin).
+    m, if specified, means add some margins to the display timing calcuation (add 1.8% margin).
+    e, if specified, means to enable the port (even if no device/monitor is detected).
+    D, if specified, means to enable the port (even if no device/monitor is detected) and use the Digital interface.
+    d, if specified, means to disable the port (even if there is a monitor attached there).
+
+Note: This is a generic parameter used to set framebuffer display resolution. It can also be used for non-KMS drivers too. That is not discussed here because it is irrelevant, for further reference you can refer to Linux Kernel Framebuffer Documentation.</code></pre>Заменил VGA-0 на VGA и HDMI-0 на HDMI-A - всё равно эффект нулевой.<br /><br />Оно вообще должно работать? Или это предания седой старины, современным ядром не поддерживаемые?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165299"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/danil/">
+                <span class="post-username">danil</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165299/">#</a>
+            6 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/danil/topics/">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/danil/posts/">
+                    32
+                </a>
+            </div>
+            <div>
+                Участник с: 04 марта 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            тоже нулевая реакция. ядро - последнее из репозитория
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165300"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165300/">#</a>
+            6 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>danil</em><br>Возможно ли какими-либо средствами OS получить доступ к настройкам БИОС, дабы основным выходом назначить VGA</blockquote>Имхо, непосредственно получить доступ к настройкам БИОС из системы не возможно, не считая грубого вмешательства — изменить бинарник/дамп и перепрошить им БИОС.<br />Но воспользоваться BIOS (точнее его дампом, размещенным в памяти) для изменения некоторых параметров <em>(наверное, точнее будет режимов...)</em> до загрузки ядра возможно, например, тот же режим дисплея/монитора (см. исходники linux/Documentation/svga.txt + linux/arch/x86/boot/video.c).....хотя многое уже и не работает ... тот же параметр vga=ask пишет deprecated..... (сейчас проверил)
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165377"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165377/">#</a>
+            6 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Нет, <strong>akorop</strong>, <strong>danil</strong>, это актуально и работает, просто я за давностью немного забыл особенности реализации, прошу прощения :)<br />Имена, показываемые xrandr в иксах могут не совпадать с именами выходов драйвера уровня ядра, а в параметре video= нужно указывать именно вторые.<br /><br />Сейчас специально попробовал на подвернувшемся ноуте.<br />xrandr показывает встроенный экран как <strong>eDP1</strong>, а выход как <strong>VGA1</strong>, но модуль kms/drm ядра именует их иначе (с минусом): <br /><pre><code>$ ls -1 /sys/class/drm/
+card0
+card0-DP-1
+card0-eDP-1
+card0-HDMI-A-1
+card0-VGA-1
+controlD64
+renderD128</code></pre>Соответственно, в моём случае работают такие параметры: <pre><code>video=eDP-1:d video=VGA-1:e</code></pre>Разумеется, без &quot;минуса&quot; в именах и у меня была &quot;нулевая реакция&quot;.<br /><br />Разумеется, всё это справедливо только при загрузке drm/kms-модуля ядра, то есть <strong>i915</strong> (для intel), <strong>radeon</strong> (для amd) или <strong>nouveau</strong>.<br />Если у вас фирменный драйвер <strong>nvidia</strong>, фреймбуфер не сможет использовать drm/kms, и параметр ядра video= не сработает.<br /><br />У <strong>danil</strong> ноут Samsung R519 со встроенной графикой intel GMA 4500M, так что всё должно работать, и имена выходов, скорей всего, частично или полностью совпадут с моим случаем.<br /><br /><strong>vasek</strong>, &quot;старый&quot; параметр vga= относится к управлению режимом фреймбуфера BIOS до загрузки ядра, и при использовании GRUB2 он действительно &quot;deprecated&quot; <em>(со стороны GRUB2 :)</em>, но к &quot;новому&quot; параметру video= это не относится ни в коем разе.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165381"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/akorop/">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165381/">#</a>
+            6 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/akorop/topics/">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/akorop/posts/">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br>Имена, показываемые xrandr в иксах могут не совпадать с именами выходов драйвера уровня ядра, а в параметре video= нужно указывать именно вторые.</blockquote>Осталось уточить одну &quot;мелочь&quot; - как эти вторые имена узнать. Делюсь тайным знанием: <strong>dmesg | grep -E &quot;VGA|HDMI&quot;</strong>.<br />Когда я вписал получившиеся имена, то результаты получились странные.<br />Если я отключал телевизор (HDMI), то на него информация всё равно выводилась (та же, что и на монитор, включая иксовую), но xrandr говорил, что HDMI-0 disconnected. А если я отключал монитор (VGA), но монитор полностью отключался, но на телевизор выводилась какая-то мигающая зелёная фигня.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165386"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165386/">#</a>
+            6 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br>vasek, &quot;старый&quot; параметр vga= относится к управлению режимом фреймбуфера BIOS до загрузки ядра, и при использовании GRUB2 он действительно &quot;deprecated&quot; (со стороны GRUB2 :), но к &quot;новому&quot; параметру video= это не относится ни в коем разе.</blockquote><strong>Natrio</strong>, спасибо за подсказку........ жил по старинке..... о параметре video=  даже и не знал (не будешь же шерстить все исходники на то не зная чего....)..... по твоей наводке вышел на <strong>modedb</strong>  …... и, действительно, при загрузке можно переопределить видеовыход .... но, на практике проверить не могу..... технически
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/15823/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747c115cee7d16f0',m:'ueSW4dg0kckpTXti22LbbN6pDUYSjpNAsHkZcR1aZak-1662686074-0-ATu64gDsROiCjmVCwEO/0fm9bsbCBAjAktmfBk9LJZnDlKaLCsIwgFmQlBuAqA0FU483Mx2qtm3+3AQuEIxaFShZBZI78lOPTtqeTiJZ/4cVko3sded/hyFjx+55dWjE259oUx8SekLH9tOmUn3feRw=',s:[0x643daacc44,0xfe241e3849],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

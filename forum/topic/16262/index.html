@@ -1,0 +1,993 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [РЕШЕНО]LFS после сборки glibc не проходит тест на линковку
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[РЕШЕНО]LFS после сборки glibc не проходит тест на линковку</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[РЕШЕНО]LFS после сборки glibc не проходит тест на линковку</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-171618"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/safocl/">
+                <span class="post-username">safocl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/171618/">#</a>
+            6 лет, 2 месяца назад
+            
+                (отредактировано
+                
+                    6 лет, 2 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/safocl/topics/">
+                    121
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/safocl/posts/">
+                    1570
+                </a>
+            </div>
+            <div>
+                Участник с: 08 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            в общем собрал по книге glibc, запускаю:<br /><pre><code>echo &#39;int main(){}&#39; &gt; dummy.c
+$LFS_TGT-gcc dummy.c
+readelf -l a.out | grep &#39;: /tools&#39;</code></pre><br />получаю:<br /><pre><code>
+/tools/bin/../lib/gcc/x86_64-lfs-linux-gnu/5.3.0/../../../../x86_64-lfs-linux-gnu/bin/ld: cannot find crt1.o: No such file or directory
+/tools/bin/../lib/gcc/x86_64-lfs-linux-gnu/5.3.0/../../../../x86_64-lfs-linux-gnu/bin/ld: cannot find crti.o: No such file or directory
+/tools/bin/../lib/gcc/x86_64-lfs-linux-gnu/5.3.0/../../../../x86_64-lfs-linux-gnu/bin/ld: cannot find -lc
+/tools/bin/../lib/gcc/x86_64-lfs-linux-gnu/5.3.0/../../../../x86_64-lfs-linux-gnu/bin/ld: cannot find crtn.o: No such file or directory
+collect2: error: ld returned 1 exit status
+</code></pre><br />ну и сообветственно<br /><pre><code>readelf -l a.out | grep &#39;: /tools&#39;</code></pre><br />выдает отсутствие файла:<br /><pre><code>readelf: Error: &#39;a.out&#39;: No such file</code></pre>какую инфу выложить для разбора??? не могу понять, в чем дело... в интернете о решении ентой проблемы ни слова, есть только подобные вопросы..<br />чо не суждено чо ли мне собрать LFS на арче???
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-171619"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/svicer/">
+                <span class="post-username">svicer</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/171619/">#</a>
+            6 лет, 2 месяца назад
+            
+                (отредактировано
+                
+                    6 лет, 2 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/86/fa/86fa1b0c414baca804a3d090b75ad6db.png" alt="svicer avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/svicer/topics/">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/svicer/posts/">
+                    856
+                </a>
+            </div>
+            <div>
+                Участник с: 27 июля 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>safocl</em><br>чо не суждено чо ли мне собрать LFS на арче???</blockquote>Вам ну ни как, не получится, пока будете задавать тупорылые вопросы(не там где надо), единственный способ это английский...<br /><a href="https://www.linuxquestions.org/questions/linux-from-scratch-13/%5Blfs-7-4%5D-sanity-check-error-ubuntu-13-04-amd64-4175487572/">http://www.linuxquestions.org/questions/linux-from-scratch-13/%5Blfs-7-4%5D-sanity-check-error-ubuntu-13-04-amd64-4175487572/</a><br />здесь вроде решили, аж в 2013... оказалось, что пользователь, ошибся(не прям аж сильно) во время сборки, но он в отличии от вас разобрался и признал свою ошибку, а не создавал еще одну тему.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-171625"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/safocl/">
+                <span class="post-username">safocl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/171625/">#</a>
+            6 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/safocl/topics/">
+                    121
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/safocl/posts/">
+                    1570
+                </a>
+            </div>
+            <div>
+                Участник с: 08 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>svicer</em><br><blockquote><em>safocl</em><br>чо не суждено чо ли мне собрать LFS на арче???</blockquote>Вам ну ни как, не получится, пока будете задавать тупорылые вопросы(не там где надо), единственный способ это английский...<br /><a href="https://www.linuxquestions.org/questions/linux-from-scratch-13/%5Blfs-7-4%5D-sanity-check-error-ubuntu-13-04-amd64-4175487572/">http://www.linuxquestions.org/questions/linux-from-scratch-13/%5Blfs-7-4%5D-sanity-check-error-ubuntu-13-04-amd64-4175487572/</a><br />здесь вроде решили, аж в 2013... оказалось, что пользователь, ошибся(не прям аж сильно) во время сборки, но он в отличии от вас разобрался и признал свою ошибку, а не создавал еще одну тему.</blockquote><br />я вот хз, как можно ошибиться в сборке, если я просто копирую в терминал команды с книги??? я не могу вручную набрать чото неправильно, т.к. стараюсь просто копировать и вставлять в терминал команды...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-171627"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/teplovoz/">
+                <span class="post-username">teplovoz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/171627/">#</a>
+            6 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a3/d5/a3d5377868dad212636a6c6b23eaf059.png" alt="teplovoz avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/teplovoz/topics/">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/teplovoz/posts/">
+                    1046
+                </a>
+            </div>
+            <div>
+                Участник с: 28 мая 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>safocl</em><br>если я просто копирую в терминал команды с книги???</blockquote>О , в этом и проблема !
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-171628"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/safocl/">
+                <span class="post-username">safocl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/171628/">#</a>
+            6 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/safocl/topics/">
+                    121
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/safocl/posts/">
+                    1570
+                </a>
+            </div>
+            <div>
+                Участник с: 08 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>teplovoz</em><br><blockquote><em>safocl</em><br>если я просто копирую в терминал команды с книги???</blockquote>О , в этом и проблема !</blockquote><br />а в чем собсна проблема??? делаю все строго по книге... по моему то чо именнно и надо для лфс<br /><br />если ты думаешь чо я мало понимаю чо там происходит, то енто далеко не так...<br />но увы, самому исправить ошибку, которая вылезает хз из-за чего я не могу...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-171630"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/safocl/">
+                <span class="post-username">safocl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/171630/">#</a>
+            6 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/safocl/topics/">
+                    121
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/safocl/posts/">
+                    1570
+                </a>
+            </div>
+            <div>
+                Участник с: 08 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            решено... забыл при компиляии gcc вставить<br /><pre><code>tar -xf ../mpfr-3.1.3.tar.xz
+mv -v mpfr-3.1.3 mpfr
+tar -xf ../gmp-6.1.0.tar.xz
+mv -v gmp-6.1.0 gmp
+tar -xf ../mpc-1.0.3.tar.gz
+mv -v mpc-1.0.3 mpc
+for file in \
+ $(find gcc/config -name linux64.h -o -name linux.h -o -name sysv4.h)
+do
+  cp -uv $file{,.orig}
+  sed -e &#39;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8dfecd">[email&#160;protected]</a>/lib\(64\)\?\(32\)\?/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="026e6642">[email&#160;protected]</a>/tools&amp;@g&#39; \
+      -e &#39;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="88fbc8">[email&#160;protected]</a>/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d1a4a2a391">[email&#160;protected]</a>/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4e3a2121223d0e29">[email&#160;protected]</a>&#39; $file.orig &gt; $file
+  echo &#39;
+#undef STANDARD_STARTFILE_PREFIX_1
+#undef STANDARD_STARTFILE_PREFIX_2
+#define STANDARD_STARTFILE_PREFIX_1 &quot;/tools/lib/&quot;
+#define STANDARD_STARTFILE_PREFIX_2 &quot;&quot;&#39; &gt;&gt; $file
+  touch $file.orig
+done
+</code></pre><br />забыл из-за того чо много раз перераспаковывал gcc что бы правильно применить патч)))
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-171632"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/maisvendoo/">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/171632/">#</a>
+            6 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/maisvendoo/topics/">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/maisvendoo/posts/">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>safocl</strong>, почитайте <a href="https://habrahabr.ru/post/257663/">вот это</a>, может быть чем-то поможет
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-171636"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/safocl/">
+                <span class="post-username">safocl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/171636/">#</a>
+            6 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/safocl/topics/">
+                    121
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/safocl/posts/">
+                    1570
+                </a>
+            </div>
+            <div>
+                Участник с: 08 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>maisvendoo</em><br><strong>safocl</strong>, почитайте <a href="https://habrahabr.ru/post/257663/">вот это</a>, может быть чем-то поможет</blockquote><br />да я уже читал его... в общем уже на хосте ставлю пакеты... уже с тем разобрался))) в суматохе с исправлениями забыл команды выполнить... думал они уже выполнены, но я ж удалял папку с исходниками, что бы с нуля патч устанавливать)))
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-171647"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/maisvendoo/">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/171647/">#</a>
+            6 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/maisvendoo/topics/">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/maisvendoo/posts/">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>safocl</em><br>в общем уже на хосте ставлю пакеты... уже с тем разобрался)))</blockquote>Увлекательное занятие ) К концу меня аж затипало всего, но когда запустил систему был страшно горд собой. Жалею что не собирал в варианте с systemd - было бы моднее, молодежнее, современнее )))
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-171655"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/safocl/">
+                <span class="post-username">safocl</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/171655/">#</a>
+            6 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/safocl/topics/">
+                    121
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/safocl/posts/">
+                    1570
+                </a>
+            </div>
+            <div>
+                Участник с: 08 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>maisvendoo</em><br>Увлекательное занятие ) К концу меня аж затипало всего, но когда запустил систему был страшно горд собой. Жалею что не собирал в варианте с systemd - было бы моднее, молодежнее, современнее )))</blockquote><br />я как раз с систем д делаю... уже в чруте все поставил...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/16262/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747c0654993216cf',m:'3gydwPP6I0Q5NeC2jijl9N15Qut4Px2i72XWFimoJ0Y-1662685623-0-AWigRr6li8ynjrxpQFQNP5vdUDb5mpEebk8/wi0mEpe4AtYo8vt5KDzSgQ4HhoqS5jhMyRToTrLFIOJGa/oVY3Nn5bk3kPPl5Cx+13Dr2WpK2z/xCY53FLw8zELqGhCkruYczVK76y2iytFd8tk9qpc=',s:[0x9345174882,0x0b92ca2349],u:'/cdn-cgi/challenge-platform/h/g'};var _cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/cb/invisible.js?cb=747c0654993216cf',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

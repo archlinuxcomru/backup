@@ -1,0 +1,1056 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        HAL &amp; Dbus
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>HAL &amp; Dbus</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>HAL &amp; Dbus</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-73545"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/depresso/">
+                <span class="post-username">depresso</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/73545/">#</a>
+            12 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/depresso/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/depresso/posts/">
+                    72
+                </a>
+            </div>
+            <div>
+                Участник с: 28 октября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Второй день пытаюсь подружиться с арчем, но как-то пока не выходит. Прошу помощи, ибо за время юзания убунто\дебианов я вовсе не знал что такое Dbus, и зачем оно. а тут такое&#8230;<br/><br/>при запуске Thunar'a вываливаются ошибки по типу:<br/><div class="code"><pre>bla bla 
+failed to connect DBus socket @addr <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fd8e929e969889bd">[email&#160;protected]</a>
+bla bla</pre></div>при запуске гномоприложений (gedit) консоль утопает в ошибках и наглухо виснет:<br/><div class="code"><pre>GConf Error: Failed to contact configuration server; some possible causes are that you need to enable TCP/IP networking for ORBit, or you have stale NFS locks due to a system crash...</pre></div><br/>это единственное, что я успел увидеть, перед тем как ребутнуть машину - после ребута упал HAL и вырубило клавиатуру<br/>сейчас стоит, сверкает приветствием от slima и музыку играет, как получить доступ к tty не знаю, все мои попытки остановить загрузку игнорируются=(<br/><br/>При первом запуске опэнбоха сразу установил и настроил все что мне надо (мб 300-400), поэтому установить причину проблемы не могу, последнее, что ставил - gksu<br/><br/>Господа, помогите советом, куда копать? <br/>или хотя бы как поднять HAL, клавиатура с иксами работать отказывается совсем
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-73546"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kernelpanic/">
+                <span class="post-username">kernelpanic</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/73546/">#</a>
+            12 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kernelpanic/topics/">
+                    17
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kernelpanic/posts/">
+                    452
+                </a>
+            </div>
+            <div>
+                Участник с: 14 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            сколько жеж можно то а?<br/><a href="https://wiki.archlinux.org/">http://wiki.archlinux.org/</a><br/>Вы наверно издеваетесь, да?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-73547"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/depresso/">
+                <span class="post-username">depresso</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/73547/">#</a>
+            12 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/depresso/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/depresso/posts/">
+                    72
+                </a>
+            </div>
+            <div>
+                Участник с: 28 октября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><a href="https://wiki.archlinux.org/index.php/HAL_%28%420%443%441%441%43A%438%439%29">http://wiki.archlinux.org/index.php/HAL_(Русский)</a></blockquote>читал<br/>автомонтирование и устранение багов при изъятии флэшек тут совсем не причем<br/>а все остальное, про что там написано поставлено\включено и прописано
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-73548"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kernelpanic/">
+                <span class="post-username">kernelpanic</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/73548/">#</a>
+            12 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kernelpanic/topics/">
+                    17
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kernelpanic/posts/">
+                    452
+                </a>
+            </div>
+            <div>
+                Участник с: 14 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>depresso</em><br/><blockquote><a href="https://wiki.archlinux.org/index.php/HAL_%28%420%443%441%441%43A%438%439%29">http://wiki.archlinux.org/index.php/HAL_(Русский)</a></blockquote>читал<br/>автомонтирование и устранение багов при изъятии флэшек тут совсем не причем<br/>а все остальное, про что там написано поставлено\включено и прописано</blockquote>Практика показывает что если не работает значит не читали/не поняли/недоделали.<br/>Еще раз вдумчиво и с пониманием написанного,если за ночь не осенит,напишите может у вас и вправду особенная проблема.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-73549"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/depresso/">
+                <span class="post-username">depresso</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/73549/">#</a>
+            12 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/depresso/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/depresso/posts/">
+                    72
+                </a>
+            </div>
+            <div>
+                Участник с: 28 октября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>Еще раз вдумчиво и с пониманием написанного,если за ночь не осенит,напишите может у вас и вправду особенная проблема.</blockquote>если доберусь до консоли, напишу<br/>liveusb нет, а на ноуте внезапно отвалился usb=(
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-73544"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/quietsoul/">
+                <span class="post-username">quietsoul</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/73544/">#</a>
+            12 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/quietsoul/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/quietsoul/posts/">
+                    5
+                </a>
+            </div>
+            <div>
+                Участник с: 11 апреля 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>depresso</em><br/>если доберусь до консоли, напишу</blockquote>В grub-е при старте нажми на пункте &ldquo;Arch Linux&rdquo; клавишу &ldquo;e&rdquo;<br/>после, на пункте &ldquo;kernel /boot/vmlinuz26 root=/dev/sda2 ro&rdquo; ещё раз нажми &ldquo;e&rdquo; и в конец строки допиши слово &ldquo;single&rdquo;<br/>Чтобы загрузиться с изменёнными параметрами нажмёшь &ldquo;b&rdquo; и увидев надпись &ldquo;Give root password for maintenance (or type Control-D to continue)&rdquo;, введёшь root-овый пароль и попадёшь в консоль.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-73550"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/depresso/">
+                <span class="post-username">depresso</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/73550/">#</a>
+            12 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/depresso/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/depresso/posts/">
+                    72
+                </a>
+            </div>
+            <div>
+                Участник с: 28 октября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>после, на пункте &ldquo;kernel /boot/vmlinuz26 root=/dev/sda2 ro&rdquo; ещё раз нажми &ldquo;e&rdquo; и в конец строки допиши слово &ldquo;single&rdquo;</blockquote>за ненадобностью, грубовское меню я сразу же убрал, к тому же он грузился сразу в 5rl<br/>сейчас уже понял, что не стоило этого делать, пока полностью не настрою систему..<br/><br/>отвечаю на свои вопросы:<br/>hal не запускался из-за кривой загрузки в rc.conf, товарищ  kernel_panic оказался прав<br/>ошибка DBUS - из-за прав доступа к ~/.dbus, мб запускал его от sudo и успешно залочил папку с сессией в домашнем каталоге<br/>на ноутбуке тоже арч - внезапно отвалился usb с сообщениями о том, что мое железо умерло, проблема решилась выгрузкой ehci_hcd из ядра, сейчас работает только usb1.0<br/><br/>а теперь коньки вываливаются с ошибкой о том, что у меня ядер больше, чем нарисовано в конфиге<br/><div class="code"><pre>$ conky
+....
+Conky: obj-&gt;data.cpu_index 2 info.cpu_count 1
+Conky: attempting to use more CPUs than you have!
+$ uname -p
+AMD Athlon(tm) 64 X2 Dual Core Processor 6400+</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-73551"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kernelpanic/">
+                <span class="post-username">kernelpanic</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/73551/">#</a>
+            12 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kernelpanic/topics/">
+                    17
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kernelpanic/posts/">
+                    452
+                </a>
+            </div>
+            <div>
+                Участник с: 14 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>отвечаю на свои вопросы:<br/>hal не запускался из-за кривой загрузки в rc.conf, товарищ  kernel_panic оказался прав<br/>ошибка DBUS - из-за прав доступа к ~/.dbus, мб запускал его от sudo и успешно залочил папку с сессией в домашнем каталоге<br/>на ноутбуке тоже арч - внезапно отвалился usb с сообщениями о том, что мое железо умерло, проблема решилась выгрузкой ehci_hcd из ядра, сейчас работает только usb1.0<br/><br/>а теперь коньки вываливаются с ошибкой о том, что у меня ядер больше, чем нарисовано в конфиге<br/><div class="code"><pre>$ conky
+....
+Conky: obj-&gt;data.cpu_index 2 info.cpu_count 1
+Conky: attempting to use more CPUs than you have!
+$ uname -p
+AMD Athlon(tm) 64 X2 Dual Core Processor 6400+</pre></div></blockquote>Именно вот так и приобретаются знания,когда сам поразмыслив находишь ошибку.Запостите конфиг коньков куда нибудь на paste.org.Погуглив выяснилось что у некоторых в конфиге коньков повторяется один и тот же CPU ,либо попробовать вместо cpu 1 cpu 2 поставить cpu 0 cpu 1
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-73552"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vadik/">
+                <span class="post-username">vadik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/73552/">#</a>
+            12 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vadik/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vadik/posts/">
+                    5395
+                </a>
+            </div>
+            <div>
+                Участник с: 17 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Поскольку топик по hal позволю и себе задать вопрос  :) .<br/>А как заставить hal увидеть второй CDROM (DVDROM). В качестве ДЕ используется КДЕ4 и LXDE со всеми последними обновлениями, приводы  CD и DVDrom (IDE). CDrom монтирует нормально, а двд-шник только вручную, по команде mount диски монтируются нормально (иногда правда ерунда с кодировками выходит), а вот автомонтирование при вставке диска не работает. Файл /etc/PolicyKit/PolicyKit.conf<br/><div class="code"><pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt; &lt;!-- -*- XML -*- --&gt;
+&lt;!DOCTYPE pkconfig PUBLIC "-//freedesktop//DTD PolicyKit Configuration 1.0//EN"
+"http://hal.freedesktop.org/releases/PolicyKit/1.0/config.dtd"&gt;
+&lt;!-- See the manual page PolicyKit.conf(5) for file format --&gt;
+&lt;config version="0.1"&gt;
+&lt;!-- allow root to do everything --&gt;
+&lt;match user="root|имена_моих_пользователей"&gt;
+   &lt;return result="yes"/&gt;
+&lt;/match&gt;
+&lt;match action="org.freedesktop.hal.storage.mount-removable"&gt;
+   &lt;return result="yes" /&gt;
+&lt;/match&gt;
+&lt;match action="org.freedesktop.hal.storage.eject-removable"&gt;
+   &lt;return result="yes" /&gt;
+&lt;/match&gt;
+&lt;match action="org.freedesktop.hal.storage.mount-fixed"&gt;
+   &lt;return result="yes"/&gt;
+&lt;/match&gt;
+&lt;match action="hal-storage-mount-fixed-extra-options"&gt;
+   &lt;return result="yes"/&gt;
+&lt;/match&gt;
+&lt;match action="hal-storage-mount-removable-extra-options"&gt;
+   &lt;return result="yes"/&gt;
+&lt;/match&gt;
+&lt;/config&gt;</pre></div>В fstab все строчки связанные с cd, dvd закоментированы. Других файлов в /etc/PolicyKit нет.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-73553"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kernelpanic/">
+                <span class="post-username">kernelpanic</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/73553/">#</a>
+            12 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kernelpanic/topics/">
+                    17
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kernelpanic/posts/">
+                    452
+                </a>
+            </div>
+            <div>
+                Участник с: 14 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            а HAL его видит? <br/><div class="code"><pre>lshal|grep DVD или storage.model</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/7588/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747c8ba71ccc3a5f',m:'YB5rxv_yWsE3fEXRY0F.S1bbYBuEoXtcFROelrRCZFI-1662691083-0-AaS4QULZkhEwUiWO73Qpyrx/RwmF4kJscZz2AtdhmhzsuvkrqzPSFfEA1dTws9Ri49p+J5Z4SLlX7G8Yjtmxl+vdMOqbG1mj9LYqfv5vLyzUmXK0feSBtLIgqcvA0I8alCmxL+Dc2STLQfbQLI6vYiQ=',s:[0x9ab2dd93a3,0x7d145ce5c3],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

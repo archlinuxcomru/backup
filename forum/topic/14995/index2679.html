@@ -1,0 +1,1362 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/14995/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:10:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        How-to свой почтовый сервер без наворотов, postfix dovecot  в 2015г. и переезд с gmail.com
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/8/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/25/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>How-to свой почтовый сервер без наворотов, postfix dovecot  в 2015г. и переезд с gmail.com</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>How-to свой почтовый сервер без наворотов, postfix dovecot  в 2015г. и переезд с gmail.com</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-153723"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/wau/index.html">
+                <span class="post-username">wau</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/153723/index.html">#</a>
+            7 лет, 1 месяц назад
+            
+                (отредактировано
+                
+                    1 год, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/wau/topics/index.html">
+                    132
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/wau/posts/index.html">
+                    956
+                </a>
+            </div>
+            <div>
+                Участник с: 11 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Гугл переносит сервера в РФ. Да и квота его как-то исчерпалась. В общем, решено вновь, как сколько-то лет назад, почти уже 10, поднять свой почтовый сервер. Поскольку он будет обслуживать только закрытую группу пользователей, то всех пользователей будем прописывать ручками, базы данных для их учета нам не нужно. Это принципиальная позиция - обойтись минимумом. Вывод - вполне хватит связки Postfix + Dovecot.<br />Среди кучи, просто кучи руководств, бОльшая часть из которых создана в 2005-9гг, при попытке соединить в натуре все прочитанное, можно много слов высказать. Но виновато во всем время, изменившее и программы, и замусорившее поисковую выдачу.<br />Потому, подняв свой сервер, отпишу акутальную для 2015г. последовательность действий.<br />Какая ставилась задача -<br />1. поднять свой собственный почтовый сервер на простеньком железе и с минимумом софта. Сервер питается и-нетом через обычного провадера домашнего и-нета, сервер стоит &quot;за&quot; ротутером<br />2. замкнуть (перевести) все регистрационные записи домена на поднятый сервер<br />3. выкачать с gmail весь накопленный массив писем и залить его в пользовательский аккаунт своего сервера<br />4. обеспечить совместный доступ к почте нужных пользователей<br />5. веб-морду доступа к почте в конечном итоге было решено не подниамть. Типовое решение - роундкубе, он завязан на использование SQL, который на сервере хоть и поднят, но подключать не хотелось, поскольку этот роундкуб является слабым звеном - именно в нем находятся, редко, но бывают, уязвимости.<br /><br />Все зедачи реализовать удалось. Гибкость и производительность на несколько голов выше Гугля. Например, каждый пользователь может дать доступ, РЕГУЛИРУЕМЫЙ (т.е. можно выставить раздельные разрешения на каждую папку в почте на каждое действие - читать, писать, удалять, создавать, менять влаги (прочтено\не) и т.п.) и это честный imap--доступ, понимаемый каждым почтовым клиентом. Это, кстати, и добило идею веб-морды, которая на джимыле использовалась преимущественно для &quot;посмотреть расшаренную почту другого пользователя&quot;.<br />Компоненты решения - pigeonhole dovecot postfix spamassassin. Ставим их из репозиториев.<br /><br />Postfix обеспечиват smtp  - как принятие почты от наших клиентов, клиентов нашего домена с последующей передачей нашим же клиентам или во внешний мир, причем сразу на сервера получателей (минуя ретранслятор, smtp, нашего провайдера), а также обеспечивает принятие почты на наш домен от всех к нему обращающихся (на основании MX записи нашего домена).<br />Dovecot	 обеспечивает нам раздачу по нашим ящикам, сервис IMAP, POP3 и пр.<br />Потому их и используют в связке.<br />pigeonhole - это набор плагинов к dovecot<br />spamassassin - спам-фильтр<br /><br />Существенно - для нормальной работы требуется нормальный провайдер. Нам потребуется выделенный ip и явно для него заданная обратная запись PTR. PTR может указывать только владелец ip адреса. Если у хорошего провайдера есть для этого явно созданный интерфейс, то в случае с домашними провайдерами это предмет переговоров. Важно - если мы делаем почту на домене domen.ru, то ptr надо настраивать не domen.ru, а mx.domen.ru. Эта PTR запись требуется при проверках, которые осуществляют получатели вашей почты при детекции валидности почты, спамоподавлении.<br /><br />Spamassassin по результатам многлетнего использования буду менять на rspamd, поскольку не примере неприбития яндексписем наблюдаю неадекватную обучаемость ассассина.<br /><br />Что общего отмечу - разбросанные по сети мануалы ощутимо путают, ибо написаны в разные годы. Особенно это касается Dovecot, у которого, например, теперь больше нет плагина autocreate, на который ссылается большинство мануалов. Что Postfix, что Dovecot теперь состоят каждый из одного пакета. Ставятся тривиально,<br /><br /><pre><code>
+pacman -S postfix dovecot pigeonhole spamassassin
+</code></pre><br />Наверняка интересанту будет нужно на одной машинке иметь почтовый сервер, обрабатывающий ящики нескольких доменнов и нескольких клиентов, причем на машинке-сервере этих клиентов (логинов) нет. Т.е., это важно понимать, речь идет и о виртуальных доменах, и о виртуальных пользователях. Кроме того важно понимать, что конфиг у обоих серверов содержит очень большое число настроечных параметров. Разнообразные мануалы создают иллюзию несложных, простых настроек - буквально в пару строчек. Фишка в том, что логика всех указанных программ работы следующая - созданный вручную файл конфига переписывает (переопределяет) лишь те параметры, которые в нем явно указаны. Т.е. если в мануале настройке Dovecot не указать явным образом допустимые в работе протоколы, то он будет предоставлять доступ сразу по всем. Если не определить т.н. &quot;пространство имен&quot; или определить его несколько раз, или без учета правил путей к файлам, то будет каша и аборт.<br /><br />Лично я в итоге заблокировал pop3. Почему? - когда ноут постоянно подключен к сети, он скачивает по поп3 письма и сервер их автоматом считает &quot;прочитаными&quot;, что отражается на уведомлениях в мобильной почте. Кромет того, если я скачанное по поп3 письмо перемещу в спам, то сервер об этом не узнает.<br /><br />Поехали.<br /><br />Нужен пользователь, от имени которого будет работать почта -<br /><br /><pre><code>
+groupadd -g 5000 vmail \\
+useradd -g vmail -u 5000 vmail -d /home/vmail -m
+chmod 700 -R /home/vmail/ #без этого хода вы столкнетесь с тем, что создать\переименовать папку в Имап почте вы сможете, а удалить - нет.
+
+groupadd -g 5001 spamd
+useradd -u 5001 -g spamd -s /sbin/nologin -d /var/lib/spamassassin -m spamd
+chown -R spamd:spamd /var/lib/spamassassin /etc/mail/spamassassin /home/vmail/bayes
+</code></pre>Существенно -  директорий, где будет храниться почта. Имеет смысл указывать директорий на шифрованном разделе, а данном случае /home/vmail. Настройки Postfix вместо обычно используемых файлов конфига буду вставлять командой модификации конфига (все эти команды меняют /etc/postfix/main.conf). Собственно после чистой установки в /etc/postfix есть шаблон main.conf, его можно прибить, приводимые команды создадут новый и в прямо не указанной части будут действовать т.н. &quot;параметры по умолчанию&quot;. Я лично почему-то пошел иным путем, то-ли шаблон переименовал в main.conf, то ли там уже был свой. В нем туева туча строчек, все строки упорядочены по алфавиту (это знание полезно при попытке отыскать нужный параметр в редакторе). Правим -<br /><pre><code>
+ postconf -e &#39;myhostname = мой.главный_домен_с_МХ_записью_у_провайдера.ru&#39;
+ postconf -e &#39;mydestination =  мой.главный_домен_с_МХ_записью_у_провайдера.ru, localhost, localhost.localdomain&#39;
+ postconf -e &#39;virtual_alias_domains = все_другие_домены_через_запятую.ru&#39;
+ postconf -e &#39;virtual_alias_maps = hash:/etc/postfix/virtual&#39;
+ postconf -e &#39;alias_maps = hash:/etc/postfix/aliases&#39;
+ postconf -e &#39;virtual_mailbox_domains = мой.главный_домен_с_МХ_записью_у_провайдера.ru, все_другие_домены_через_запятую.ru&#39;
+ postconf -e &#39;virtual_uid_maps = static:5000&#39;
+ postconf -e &#39;virtual_gid_maps = static:5000&#39;
+ postconf -e &#39;smtpd_sasl_auth_enable = yes&#39;
+ postconf -e &#39;broken_sasl_auth_clients = yes&#39;
+ postconf -e &#39;smtpd_sasl_authenticated_header = yes&#39;
+ postconf -e &#39;smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination&#39;
+ postconf -e &#39;smtpd_use_tls = yes&#39;
+ postconf -e &#39;smtpd_tls_cert_file = /etc/ssl/certs/mail.crt&#39;
+ postconf -e &#39;smtpd_tls_key_file = /etc/ssl/private/mail.key&#39;
+ postconf -e &#39;smtpd_tls_session_cache_database = btree:/var/lib/postfix/smtpd_scache&#39;
+ postconf -e &#39;smtpd_tls_security_level = may&#39;
+ postconf -e &#39;smtp_tls_security_level = may&#39;
+ postconf -e &#39;virtual_transport = lmtp:unix:private/dovecot-lmtp&#39;
+ postconf -e &#39;smtpd_sasl_type = dovecot&#39;
+ postconf -e &#39;smtpd_sasl_path = private/auth&#39;
+ postconf -e &#39;local_recipient_maps = unix:passwd.byname $alias_maps $virtual_mailbox_maps&#39;
+ postconf -e &#39;proxy_read_maps = $local_recipient_maps $mydestination $virtual_alias_maps $virtual_alias_domains $virtual_mailbox_maps $virtual_mailbox_domains $relay_recipient_maps $relay_domains $canonical_maps $sender_canonical_maps $recipient_canonical_maps $relocated_maps $transport_maps $mynetworks&#39;
+ postconf -e &#39;smtpd_banner = $myhostname ESMTP&#39;
+ postconf -e &#39;biff = no&#39;
+ postconf -e &#39;strict_rfc821_envelopes = yes&#39;
+ postconf -e &#39;disable_vrfy_command = yes&#39;
+ postconf -e &#39;smtpd_helo_required = &#39;
+ postconf -e &#39;  smtpd_recipient_restrictions =  permit_mynetworks, permit_sasl_authenticated, reject_non_fqdn_hostname, reject_non_fqdn_sender, reject_non_fqdn_recipient, reject_unknown_recipient_domain, reject_unauth_destination,  reject_unauth_pipelining,  reject_invalid_hostname&#39;
+ postconf -e &#39;invalid_hostname_reject_code = 550&#39;
+ postconf -e &#39;non_fqdn_reject_code = 550&#39;
+ postconf -e &#39;unknown_address_reject_code = 550&#39;
+ postconf -e &#39;unknown_client_reject_code = 550&#39;
+ postconf -e &#39;unknown_hostname_reject_code = 550&#39;
+ postconf -e &#39;unverified_recipient_reject_code = 550&#39;
+ postconf -e &#39;unverified_sender_reject_code = 550&#39;
+ postconf -e &#39;local_destination_recipient_limit = 10&#39;
+ postconf -e &#39;local_destination_concurrency_limit = 10&#39;
+</code></pre>всем этим мы сказали, где брать наши ключи\сертификаты, логины\пароли, наши домены, дали инструкции хоть как-то отбрыкиваться от спамеров (т.е. не отправлять\не принимать через сервер почту от имени и для несуществующих пользователей), указали на связку с Dovecot.<br /><br />Ключи, цифровые сертификаты сервера, выше мы указали место их хранения (можете прописать любое свое, главно их создать). Желательно, конечно, иметь &quot;взрослые&quot; сертификаты, подписанные хоть каким-нибудь сертификационным центром. В простейшем случае можно использовать свои, самосозданные (не помню я как их сделал, но вариаций и инструкций много) -<br /><br /><pre><code>
+/etc/ssl/certs/mail.crt
+/etc/ssl/private/mail.key
+</code></pre>Теперь можно разобраться с именами, пользователями. Все реальные пользователи (самого сервера, не путать с пользователями почтового сервера) есть в Системе (кто может залогиниться на сервере как пользователь). Файл /etc/aliases содержит псевдонимы локальных пользователей. Т.е. в системе есть root и куча других, в этом файле их сопоставляют с теми, кто может залогиниться. Входящий в комплект Postfix аналогичный файл /etc/postfix/aliases лишь дополняет /etc/aliases, т.е. при запуске сервера инклудит (вроде) в себя /etc/aliases. Вцелом кроме как указать кому пересылать почту за рута, постмастера и т.п. эти файлы не нужны. Но после любого их изменения надо выполнить команды, изменения в этих файлах требуют индексации и (возможно) перезапуска postfix -<br /><br /><pre><code>
+newaliases #(индексирует /etc/aliases)
+postalias /etc/postfix/aliases
+</code></pre>Наиболее активно используемый файл, это файл виртуальных имен,<br /><br />/etc/postfix/virtual<br /><br />Именно в нем мы можем делать чудеса маршрутизации, указывая сперва имя, хоть просто имя, могущее существовать в любом из обслуживаемых доменов (или не существовать, но почту принимать), хоть конкретный мейл (включая мейл, не обслуживаемый вашим сервером, но отправку на который вы хотите поймать в ящик на вашем сервере), затем после пробела набор мейлов (включая любые внешние) или имен, на которые нужно перекидывать почту -<br /><br />user	имя1, ekjwr@vibew.ty, ewvrevr<br /><br />добавлять можно так -<br /><br /><pre><code>
+echo &#39;s us1, us2&#39; &gt;&gt; /etc/postfix/virtual
+echo &#39;пример@gmail.com us1&#39; &gt;&gt; /etc/postfix/virtual
+</code></pre><br />повторюсь, после редактирования обязательно выполнить команду -<br /><br /><pre><code>
+postmap /etc/postfix/virtual
+</code></pre><br />Далее уже надо ручками поправить /etc/postfix/master.cf, указав  в нем на обслуживающего агента (dovecot) и спамодав. Во избежание ошибок рекомендую сперва -<br /><br /><pre><code>
+rm /etc/postfix/master.cf
+</code></pre><br /> теперь<br /> <pre><code>
+ nano (или gedit, или medit, редактор) /etc/postfix/master.cf
+</code></pre><br /> вставив туда (будье внимательны при копи-пасте - длинные строки могут терять кончики с трагическими последствиями!)-<br /> <pre><code>
+ submission inet n       -       n       -       -       smtpd
+  -o smtpd_tls_security_level=encrypt
+  -o smtpd_sasl_auth_enable=yes
+ -o smtpd_recipient_restrictions=reject_non_fqdn_recipient,reject_unknown_recipient_domain,permit_sasl_authenticated,reject
+
+dovecot   unix  -       n       n       -       -       pipe
+       flags=DRhu user=vmail:vmail argv=/usr/bin/vendor_perl/spamc -F -u spamd -e /usr/lib/dovecot/dovecot-lda -f ${sender} -d ${recipient}
+smtp      inet  n       -       -       -       -       smtpd -o content_filter=spamfilter
+
+spamfilter unix -       n       n       -       -       pipe flags=Rq user=spamd argv=/etc/dovecot/spamfilter.sh -oi -f ${sender} ${recipient}
+
+pickup    unix  n       -       n       60      1       pickup
+cleanup   unix  n       -       n       -       0       cleanup
+qmgr      unix  n       -       n       300     1       qmgr
+#qmgr     unix  n       -       n       300     1       oqmgr
+tlsmgr    unix  -       -       n       1000?   1       tlsmgr
+rewrite   unix  -       -       n       -       -       trivial-rewrite
+bounce    unix  -       -       n       -       0       bounce
+defer     unix  -       -       n       -       0       bounce
+trace     unix  -       -       n       -       0       bounce
+verify    unix  -       -       n       -       1       verify
+flush     unix  n       -       n       1000?   0       flush
+proxymap  unix  -       -       n       -       -       proxymap
+proxywrite unix -       -       n       -       1       proxymap
+smtp      unix  -       -       n       -       -       smtp
+relay     unix  -       -       n       -       -       smtp
+showq     unix  n       -       n       -       -       showq
+error     unix  -       -       n       -       -       error
+retry     unix  -       -       n       -       -       error
+discard   unix  -       -       n       -       -       discard
+local     unix  -       n       n       -       -       local
+virtual   unix  -       n       n       -       -       virtual
+lmtp      unix  -       -       n       -       -       lmtp
+anvil     unix  -       -       n       -       1       anvil
+scache    unix  -       -       n       -       1       scache
+</code></pre><br />намаявшись с разбросанными в разных местах конфигами я пришел к тому, что зачистил директорий давкота и все сложил туда.<br /><br /><pre><code>
+rm -R /etc/dovecot/*
+</code></pre><br />теперь сам скрипт спамодава. В Вики спамодава указаны разные способы увязки всех демонов, я пробовал разные, завелся именно этот, хоть я его и пробовал последним (в нем задействован sendmail, имеющийся в любой системе) -<br /><br /><pre><code>
+редактор /etc/dovecot/spamfilter.sh
+</code></pre><br /><pre><code>
+#!/bin/bash
+
+SENDMAIL=/usr/bin/sendmail
+SPAMASSASSIN=/usr/bin/vendor_perl/spamc
+logger &lt;&lt;&lt;&quot;Spam filter piping to SpamAssassin, then to: $SENDMAIL $@&quot;
+${SPAMASSASSIN} | ${SENDMAIL} &quot;$@&quot;
+
+exit $?
+</code></pre><br />даем права на запуск -<br /><pre><code>
+chmod -R 777 /etc/dovecot/spamfilter.sh
+</code></pre><br />рисуем скрипт, которым будет создана связка Логин-пароль пользователя почтового сервера. Логин и пароль (хэш пароля) будут записаны в файл /etc/dovecot/users. Логины предпочтительно создавать как user@domen.x. Это имеет значени, поскольку именно с учетом схемы принятых имен будут создаваться директории (папки), на которые завязаны разные настроечные параметры, в т.ч. &quot;пространство имен&quot;. Пойдя по пути пользователь = &#39;user&#39; вы столкнетесь с конфликтом имен. Создаем -<br /><br /><pre><code>
+редактор /etc/dovecot/sozdanie_user
+</code></pre><br />скрипт -<br /><pre><code>
+#!/bin/sh
+echo $1:$(doveadm pw -s ssha512 -p $2):::::: &gt;&gt; /etc/dovecot/users
+</code></pre><br />права на запуск -<br /><pre><code>
+chmod -R 777 /etc/dovecot/sozdanie_user
+</code></pre><br />Пример запуска (создания) -<br /><pre><code>
+./etc/dovecot/sozdanie_user &#39;user@domen.r&#39; &#39;пароль-сложный-пресложный&#39;
+</code></pre><br />Скрипт обучения антиспама, я его затачивал на обучение по спам-папкам лишь продвинутых пользоваталей, которые следят за вопросом.<br /><br /><pre><code>
+редактор /etc/dovecot/spam
+</code></pre><br />скрипт -<br /><pre><code>
+#!/bin/bash
+ # обучение на основе спама конкретных пользователей
+sa-learn --spam /home/vmail/домен/user1/Maildir/Junk/
+sa-learn --spam /home/vmail/домен/user2/Maildir/Junk/
+sa-learn --spam /home/vmail/домен/user3/Maildir/Junk/
+
+#обчение на письмах - НЕ спам
+sa-learn --ham  /home/vmail/домен/user1/Maildir/
+sa-learn --ham  /home/vmail/домен/user3/Maildir/
+</code></pre><br />права на запуск -<br /><pre><code>
+chmod -R 777 /etc/dovecot/spam
+</code></pre><br />затем скормим команду крону, чтобы с какой-то периодичностью спам-фильтр самообучался -<br /><br /><pre><code>
+crontab -e
+</code></pre><br />там нарисуйте строчку -<br /><br />30 5 */1 * * /etc/dovecot/spam<br /><br />Еще один срипт, последний, который будет делать простую вещь - все письма, помеченные Спамфильтром как спам НЕ убивать, а просто перекладывать в папку спам клиента. Почему так? - если спам прибивать, то потеряются письма, ошибочно принятые за спам. Если не прибивать и не перекладывать, то во Входящих на 1 полезное будет 50-100 спамовых писем и телефоны с их мобильными клиентами почты замучают нотификациями. В этом же файле можно настроить и другие сортировки, выполняемые в рамках стандартного для вашего сервера &quot;пространства имен&quot;. Кроме того, для обучения спам-фильтра ему нужно иметь место, куда сложен отобранный спам.<br /><br /><pre><code>
+редактор spam.sieve
+</code></pre><br />скрипт -<br /><pre><code>
+require &quot;fileinto&quot;;
+if header :comparator &quot;i;ascii-casemap&quot; :contains &quot;subject&quot; &quot;*****SPAM*(&quot; {
+  fileinto &quot;Junk&quot;;
+  stop;
+} else {
+  keep;
+}
+</code></pre><br />Права на исполнение давать не надо, надо скомпилировать -<br /><br /><pre><code>
+sievec /etc/dovecot/spam.sieve
+</code></pre><br />Как видите, сортировщик ищет в теме письма нужные ему буквы, символы. Их рождает антиспам-фильтр, который тоже надо подстроить. Прибьем лишний конфиг (чтобы глаза не разбегались) и сделаем свой. Если есть желание менять заголовок, то это надо делать здесь и в скрипте сортировщика, синхронно (не забыв про компиляцию сортировщика) -<br /><br /><pre><code>
+rm /etc/mail/spamassassin/local.cf
+rm /var/lib/spamassassin/3.004001/updates_spamassassin_org/local.cf
+редактор /var/lib/spamassassin/3.004001/updates_spamassassin_org/local.cf
+</code></pre><br />ВНИМАНИЕ - при последующих, с годами, обновлениях будет меняться версия ассассина и вместо 3.004001 будут другие цифры, а конфиги рабочие будут таки по пути /etc/mail/spamassassin/local.cf<br /><br />в редакторе -<br /><br /><pre><code>
+rewrite_header Subject *****SPAM*(_SCORE_)*
+report_safe 0
+required_score 6.0
+use_bayes 1
+bayes_auto_learn 1
+bayes_ignore_header X-Bogosity
+bayes_ignore_header X-Spam-Flag
+bayes_ignore_header X-Spam-Status
+bayes_min_ham_num 1
+bayes_min_spam_num 1
+ok_locales ru en uk
+#важно - указывать путь к реально существующему директорию, иначе обучение не будет работать!
+bayes_path /etc/mail/spamassassin/bayes
+bayes_file_mode 0666
+score SUBJ_FULL_OF_8BITS 0
+score FROM_ILLEGAL_CHARS 0
+score SUBJ_ILLEGAL_CHARS 0
+score HEAD_ILLEGAL_CHARS 0
+score HABEAS_SWE 0
+score FORGED_IMS_TAGS 1
+score BAYES_00 0.0001 0.0001 -2.312 -2.599
+score BAYES_05 0.0001 0.0001 -1.110 -1.110
+score BAYES_20 0.0001 0.0001 -0.740 -0.740
+score BAYES_40 0.0001 0.0001 -0.185 -0.185
+score BAYES_50 0.0001 0.0001 0.001 0.001
+score BAYES_60 0.0001 0.0001 2.0 2.0
+score BAYES_80 0.0001 0.0001 3.0 3.0
+score BAYES_95 0.0001 0.0001 3.5 3.5
+score BAYES_99 0.0001 0.0001 5.0 5.0
+score ALL_TRUSTED -3.360 -3.440 -3.665 -3.800
+</code></pre>Теперь конфигурируем сам давкот -<br /><pre><code>
+редактор /etc/dovecot/dovecot.conf
+</code></pre><br /> в редакторе -<br /><pre><code>
+# 2.0.9: /etc/dovecot/dovecot.conf
+# OS: Linux 2.6.32-504.16.2.el6.x86_64 x86_64 CentOS release 6.6 (Final)
+
+protocols = imap lmtp pop3
+auth_mechanisms = plain login
+mail_gid = vmail
+#схема директориев в почтовом каталоге
+mail_home = /home/vmail/%d/%n
+mail_location = maildir:~/Maildir:LAYOUT=fs
+
+#без фишки :LAYOUT=fs ох нахлебались бы, как я
+
+mail_uid = vmail
+mbox_write_locks = fcntl
+mail_privileged_group = virtual
+
+passdb {
+  args = scheme=ssha512 username_format=%u /etc/dovecot/users
+  driver = passwd-file
+}
+
+service auth {
+  unix_listener /var/spool/postfix/private/auth {
+    group = postfix
+    mode = 0660
+    user = postfix
+  }
+  unix_listener auth-userdb {
+    mode = 0600
+    user = vmail
+  }
+}
+
+service lmtp {
+  unix_listener /var/spool/postfix/private/dovecot-lmtp {
+    group = postfix
+    mode = 0600
+    user = postfix
+  }
+  user = vmail
+
+}
+
+ssl_cert = &lt;/etc/ssl/certs/mail.crt
+ssl_key = &lt;/etc/ssl/private/mail.key
+
+userdb {
+  args = username_format=%u /etc/dovecot/users
+  driver = passwd-file
+}
+
+mail_plugins = acl
+
+#схема для отображения расшаренных папок почты пользователей
+namespace  {
+  type = shared
+  separator = /
+  prefix = shared/%%u/
+  location = maildir:%%h/Maildir:INDEX=~/Maildir/shared/%%u
+  subscriptions = no
+  list = yes
+}
+
+#стандартные папки почты для каждого пользователя
+namespace inbox {
+#  prefix = INBOX. # the namespace prefix isn&#39;t added again to the mailbox names.
+  inbox = yes
+  type = private
+  list = yes
+  mailbox Trash {
+    auto = subscribe
+    special_use = \Trash
+  }
+
+  mailbox Drafts {
+    auto = subscribe
+    special_use = \Drafts
+  }
+
+  mailbox Sent {
+    auto = subscribe # autocreate and autosubscribe the Sent mailbox
+    special_use = \Sent
+  }
+
+  mailbox Junk {
+    auto = subscribe # autocreate Spam, but don&#39;t autosubscribe
+    special_use = \Junk
+  }
+}
+</code></pre>Избегайте отсебятины в именах и схемах директориев, на них завязан и совместный доступ, и срипт сортировки, и скрипт обучения антиспама.<br />В части создания и настройки сервера это все. Пора запускать.<br /><pre><code>
+systemctl enable postfix  dovecot spamassassin.service
+systemctl start postfix  dovecot spamassassin.service
+</code></pre>смотреть логи так -<br /><pre><code>
+journalctl -xef
+</code></pre><br />При первом же логине клиента будут созданы каталоги (директории), все необходимые файлы.  Рекомендую дальнейшие операции выполнять почтовым клиентом Thunderbird, он вполне адекватен. Но заводить &quot;учетную запись&quot; ЕЩЕ РАНО. Поскольку потребуется масса перезагрузок клиента, отключите плагин календаря (сильно задерживает запуск), найдите и подключите плагин imap-acl-ext... - сам расшаренный доступ к папкам пользователей дает плагин давкота acl, а плагин давктоа imap-acl позволяет пользователям через их почтовую программу с плагином почтового клиента imap-acl-ext.. рулить правами доступа к своей почте другим пользователям. Собственно рулежка эта обеспечивается имеющимся в каждом каталоге почты файлике -<br /><br /><pre><code>
+редактор  /home/vmail/домен.у/юзер/Maildir/dovecot-acl
+</code></pre><br />в нем -<br /><br /><pre><code>
+owner lrwstipekxa
+user=юзер@домен.у lr
+</code></pre><br />владельцу полные права, а юзеру - иные (чтение, просмотр папок)<br /><br />Через почтовую программу в списке папок учетной записи -<br />Свойства - вкладка Совместное использование - Сет пермишн - упражняйтесь вволю<br />Подписаться - внизу (согласно Пространству имен) будет shared и список доступных почт других пользователей.<br />Поскольку мы планово собирались выкачать с джимыла всю накопленную почту, то встанет вопрос ограничений Thund... на размер папки почты (4.х гб). Тырнет изобилует ссылками на нерешаемость проблемы. Это не так. Thund - настройки - Дополнительные -внизу вкладки &quot;тип харнилища сообщений...&quot; следует выбрать &quot;по файлу на сообщение&quot;. Перезагрузка программы.<br /><br />Идем в веб-версию джимыла (мэйл-ру, яндекс и т.п.), в настройках ищем про pop3 или imap. Включаем доступ по поп3 КО ВСЕМ письмам. Здесь же, зависит от вашей решительности, ставим галки - удалять ли скачанные письма. пугаться не надо - удаляются они в Корзину и если что не так, легко оттуда достаются. Далее глубоко заполночь, чтобы не мешать домашним,  в Thund заводите почтовый ящик джимыла. Да, он был и ранее (наверняка). Но ведь в нем же проводились чистки? А стоит задача выкачать все? так что новый ящик. Если Thund будет ругаться на дублирование (ранее был поп3 ящик), заведите imap и наоборот. Теперь медленно и печально Thund выкачает все гигабайты вашей почты. Не мешайте ему. Проверьте итоговый размер ящика в Thund и число писем, сопоставьте с данными вебверсии джимыла. Если что не так - все прибить и повторить.<br /><br />Пока он качает, идем в паннель управления Роутера и прописываем в нем проброс портов (25, 110, 587, 143, 465) из и-нета на сервер (машину) с почтой. Также идем в паннель управления хостинг-провайдера и там для нашего домена указываем адрес нашего сервера (роутера, его внешний ip).<br />В моем случае, поскольку настройки не позволяли указать сразу ip адрес, хостинг-провайдер пририсовал свой адрес-псевдоним, который в свою очередь ссылался на мой ip. Техподдержка поможет.<br /><br />Когда выкачалась почта в Thund заводим учетную запись со своего сервера, сразу указывая ВНЕШНИЙ ip (роутер это должен позволять). Ну соотв. выбрать imap, указать имя пользователя и пр. Хорошо бы перезапустить Thund.<br /><br />Место для принципиального решения - куда конкретно класть выкачанную из джимыла почту? - я в &quot;удаленные&quot; (которые Thund было запрещено чистить). У Вас иное мнение? - создайте папку и вперед. Тыкаем мышью в список писем джимыла и пробуем Ctrl+A (выделить все). Добиваемся выделения всего (сколько-то десятков тысяч?). Правой кнопкой - переместить (или скопировать - на Ваш вкус) в папку - и указываем куда именно какой именно учетной записи. Могу уверенно утверждать, что если при этом ничего с Thund  не вытворять, то тысяч 20 писем он так перенесет. Но если попытаться еще что-то делать, то он может раздуться в ОЗУ заняв его целиком (мои 4гб) и ..... что-то может пойти не так. Терпение. Сперва он тащит маленькие письма, самые большие - в самом конце. Сколько-то часов. Комп при этом нормально работает.<br /><br />После переноса учетную запись джимыла можно прибить, в его вебморде настроить автоответчик и пересылку почты. И забыть о нем. Получив взамен очень хорошую скорость, патриотичность (никаких проблем и в Крыму), возможность кидать любого размера почту с любыми вложениями и без &quot;большого брата&quot; в мыльнице, возможность гибко настраивать совместный доступ и пользовать его в мобильных и настольных клиентах.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-153724"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/153724/index.html">#</a>
+            7 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            спасибо
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-153726"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/ghost/index.html">
+                <span class="post-username">ghost</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/153726/index.html">#</a>
+            7 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/ghost/topics/index.html">
+                    26
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/ghost/posts/index.html">
+                    632
+                </a>
+            </div>
+            <div>
+                Участник с: 07 мая 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            статья что надо
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-153744"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vadik/index.html">
+                <span class="post-username">vadik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/153744/index.html">#</a>
+            7 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vadik/topics/index.html">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vadik/posts/index.html">
+                    5395
+                </a>
+            </div>
+            <div>
+                Участник с: 17 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Думаю статье место в блогах. )
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-153933"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/gorynych/index.html">
+                <span class="post-username">gorynych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/153933/index.html">#</a>
+            7 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/cc/b1/ccb1b722288dc9453a40c31db78adec2.png" alt="gorynych avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/gorynych/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/gorynych/posts/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Участник с: 23 июля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Хорошая статья, только у меня возник вопрос зачем в <strong>virtual_mailbox_domains</strong> прописывать <strong>мой.главный_домен_с_МХ_записью_у_провайдера.ru</strong> если он уже прописан в <strong>mydestination</strong> и как следствие является локальным доменом с локальными пользователями? или я чего то недопонимаю?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-153958"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/wau/index.html">
+                <span class="post-username">wau</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/153958/index.html">#</a>
+            7 лет, 1 месяц назад
+            
+                (отредактировано
+                
+                    7 лет, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/wau/topics/index.html">
+                    132
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/wau/posts/index.html">
+                    956
+                </a>
+            </div>
+            <div>
+                Участник с: 11 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            не возьмусь убедительно ответить.<br />Но исходил из следующего, и, казалось, это вроде отразил - машина, на которой поднят сервер, имеет локальных пользователей, но ни их число, ни их имена не совпадают (могут не совпадать) с именами пользователей почты. И само имя машины, на которой развернут сервер, может быть любым (иным), не совпадающим с доменом поддерживаемой почты. Исторически сложилось так, что сперва родилась машина-сервер, по-сути с одним пользователем-админом, потом к ней постепенно прикручиваются различные сервисы и, думаю, это весьма распространенная ситуация.<br />Соответственно следствием является частичное дублирование - это как указание даже в разных местах aliases, когда постфиксовый сам по себе считывает (инклудит, включает в себя) системный, ведь обычно как о само собой разумееющихся вещах не говорят (не пишут), а новички о них и не узнают.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-153964"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/gorynych/index.html">
+                <span class="post-username">gorynych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/153964/index.html">#</a>
+            7 лет, 1 месяц назад
+            
+                (отредактировано
+                
+                    7 лет, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/cc/b1/ccb1b722288dc9453a40c31db78adec2.png" alt="gorynych avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/gorynych/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/gorynych/posts/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Участник с: 23 июля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В принципе понял, просто всегда считал что один и тот же домен нельзя прописывать и как локальный и как виртуальный<br /><br />UPS: И как оказалось был прав, если домен - мой.главный_домен_с_МХ_записью_у_провайдера.ru указать в $mydestination, а также его указать в $virtual_mailbox_domains. То мы получаем в логах предупреждение:<br /><blockquote>warning: do not list domain мой.главный_домен_с_МХ_записью_у_провайдера.ru in BOTH mydestination and virtual_mailbox_domains</blockquote><br />Т.е. мы указали один и тот же домен сразу в двух классах адресов - локальных и виртуальных. Чего не стоит никогда делать.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-153974"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/gorynych/index.html">
+                <span class="post-username">gorynych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/153974/index.html">#</a>
+            7 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/cc/b1/ccb1b722288dc9453a40c31db78adec2.png" alt="gorynych avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/gorynych/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/gorynych/posts/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Участник с: 23 июля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Эм заметил что в статье для postfix не используется <strong>virtual_mailbox_domains</strong>, откуда postfix знает какие у него есть ящики?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-153979"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/wau/index.html">
+                <span class="post-username">wau</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/153979/index.html">#</a>
+            7 лет, 1 месяц назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/wau/topics/index.html">
+                    132
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/wau/posts/index.html">
+                    956
+                </a>
+            </div>
+            <div>
+                Участник с: 11 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Сам в свое время удивлялся, когда читал множественные хаутушки. Во всех случаях постфикс обязательно работал в связке с чем-нибудь типа давкота. Собственно реальных пользователей почты я создавал в давкоте (описано). Виртуальных, включая всевозможные переадресации, указывал в /etc/postfix/virtual и ссылки на вирутальных по мере надобности в /etc/postfix/aliases.<br />Вики по давкоту глаголят примерно так - &quot;при первом входе пользователя будут созданы ящики\директории&quot;. Связка между постфиксом (транспорт) и агентом, выразимся в контексте вопроса так - &quot;раскладки по ящикам&quot; (это я умничаю, возможно и напрасно, без глубокого знания предмета), непосредственно в конфиге постфикса указан давкот.  Т.е. указание постфиксу использовать давкот содержится в конфиге (описано), и отдельно повторю -<br /><blockquote>postconf -e &#39;mailbox_command = /usr/lib/dovecot/deliver&#39;<br />postconf -e &#39;virtual_transport = lmtp:unix:private/dovecot-lmtp&#39;<br /> postconf -e &#39;smtpd_sasl_type = dovecot&#39;</blockquote>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-153982"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/gorynych/index.html">
+                <span class="post-username">gorynych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/153982/index.html">#</a>
+            7 лет, 1 месяц назад
+            
+                (отредактировано
+                
+                    7 лет, 1 месяц назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/cc/b1/ccb1b722288dc9453a40c31db78adec2.png" alt="gorynych avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/gorynych/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/gorynych/posts/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Участник с: 23 июля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Хорошо, может я что то просто не допонимаю, в силу того что я тоже не шибко соображаю в данном вопросе, ваше пояснение я принял к сведению постараюсь разложить его у себя в голове по полочкам.<br />В предыдушем посте я допустил ошибку я имел виду не <strong>virtual_mailbox_domains</strong> а <strong>virtual_mailbox_maps</strong>, и его упоминание я всетки нашол у вас, оно у помянуто в <strong>local_recipient_maps</strong>, тем самым вы виртуальных пользователей относите к локальным, если я правильно помню назначение данного параметра.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index3389.html?next=/forum/topic/14995/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/14995/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:10:21 GMT -->
+</html>

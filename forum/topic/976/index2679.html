@@ -1,0 +1,1059 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/976/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:13:42 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [РЕШЕНО] Systemd и автомонтирование в PCManFM
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/23/index.html">Демоны и загрузка системы</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[РЕШЕНО] Systemd и автомонтирование в PCManFM</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[РЕШЕНО] Systemd и автомонтирование в PCManFM</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-9282"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/equeim/index.html">
+                <span class="post-username">equeim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/9282/index.html">#</a>
+            9 лет, 12 месяцев назад
+            
+                (отредактировано
+                
+                    9 лет, 12 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/equeim/topics/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/equeim/posts/index.html">
+                    30
+                </a>
+            </div>
+            <div>
+                Участник с: 27 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Здравствуйте.<br/>Не работает автомонтирование в PCManFM.<br/>Дано: свежеустановленный арч с чистым Systemd без initscripts. DE - LXDE, запуск через lxdm. Udisks установлен, Dbus запущен. Но автомонтирование флешек (и других устройств) не работает. Прошу помочь в решении данной проблемы (в гугле искал, не нашел). Система полностью обновлена.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-9283"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/kurych/index.html">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/9283/index.html">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/kurych/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/kurych/posts/index.html">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            &ldquo;Правка&rdquo;-&gt;&ldquo;Параметры&rdquo;: Вкладка &ldquo;Управление томами&rdquo; галочки выставлены где нужно?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-9284"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/equeim/index.html">
+                <span class="post-username">equeim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/9284/index.html">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/equeim/topics/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/equeim/posts/index.html">
+                    30
+                </a>
+            </div>
+            <div>
+                Участник с: 27 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Конечно выставлены.<br/>Самое интересное, что устройства в /dev появляются, и прекрасно монтируются вручную.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-9285"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/9285/index.html">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+             <a href="https://wiki.archlinux.org/index.php/Udev#Mount_drives_as_a_normal_user">https://wiki.archlinux.org/index.php/Ud &#8230; ormal_user</a> <br/>???
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-9286"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/kurych/index.html">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/9286/index.html">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/kurych/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/kurych/posts/index.html">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А на что-то ругается? Или молча не работает? В логах какие-то следы поищите (sudo journalctl).<br/>И покажите вывод команды &ldquo;id&rdquo;. А то, может, Вы в нужных группах не прописаны.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-9287"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/kurych/index.html">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/9287/index.html">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/kurych/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/kurych/posts/index.html">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br/><a href="https://wiki.archlinux.org/index.php/Udev#Mount_drives_as_a_normal_user">https://wiki.archlinux.org/index.php/Udev#Mount_drives_as_a_normal_user</a><br/>???</blockquote>Я думаю, рановато пока костыли забивать. По идее, все должно работать из коробки. У меня, например, отродясь таких настроек, как в ссылке, не водилось. Однако, все монтируется.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-9288"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/equeim/index.html">
+                <span class="post-username">equeim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/9288/index.html">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/equeim/topics/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/equeim/posts/index.html">
+                    30
+                </a>
+            </div>
+            <div>
+                Участник с: 27 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            journalctl<br/><div class="code"><pre>Sep 05 15:57:11 boberlinux kernel: usb 5-3: new high-speed USB device number 3 using ehci_hcd
+Sep 05 15:57:11 boberlinux kernel: scsi7 : usb-storage 5-3:1.0
+Sep 05 15:57:12 boberlinux kernel: scsi 7:0:0:0: Direct-Access     Kingston DataTraveler G3  1.00 PQ: 0 ANSI: 0 CCS
+Sep 05 15:57:12 boberlinux kernel: sd 7:0:0:0: [sdb] 15644912 512-byte logical blocks: (8.01 GB/7.45 GiB)
+Sep 05 15:57:12 boberlinux kernel: sd 7:0:0:0: [sdb] Write Protect is off
+Sep 05 15:57:12 boberlinux kernel: sd 7:0:0:0: [sdb] Mode Sense: 0b 00 00 08
+Sep 05 15:57:12 boberlinux kernel: sd 7:0:0:0: [sdb] No Caching mode page present
+Sep 05 15:57:12 boberlinux kernel: sd 7:0:0:0: [sdb] Assuming drive cache: write through
+Sep 05 15:57:12 boberlinux kernel: sd 7:0:0:0: [sdb] No Caching mode page present
+Sep 05 15:57:12 boberlinux kernel: sd 7:0:0:0: [sdb] Assuming drive cache: write through
+Sep 05 15:57:12 boberlinux kernel:  sdb: sdb1
+Sep 05 15:57:12 boberlinux kernel: sd 7:0:0:0: [sdb] No Caching mode page present
+Sep 05 15:57:12 boberlinux kernel: sd 7:0:0:0: [sdb] Assuming drive cache: write through
+Sep 05 15:57:12 boberlinux kernel: sd 7:0:0:0: [sdb] Attached SCSI removable disk</pre></div>&ldquo;No Caching mode page present&rdquo; и &ldquo;Assuming drive cache: write through&rdquo; выделены красным.<br/><br/>id<br/><div class="code"><pre>uid=1000(alexey) gid=100(users) группы=100(users),7(lp),10(wheel),50(games),91(video),92(audio),93(optical),95(storage),96(scanner),98(power)</pre></div><br/><blockquote><em>nafanja</em><br/><a href="https://wiki.archlinux.org/index.php/Udev#Mount_drives_as_a_normal_user">https://wiki.archlinux.org/index.php/Udev#Mount_drives_as_a_normal_user</a><br/>???</blockquote>Не помогло.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-9289"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/domov0y/index.html">
+                <span class="post-username">domov0y</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/9289/index.html">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/domov0y/topics/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/domov0y/posts/index.html">
+                    819
+                </a>
+            </div>
+            <div>
+                Участник с: 09 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            pcmanfm не отображает  не примонтированные накопители и соответственно при втыкании флешки не  монтирует их?
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с вами знание ip адреса
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-9290"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/equeim/index.html">
+                <span class="post-username">equeim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/9290/index.html">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/equeim/topics/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/equeim/posts/index.html">
+                    30
+                </a>
+            </div>
+            <div>
+                Участник с: 27 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>domov0y</em><br/>pcmanfm не отображает  не примонтированные накопители и соответственно при втыкании флешки не  монтирует их?</blockquote>Нет, на боковой панели они вообще не появляются. Втыкаю флешку - ноль реакции. Только сообщения в логе journalctl.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-9291"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/domov0y/index.html">
+                <span class="post-username">domov0y</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/9291/index.html">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/domov0y/topics/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/domov0y/posts/index.html">
+                    819
+                </a>
+            </div>
+            <div>
+                Участник с: 09 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            примонтируйте  флешку и удивитесь. она появится в списке устройств на левой панели. Есть где то косяк, но разбираться пока лень. появился сей глюк две с половиной недели назад.
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с вами знание ip адреса
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index1fb5.html?next=/forum/topic/976/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/976/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:13:42 GMT -->
+</html>

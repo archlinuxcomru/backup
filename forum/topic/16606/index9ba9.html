@@ -1,0 +1,624 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/16606/?page=3 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:24:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Отключение systemd-journald
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/23/index.html">Демоны и загрузка системы</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Отключение systemd-journald</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Отключение systemd-journald</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index4658.html?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index9ba9.html?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-175491"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/svicer/index.html">
+                <span class="post-username">svicer</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/175491/index.html">#</a>
+            5 лет, 10 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/86/fa/86fa1b0c414baca804a3d090b75ad6db.png" alt="svicer avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/svicer/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/svicer/posts/index.html">
+                    856
+                </a>
+            </div>
+            <div>
+                Участник с: 27 июля 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br>nafanja</blockquote>Я про машину <strong>Vadim</strong><br />У меня потребление памяти еще меньше, хотя дефолт.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180160"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Ulin/index.html">
+                <span class="post-username">Ulin</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180160/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Ulin/topics/index.html">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Ulin/posts/index.html">
+                    81
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июня 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Как можно отключить логи systemd? Команда journalctl работать не буде:) (действия проводятся над конфигами systemd)<br />Редактируем файл &quot;/etc/systemd/journald.conf&quot; Находим Storage=.... приводим его к такому виду &quot;Storage=none&quot;.<br />none - логи не ведутся<br />auto - (значение по умолчанию) если папка /var/log/jou... существует в нее будут записыватся логи, в противном случае система сама придумает куда их писать:)<br />persistent - если папки  /var/log/jou... не существует он ее создает и конечноже пишет логищя.<br />volatile - не встречался и не знаю для чего он.<br /><br />Это основное, а дополнительно вы можете проделать такие манипуляции<br />/etc/systemd/system.conf<br />Параметр LogLevel=.... привести к LogLevel=err<br />/etc/systemd/coredump.conf<br />Параметр Storage=.... привести к Storage=none<br /><br />Почему я отключаю логи? Может потамучто я их включаю когда действительно нужно. А если их оставить, то они разьедаются, там по умолчанию стоит размер логов 10% жесткого диска, через продолжительное время пользования systemd-journal (flush) может разьестся до 10-20-30 сек и более. Ограничение тоже вариант, но эфект тотже, накопится...<br /><br />По поводу вашего &quot;/etc/sysctl.d/vm.conf&quot; яб выставил `vm.swappiness=10`, а `vm.vfs_cache_pressure=50` страшни,<br />&quot;Есть такой параметр vm.vfs_cache_pressure. Он влияет на тенденцию ядра освобождать оперативную память, использованную для кэширования объектов ФС. Значение по умолчанию 100. При значении 0, объекты он кэширует (в оперативную память) навсегда. Чем больше значение, тем чаще ядро занимается чисткой их (так будет больше свободной оперативной памяти). Если у вас оперативной памяти не хватает (например, всего 2 ГБ), то лучше поставить 1000: &quot; Источник <a href="https://wiki.archlinux.org/index.php/Maximizing_performance_(Русский)">https://wiki.archlinux.org/index.php/Maximizing_performance_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)</a><br />
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180163"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Aivar/index.html">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180163/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Aivar/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Aivar/posts/index.html">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Ulin</em><br>volatile - не встречался и не знаю для чего он.</blockquote>Текущий лог ведется, но не сохраняется.<br /><pre><code>$ grep -v ^# /etc/systemd/journald.conf
+[Journal]
+Storage=volatile
+RuntimeMaxUse=10M</code></pre><br /><blockquote><em>Ulin</em><br>Почему я отключаю логи? Может потамучто я их включаю когда действительно нужно. А если их оставить, то они разьедаются</blockquote>Вот на то и существует <strong>volatile</strong>, хотя,  если у вас аптайм пару лет, то, конечно, не поможет.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180171"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/A.T.W.A/index.html">
+                <span class="post-username">A.T.W.A.</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180171/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/bb/e2/bbe28481570b156d3b5b36cd921ca258.png" alt="A.T.W.A. avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/A.T.W.A/topics/index.html">
+                    14
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/A.T.W.A/posts/index.html">
+                    658
+                </a>
+            </div>
+            <div>
+                Участник с: 21 марта 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Ulin</em><br>volatile - не встречался и не знаю для чего он.</blockquote>Лог только в оперативной памяти.
+            
+                
+                    <div class="post-signature">
+                        <a href="https://t.me/atvva">https://t.me/atvva</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index4658.html?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index9ba9.html?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index1e21.html?next=/forum/topic/16606/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/16606/?page=3 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:24:49 GMT -->
+</html>

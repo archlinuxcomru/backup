@@ -1,0 +1,643 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Squid, магия http://ya.ru:443 DDoS&#39;ит прокси
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Squid, магия http://ya.ru:443 DDoS&#39;ит прокси</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Squid, магия http://ya.ru:443 DDoS&#39;ит прокси</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-166906"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Bobr/">
+                <span class="post-username">Bobr</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/166906/">#</a>
+            6 лет, 5 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Bobr/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Bobr/posts/">
+                    3
+                </a>
+            </div>
+            <div>
+                Участник с: 01 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Приветствую.<br /><br />Собственно, ситуация такая: Маленькая сеть, не прозрачный прокси. Squid, iptables - настройки по-умолчанию. (pacman -Syu на текущую дату)<br />Шлюз - два интерфейса (net0+ppp0;net1). На ppp0 сидит злой провайдер, который фильтрует всё через контент фильтр <a href="http://inside-systems.ru/">Inside-Systems</a> (анализирует весь трафик, подменяет все сертификаты по https своим).<br /><br />А теперь, суть магии: firefox (прописан squid) + запрос <a href="http://ya.ru:443">http://ya.ru:443</a> валит прокси сервер, в логах по службе squid записи вида:<br /><br /><pre><code>Apr 01 14:00:57 s28izh squid[20203]: assertion failed: [b]FwdState.cc:654: &quot;!Comm::IsConnOpen(serverConn)&quot;[/b]
+Apr 01 14:00:57 pdc systemd[1]: Started Process Core Dump (PID 20251/UID 0).
+-- Subject: Unit <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e5969c9691808881c8868a978081908895a5ddd3c8d7d5d7d0d4c8d5cb968097938c8680">[email&#160;protected]</a> has finished start-up
+-- Defined-By: systemd
+-- Support: <a href="https://lists.freedesktop.org/mailman/listinfo/systemd-devel">http://lists.freedesktop.org/mailman/listinfo/systemd-devel</a>
+--
+-- Unit <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="24575d575041494009474b564140514954641c1209161416111509140a574156524d4741">[email&#160;protected]</a> has finished starting up.
+--
+-- The start-up result is done.
+Apr 01 14:00:57 pdc squid[13476]: Squid Parent: (squid-1) process 20203 exited due to signal 6 with status 0
+Apr 01 14:00:58 pdc systemd-coredump[20252]: Process 20203 (squid) of user 15 dumped core.
+
+                                                Stack trace of thread 20203:
+                                                #0  0x00007f81b163d2a8 raise (libc.so.6)
+                                                #1  0x00007f81b163e72a abort (libc.so.6)
+                                                #2  0x0000000000573544 xassert (squid)
+                                                #3  0x00000000005b019d _ZN8FwdState27handleUnregisteredServerEndEv (squid)
+                                                #4  0x0000000000801e17 _ZN6Client8swanSongEv (squid)
+                                                #5  0x000000000073bbf5 _ZN8AsyncJob7callEndEv (squid)
+                                                #6  0x00000000005db463 _ZN9JobDialerI13HttpStateDataE4dialER9AsyncCall (squid)
+                                                #7  0x0000000000739521 _ZN9AsyncCall4makeEv (squid)
+                                                #8  0x000000000073daae _ZN14AsyncCallQueue8fireNextEv (squid)
+                                                #9  0x000000000073dee9 _ZN14AsyncCallQueue4fireEv (squid)
+                                                #10 0x0000000000595891 _ZN9EventLoop7runOnceEv (squid)
+                                                #11 0x0000000000595a90 _ZN9EventLoop3runEv (squid)
+                                                #12 0x0000000000608df7 _Z9SquidMainiPPc (squid)
+                                                #13 0x00000000004eb8cf main (squid)
+                                                #14 0x00007f81b162a710 __libc_start_main (libc.so.6)
+                                                #15 0x00000000004f2679 _start (squid)
+
+                                                Stack trace of thread 20204:
+                                                #0  0x00007f81b38bf03f <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="eb9b9f83998e8a8fb48884858fb49c8a829fab">[email&#160;protected]</a>@GLIBC_2.3.2 (libpthread.so.0)
+                                                #1  0x000000000071fce7 _Z20squidaio_thread_loopPv (squid)
+                                                #2  0x00007f81b38b9424 start_thread (libpthread.so.0)
+                                                #3  0x00007f81b16f1cbd __clone (libc.so.6)
+
+                                                Stack trace of thread ...
+</code></pre><br />Без squud, всё работает спокойно, на запрос <a href="http://ya.ru:443">http://ya.ru:443</a> в браузере возвращается ошибка:<br /><pre><code>400 Bad Request
+The plain HTTP request was sent to HTTPS port
+nginx</code></pre><br />Если через squid - может вернуть, стандартное сообщение.<br /><pre><code>Ошибка чтения
+Система вернула: (104) Connection reset by peer</code></pre>Если начать &quot;DDoS&#39;ить&quot; (долбить F5) Squid падает, возращается сообщение &quot;Прокси-сервер отказывается принимать соединения&quot;.<br /><br />При этом в access.log (tac):<br /><pre><code>1459506355.957      0 192.168.1.3 TCP_IMS_HIT/304 258 GET <a href="http://pdc:8080/squid-internal-static/icons/SN.png">http://pdc:8080/squid-internal-static/icons/SN.png</a> - HIER_NONE/- image/png
+1459506355.919     56 192.168.1.3 TCP_MISS/502 4453 GET <a href="http://ya.ru:443/">http://ya.ru:443/</a> - HIER_DIRECT/2a02:6b8::3 text/html
+1459506354.521      0 192.168.1.3 TCP_IMS_HIT/304 258 GET <a href="http://pdc:8080/squid-internal-static/icons/SN.png">http://pdc:8080/squid-internal-static/icons/SN.png</a> - HIER_NONE/- image/png
+1459506354.467   1014 192.168.1.3 TCP_MISS/502 4453 GET <a href="http://ya.ru:443/">http://ya.ru:443/</a> - HIER_DIRECT/213.180.193.3 text/html
+1459506266.919  66698 192.168.1.49 TCP_TUNNEL/200 10119 CONNECT mc.yandex.ru:443 - HIER_DIRECT/87.250.251.119 -
+1459506260.311    143 192.168.1.3 TCP_MISS/502 4417 GET <a href="http://ya.ru:443/">http://ya.ru:443/</a> - HIER_DIRECT/2a02:6b8::3 text/html
+1459506174.146      8 192.168.1.3 TCP_MISS/502 4417 GET <a href="http://ya.ru:443/">http://ya.ru:443/</a> - HIER_DIRECT/213.180.193.3 text/html</code></pre><br />Перезапуски Squid не сильно напрягают, но сама возможность нагнуть Squid немного раздражает.<br /><br />Сижу, думаю куда копать.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-166909"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/166909/">#</a>
+            6 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Bobr</em><br>На ppp0 сидит злой провайдер, который фильтрует всё через контент фильтр Inside-Systems (анализирует весь трафик, подменяет все сертификаты по https своим).</blockquote>тут два варианта:<br />1. ты шпиЁн, и хочешь стащить секретные данные.<br />2. провайдер занимается не законным промыслом.<br /><br />по поводу первого, оставь свои ФИО, № паспорта и адрес где ты находишься, и МЫ к тебе приедем поможем :D<br />а на счет второго, пиши заяву или меняй провайдера.
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-166957"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/166957/">#</a>
+            6 лет, 5 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Bobr</em><br>подменяет все сертификаты по https своим</blockquote>у него наверно свой сервер сертификатов, и беспрецедентный договор с мозилой.<br />я кончено могу ошибаться но вроде как с 36 версии на сайты под hhtps с  не доверенным сертификатом не пускает... (в других браузерах может по другому, но это блин провайдер что то вы мутите)))
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-167031"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Bobr/">
+                <span class="post-username">Bobr</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/167031/">#</a>
+            6 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Bobr/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Bobr/posts/">
+                    3
+                </a>
+            </div>
+            <div>
+                Участник с: 01 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br><blockquote><em>Bobr</em><br>На ppp0 сидит злой провайдер, который фильтрует всё через контент фильтр Inside-Systems (анализирует весь трафик, подменяет все сертификаты по https своим).</blockquote>тут два варианта:<br />1. ты шпиЁн, и хочешь стащить секретные данные.<br />2. провайдер занимается не законным промыслом.<br /><br />по поводу первого, оставь свои ФИО, № паспорта и адрес где ты находишься, и МЫ к тебе приедем поможем :D<br />а на счет второго, пиши заяву или меняй провайдера.</blockquote><br />Всё намного прозаичнее - контроль вышестоящей организации.<br /><br /><blockquote><em>indeviral</em><br><blockquote><em>Bobr</em><br>подменяет все сертификаты по https своим</blockquote>у него наверно свой сервер сертификатов, и беспрецедентный договор с мозилой.<br />я кончено могу ошибаться но вроде как с 36 версии на сайты под hhtps с  не доверенным сертификатом не пускает... (в других браузерах может по другому, но это блин провайдер что то вы мутите)))</blockquote><br />Они распространяют свой сертификат.<br /><br />Скрипя сердцем закрыл проблему acl правилом:<br /><pre><code>alc url_no_http url_regex ^http:.*:443</code></pre><br />Пытался завалить squid на виртуальной машине, с которой разворачивал образ - повторить ошибку не получилось (подключался не по pppoe). Попытаюсь рабочий образ с другим провайдером погонять.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-167087"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Bobr/">
+                <span class="post-username">Bobr</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/167087/">#</a>
+            6 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Bobr/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Bobr/posts/">
+                    3
+                </a>
+            </div>
+            <div>
+                Участник с: 01 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Проблема решена - баг закрыт в squid 3.5.16-1 от 2016-04-02 10:58 UTC.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/15921/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747bb35388619db4',m:'MwrwyJ6ED2lxSdpd1RzjP4d0fi3vuxsF9JAZlNcYJUc-1662682222-0-ASXpMCUdv8iR8VRYIH5V09/Z7J3709oGm9OCVl0fisnSz7TffOKIFQYqHwquwP6zF8Siiy6Ih/CpCwJg+qcL9g197x1XWHFRU8uoVj41Mrvg/NFpAHEQFeZ6ZStRltkdAYHeXK4Sl4YINO+rGZJY4Y0=',s:[0x811ea3eecd,0x3de4c3c009],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

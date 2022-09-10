@@ -1,0 +1,813 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        WICD + DHCLIENT + Unsecured wifi = fail
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>WICD + DHCLIENT + Unsecured wifi = fail</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>WICD + DHCLIENT + Unsecured wifi = fail</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79202"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/rosso/">
+                <span class="post-username">rosso</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79202/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/rosso/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/rosso/posts/">
+                    3
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Доброго времени суток!<br/>Есть ноут с установленным последним ArchLinux, wifi работает под управление wicd. Заметил очень неприятную странность, если wifi сеть защищенная (wpa, wap2), то все прекрасно работает, но если сеть открытая, то wicd не соединяет(а точнее не может получить ip адрес). Пробовал через dhclient и через dhcpcd.<br/><br/>вот логи подключенния к защищенной и открытой сети соответсвенно:<br/><div class="code"><pre>2009/06/01 22:59:59 :: trying to automatically connect to...wpa2wifi
+2009/06/01 22:59:59 :: Connecting to wireless network wpa2wifi
+2009/06/01 22:59:59 :: Putting interface down
+2009/06/01 22:59:59 :: Releasing DHCP leases...
+2009/06/01 22:59:59 :: Setting false IP...
+2009/06/01 22:59:59 :: Stopping wpa_supplicant and any DHCP clients
+2009/06/01 22:59:59 :: Flushing the routing table...
+2009/06/01 23:00:00 :: Generating psk...
+2009/06/01 23:00:00 :: Attempting to authenticate...
+2009/06/01 23:00:00 :: Putting interface up...
+2009/06/01 23:00:08 :: Running DHCP
+2009/06/01 23:00:08 :: Internet Systems Consortium DHCP Client V3.0.6
+2009/06/01 23:00:08 :: Copyright 2004-2007 Internet Systems Consortium.
+2009/06/01 23:00:08 :: All rights reserved.
+2009/06/01 23:00:08 :: For info, please visit <a href="http://www.isc.org/sw/dhcp/">http://www.isc.org/sw/dhcp/</a>
+2009/06/01 23:00:08 :: 
+2009/06/01 23:00:09 :: Listening on LPF/ra0/00:15:af:ef:d0:a7
+2009/06/01 23:00:09 :: Sending on   LPF/ra0/00:15:af:ef:d0:a7
+2009/06/01 23:00:09 :: Sending on   Socket/fallback
+2009/06/01 23:00:12 :: DHCPREQUEST on ra0 to 255.255.255.255 port 67
+2009/06/01 23:00:12 :: DHCPNAK from 192.168.1.1
+2009/06/01 23:00:13 :: DHCPDISCOVER on ra0 to 255.255.255.255 port 67 interval 7
+2009/06/01 23:00:13 :: DHCPOFFER from 192.168.1.1
+2009/06/01 23:00:13 :: DHCPREQUEST on ra0 to 255.255.255.255 port 67
+2009/06/01 23:00:13 :: DHCPACK from 192.168.1.1
+2009/06/01 23:00:13 :: bound to 192.168.1.5 -- renewal in 33961 seconds.
+2009/06/01 23:00:13 :: DHCP connection successful
+2009/06/01 23:00:13 :: Connecting thread exiting.
+2009/06/01 23:06:44 :: GetWiredProperty: WiredNetwork does not exist
+2009/06/01 23:07:05 :: setting use global dns to 0
+2009/06/01 23:07:05 :: setting use global dns to boolean False
+2009/06/01 23:07:05 :: setting global dns
+2009/06/01 23:07:05 :: global dns servers are   
+2009/06/01 23:07:05 :: setting wireless interface ra0
+2009/06/01 23:07:05 :: setting wired interface eth0
+2009/06/01 23:07:05 :: setting wpa driver wext
+2009/06/01 23:07:05 :: setting automatically reconnect when connection drops
+2009/06/01 23:07:05 :: Setting dhcp client to 1
+2009/06/01 23:07:08 :: Connecting to wireless network freewifi
+2009/06/01 23:07:08 :: Putting interface down
+2009/06/01 23:07:08 :: Releasing DHCP leases...
+2009/06/01 23:07:08 :: Setting false IP...
+2009/06/01 23:07:08 :: Stopping wpa_supplicant and any DHCP clients
+2009/06/01 23:07:08 :: Flushing the routing table...
+2009/06/01 23:07:08 :: Putting interface up...
+2009/06/01 23:07:08 :: Running DHCP
+2009/06/01 23:07:08 :: Internet Systems Consortium DHCP Client V3.0.6
+2009/06/01 23:07:08 :: Copyright 2004-2007 Internet Systems Consortium.
+2009/06/01 23:07:08 :: All rights reserved.
+2009/06/01 23:07:08 :: For info, please visit <a href="http://www.isc.org/sw/dhcp/">http://www.isc.org/sw/dhcp/</a>
+2009/06/01 23:07:08 :: 
+2009/06/01 23:07:09 :: Listening on LPF/ra0/00:15:af:ef:d0:a7
+2009/06/01 23:07:09 :: Sending on   LPF/ra0/00:15:af:ef:d0:a7
+2009/06/01 23:07:09 :: Sending on   Socket/fallback
+2009/06/01 23:07:11 :: DHCPREQUEST on ra0 to 255.255.255.255 port 67
+2009/06/01 23:07:17 :: DHCPREQUEST on ra0 to 255.255.255.255 port 67
+2009/06/01 23:07:25 :: DHCPDISCOVER on ra0 to 255.255.255.255 port 67 interval 6
+2009/06/01 23:07:31 :: DHCPDISCOVER on ra0 to 255.255.255.255 port 67 interval 8
+2009/06/01 23:07:33 :: canceling connection attempt
+2009/06/01 23:07:33 :: DHCP connection failed
+2009/06/01 23:07:33 :: exiting connection thread</pre></div><br/>Прошу  совета.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79203"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/muu/">
+                <span class="post-username">muu</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79203/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/muu/topics/">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/muu/posts/">
+                    476
+                </a>
+            </div>
+            <div>
+                Участник с: 16 ноября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Имел такую же проблему когда пытался использовать wicd. Решения не нагуглил, приходилось для открытых сетей запускать dhcpcd руками.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79204"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/rosso/">
+                <span class="post-username">rosso</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79204/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/rosso/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/rosso/posts/">
+                    3
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Muu</em><br/>Имел такую же проблему когда пытался использовать wicd. Решения не нагуглил, приходилось для открытых сетей запускать dhcpcd руками.</blockquote>Так и вручную адрес получить не удается. Работает 1 раз и сразу после перезагрузки. Может быть стоит обратить внимание на какие-нибудь настройки dhcp клиентов?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79205"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/muu/">
+                <span class="post-username">muu</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79205/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/muu/topics/">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/muu/posts/">
+                    476
+                </a>
+            </div>
+            <div>
+                Участник с: 16 ноября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>rosso</em><br/>Так и вручную адрес получить не удается. Работает 1 раз и сразу после перезагрузки. Может быть стоит обратить внимание на какие-нибудь настройки dhcp клиентов?</blockquote>У меня срабатывала следующая схема: соединяешься с сетью при помощи wicd, а уже после соединения руками убиваешь активный экземпляр dhcpcd и запускаешь руками его по новой. А вот &ldquo;1 раз и сразу после перезагрузки&rdquo; - это у меня как раз wicd своими силами соединялся.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79206"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nmr/">
+                <span class="post-username">nmr</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79206/">#</a>
+            13 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nmr/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nmr/posts/">
+                    1
+                </a>
+            </div>
+            <div>
+                Участник с: 10 июня 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня этот эффект проявляется при плохом уровне сигнала&#8230; при среднем, работает, и даже подключается автоматически.<br/><br/>если кому поможет, совет: отключите networkmanager в системе и в файле /etc/rc.conf можно закоментить строчку:<br/><br/>#rc_plug_services=&ldquo;!net.*&rdquo;<br/><br/>ps: ну и отпишитесь, по результатам.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79207"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/rosso/">
+                <span class="post-username">rosso</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79207/">#</a>
+            13 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/rosso/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/rosso/posts/">
+                    3
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Networkmanager и так выключен, если wicd работает. И rc_plug_services у меня тоже нет.<br/>Нужно понять, почему срабатывает после перезагрузки и не срабатывает при переключении сетей.<br/>Насколько я понимаю, wicd использует wpa_supplicant и dhclient.<br/>Перезапуск демона wicd, убивание dhclient и wpa_supplicant не помогает.<br/>Может что-нибудь еще?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-79208"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/audigymiata/">
+                <span class="post-username">audigymiata</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/79208/">#</a>
+            12 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/audigymiata/topics/">
+                    13
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/audigymiata/posts/">
+                    148
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А у меня не получается получить адрес по dhcp:<br/><br/>Вот вывод iwconfig<br/><div class="code"><pre>[~] $ iwconfig 
+lo        no wireless extensions.
+wifi0     no wireless extensions.
+ath0      IEEE 802.11g  ESSID:"RADIOSPOT"  Nickname:""
+          Mode:Master  Frequency:2.412 GHz  Access Point: 06:23:4E:4A:95:B1   
+          Bit Rate:0 kb/s   Tx-Power:16 dBm   Sensitivity=1/1  
+          Retry:off   RTS thr:off   Fragment thr:off
+          Power Management:off
+          Link Quality=0/70  Signal level=-88 dBm  Noise level=-88 dBm
+          Rx invalid nwid:1  Rx invalid crypt:0  Rx invalid frag:0
+          Tx excessive retries:0  Invalid misc:0   Missed beacon:0</pre></div><br/>Вывод iwlist ath0 scan<br/><div class="code"><pre>Cell 03 - Address: 00:13:49:C9:A3:D6
+                    ESSID:"RADIOSPOT"
+                    Mode:Master
+                    Frequency:2.412 GHz (Channel 1)
+                    Quality=24/70  Signal level=-71 dBm  Noise level=-95 dBm
+                    Encryption key:off
+                    Bit Rates:1 Mb/s; 2 Mb/s; 5.5 Mb/s; 11 Mb/s; 6 Mb/s
+                              9 Mb/s; 12 Mb/s; 18 Mb/s; 24 Mb/s; 36 Mb/s
+                              48 Mb/s; 54 Mb/s
+                    Extra:bcn_int=100</pre></div><br/>Собственно попытка подключиться<br/><div class="code"><pre>[~] $ sudo dhclient ath0
+Internet Systems Consortium DHCP Client V3.1.3
+Copyright 2004-2009 Internet Systems Consortium.
+All rights reserved.
+For info, please visit <a href="https://www.isc.org/software/dhcp/">https://www.isc.org/software/dhcp/</a>
+wifi0: unknown hardware address type 801
+wifi0: unknown hardware address type 801
+Listening on LPF/ath0/06:23:4e:4a:95:b1
+Sending on   LPF/ath0/06:23:4e:4a:95:b1
+Sending on   Socket/fallback
+DHCPDISCOVER on ath0 to 255.255.255.255 port 67 interval 7
+DHCPDISCOVER on ath0 to 255.255.255.255 port 67 interval 13
+DHCPDISCOVER on ath0 to 255.255.255.255 port 67 interval 19
+DHCPDISCOVER on ath0 to 255.255.255.255 port 67 interval 19</pre></div><br/>Настраиваю так<br/><ul><li># ifconfig ath0 down<br/># wlanconfig ath0 destroy<br/># wlanconfig ath0 create wlandev wifi0 wlanmode master<br/># iwconfig ath0 essid RADIOSPOT channel 1 rate 11M<br/># ifconfig ath0 up<br/></li></ul>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/8319/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747bc03c2f193a9b',m:'SM39tcIOSRdHhSt0o_QfYiTkZdoBKjI0waCUnkZH1d0-1662682751-0-Aasg4ITlT50nf6eUqxI33NZGygbIE6Irr7kc85uI81XYk/DQXqzc9ZF9CXllsFZMbjhCCh0cAbHJQQlRoJVGaK9M0VFqv1UCQ8DaHLOV8kThQGVT+5oZZ4puX6ZvcikV0h9NEO2+hPKG6INwooyttZc=',s:[0x803e82c33a,0xef5ec90530],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

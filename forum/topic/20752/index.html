@@ -1,0 +1,967 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20752/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:13:51 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Добавление ядра в систему и конфигурирование initial ramdisk посредством mkinitcpio
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/12/index.html">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Добавление ядра в систему и конфигурирование initial ramdisk посредством mkinitcpio</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Добавление ядра в систему и конфигурирование initial ramdisk посредством mkinitcpio</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245208"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Goldman/index.html">
+                <span class="post-username">Goldman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245208/index.html">#</a>
+            1 год, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Goldman/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Goldman/posts/index.html">
+                    37
+                </a>
+            </div>
+            <div>
+                Участник с: 27 февраля 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Доброго дня всем. Возникла необходимость добавить дополнительное ядро в систему, затем прописать пару хуков и сконфигурировать initial ramdisk.<br />Ядро добавил, загружается, а вот после mkinitcpio уже нет. Что было сделано попорядку:<br /><br />Создал следующий preset<br />$ cat /etc/mkinitcpio.d/5.4.34-1-lts.preset<br />ALL_config=&quot;/etc/mkinitcpio.conf&quot;<br />ALL_kver=&quot;/boot/vmlinuz-5.4.34-1-lts&quot;<br />PRESETS=(&#39;default&#39; &#39;fallback&#39;)<br />#default_config=&quot;/etc/mkinitcpio.conf&quot;<br />default_image=&quot;/boot/initramfs-5.4.34-1-lts.img&quot;<br />#default_options=&quot;&quot;<br />#fallback_config=&quot;/etc/mkinitcpio.conf&quot;<br />fallback_image=&quot;/boot/initramfs-5.4.34-1-lts-fallback.img&quot;<br />fallback_options=&quot;-S autodetect&quot;<br /><br />В boot скопировал ядро 5.4.34.<br />$ ls /boot<br />initramfs-5.4.34-1-lts.img vmlinuz-5.4.34-1-lts initramfs-5.4.34-1-lts-fallback.img<br /><br />Также создал папаку linux-5.4.34-1-lts и скинул туда сорцы (все файлы брал из бэкапа системы)<br />$ ls /usr/src/<br />linux  linux-5.4.34-1-lts  linux-lts<br /><br />Создал папку linux-5.4.34-1-lts и закинул модули ядра<br />$ ls /lib/modules<br />5.10.35-1-lts  5.12.1-arch1-1  5.4.34-1-lts<br /><br />Запускаю<br /># mkinitcpio -p 5.4.34-1-lts<br /><br />В итоге с данного ядра загрузка не удается, kernel panic<br />Что я делаю не так, как правильно?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245209"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/cucullus/index.html">
+                <span class="post-username">cucullus</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245209/index.html">#</a>
+            1 год, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/3e/fc/3efc5087b47b238689d6b1152d129048.png" alt="cucullus avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/cucullus/topics/index.html">
+                    256
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/cucullus/posts/index.html">
+                    3435
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Goldman</em><br>ALL_config=&quot;/etc/mkinitcpio.conf&quot;</blockquote><br />а нужны именно такие хуки как и в дефолтном?
+            
+                
+                    <div class="post-signature">
+                        такие дела.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245210"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Goldman/index.html">
+                <span class="post-username">Goldman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245210/index.html">#</a>
+            1 год, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Goldman/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Goldman/posts/index.html">
+                    37
+                </a>
+            </div>
+            <div>
+                Участник с: 27 февраля 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>cucullus</em><br><blockquote><em>Goldman</em><br>ALL_config=&quot;/etc/mkinitcpio.conf&quot;</blockquote><br />а нужны именно такие хуки как и в дефолтном?</blockquote>Да, я в дефолт пару хуков добавил, текущее ядро и лтс сконфигурировал тоже, с них загрузка происходит нормально.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245214"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245214/index.html">#</a>
+            1 год, 3 месяца назад
+            
+                (отредактировано
+                
+                    1 год, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Goldman</em><br>Что я делаю не так, как правильно?</blockquote>C 5.10.x-lts вроде перешли на сжатие initramfs в zstd, может отсюда твои проблемы?<br />5.4.34-1-lts у тебя собрано с поддержкой распаковки initramfs из zstd?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245221"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Goldman/index.html">
+                <span class="post-username">Goldman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245221/index.html">#</a>
+            1 год, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Goldman/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Goldman/posts/index.html">
+                    37
+                </a>
+            </div>
+            <div>
+                Участник с: 27 февраля 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>RusWolf</em><br><blockquote><em>Goldman</em><br>Что я делаю не так, как правильно?</blockquote>C 5.10.x-lts вроде перешли на сжатие initramfs в zstd, может отсюда твои проблемы?<br />5.4.34-1-lts у тебя собрано с поддержкой распаковки initramfs из zstd?</blockquote>вряд-ли дело в компрессии, 5.4.34-1-lts  у меня пол года назад работал одновременно с теущим ядром версии 5.10 и выше, конфигурирования производились, проблем не возникало. В бэкапе посмотрел mkinitcpio.conf, там было и раньше указано, что компрессия по дефолту используется, сейчас также.<br /># COMPRESSION<br /># Use this to compress the initramfs image. By default, gzip compression<br /># is used. Use &#39;cat&#39; to create an uncompressed image.<br />#COMPRESSION=&quot;gzip&quot;<br />#COMPRESSION=&quot;bzip2&quot;<br />#COMPRESSION=&quot;lzma&quot;<br />#COMPRESSION=&quot;xz&quot;<br />#COMPRESSION=&quot;lzop&quot;<br />#COMPRESSION=&quot;lz4&quot;<br /><br /># COMPRESSION_OPTIONS<br /># Additional options for the compressor<br />#COMPRESSION_OPTIONS=()
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245223"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245223/index.html">#</a>
+            1 год, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>RusWolf</em><br>перешли на сжатие initramfs в zstd</blockquote>-<blockquote><em>Goldman</em><br>у меня пол года назад</blockquote>-<br /><blockquote>Было, было, да прошло</blockquote>Сейчас <blockquote>By default, zstd compression</blockquote><a href="../20558/index.html">https://archlinux.org.ru/forum/topic/20558/</a><br /><br />Попробуйте раскомментировать в /etc/mkinitcpio.conf<br /><pre><code>COMPRESSION=&quot;gzip&quot;</code></pre>и<br /> <pre><code>sudo mkinitcpio -P</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245224"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sirocco/index.html">
+                <span class="post-username">sirocco</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245224/index.html">#</a>
+            1 год, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sirocco/topics/index.html">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sirocco/posts/index.html">
+                    2501
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Либо патч использовать<br /><a href="https://aur.archlinux.org/packages/linux-lts54/">https://aur.archlinux.org/packages/linux-lts54/</a><br /><br />0003-Add-support-for-ZSTD-compressed-kernel.patch
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245226"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245226/index.html">#</a>
+            1 год, 3 месяца назад
+            
+                (отредактировано
+                
+                    1 год, 3 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sirocco</em><br>Либо патч использовать<br /><a href="https://aur.archlinux.org/packages/linux-lts54/">https://aur.archlinux.org/packages/linux-lts54/</a><br />0003-Add-support-for-ZSTD-compressed-kernel.patch</blockquote>to <strong>Goldman</strong> - глядя на приведенную ссылку не проще поставить из AUR <strong>linux-lts54</strong>??? ... Насколько понимаю это тот же 5.4.34-1, но немного обновленный и получился 5.4.119-1, но, главное, он будет обновляться и далее ... с учетом работоспособности функционала для 5.4.34<br />... или я не прав??? ...
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245260"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Goldman/index.html">
+                <span class="post-username">Goldman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245260/index.html">#</a>
+            1 год, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Goldman/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Goldman/posts/index.html">
+                    37
+                </a>
+            </div>
+            <div>
+                Участник с: 27 февраля 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vs220</em><br>Попробуйте раскомментировать в /etc/mkinitcpio.conf<br />COMPRESSION=&quot;gzip&quot;</blockquote>Действительно, сработало!<br /><br />Благодарю <strong>RusWolf</strong> и  <strong>vs220</strong> за помощь!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-245369"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Goldman/index.html">
+                <span class="post-username">Goldman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/245369/index.html">#</a>
+            1 год, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Goldman/topics/index.html">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Goldman/posts/index.html">
+                    37
+                </a>
+            </div>
+            <div>
+                Участник с: 27 февраля 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>поставить из AUR linux-lts54</blockquote>Спасибо за совет, да стоит установить.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index8898.html?next=/forum/topic/20752/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20752/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:13:51 GMT -->
+</html>

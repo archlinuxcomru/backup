@@ -1,0 +1,1212 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Ядро PAE
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Ядро PAE</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Ядро PAE</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=6" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=7">7 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=9">9</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=10">10</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=8" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124044"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/124044/">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Попробовал PAE из того репа:<br/><div class="code"><pre>$ uname -a
+Linux first 3.12.0-1-pae #1 SMP PREEMPT Mon Nov 18 00:24:59 EST 2013 i686 GNU/Linux
+$ dmesg | grep Memory
+[    0.000000] Memory: 4026824K/4085936K available (4487K kernel code, 445K rwdata, 1400K rodata, 644K init, 960K bss, 59112K reserved, 3174984K highmem)
+[    0.748817] [drm] Memory usable by graphics device = 2048M
+$ cat /proc/meminfo |grep -i mem
+MemTotal:        4030956 kB
+MemFree:         3403128 kB
+Shmem:             25688 kB
+$ free
+             total       used       free     shared    buffers     cached
+Mem:       4030956     644264    3386692          0      66552     227820
+-/+ buffers/cache:     349892    3681064
+Swap:      4194300          0    4194300</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124050"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/teplovoz/">
+                <span class="post-username">teplovoz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/124050/">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a3/d5/a3d5377868dad212636a6c6b23eaf059.png" alt="teplovoz avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/teplovoz/topics/">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/teplovoz/posts/">
+                    1046
+                </a>
+            </div>
+            <div>
+                Участник с: 28 мая 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Спасибо за советы  , глаза разбегаются  ,  теперь  задача  что выбрать !
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124051"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/anode/">
+                <span class="post-username">anode</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/124051/">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/anode/topics/">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/anode/posts/">
+                    982
+                </a>
+            </div>
+            <div>
+                Участник с: 30 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Кто-нибуль может эти цифири хотя бы подвигнуть к какой-то логике? И, хотя бы невнятно, что-то прокоментировать?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124055"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/teplovoz/">
+                <span class="post-username">teplovoz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/124055/">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a3/d5/a3d5377868dad212636a6c6b23eaf059.png" alt="teplovoz avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/teplovoz/topics/">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/teplovoz/posts/">
+                    1046
+                </a>
+            </div>
+            <div>
+                Участник с: 28 мая 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Подумал , и так же установил   -   <blockquote><a href="https://wiki.archlinux.org/index.php/Unofficial_User_Repositories#Unsigned_3">https://wiki.archlinux.org/index.php/Unofficial_User_Repositories#Unsigned_3</a><br/><a href="http://pae.archlinux.ca/">http://pae.archlinux.ca/</a><br/>	</blockquote>так быстрей , из AUR долго собирается  , и вот  -<br/><div class="code"><pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0e784e6f7c6d66">[email&#160;protected]</a> ~]$ uname -a
+Linux arch 3.12.0-1-pae #1 SMP PREEMPT Mon Nov 18 00:24:59 EST 2013 i686 GNU/Linux
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="88fec8e9faebe0">[email&#160;protected]</a> ~]$ dmesg | grep Memory
+[    0.000000] Memory: 6210740K/6289848K available (4487K kernel code, 445K rwdata, 1400K rodata, 644K init, 960K bss, 79108K reserved, 5376840K highmem)
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6610260714050e">[email&#160;protected]</a> ~]$ cat /proc/meminfo |grep -i mem
+MemTotal:        6214520 kB
+MemFree:         5907648 kB
+Shmem:              2444 kB
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="96e0d6f7e4f5fe">[email&#160;protected]</a> ~]$ free
+             total       used       free     shared    buffers     cached
+Mem:       6214520     308928    5905592          0      22676     115120
+-/+ buffers/cache:     171132    6043388
+Swap:      8588028          0    8588028
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f781b79685949f">[email&#160;protected]</a> ~]$</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124063"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/palpalych/">
+                <span class="post-username">palpalych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/124063/">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/47/d0/47d0dfe31100e02907f5e9bb71c76f86.png" alt="palpalych avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/palpalych/topics/">
+                    89
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/palpalych/posts/">
+                    1126
+                </a>
+            </div>
+            <div>
+                Участник с: 09 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            На буке вообще беда, пишет 3,1 ГиБ<br/><div class="code"><pre>3.12.1-1-ARCH #1 SMP PREEMPT Thu Nov 21 09:01:05 CET 2013 i686 GNU/Linux</pre></div><div class="code"><pre>[    0.000000] Memory: 3267516K/3312584K available (4321K kernel code, 431K rwdata, 1368K rodata, 612K init, 952K bss, 45068K reserved, 2405728K highmem)
+[    1.455460] [drm] Memory usable by graphics device = 2048M</pre></div>
+            
+                
+                    <div class="post-signature">
+                        Арчи ~]$ ...as always want ready-made solutions that would make even tastier
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124064"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/palpalych/">
+                <span class="post-username">palpalych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/124064/">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/47/d0/47d0dfe31100e02907f5e9bb71c76f86.png" alt="palpalych avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/palpalych/topics/">
+                    89
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/palpalych/posts/">
+                    1126
+                </a>
+            </div>
+            <div>
+                Участник с: 09 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>teplovoz</em><br/>Подумал , и так же установил   -   <blockquote><a href="https://wiki.archlinux.org/index.php/Unofficial_User_Repositories#Unsigned_3">https://wiki.archlinux.org/index.php/Unofficial_User_Repositories#Unsigned_3</a><br/><a href="http://pae.archlinux.ca/">http://pae.archlinux.ca/</a><br/></blockquote></blockquote>А с этим как быть<br/><div class="code"><pre>linux-pae                     2013,0   B  0,00B/s 00:00 [##############################] 100%
+ linux-pae.sig                  287,0   B  0,00B/s 00:00 [##############################] 100%
+ошибка: linux-pae: key "75CAB52BBADC156D" is unknown
+:: Импортировать PGP ключ 2048R/, "Tom Wizetek &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c4b0aba984b3adbea1b0a1afeaa7aba9">[email&#160;protected]</a>&gt;", созданный: 2012-07-28? [Y/n] Y
+ошибка: key "Tom Wizetek &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="384c5755784f51425d4c5d53165b5755">[email&#160;protected]</a>&gt;" could not be imported
+ошибка: не удалось обновить linux-pae (неверная или поврежденная база данных(PGP-подпись))
+ошибка: база данных 'linux-pae' повреждена (неверная или поврежденная база данных(PGP-подпись))</pre></div>
+            
+                
+                    <div class="post-signature">
+                        Арчи ~]$ ...as always want ready-made solutions that would make even tastier
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124065"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/palpalych/">
+                <span class="post-username">palpalych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/124065/">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/47/d0/47d0dfe31100e02907f5e9bb71c76f86.png" alt="palpalych avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/palpalych/topics/">
+                    89
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/palpalych/posts/">
+                    1126
+                </a>
+            </div>
+            <div>
+                Участник с: 09 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <div class="code"><pre>3.12.0-1-pae #1 SMP PREEMPT Mon Nov 18 00:24:59 EST 2013 i686 GNU/Linux</pre></div><div class="code"><pre>[    0.000000] Memory: 4027344K/4088776K available (4487K kernel code, 445K rwdata, 1400K rodata, 644K init, 960K bss, 61432K reserved, 3177824K highmem)
+[    1.462592] [drm] Memory usable by graphics device = 2048M</pre></div>и как-то странно горит лампочка графической карты, в обычном ядре такого не наблюдается...<br/>да и bumblebee не подает признаков жизни...
+            
+                
+                    <div class="post-signature">
+                        Арчи ~]$ ...as always want ready-made solutions that would make even tastier
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124066"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/teplovoz/">
+                <span class="post-username">teplovoz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/124066/">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a3/d5/a3d5377868dad212636a6c6b23eaf059.png" alt="teplovoz avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/teplovoz/topics/">
+                    7
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/teplovoz/posts/">
+                    1046
+                </a>
+            </div>
+            <div>
+                Участник с: 28 мая 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>palpalych </strong><br/><blockquote>ошибка: linux-pae: key "75CAB52BBADC156D" is unknown<br/>:: Импортировать PGP ключ 2048R/, "Tom Wizetek &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5c2833311c2b352639283937723f3331">[email&#160;protected]</a>&gt;", созданный: 2012-07-28? [Y/n] Y<br/>ошибка: key "Tom Wizetek &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4a3e25270a3d23302f3e2f2164292527">[email&#160;protected]</a>&gt;" could not be imported<br/>ошибка: не удалось обновить linux-pae (неверная или поврежденная база данных(PGP-подпись))<br/>ошибка: база данных 'linux-pae' повреждена (неверная или поврежденная база данных(PGP-подпись))</blockquote><br/>Там же -  <div class="code"><pre>pacman-key --lsign-key BADC156D</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124068"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/palpalych/">
+                <span class="post-username">palpalych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/124068/">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/47/d0/47d0dfe31100e02907f5e9bb71c76f86.png" alt="palpalych avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/palpalych/topics/">
+                    89
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/palpalych/posts/">
+                    1126
+                </a>
+            </div>
+            <div>
+                Участник с: 09 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>teplovoz</em><br/>Там же -  <div class="code"><pre>pacman-key --lsign-key BADC156D</pre></div></blockquote>Пробовал, не прокатило...
+            
+                
+                    <div class="post-signature">
+                        Арчи ~]$ ...as always want ready-made solutions that would make even tastier
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-124069"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/124069/">#</a>
+            8 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>palpalych</em><br/><blockquote><em>teplovoz</em><br/>Там же -  <div class="code"><pre>pacman-key --lsign-key BADC156D</pre></div></blockquote>Пробовал, не прокатило...</blockquote>Покажите ваш <strong>pacman.conf</strong><br/><br/><blockquote><em>palpalych</em><br/>и как-то странно горит лампочка графической карты, в обычном ядре такого не наблюдается...<br/>да и bumblebee не подает признаков жизни...</blockquote>Дополнительные модули ядра (nvidia и т.п.) для каждого ядра устанавливаются отдельно.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=6" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=7">7 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=9">9</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=10">10</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=8" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/12682/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747c074a3f72167e',m:'CNqgwMM6QnXbbzHiglrrzQ5Yb.uAHAvCwXAShSFdme0-1662685663-0-AWAr+QClBwKGuBJCqN4gTsXcjmvUSL/QG2KbO3b+mQmuR90A7R/YrzK3PJfkQQ8Y/oTw0Z61FDgLZ7miqtsAOGPtrwTgdveEHZ+OIB8DsW2yzd5PnaWbzRQxK2WHgEfGagQ2/4NE0BNIoJjVgMZ6fFc=',s:[0x24d01e0976,0x3bbfba1af4],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

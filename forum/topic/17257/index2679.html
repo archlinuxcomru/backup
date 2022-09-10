@@ -1,0 +1,2291 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17257/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 22:28:28 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Правила udev для usb флэшек
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/9/index.html">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Правила udev для usb флэшек</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Правила udev для usb флэшек</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185018"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/allon925/index.html">
+                <span class="post-username">allon925</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185018/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/allon925/topics/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/allon925/posts/index.html">
+                    310
+                </a>
+            </div>
+            <div>
+                Участник с: 14 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Не определяются 2 флэшки при загрузке системы:<br /><pre><code>
+[<a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="83f0e6f1e4e6fac3f0e6f1e4e6face">[email&#160;protected]</a> rules.d]$ lsusb
+Bus 007 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 011 Device 003: ID 0d8c:013c C-Media Electronics, Inc. CM108 Audio Controller
+Bus 011 Device 002: ID 046d:c52f Logitech, Inc. Unifying Receiver
+Bus 011 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 010 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 004 Device 002: ID 8564:1000 Transcend Information, Inc. JetFlash
+Bus 004 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 009 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 001 Device 004: ID 090c:3267 Silicon Motion, Inc. - Taiwan (formerly Feiya Technology Corp.)
+Bus 001 Device 003: ID 04f9:0045 Brother Industries, Ltd
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 008 Device 002: ID 046d:c069 Logitech, Inc. M-U0007 [Corded Mouse M500]
+Bus 008 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 006 Device 002: ID 2109:0813 VIA Labs, Inc.
+Bus 006 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 005 Device 003: ID 14cd:8601 Super Top
+Bus 005 Device 002: ID 2109:2813 VIA Labs, Inc.
+Bus 005 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 003 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+[code]
+видит только 1 флэшку:
+[code]
+Bus 004 Device 002: ID 8564:1000 Transcend Information, Inc. JetFlash
+</code></pre>Хотя вставлено 2. У двух флэшек одинаковый pid и vid  8564:1000 соответственно, при написании правил для udev писал через серийные номера, которые к счастью разные.<br />В /etc/udev/rules.d/10-usbstick.rules<br /><br /><pre><code>
+
+[<a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="f281978095978bb281978095978bbf">[email&#160;protected]</a> rules.d]$ cat 10-usbstick.rules
+KERNEL==&quot;sd*&quot;, ATTRS{serial}==&quot;198FGLF0XIA1WBWG&quot;, ATTRS{idVendor}==&quot;8564&quot;, ATTRS{idProduct}==&quot;1000&quot;, SYMLINK+=&quot;/dev/sdb%n&quot;
+KERNEL==&quot;sd*&quot;, ATTRS{serial}==&quot;16I85494H3Q27U7N&quot;, ATTRS{idVendor}==&quot;8564&quot;, ATTRS{idProduct}==&quot;1000&quot;, SYMLINK+=&quot;/dev/sdc%n&quot;
+
+</code></pre><br />После записи правил сделал:<br /><br /><pre><code>
+udevadm control --reload-rules
+</code></pre>Не могу понять, что делаю не так но при перезагрузке все равно определяется одна флэшка.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185024"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185024/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>allon925</strong>, встроенные  в ядро имена устройств, включая sd*, нельзя дублировать симлинками, потому что они уже заняты. Используйте какие-нибудь другие имена.<br />Вообще, правила UDEV не помогут ядру &quot;видеть&quot; устройства, оно &quot;видит&quot; их и так. Правила задают только юзерспейсную реакцию на события, связанные с добавлением, изменением и удалением устройств.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185029"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/allon925/index.html">
+                <span class="post-username">allon925</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185029/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/allon925/topics/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/allon925/posts/index.html">
+                    310
+                </a>
+            </div>
+            <div>
+                Участник с: 14 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Симлинки я убирал. Все равно не видит.<br /><blockquote><em>Natrio</em><br>Вообще, правила UDEV не помогут ядру &quot;видеть&quot; устройства, оно &quot;видит&quot; их и так. Правила задают только юзерспейсную реакцию на события, связанные с добавлением, изменением и удалением устройств.</blockquote>Тогда, что можно попробовать?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185030"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/allon925/index.html">
+                <span class="post-username">allon925</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185030/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/allon925/topics/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/allon925/posts/index.html">
+                    310
+                </a>
+            </div>
+            <div>
+                Участник с: 14 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Флэшки получаются рабочие, если система загружена, я могу их вынуть затем вставить и KDE увидит обе флэшки и с помощью lsusb они также будут видны.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185032"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185032/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Для начала нужно понять, что у вас происходит.<br /><br />Можно сделать так:<br />1. Вытащите обе флешки.<br />2. Запустите в терминале команду <pre><code>dmesg -kw</code></pre>3. Вставьте первую флешку<br />4. Вставьте вторую<br />5. Скопируйте сюда вывод команды, начиная с подключения первой флешки и до конца.<br /><br />После этого можно будет составить греп, чтобы отфильтровать из всей простыни вывода происходящее при определении флешек на этапе загрузки.<br />Или можно сразу попробовать так: <pre><code>dmesg -k|grep -iE &#39; (usb|sd|scsi)&#39;</code></pre> но будет много лишнего.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185035"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/allon925/index.html">
+                <span class="post-username">allon925</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185035/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/allon925/topics/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/allon925/posts/index.html">
+                    310
+                </a>
+            </div>
+            <div>
+                Участник с: 14 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вытащил обе флэшки:<br /><pre><code>
+ 0.000000] tsc: Detected 3612.056 MHz processor
+[    0.000020] Calibrating delay loop (skipped), value calculated using timer frequency.. 7227.11 BogoMIPS (lpj=12040186)
+[    0.000022] pid_max: default: 32768 minimum: 301
+[    0.000031] ACPI: Core revision 20160831
+[    0.002778] ACPI: 2 ACPI AML tables successfully acquired and loaded
+[    0.003169] Security Framework initialized
+[    0.003170] Yama: becoming mindful.
+[    0.003961] Dentry cache hash table entries: 2097152 (order: 12, 16777216 bytes)
+[    0.007878] Inode-cache hash table entries: 1048576 (order: 11, 8388608 bytes)
+[    0.009642] Mount-cache hash table entries: 32768 (order: 6, 262144 bytes)
+[    0.009656] Mountpoint-cache hash table entries: 32768 (order: 6, 262144 bytes)
+[    0.009980] CPU: Physical Processor ID: 0
+[    0.009981] CPU: Processor Core ID: 0
+[    0.009982] mce: CPU supports 7 MCE banks
+[    0.009988] LVT offset 1 assigned for vector 0xf9
+[    0.009993] Last level iTLB entries: 4KB 512, 2MB 1024, 4MB 512
+[    0.009994] Last level dTLB entries: 4KB 1024, 2MB 1024, 4MB 512, 1GB 0
+[    0.010231] Freeing SMP alternatives memory: 24K (ffffffff81c4d000 - ffffffff81c53000)
+[    0.277157] ftrace: allocating 24616 entries in 97 pages
+[    0.286165] smpboot: Max logical packages: 1
+[    0.286506] ..TIMER: vector=0x30 apic1=0 pin1=2 apic2=-1 pin2=-1
+[    0.423675] smpboot: CPU0: AMD FX(tm)-8150 Eight-Core Processor (family: 0x15, model: 0x1, stepping: 0x2)
+[    0.423678] Performance Events: Fam15h core perfctr, AMD PMU driver.
+[    0.423682] ... version:                0
+[    0.423683] ... bit width:              48
+[    0.423683] ... generic registers:      6
+[    0.423684] ... value mask:             0000ffffffffffff
+[    0.423684] ... max period:             00007fffffffffff
+[    0.423684] ... fixed-purpose events:   0
+[    0.423685] ... event mask:             000000000000003f
+[    0.457087] NMI watchdog: enabled on all CPUs, permanently consumes one hw-PMU counter.
+[    0.490388] x86: Booting SMP configuration:
+[    0.490389] .... node  #0, CPUs:      #1 #2 #3 #4 #5 #6 #7
+[    1.235727] x86: Booted up 1 node, 8 CPUs
+[    1.235730] smpboot: Total of 8 processors activated (57815.88 BogoMIPS)
+[    1.248762] devtmpfs: initialized
+[    1.248831] x86/mm: Memory block size: 128MB
+[    1.253289] PM: Registering ACPI NVS region [mem 0xbaca5000-0xbba08fff] (14041088 bytes)
+[    1.253444] PM: Registering ACPI NVS region [mem 0xbca4f000-0xbcc54fff] (2121728 bytes)
+[    1.253543] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 6370867519511994 ns
+[    1.253589] pinctrl core: initialized pinctrl subsystem
+[    1.253622] RTC time: 19:47:16, date: 03/16/17
+[    1.253711] NET: Registered protocol family 16
+[    1.270342] cpuidle: using governor ladder
+[    1.287023] cpuidle: using governor menu
+[    1.287101] ACPI: bus type PCI registered
+[    1.287103] acpiphp: ACPI Hot Plug PCI Controller Driver version: 0.5
+[    1.287160] PCI: MMCONFIG for domain 0000 [bus 00-ff] at [mem 0xe0000000-0xefffffff] (base 0xe0000000)
+[    1.287162] PCI: not using MMCONFIG
+[    1.287162] PCI: Using configuration type 1 for base access
+[    1.287163] PCI: Using configuration type 1 for extended access
+[    1.310482] HugeTLB registered 1 GB page size, pre-allocated 0 pages
+[    1.310483] HugeTLB registered 2 MB page size, pre-allocated 0 pages
+[    1.310764] ACPI: Added _OSI(Module Device)
+[    1.310765] ACPI: Added _OSI(Processor Device)
+[    1.310765] ACPI: Added _OSI(3.0 _SCP Extensions)
+[    1.310766] ACPI: Added _OSI(Processor Aggregator Device)
+[    1.310910] ACPI: Executed 2 blocks of module-level executable AML code
+[    1.314049] ACPI : EC: EC started
+[    1.314055] ACPI: \_SB_.PCI0.SBRG.EC0_: Used as first EC
+[    1.314057] ACPI: \_SB_.PCI0.SBRG.EC0_: GPE=0xa, EC_CMD/EC_SC=0x66, EC_DATA=0x62
+[    1.314058] ACPI: \_SB_.PCI0.SBRG.EC0_: Used as boot DSDT EC to handle transactions
+[    1.314058] ACPI: Interpreter enabled
+[    1.314072] ACPI: (supports S0 S3 S4 S5)
+[    1.314073] ACPI: Using IOAPIC for interrupt routing
+[    1.314188] PCI: MMCONFIG for domain 0000 [bus 00-ff] at [mem 0xe0000000-0xefffffff] (base 0xe0000000)
+[    1.314219] PCI: MMCONFIG at [mem 0xe0000000-0xefffffff] reserved in ACPI motherboard resources
+[    1.314231] PCI: Using host bridge windows from ACPI; if necessary, use &quot;pci=nocrs&quot; and report a bug
+[    1.319947] ACPI: PCI Root Bridge [PCI0] (domain 0000 [bus 00-ff])
+[    1.319951] acpi PNP0A03:00: _OSC: OS supports [ExtendedConfig ASPM ClockPM Segments MSI]
+[    1.319954] acpi PNP0A03:00: _OSC failed (AE_NOT_FOUND); disabling ASPM
+[    1.320222] PCI host bridge to bus 0000:00
+[    1.320224] pci_bus 0000:00: root bus resource [io  0x0000-0x03af window]
+[    1.320225] pci_bus 0000:00: root bus resource [io  0x03e0-0x0cf7 window]
+[    1.320226] pci_bus 0000:00: root bus resource [io  0x03b0-0x03df window]
+[    1.320227] pci_bus 0000:00: root bus resource [io  0x0d00-0xffff window]
+[    1.320228] pci_bus 0000:00: root bus resource [mem 0x000a0000-0x000bffff window]
+[    1.320229] pci_bus 0000:00: root bus resource [mem 0x000c0000-0x000dffff window]
+[    1.320230] pci_bus 0000:00: root bus resource [mem 0xc0000000-0xffffffff window]
+[    1.320231] pci_bus 0000:00: root bus resource [bus 00-ff]
+[    1.320238] pci 0000:00:00.0: [1002:5a14] type 00 class 0x060000
+[    1.320352] pci 0000:00:02.0: [1002:5a16] type 01 class 0x060400
+[    1.320383] pci 0000:00:02.0: PME# supported from D0 D3hot D3cold
+[    1.320429] pci 0000:00:02.0: System wakeup disabled by ACPI
+[    1.320465] pci 0000:00:04.0: [1002:5a18] type 01 class 0x060400
+[    1.320494] pci 0000:00:04.0: PME# supported from D0 D3hot D3cold
+[    1.320539] pci 0000:00:04.0: System wakeup disabled by ACPI
+[    1.320572] pci 0000:00:05.0: [1002:5a19] type 01 class 0x060400
+[    1.320601] pci 0000:00:05.0: PME# supported from D0 D3hot D3cold
+[    1.320645] pci 0000:00:05.0: System wakeup disabled by ACPI
+[    1.320680] pci 0000:00:07.0: [1002:5a1b] type 01 class 0x060400
+[    1.320709] pci 0000:00:07.0: PME# supported from D0 D3hot D3cold
+[    1.320755] pci 0000:00:07.0: System wakeup disabled by ACPI
+[    1.320814] pci 0000:00:11.0: [1002:4391] type 00 class 0x010601
+[    1.320826] pci 0000:00:11.0: reg 0x10: [io  0xf040-0xf047]
+[    1.320833] pci 0000:00:11.0: reg 0x14: [io  0xf030-0xf033]
+[    1.320840] pci 0000:00:11.0: reg 0x18: [io  0xf020-0xf027]
+[    1.320846] pci 0000:00:11.0: reg 0x1c: [io  0xf010-0xf013]
+[    1.320853] pci 0000:00:11.0: reg 0x20: [io  0xf000-0xf00f]
+[    1.320860] pci 0000:00:11.0: reg 0x24: [mem 0xfeb0b000-0xfeb0b3ff]
+[    1.320957] pci 0000:00:12.0: [1002:4397] type 00 class 0x0c0310
+[    1.320967] pci 0000:00:12.0: reg 0x10: [mem 0xfeb0a000-0xfeb0afff]
+[    1.321050] pci 0000:00:12.0: System wakeup disabled by ACPI
+[    1.321088] pci 0000:00:12.2: [1002:4396] type 00 class 0x0c0320
+[    1.321100] pci 0000:00:12.2: reg 0x10: [mem 0xfeb09000-0xfeb090ff]
+[    1.321158] pci 0000:00:12.2: supports D1 D2
+[    1.321159] pci 0000:00:12.2: PME# supported from D0 D1 D2 D3hot
+[    1.321203] pci 0000:00:12.2: System wakeup disabled by ACPI
+[    1.321242] pci 0000:00:13.0: [1002:4397] type 00 class 0x0c0310
+[    1.321252] pci 0000:00:13.0: reg 0x10: [mem 0xfeb08000-0xfeb08fff]
+[    1.321334] pci 0000:00:13.0: System wakeup disabled by ACPI
+[    1.321371] pci 0000:00:13.2: [1002:4396] type 00 class 0x0c0320
+[    1.321384] pci 0000:00:13.2: reg 0x10: [mem 0xfeb07000-0xfeb070ff]
+[    1.321442] pci 0000:00:13.2: supports D1 D2
+[    1.321443] pci 0000:00:13.2: PME# supported from D0 D1 D2 D3hot
+[    1.321487] pci 0000:00:13.2: System wakeup disabled by ACPI
+[    1.321525] pci 0000:00:14.0: [1002:4385] type 00 class 0x0c0500
+[    1.321643] pci 0000:00:14.2: [1002:4383] type 00 class 0x040300
+[    1.321657] pci 0000:00:14.2: reg 0x10: [mem 0xfeb00000-0xfeb03fff 64bit]
+[    1.321706] pci 0000:00:14.2: PME# supported from D0 D3hot D3cold
+[    1.321749] pci 0000:00:14.2: System wakeup disabled by ACPI
+[    1.321782] pci 0000:00:14.3: [1002:439d] type 00 class 0x060100
+[    1.321901] pci 0000:00:14.4: [1002:4384] type 01 class 0x060401
+[    1.321968] pci 0000:00:14.4: System wakeup disabled by ACPI
+[    1.322020] pci 0000:00:14.5: [1002:4399] type 00 class 0x0c0310
+[    1.322030] pci 0000:00:14.5: reg 0x10: [mem 0xfeb06000-0xfeb06fff]
+[    1.322113] pci 0000:00:14.5: System wakeup disabled by ACPI
+[    1.322150] pci 0000:00:16.0: [1002:4397] type 00 class 0x0c0310
+[    1.322159] pci 0000:00:16.0: reg 0x10: [mem 0xfeb05000-0xfeb05fff]
+[    1.322242] pci 0000:00:16.0: System wakeup disabled by ACPI
+[    1.322279] pci 0000:00:16.2: [1002:4396] type 00 class 0x0c0320
+[    1.322291] pci 0000:00:16.2: reg 0x10: [mem 0xfeb04000-0xfeb040ff]
+[    1.322355] pci 0000:00:16.2: supports D1 D2
+[    1.322356] pci 0000:00:16.2: PME# supported from D0 D1 D2 D3hot
+[    1.322401] pci 0000:00:16.2: System wakeup disabled by ACPI
+[    1.322439] pci 0000:00:18.0: [1022:1600] type 00 class 0x060000
+[    1.322513] pci 0000:00:18.1: [1022:1601] type 00 class 0x060000
+[    1.322583] pci 0000:00:18.2: [1022:1602] type 00 class 0x060000
+[    1.322654] pci 0000:00:18.3: [1022:1603] type 00 class 0x060000
+[    1.322726] pci 0000:00:18.4: [1022:1604] type 00 class 0x060000
+[    1.322797] pci 0000:00:18.5: [1022:1605] type 00 class 0x060000
+[    1.323059] pci 0000:01:00.0: [1002:683d] type 00 class 0x030000
+[    1.323070] pci 0000:01:00.0: reg 0x10: [mem 0xc0000000-0xcfffffff 64bit pref]
+[    1.323077] pci 0000:01:00.0: reg 0x18: [mem 0xfea00000-0xfea3ffff 64bit]
+[    1.323082] pci 0000:01:00.0: reg 0x20: [io  0xe000-0xe0ff]
+[    1.323091] pci 0000:01:00.0: reg 0x30: [mem 0xfea40000-0xfea5ffff pref]
+[    1.323124] pci 0000:01:00.0: supports D1 D2
+[    1.323125] pci 0000:01:00.0: PME# supported from D1 D2 D3hot
+[    1.323186] pci 0000:01:00.1: [1002:aab0] type 00 class 0x040300
+[    1.323196] pci 0000:01:00.1: reg 0x10: [mem 0xfea60000-0xfea63fff 64bit]
+[    1.323270] pci 0000:01:00.1: supports D1 D2
+[    1.332376] pci 0000:00:02.0: PCI bridge to [bus 01]
+[    1.332379] pci 0000:00:02.0:   bridge window [io  0xe000-0xefff]
+[    1.332381] pci 0000:00:02.0:   bridge window [mem 0xfea00000-0xfeafffff]
+[    1.332383] pci 0000:00:02.0:   bridge window [mem 0xc0000000-0xcfffffff 64bit pref]
+[    1.332571] pci 0000:02:00.0: [10ec:8168] type 00 class 0x020000
+[    1.332584] pci 0000:02:00.0: reg 0x10: [io  0xd000-0xd0ff]
+[    1.332602] pci 0000:02:00.0: reg 0x18: [mem 0xd0004000-0xd0004fff 64bit pref]
+[    1.332614] pci 0000:02:00.0: reg 0x20: [mem 0xd0000000-0xd0003fff 64bit pref]
+[    1.332676] pci 0000:02:00.0: supports D1 D2
+[    1.332677] pci 0000:02:00.0: PME# supported from D0 D1 D2 D3hot D3cold
+[    1.342377] pci 0000:00:04.0: PCI bridge to [bus 02]
+[    1.342380] pci 0000:00:04.0:   bridge window [io  0xd000-0xdfff]
+[    1.342384] pci 0000:00:04.0:   bridge window [mem 0xd0000000-0xd00fffff 64bit pref]
+[    1.342429] pci 0000:03:00.0: [1b21:1042] type 00 class 0x0c0330
+[    1.342448] pci 0000:03:00.0: reg 0x10: [mem 0xfe900000-0xfe907fff 64bit]
+[    1.342537] pci 0000:03:00.0: PME# supported from D3hot D3cold
+[    1.352365] pci 0000:00:05.0: PCI bridge to [bus 03]
+[    1.352370] pci 0000:00:05.0:   bridge window [mem 0xfe900000-0xfe9fffff]
+[    1.352440] pci 0000:04:00.0: [1b21:1042] type 00 class 0x0c0330
+[    1.352458] pci 0000:04:00.0: reg 0x10: [mem 0xfe800000-0xfe807fff 64bit]
+[    1.352546] pci 0000:04:00.0: PME# supported from D3hot D3cold
+[    1.362377] pci 0000:00:07.0: PCI bridge to [bus 04]
+[    1.362380] pci 0000:00:07.0:   bridge window [mem 0xfe800000-0xfe8fffff]
+[    1.362449] pci 0000:00:14.4: PCI bridge to [bus 05] (subtractive decode)
+[    1.362456] pci 0000:00:14.4:   bridge window [io  0x0000-0x03af window] (subtractive decode)
+[    1.362457] pci 0000:00:14.4:   bridge window [io  0x03e0-0x0cf7 window] (subtractive decode)
+[    1.362458] pci 0000:00:14.4:   bridge window [io  0x03b0-0x03df window] (subtractive decode)
+[    1.362459] pci 0000:00:14.4:   bridge window [io  0x0d00-0xffff window] (subtractive decode)
+[    1.362460] pci 0000:00:14.4:   bridge window [mem 0x000a0000-0x000bffff window] (subtractive decode)
+[    1.362461] pci 0000:00:14.4:   bridge window [mem 0x000c0000-0x000dffff window] (subtractive decode)
+[    1.362462] pci 0000:00:14.4:   bridge window [mem 0xc0000000-0xffffffff window] (subtractive decode)
+[    1.362813] ACPI: PCI Interrupt Link [LNKA] (IRQs 4 7 10 11 14 15) *0
+[    1.362866] ACPI: PCI Interrupt Link [LNKB] (IRQs 4 7 10 11 14 15) *0
+[    1.362920] ACPI: PCI Interrupt Link [LNKC] (IRQs 4 7 10 11 14 15) *0
+[    1.362974] ACPI: PCI Interrupt Link [LNKD] (IRQs 3 4 10 11 14 15) *0
+[    1.363018] ACPI: PCI Interrupt Link [LNKE] (IRQs 4 7 10 11 14 15) *0
+[    1.363052] ACPI: PCI Interrupt Link [LNKF] (IRQs 4 7 10 11 14 15) *0
+[    1.363086] ACPI: PCI Interrupt Link [LNKG] (IRQs 4 7 10 11 14 15) *0
+[    1.363119] ACPI: PCI Interrupt Link [LNKH] (IRQs 4 7 10 11 14 15) *0
+[    1.363219] ACPI: Enabled 1 GPEs in block 00 to 1F
+[    1.363272] ACPI : EC: event unblocked
+[    1.363276] ACPI: \_SB_.PCI0.SBRG.EC0_: GPE=0xa, EC_CMD/EC_SC=0x66, EC_DATA=0x62
+[    1.363277] ACPI: \_SB_.PCI0.SBRG.EC0_: Used as boot DSDT EC to handle transactions and events
+[    1.363402] vgaarb: setting as boot device: PCI:0000:01:00.0
+[    1.363403] vgaarb: device added: PCI:0000:01:00.0,decodes=io+mem,owns=io+mem,locks=none
+[    1.363404] vgaarb: loaded
+[    1.363404] vgaarb: bridge control possible 0000:01:00.0
+[    1.363454] Registered efivars operations
+[    1.369190] PCI: Using ACPI for IRQ routing
+[    1.375494] PCI: pci_cache_line_size set to 64 bytes
+[    1.375568] e820: reserve RAM buffer [mem 0xa6e38018-0xa7ffffff]
+[    1.375569] e820: reserve RAM buffer [mem 0xa7ef3018-0xa7ffffff]
+[    1.375569] e820: reserve RAM buffer [mem 0xba9b9000-0xbbffffff]
+[    1.375570] e820: reserve RAM buffer [mem 0xbca4f000-0xbfffffff]
+[    1.375571] e820: reserve RAM buffer [mem 0xbd083000-0xbfffffff]
+[    1.375571] e820: reserve RAM buffer [mem 0xbd800000-0xbfffffff]
+[    1.375572] e820: reserve RAM buffer [mem 0x43f000000-0x43fffffff]
+[    1.375657] NetLabel: Initializing
+[    1.375657] NetLabel:  domain hash size = 128
+[    1.375658] NetLabel:  protocols = UNLABELED CIPSOv4
+[    1.375668] NetLabel:  unlabeled traffic allowed by default
+[    1.375735] hpet0: at MMIO 0xfed00000, IRQs 2, 8, 0
+[    1.375737] hpet0: 3 comparators, 32-bit 14.318180 MHz counter
+[    1.378811] clocksource: Switched to clocksource hpet
+[    1.384973] VFS: Disk quotas dquot_6.6.0
+[    1.384990] VFS: Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+[    1.385059] pnp: PnP ACPI init
+[    1.385154] system 00:00: [mem 0xe0000000-0xefffffff] has been reserved
+[    1.385157] system 00:00: Plug and Play ACPI device, IDs PNP0c01 (active)
+[    1.385378] system 00:01: [io  0x040b] has been reserved
+[    1.385380] system 00:01: [io  0x04d6] has been reserved
+[    1.385381] system 00:01: [io  0x0c00-0x0c01] has been reserved
+[    1.385382] system 00:01: [io  0x0c14] has been reserved
+[    1.385383] system 00:01: [io  0x0c50-0x0c51] has been reserved
+[    1.385384] system 00:01: [io  0x0c52] has been reserved
+[    1.385385] system 00:01: [io  0x0c6c] has been reserved
+[    1.385386] system 00:01: [io  0x0c6f] has been reserved
+[    1.385387] system 00:01: [io  0x0cd0-0x0cd1] has been reserved
+[    1.385389] system 00:01: [io  0x0cd2-0x0cd3] has been reserved
+[    1.385390] system 00:01: [io  0x0cd4-0x0cd5] has been reserved
+[    1.385391] system 00:01: [io  0x0cd6-0x0cd7] has been reserved
+[    1.385392] system 00:01: [io  0x0cd8-0x0cdf] has been reserved
+[    1.385393] system 00:01: [io  0x0800-0x089f] has been reserved
+[    1.385394] system 00:01: [io  0x0b20-0x0b3f] has been reserved
+[    1.385395] system 00:01: [io  0x0900-0x090f] has been reserved
+[    1.385396] system 00:01: [io  0x0910-0x091f] has been reserved
+[    1.385398] system 00:01: [io  0xfe00-0xfefe] has been reserved
+[    1.385399] system 00:01: [mem 0xfec00000-0xfec00fff] could not be reserved
+[    1.385401] system 00:01: [mem 0xfee00000-0xfee00fff] has been reserved
+[    1.385402] system 00:01: [mem 0xfed80000-0xfed8ffff] has been reserved
+[    1.385403] system 00:01: [mem 0xfed61000-0xfed70fff] has been reserved
+[    1.385405] system 00:01: [mem 0xfec10000-0xfec10fff] has been reserved
+[    1.385406] system 00:01: [mem 0xfed00000-0xfed00fff] could not be reserved
+[    1.385408] system 00:01: [mem 0xff800000-0xffffffff] has been reserved
+[    1.385409] system 00:01: Plug and Play ACPI device, IDs PNP0c02 (active)
+[    1.385540] system 00:02: [io  0x0290-0x02af] has been reserved
+[    1.385542] system 00:02: Plug and Play ACPI device, IDs PNP0c02 (active)
+[    1.385568] pnp 00:03: Plug and Play ACPI device, IDs PNP0b00 (active)
+[    1.385619] system 00:04: [io  0x04d0-0x04d1] has been reserved
+[    1.385621] system 00:04: Plug and Play ACPI device, IDs PNP0c02 (active)
+[    1.385659] system 00:05: Plug and Play ACPI device, IDs PNP0c02 (active)
+[    1.385698] pnp 00:06: Plug and Play ACPI device, IDs PNP0303 PNP030b (active)
+[    1.385825] pnp 00:07: [dma 0 disabled]
+[    1.385865] pnp 00:07: Plug and Play ACPI device, IDs PNP0501 (active)
+[    1.385977] system 00:08: Plug and Play ACPI device, IDs PNP0c02 (active)
+[    1.386065] system 00:09: [mem 0xfec20000-0xfec200ff] could not be reserved
+[    1.386067] system 00:09: Plug and Play ACPI device, IDs PNP0c02 (active)
+[    1.386171] pnp: PnP ACPI: found 10 devices
+[    1.392844] clocksource: acpi_pm: mask: 0xffffff max_cycles: 0xffffff, max_idle_ns: 2085701024 ns
+[    1.392862] pci 0000:00:02.0: PCI bridge to [bus 01]
+[    1.392864] pci 0000:00:02.0:   bridge window [io  0xe000-0xefff]
+[    1.392866] pci 0000:00:02.0:   bridge window [mem 0xfea00000-0xfeafffff]
+[    1.392868] pci 0000:00:02.0:   bridge window [mem 0xc0000000-0xcfffffff 64bit pref]
+[    1.392870] pci 0000:00:04.0: PCI bridge to [bus 02]
+[    1.392872] pci 0000:00:04.0:   bridge window [io  0xd000-0xdfff]
+[    1.392874] pci 0000:00:04.0:   bridge window [mem 0xd0000000-0xd00fffff 64bit pref]
+[    1.392877] pci 0000:00:05.0: PCI bridge to [bus 03]
+[    1.392878] pci 0000:00:05.0:   bridge window [mem 0xfe900000-0xfe9fffff]
+[    1.392881] pci 0000:00:07.0: PCI bridge to [bus 04]
+[    1.392883] pci 0000:00:07.0:   bridge window [mem 0xfe800000-0xfe8fffff]
+[    1.392887] pci 0000:00:14.4: PCI bridge to [bus 05]
+[    1.392895] pci_bus 0000:00: resource 4 [io  0x0000-0x03af window]
+[    1.392896] pci_bus 0000:00: resource 5 [io  0x03e0-0x0cf7 window]
+[    1.392897] pci_bus 0000:00: resource 6 [io  0x03b0-0x03df window]
+[    1.392898] pci_bus 0000:00: resource 7 [io  0x0d00-0xffff window]
+[    1.392899] pci_bus 0000:00: resource 8 [mem 0x000a0000-0x000bffff window]
+[    1.392900] pci_bus 0000:00: resource 9 [mem 0x000c0000-0x000dffff window]
+[    1.392901] pci_bus 0000:00: resource 10 [mem 0xc0000000-0xffffffff window]
+[    1.392902] pci_bus 0000:01: resource 0 [io  0xe000-0xefff]
+[    1.392903] pci_bus 0000:01: resource 1 [mem 0xfea00000-0xfeafffff]
+[    1.392904] pci_bus 0000:01: resource 2 [mem 0xc0000000-0xcfffffff 64bit pref]
+[    1.392905] pci_bus 0000:02: resource 0 [io  0xd000-0xdfff]
+[    1.392906] pci_bus 0000:02: resource 2 [mem 0xd0000000-0xd00fffff 64bit pref]
+[    1.392907] pci_bus 0000:03: resource 1 [mem 0xfe900000-0xfe9fffff]
+[    1.392908] pci_bus 0000:04: resource 1 [mem 0xfe800000-0xfe8fffff]
+[    1.392909] pci_bus 0000:05: resource 4 [io  0x0000-0x03af window]
+[    1.392910] pci_bus 0000:05: resource 5 [io  0x03e0-0x0cf7 window]
+[    1.392911] pci_bus 0000:05: resource 6 [io  0x03b0-0x03df window]
+[    1.392912] pci_bus 0000:05: resource 7 [io  0x0d00-0xffff window]
+[    1.392912] pci_bus 0000:05: resource 8 [mem 0x000a0000-0x000bffff window]
+[    1.392913] pci_bus 0000:05: resource 9 [mem 0x000c0000-0x000dffff window]
+[    1.392914] pci_bus 0000:05: resource 10 [mem 0xc0000000-0xffffffff window]
+[    1.392969] NET: Registered protocol family 2
+[    1.393149] TCP established hash table entries: 131072 (order: 8, 1048576 bytes)
+[    1.393396] TCP bind hash table entries: 65536 (order: 8, 1048576 bytes)
+[    1.393595] TCP: Hash tables configured (established 131072 bind 65536)
+[    1.393631] UDP hash table entries: 8192 (order: 6, 262144 bytes)
+[    1.393691] UDP-Lite hash table entries: 8192 (order: 6, 262144 bytes)
+[    1.393781] NET: Registered protocol family 1
+[    1.689016] pci 0000:01:00.0: Video device with shadowed ROM at [mem 0x000c0000-0x000dffff]
+[    1.689232] PCI: CLS 64 bytes, default 64
+[    1.689270] Unpacking initramfs...
+[    1.810291] Freeing initrd memory: 9068K (ffff88007f725000 - ffff880080000000)
+[    1.810294] PCI-DMA: Disabling AGP.
+[    1.810360] PCI-DMA: aperture base @ a0000000 size 65536 KB
+[    1.810361] PCI-DMA: using GART IOMMU.
+[    1.810362] PCI-DMA: Reserving 64MB of IOMMU area in the AGP aperture
+[    1.813538] perf: AMD NB counters detected
+[    1.813751] LVT offset 0 assigned for vector 0x400
+[    1.813830] perf: AMD IBS detected (0x000000ff)
+[    1.813876] Scanning for low memory corruption every 60 seconds
+[    1.814178] futex hash table entries: 2048 (order: 5, 131072 bytes)
+[    1.814469] Initialise system trusted keyrings
+[    1.814586] workingset: timestamp_bits=40 max_order=22 bucket_order=0
+[    1.816211] zbud: loaded
+[    1.816677] Key type asymmetric registered
+[    1.816708] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 249)
+[    1.816756] io scheduler noop registered
+[    1.816757] io scheduler deadline registered
+[    1.816763] io scheduler cfq registered (default)
+[    1.817028] pci_hotplug: PCI Hot Plug PCI Core version: 0.5
+[    1.817032] pciehp: PCI Express Hot Plug Controller Driver version: 0.4
+[    1.817042] efifb: probing for efifb
+[    1.817051] efifb: framebuffer at 0xc0000000, using 3072k, total 3072k
+[    1.817052] efifb: mode is 1024x768x32, linelength=4096, pages=1
+[    1.817052] efifb: scrolling: redraw
+[    1.817053] efifb: Truecolor: size=8:8:8:8, shift=24:16:8:0
+[    1.818643] Console: switching to colour frame buffer device 128x48
+[    1.820127] fb0: EFI VGA frame buffer device
+[    1.820854] GHES: HEST is not enabled!
+[    1.820931] Serial: 8250/16550 driver, 4 ports, IRQ sharing enabled
+[    1.841480] 00:07: ttyS0 at I/O 0x3f8 (irq = 4, base_baud = 115200) is a 16550A
+[    1.841894] Linux agpgart interface v0.103
+[    1.842549] rtc_cmos 00:03: RTC can wake from S4
+[    1.842681] rtc_cmos 00:03: rtc core: registered rtc_cmos as rtc0
+[    1.842700] rtc_cmos 00:03: alarms up to one month, y3k, 114 bytes nvram, hpet irqs
+[    1.842815] ledtrig-cpu: registered to indicate activity on CPUs
+[    1.843011] NET: Registered protocol family 10
+[    1.843207] NET: Registered protocol family 17
+[    1.843521] microcode: CPU0: patch_level=0x06000629
+[    1.843531] microcode: CPU1: patch_level=0x06000629
+[    1.843540] microcode: CPU2: patch_level=0x06000629
+[    1.843547] microcode: CPU3: patch_level=0x06000629
+[    1.843574] microcode: CPU4: patch_level=0x06000629
+[    1.843582] microcode: CPU5: patch_level=0x06000629
+[    1.843590] microcode: CPU6: patch_level=0x06000629
+[    1.843594] microcode: CPU7: patch_level=0x06000629
+[    1.843633] microcode: Microcode Update Driver: v2.01 &lt;<a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="a9ddc0cedbc8c7e9c8c0dfc8d3c0c8c787cfdac7ccdd87cac687dcc2">[email&#160;protected]</a>&gt;, Peter Oruba
+[    1.843754] registered taskstats version 1
+[    1.843760] Loading compiled-in X.509 certificates
+[    1.843772] zswap: loaded using pool lzo/zbud
+[    1.844124]   Magic number: 9:435:799
+[    1.844138] platform PNP0C09:00: hash matches
+[    1.844149] ec PNP0C09:00: hash matches
+[    1.844196] rtc_cmos 00:03: setting system clock to 2017-03-16 19:47:16 UTC (1489693636)
+[    1.844255] PM: Hibernation image not present or could not be loaded.
+[    1.845211] Freeing unused kernel memory: 1280K (ffffffff81b0d000 - ffffffff81c4d000)
+[    1.845212] Write protecting the kernel read-only data: 10240k
+[    1.845793] Freeing unused kernel memory: 1972K (ffff880002613000 - ffff880002800000)
+[    1.846021] Freeing unused kernel memory: 104K (ffff8800029e6000 - ffff880002a00000)
+[    1.853836] random: systemd-tmpfile: uninitialized urandom read (16 bytes read)
+[    1.855526] random: systemd-udevd: uninitialized urandom read (16 bytes read)
+[    1.855573] random: systemd-udevd: uninitialized urandom read (16 bytes read)
+[    1.857267] [drm] Initialized
+[    1.857309] random: systemd-udevd: uninitialized urandom read (16 bytes read)
+[    1.857323] random: systemd-udevd: uninitialized urandom read (16 bytes read)
+[    1.857328] random: systemd-udevd: uninitialized urandom read (16 bytes read)
+[    1.857518] random: systemd-udevd: uninitialized urandom read (16 bytes read)
+[    1.857529] random: systemd-udevd: uninitialized urandom read (16 bytes read)
+[    1.857533] random: systemd-udevd: uninitialized urandom read (16 bytes read)
+[    1.857770] random: systemd-udevd: uninitialized urandom read (16 bytes read)
+[    1.863673] [drm] radeon kernel modesetting enabled.
+[    1.864395] checking generic (c0000000 300000) vs hw (c0000000 10000000)
+[    1.864395] fb: switching to radeondrmfb from EFI VGA
+[    1.864416] Console: switching to colour dummy device 80x25
+[    1.864710] [drm] initializing kernel modesetting (VERDE 0x1002:0x683D 0x1458:0x2556 0x00).
+[    1.864720] [drm] register mmio base: 0xFEA00000
+[    1.864720] [drm] register mmio size: 262144
+[    1.864744] radeon 0000:01:00.0: Invalid PCI ROM header signature: expecting 0xaa55, got 0xffff
+[    1.864779] ATOM BIOS: GV
+[    1.864916] radeon 0000:01:00.0: VRAM: 1024M 0x0000000000000000 - 0x000000003FFFFFFF (1024M used)
+[    1.864917] radeon 0000:01:00.0: GTT: 1024M 0x0000000040000000 - 0x000000007FFFFFFF
+[    1.864919] [drm] Detected VRAM RAM=1024M, BAR=256M
+[    1.864920] [drm] RAM width 128bits DDR
+[    1.864969] [TTM] Zone  kernel: Available graphics memory: 8168466 kiB
+[    1.864969] [TTM] Zone   dma32: Available graphics memory: 2097152 kiB
+[    1.864970] [TTM] Initializing pool allocator
+[    1.864974] [TTM] Initializing DMA pool allocator
+[    1.864996] [drm] radeon: 1024M of VRAM memory ready
+[    1.864996] [drm] radeon: 1024M of GTT memory ready.
+[    1.865003] [drm] Loading verde Microcode
+[    1.865107] [drm] Internal thermal controller with fan control
+[    1.865157] [drm] probing gen 2 caps for device 1002:5a16 = 33ed02/0
+[    1.871514] [drm] radeon: dpm initialized
+[    1.872479] [drm] Found VCE firmware/feedback version 50.0.1 / 17!
+[    1.872484] [drm] GART: num cpu pages 262144, num gpu pages 262144
+[    1.873323] [drm] probing gen 2 caps for device 1002:5a16 = 33ed02/0
+[    1.873325] [drm] PCIE gen 2 link speeds already enabled
+[    1.884354] [drm] PCIE GART of 1024M enabled (table at 0x00000000001D6000).
+[    1.884448] radeon 0000:01:00.0: WB enabled
+[    1.884449] radeon 0000:01:00.0: fence driver on ring 0 use gpu addr 0x0000000040000c00 and cpu addr 0xffff880429050c00
+[    1.884450] radeon 0000:01:00.0: fence driver on ring 1 use gpu addr 0x0000000040000c04 and cpu addr 0xffff880429050c04
+[    1.884451] radeon 0000:01:00.0: fence driver on ring 2 use gpu addr 0x0000000040000c08 and cpu addr 0xffff880429050c08
+[    1.884452] radeon 0000:01:00.0: fence driver on ring 3 use gpu addr 0x0000000040000c0c and cpu addr 0xffff880429050c0c
+[    1.884453] radeon 0000:01:00.0: fence driver on ring 4 use gpu addr 0x0000000040000c10 and cpu addr 0xffff880429050c10
+[    1.884705] radeon 0000:01:00.0: fence driver on ring 5 use gpu addr 0x0000000000075a18 and cpu addr 0xffffc90002635a18
+[    1.904840] radeon 0000:01:00.0: fence driver on ring 6 use gpu addr 0x0000000040000c18 and cpu addr 0xffff880429050c18
+[    1.904841] radeon 0000:01:00.0: fence driver on ring 7 use gpu addr 0x0000000040000c1c and cpu addr 0xffff880429050c1c
+[    1.904842] [drm] Supports vblank timestamp caching Rev 2 (21.10.2013).
+[    1.904843] [drm] Driver supports precise vblank timestamp query.
+[    1.904843] radeon 0000:01:00.0: radeon: MSI limited to 32-bit
+[    1.904880] radeon 0000:01:00.0: radeon: using MSI.
+[    1.904904] [drm] radeon: irq initialized.
+[    2.422654] [drm] ring test on 0 succeeded in 1 usecs
+[    2.422658] [drm] ring test on 1 succeeded in 1 usecs
+[    2.422661] [drm] ring test on 2 succeeded in 1 usecs
+[    2.422673] [drm] ring test on 3 succeeded in 9 usecs
+[    2.422678] [drm] ring test on 4 succeeded in 3 usecs
+[    2.599820] [drm] ring test on 5 succeeded in 2 usecs
+[    2.599824] [drm] UVD initialized successfully.
+[    2.709894] [drm] ring test on 6 succeeded in 20 usecs
+[    2.709904] [drm] ring test on 7 succeeded in 3 usecs
+[    2.709905] [drm] VCE initialized successfully.
+[    2.710094] [drm] ib test on ring 0 succeeded in 0 usecs
+[    2.710123] [drm] ib test on ring 1 succeeded in 0 usecs
+[    2.710148] [drm] ib test on ring 2 succeeded in 0 usecs
+[    2.710187] [drm] ib test on ring 3 succeeded in 0 usecs
+[    2.710328] [drm] ib test on ring 4 succeeded in 0 usecs
+[    2.818901] tsc: Refined TSC clocksource calibration: 3612.070 MHz
+[    2.818916] clocksource: tsc: mask: 0xffffffffffffffff max_cycles: 0x3410dd254cb, max_idle_ns: 440795230945 ns
+[    3.378976] [drm] ib test on ring 5 succeeded
+[    3.832544] clocksource: Switched to clocksource tsc
+[    3.885699] [drm] ib test on ring 6 succeeded
+[    4.392324] [drm] ib test on ring 7 succeeded
+[    4.393037] [drm] Radeon Display Connectors
+[    4.393038] [drm] Connector 0:
+[    4.393039] [drm]   DP-1
+[    4.393039] [drm]   HPD2
+[    4.393040] [drm]   DDC: 0x6540 0x6540 0x6544 0x6544 0x6548 0x6548 0x654c 0x654c
+[    4.393041] [drm]   Encoders:
+[    4.393042] [drm]     DFP1: INTERNAL_UNIPHY2
+[    4.393042] [drm] Connector 1:
+[    4.393043] [drm]   DP-2
+[    4.393043] [drm]   HPD3
+[    4.393044] [drm]   DDC: 0x6570 0x6570 0x6574 0x6574 0x6578 0x6578 0x657c 0x657c
+[    4.393044] [drm]   Encoders:
+[    4.393045] [drm]     DFP2: INTERNAL_UNIPHY2
+[    4.393045] [drm] Connector 2:
+[    4.393046] [drm]   HDMI-A-1
+[    4.393046] [drm]   HPD1
+[    4.393047] [drm]   DDC: 0x6530 0x6530 0x6534 0x6534 0x6538 0x6538 0x653c 0x653c
+[    4.393047] [drm]   Encoders:
+[    4.393048] [drm]     DFP3: INTERNAL_UNIPHY1
+[    4.393048] [drm] Connector 3:
+[    4.393049] [drm]   DVI-I-1
+[    4.393049] [drm]   HPD4
+[    4.393050] [drm]   DDC: 0x6560 0x6560 0x6564 0x6564 0x6568 0x6568 0x656c 0x656c
+[    4.393051] [drm]   Encoders:
+[    4.393051] [drm]     DFP4: INTERNAL_UNIPHY
+[    4.393052] [drm]     CRT1: INTERNAL_KLDSCP_DAC1
+[    4.501069] [drm] fb mappable at 0xC03D9000
+[    4.501069] [drm] vram apper at 0xC0000000
+[    4.501070] [drm] size 8294400
+[    4.501070] [drm] fb depth is 24
+[    4.501071] [drm]    pitch is 7680
+[    4.501206] fbcon: radeondrmfb (fb0) is primary device
+[    4.523944] Console: switching to colour frame buffer device 240x67
+[    4.527680] radeon 0000:01:00.0: fb0: radeondrmfb frame buffer device
+[    4.545642] [drm] Initialized radeon 2.48.0 20080528 for 0000:01:00.0 on minor 0
+[    4.579378] i8042: PNP: PS/2 Controller [PNP0303:PS2K] at 0x60,0x64 irq 1
+[    4.579379] i8042: PNP: PS/2 appears to have AUX port disabled, if this is incorrect please boot with i8042.nopnp
+[    4.579590] serio: i8042 KBD port at 0x60,0x64 irq 1
+[    4.585611] ACPI: bus type USB registered
+[    4.585646] usbcore: registered new interface driver usbfs
+[    4.585671] usbcore: registered new interface driver hub
+[    4.585709] usbcore: registered new device driver usb
+[    4.585789] SCSI subsystem initialized
+[    4.586249] ohci_hcd: USB 1.1 &#39;Open&#39; Host Controller (OHCI) Driver
+[    4.586529] ehci_hcd: USB 2.0 &#39;Enhanced&#39; Host Controller (EHCI) Driver
+[    4.586530] Warning! ehci_hcd should always be loaded before uhci_hcd and ohci_hcd, not after
+[    4.586879] ehci-pci: EHCI PCI platform driver
+[    4.587046] QUIRK: Enable AMD PLL fix
+[    4.587068] ehci-pci 0000:00:12.2: EHCI Host Controller
+[    4.587073] ehci-pci 0000:00:12.2: new USB bus registered, assigned bus number 1
+[    4.587077] ehci-pci 0000:00:12.2: applying AMD SB700/SB800/Hudson-2/3 EHCI dummy qh workaround
+[    4.587084] ehci-pci 0000:00:12.2: debug port 1
+[    4.587114] ehci-pci 0000:00:12.2: irq 17, io mem 0xfeb09000
+[    4.588228] libata version 3.00 loaded.
+[    4.602186] ehci-pci 0000:00:12.2: USB 2.0 started, EHCI 1.00
+[    4.602354] hub 1-0:1.0: USB hub found
+[    4.602360] hub 1-0:1.0: 5 ports detected
+[    4.602509] xhci_hcd 0000:03:00.0: xHCI Host Controller
+[    4.602516] xhci_hcd 0000:03:00.0: new USB bus registered, assigned bus number 2
+[    4.617142] input: AT Translated Set 2 keyboard as /devices/platform/i8042/serio0/input/input0
+[    4.661853] xhci_hcd 0000:03:00.0: hcc params 0x0200f180 hci version 0x96 quirks 0x00080000
+[    4.662146] hub 2-0:1.0: USB hub found
+[    4.662159] hub 2-0:1.0: 2 ports detected
+[    4.662266] xhci_hcd 0000:03:00.0: xHCI Host Controller
+[    4.662268] xhci_hcd 0000:03:00.0: new USB bus registered, assigned bus number 3
+[    4.662288] usb usb3: We don&#39;t know the algorithms for LPM for this host, disabling LPM.
+[    4.662370] ehci-pci 0000:00:13.2: EHCI Host Controller
+[    4.662415] hub 3-0:1.0: USB hub found
+[    4.662423] hub 3-0:1.0: 2 ports detected
+[    4.662512] ehci-pci 0000:00:13.2: new USB bus registered, assigned bus number 4
+[    4.662516] ehci-pci 0000:00:13.2: applying AMD SB700/SB800/Hudson-2/3 EHCI dummy qh workaround
+[    4.662525] ehci-pci 0000:00:13.2: debug port 1
+[    4.662558] ehci-pci 0000:00:13.2: irq 21, io mem 0xfeb07000
+[    4.675614] ehci-pci 0000:00:13.2: USB 2.0 started, EHCI 1.00
+[    4.675882] hub 4-0:1.0: USB hub found
+[    4.675887] hub 4-0:1.0: 5 ports detected
+[    4.676031] xhci_hcd 0000:04:00.0: xHCI Host Controller
+[    4.676037] xhci_hcd 0000:04:00.0: new USB bus registered, assigned bus number 5
+[    4.787853] xhci_hcd 0000:04:00.0: hcc params 0x0200f180 hci version 0x96 quirks 0x00080000
+[    4.788138] hub 5-0:1.0: USB hub found
+[    4.788145] hub 5-0:1.0: 2 ports detected
+[    4.788245] xhci_hcd 0000:04:00.0: xHCI Host Controller
+[    4.788248] xhci_hcd 0000:04:00.0: new USB bus registered, assigned bus number 6
+[    4.788269] usb usb6: We don&#39;t know the algorithms for LPM for this host, disabling LPM.
+[    4.788344] ehci-pci 0000:00:16.2: EHCI Host Controller
+[    4.788395] hub 6-0:1.0: USB hub found
+[    4.788402] hub 6-0:1.0: 2 ports detected
+[    4.788491] ehci-pci 0000:00:16.2: new USB bus registered, assigned bus number 7
+[    4.788495] ehci-pci 0000:00:16.2: applying AMD SB700/SB800/Hudson-2/3 EHCI dummy qh workaround
+[    4.788503] ehci-pci 0000:00:16.2: debug port 1
+[    4.788544] ehci-pci 0000:00:16.2: irq 23, io mem 0xfeb04000
+[    4.798931] ehci-pci 0000:00:16.2: USB 2.0 started, EHCI 1.00
+[    4.799086] hub 7-0:1.0: USB hub found
+[    4.799092] hub 7-0:1.0: 4 ports detected
+[    4.799226] ahci 0000:00:11.0: version 3.0
+[    4.799384] ahci 0000:00:11.0: AHCI 0001.0200 32 slots 1 ports 6 Gbps 0x20 impl SATA mode
+[    4.799387] ahci 0000:00:11.0: flags: 64bit ncq sntf ilck pm led clo pmp pio slum part
+[    4.799564] ohci-pci: OHCI PCI platform driver
+[    4.800644] scsi host0: ahci
+[    4.800760] scsi host1: ahci
+[    4.800851] scsi host2: ahci
+[    4.800947] scsi host3: ahci
+[    4.801041] scsi host4: ahci
+[    4.801130] scsi host5: ahci
+[    4.801180] ata1: DUMMY
+[    4.801181] ata2: DUMMY
+[    4.801181] ata3: DUMMY
+[    4.801182] ata4: DUMMY
+[    4.801182] ata5: DUMMY
+[    4.801184] ata6: SATA max UDMA/133 abar <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="8be6babbb9bfcbbbf3edeee9bbe9bbbbbb">[email&#160;protected]</a> port 0xfeb0b380 irq 19
+[    4.801300] ohci-pci 0000:00:12.0: OHCI PCI host controller
+[    4.801306] ohci-pci 0000:00:12.0: new USB bus registered, assigned bus number 8
+[    4.801329] ohci-pci 0000:00:12.0: irq 18, io mem 0xfeb0a000
+[    4.859843] hub 8-0:1.0: USB hub found
+[    4.859850] hub 8-0:1.0: 5 ports detected
+[    4.860050] ohci-pci 0000:00:13.0: OHCI PCI host controller
+[    4.860053] ohci-pci 0000:00:13.0: new USB bus registered, assigned bus number 9
+[    4.860070] ohci-pci 0000:00:13.0: irq 20, io mem 0xfeb08000
+[    4.919840] hub 9-0:1.0: USB hub found
+[    4.919847] hub 9-0:1.0: 5 ports detected
+[    4.920033] ohci-pci 0000:00:14.5: OHCI PCI host controller
+[    4.920037] ohci-pci 0000:00:14.5: new USB bus registered, assigned bus number 10
+[    4.920055] ohci-pci 0000:00:14.5: irq 18, io mem 0xfeb06000
+[    4.978904] usb 1-4: new high-speed USB device number 3 using ehci-pci
+[    4.979852] hub 10-0:1.0: USB hub found
+[    4.979859] hub 10-0:1.0: 2 ports detected
+[    4.980034] ohci-pci 0000:00:16.0: OHCI PCI host controller
+[    4.980038] ohci-pci 0000:00:16.0: new USB bus registered, assigned bus number 11
+[    4.980056] ohci-pci 0000:00:16.0: irq 22, io mem 0xfeb05000
+[    4.995612] usb 4-1: new high-speed USB device number 2 using ehci-pci
+[    5.039838] hub 11-0:1.0: USB hub found
+[    5.039845] hub 11-0:1.0: 4 ports detected
+[    5.140093] usb-storage 4-1:1.0: USB Mass Storage device detected
+[    5.140189] scsi host6: usb-storage 4-1:1.0
+[    5.140252] usbcore: registered new interface driver usb-storage
+[    5.140522] usbcore: registered new interface driver uas
+[    5.205592] usb 8-3: new low-speed USB device number 2 using ohci-pci
+[    5.235525] usb 1-5: new high-speed USB device number 4 using ehci-pci
+[    5.275582] ata6: SATA link up 6.0 Gbps (SStatus 133 SControl 300)
+[    5.276869] ata6.00: ATA-8: WDC WD5000AAKX-08ERMA0, 19.01H19, max UDMA/100
+[    5.276871] ata6.00: 976773168 sectors, multi 16: LBA48 NCQ (depth 31/32), AA
+[    5.278122] ata6.00: configured for UDMA/100
+[    5.278324] scsi 5:0:0:0: Direct-Access     ATA      WDC WD5000AAKX-0 1H19 PQ: 0 ANSI: 5
+[    5.282422] usb 6-1: new SuperSpeed USB device number 2 using xhci_hcd
+[    5.316959] sd 5:0:0:0: [sda] 976773168 512-byte logical blocks: (500 GB/466 GiB)
+[    5.317048] sd 5:0:0:0: [sda] Write Protect is off
+[    5.317050] sd 5:0:0:0: [sda] Mode Sense: 00 3a 00 00
+[    5.317080] sd 5:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn&#39;t support DPO or FUA
+[    5.368092]  sda: sda1 sda2 sda4 sda5 sda7
+[    5.368683] sd 5:0:0:0: [sda] Attached SCSI disk
+[    5.388838] usb 11-3: new full-speed USB device number 2 using ohci-pci
+[    5.388863] hidraw: raw HID events driver (C) Jiri Kosina
+[    5.394873] usbcore: registered new interface driver usbhid
+[    5.394874] usbhid: USB HID core driver
+[    5.395375] input: Logitech USB Laser Mouse as /devices/pci0000:00/0000:00:12.0/usb8/8-3/8-3:1.0/0003:046D:C069.0001/input/input1
+[    5.395415] hid-generic 0003:046D:C069.0001: input,hidraw0: USB HID v1.10 Mouse [Logitech USB Laser Mouse] on usb-0000:00:12.0-3/input0
+[    5.424203] hub 6-1:1.0: USB hub found
+[    5.424513] hub 6-1:1.0: 4 ports detected
+[    5.573875] input: Logitech USB Receiver as /devices/pci0000:00/0000:00:16.0/usb11/11-3/11-3:1.0/0003:046D:C52F.0002/input/input2
+[    5.573913] hid-generic 0003:046D:C52F.0002: input,hidraw1: USB HID v1.11 Mouse [Logitech USB Receiver] on usb-0000:00:16.0-3/input0
+[    5.581798] input: Logitech USB Receiver as /devices/pci0000:00/0000:00:16.0/usb11/11-3/11-3:1.1/0003:046D:C52F.0003/input/input3
+[    5.588934] usb 5-1: new high-speed USB device number 2 using xhci_hcd
+[    5.635732] hid-generic 0003:046D:C52F.0003: input,hiddev0,hidraw2: USB HID v1.11 Device [Logitech USB Receiver] on usb-0000:00:16.0-3/input1
+[    5.820473] EXT4-fs (sda4): mounting ext2 file system using the ext4 subsystem
+[    5.829808] EXT4-fs (sda4): mounted filesystem without journal. Opts: (null)
+[    5.838684] usb-storage 1-5:1.0: USB Mass Storage device detected
+[    5.838758] scsi host7: usb-storage 1-5:1.0
+[    5.884311] random: fast init done
+[    5.908946] usb 11-4: new full-speed USB device number 3 using ohci-pci
+[    5.992843] hub 5-1:1.0: USB hub found
+[    5.993005] hub 5-1:1.0: 4 ports detected
+[    6.090908] input: C-Media Electronics Inc.       USB PnP Sound Device as /devices/pci0000:00/0000:00:16.0/usb11/11-4/11-4:1.3/0003:0D8C:013C.0004/input/input4
+[    6.145793] hid-generic 0003:0D8C:013C.0004: input,hidraw3: USB HID v1.00 Device [C-Media Electronics Inc.       USB PnP Sound Device] on usb-0000:00:16.0-4/input3
+[    6.305510] usb 5-1.1: new high-speed USB device number 3 using xhci_hcd
+[    6.457577] scsi 6:0:0:0: Direct-Access     JetFlash Transcend 16GB   1100 PQ: 0 ANSI: 6
+[    6.459631] sd 6:0:0:0: [sdb] 30851072 512-byte logical blocks: (15.8 GB/14.7 GiB)
+[    6.460358] sd 6:0:0:0: [sdb] Write Protect is off
+[    6.460360] sd 6:0:0:0: [sdb] Mode Sense: 43 00 00 00
+[    6.461186] sd 6:0:0:0: [sdb] Write cache: enabled, read cache: enabled, doesn&#39;t support DPO or FUA
+[    6.466720]  sdb: sdb1
+[    6.469972] sd 6:0:0:0: [sdb] Attached SCSI removable disk
+[    6.520719] hub 5-1.1:1.0: USB hub found
+[    6.520782] hub 5-1.1:1.0: 4 ports detected
+[    6.846608] scsi 7:0:0:0: Direct-Access     SMI      USB MEMORY BAR   1000 PQ: 0 ANSI: 5
+[    6.848974] sd 7:0:0:0: [sdc] Attached SCSI removable disk
+[    7.255765] ip_tables: (C) 2000-2006 Netfilter Core Team
+[    8.026683] random: crng init done
+[    8.643447] vhba: loading out-of-tree module taints kernel.
+[    8.643921] scsi host8: vhba
+[    8.948141] vboxdrv: Found 8 processor cores
+[    8.965879] vboxdrv: TSC mode is Invariant, tentative frequency 3612053356 Hz
+[    8.965880] vboxdrv: Successfully loaded version 5.1.14 (interface 0x00280000)
+[    9.077235] VBoxPciLinuxInit
+[    9.109027] vboxpci: IOMMU not found (not registered)
+[    9.109406] vboxnetadp: disagrees about version of symbol consume_skb
+[    9.109407] vboxnetadp: Unknown symbol consume_skb (err -22)
+[    9.109411] vboxnetadp: disagrees about version of symbol unregister_netdev
+[    9.109412] vboxnetadp: Unknown symbol unregister_netdev (err -22)
+[    9.109413] vboxnetadp: disagrees about version of symbol ether_setup
+[    9.109414] vboxnetadp: Unknown symbol ether_setup (err -22)
+[    9.109416] vboxnetadp: disagrees about version of symbol alloc_netdev_mqs
+[    9.109416] vboxnetadp: Unknown symbol alloc_netdev_mqs (err -22)
+[    9.109420] vboxnetadp: disagrees about version of symbol register_netdev
+[    9.109421] vboxnetadp: Unknown symbol register_netdev (err -22)
+[    9.109422] vboxnetadp: disagrees about version of symbol free_netdev
+[    9.109423] vboxnetadp: Unknown symbol free_netdev (err -22)
+[    9.109425] vboxnetadp: disagrees about version of symbol ethtool_op_get_link
+[    9.109425] vboxnetadp: Unknown symbol ethtool_op_get_link (err -22)
+[    9.109431] vboxnetadp: disagrees about version of symbol netif_carrier_off
+[    9.109431] vboxnetadp: Unknown symbol netif_carrier_off (err -22)
+[    9.153031] vboxnetflt: disagrees about version of symbol skb_copy_bits
+[    9.153033] vboxnetflt: Unknown symbol skb_copy_bits (err -22)
+[    9.153034] vboxnetflt: disagrees about version of symbol skb_put
+[    9.153035] vboxnetflt: Unknown symbol skb_put (err -22)
+[    9.153036] vboxnetflt: disagrees about version of symbol dev_queue_xmit
+[    9.153036] vboxnetflt: Unknown symbol dev_queue_xmit (err -22)
+[    9.153040] vboxnetflt: disagrees about version of symbol consume_skb
+[    9.153041] vboxnetflt: Unknown symbol consume_skb (err -22)
+[    9.153044] vboxnetflt: disagrees about version of symbol dev_add_pack
+[    9.153045] vboxnetflt: Unknown symbol dev_add_pack (err -22)
+[    9.153051] vboxnetflt: disagrees about version of symbol dev_set_promiscuity
+[    9.153051] vboxnetflt: Unknown symbol dev_set_promiscuity (err -22)
+[    9.153060] vboxnetflt: disagrees about version of symbol eth_type_trans
+[    9.153061] vboxnetflt: Unknown symbol eth_type_trans (err -22)
+[    9.153062] vboxnetflt: disagrees about version of symbol kfree_skb
+[    9.153063] vboxnetflt: Unknown symbol kfree_skb (err -22)
+[    9.153066] vboxnetflt: disagrees about version of symbol skb_checksum_help
+[    9.153066] vboxnetflt: Unknown symbol skb_checksum_help (err -22)
+[    9.153072] vboxnetflt: disagrees about version of symbol dev_remove_pack
+[    9.153073] vboxnetflt: Unknown symbol dev_remove_pack (err -22)
+[    9.153075] vboxnetflt: disagrees about version of symbol skb_push
+[    9.153076] vboxnetflt: Unknown symbol skb_push (err -22)
+[    9.153082] vboxnetflt: disagrees about version of symbol netif_rx_ni
+[    9.153083] vboxnetflt: Unknown symbol netif_rx_ni (err -22)
+[    9.153085] vboxnetflt: disagrees about version of symbol netif_schedule_queue
+[    9.153086] vboxnetflt: Unknown symbol netif_schedule_queue (err -22)
+[    9.153089] vboxnetflt: disagrees about version of symbol __netdev_alloc_skb
+[    9.153090] vboxnetflt: Unknown symbol __netdev_alloc_skb (err -22)
+[    9.153103] vboxnetflt: disagrees about version of symbol netif_carrier_off
+[    9.153104] vboxnetflt: Unknown symbol netif_carrier_off (err -22)
+[    9.153106] vboxnetflt: disagrees about version of symbol skb_copy
+[    9.153107] vboxnetflt: Unknown symbol skb_copy (err -22)
+[    9.153108] vboxnetflt: disagrees about version of symbol netif_carrier_on
+[    9.153108] vboxnetflt: Unknown symbol netif_carrier_on (err -22)
+[    9.153115] vboxnetflt: disagrees about version of symbol __skb_gso_segment
+[    9.153116] vboxnetflt: Unknown symbol __skb_gso_segment (err -22)
+[    9.193778] EXT4-fs (sda4): re-mounted. Opts: block_validity,barrier,user_xattr,acl
+[   10.801390] acpi_cpufreq: overriding BIOS provided _PSD data
+[   10.993210] shpchp: Standard Hot Plug PCI Controller Driver version: 0.4
+[   10.994615] wmi: Mapper loaded
+[   11.018377] input: Power Button as /devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0C:00/input/input5
+[   11.018380] ACPI: Power Button [PWRB]
+[   11.018433] input: Power Button as /devices/LNXSYSTM:00/LNXPWRBN:00/input/input6
+[   11.018434] ACPI: Power Button [PWRF]
+[   11.029248] piix4_smbus 0000:00:14.0: SMBus Host Controller at 0xb00, revision 0
+[   11.029257] piix4_smbus 0000:00:14.0: Using register 0x2c for SMBus port selection
+[   11.029603] piix4_smbus 0000:00:14.0: Auxiliary SMBus Host Controller at 0xb20
+[   11.074164] snd_hda_intel 0000:01:00.1: enabling device (0000 -&gt; 0002)
+[   11.074258] snd_hda_intel 0000:01:00.1: Handle vga_switcheroo audio client
+[   11.074261] snd_hda_intel 0000:01:00.1: Force to non-snoop mode
+[   11.164160] input: PC Speaker as /devices/platform/pcspkr/input/input7
+[   11.167467] sp5100_tco: SP5100/SB800 TCO WatchDog Timer Driver v0.05
+[   11.167579] sp5100_tco: PCI Vendor ID: 0x1002, Device ID: 0x4385, Revision ID: 0x42
+[   11.167584] sp5100_tco: I/O address 0x0cd6 already in use
+[   11.236264] snd_hda_codec_realtek hdaudioC0D0: autoconfig for ALC887-VD: line_outs=4 (0x14/0x15/0x16/0x17/0x0) type:line
+[   11.236271] snd_hda_codec_realtek hdaudioC0D0:    speaker_outs=0 (0x0/0x0/0x0/0x0/0x0)
+[   11.236276] snd_hda_codec_realtek hdaudioC0D0:    hp_outs=1 (0x1b/0x0/0x0/0x0/0x0)
+[   11.236279] snd_hda_codec_realtek hdaudioC0D0:    mono: mono_out=0x0
+[   11.236282] snd_hda_codec_realtek hdaudioC0D0:    dig-out=0x11/0x1e
+[   11.236284] snd_hda_codec_realtek hdaudioC0D0:    inputs:
+[   11.236289] snd_hda_codec_realtek hdaudioC0D0:      Front Mic=0x19
+[   11.236293] snd_hda_codec_realtek hdaudioC0D0:      Rear Mic=0x18
+[   11.236296] snd_hda_codec_realtek hdaudioC0D0:      Line=0x1a
+[   11.237480] input: HDA ATI HDMI HDMI/DP,pcm=3 as /devices/pci0000:00/0000:00:02.0/0000:01:00.1/sound/card1/input8
+[   11.237569] input: HDA ATI HDMI HDMI/DP,pcm=7 as /devices/pci0000:00/0000:00:02.0/0000:01:00.1/sound/card1/input9
+[   11.237664] input: HDA ATI HDMI HDMI/DP,pcm=8 as /devices/pci0000:00/0000:00:02.0/0000:01:00.1/sound/card1/input10
+[   11.237745] input: HDA ATI HDMI HDMI/DP,pcm=9 as /devices/pci0000:00/0000:00:02.0/0000:01:00.1/sound/card1/input11
+[   11.237837] input: HDA ATI HDMI HDMI/DP,pcm=10 as /devices/pci0000:00/0000:00:02.0/0000:01:00.1/sound/card1/input12
+[   11.237919] input: HDA ATI HDMI HDMI/DP,pcm=11 as /devices/pci0000:00/0000:00:02.0/0000:01:00.1/sound/card1/input13
+[   11.258761] input: HDA ATI SB Front Mic as /devices/pci0000:00/0000:00:14.2/sound/card0/input14
+[   11.258957] input: HDA ATI SB Rear Mic as /devices/pci0000:00/0000:00:14.2/sound/card0/input15
+[   11.259124] input: HDA ATI SB Line as /devices/pci0000:00/0000:00:14.2/sound/card0/input16
+[   11.259300] input: HDA ATI SB Line Out Front as /devices/pci0000:00/0000:00:14.2/sound/card0/input17
+[   11.259480] input: HDA ATI SB Line Out Surround as /devices/pci0000:00/0000:00:14.2/sound/card0/input18
+[   11.259662] input: HDA ATI SB Line Out CLFE as /devices/pci0000:00/0000:00:14.2/sound/card0/input19
+[   11.259836] input: HDA ATI SB Line Out Side as /devices/pci0000:00/0000:00:14.2/sound/card0/input20
+[   11.259989] input: HDA ATI SB Front Headphone as /devices/pci0000:00/0000:00:14.2/sound/card0/input21
+[   11.477573] FUJITSU Extended Socket Network Device Driver - version 1.1 - Copyright (c) 2015 FUJITSU LIMITED
+[   11.482102] r8169 Gigabit Ethernet driver 2.3LK-NAPI loaded
+[   11.482118] r8169 0000:02:00.0: can&#39;t disable ASPM; OS doesn&#39;t have ASPM control
+[   11.484824] r8169 0000:02:00.0 eth0: RTL8168f/8111f at 0xffffc90001961000, 60:a4:4c:2b:3e:f9, XID 08000800 IRQ 49
+[   11.484828] r8169 0000:02:00.0 eth0: jumbo features [frames: 9200 bytes, tx checksumming: ko]
+[   11.994464] AVX version of gcm_enc/dec engaged.
+[   11.994465] AES CTR mode by8 optimization enabled
+[   12.422825] [drm] amdgpu kernel modesetting enabled.
+[   13.055950] asus_wmi: ASUS WMI generic driver loaded
+[   13.062778] asus_wmi: Initialization: 0x0
+[   13.062848] asus_wmi: BIOS WMI version: 0.9
+[   13.062966] asus_wmi: SFUN value: 0x0
+[   13.063752] input: Eee PC WMI hotkeys as /devices/platform/eeepc-wmi/input/input22
+[   13.064034] asus_wmi: Number of fans: 1
+[   13.117800] EXT4-fs (sda5): mounting ext2 file system using the ext4 subsystem
+[   13.143366] EXT4-fs (sda5): mounted filesystem without journal. Opts: block_validity,barrier,user_xattr,acl
+[   13.174432] kvm: Nested Virtualization enabled
+[   13.174440] kvm: Nested Paging enabled
+[   13.207946] EDAC MC: Ver: 3.0.0
+[   13.210050] MCE: In-kernel MCE decoding enabled.
+[   13.211922] EDAC amd64: DRAM ECC disabled.
+[   13.211937] EDAC amd64: ECC disabled in the BIOS or no ECC capability, module will not load.
+                Either enable ECC checking or force module loading by setting &#39;ecc_enable_override&#39;.
+                (Note that use of the override may cause unknown side effects.)
+[   13.256389] EDAC amd64: DRAM ECC disabled.
+[   13.256404] EDAC amd64: ECC disabled in the BIOS or no ECC capability, module will not load.
+                Either enable ECC checking or force module loading by setting &#39;ecc_enable_override&#39;.
+                (Note that use of the override may cause unknown side effects.)
+[   13.303015] EDAC amd64: DRAM ECC disabled.
+[   13.303029] EDAC amd64: ECC disabled in the BIOS or no ECC capability, module will not load.
+                Either enable ECC checking or force module loading by setting &#39;ecc_enable_override&#39;.
+                (Note that use of the override may cause unknown side effects.)
+[   13.359604] EDAC amd64: DRAM ECC disabled.
+[   13.359620] EDAC amd64: ECC disabled in the BIOS or no ECC capability, module will not load.
+                Either enable ECC checking or force module loading by setting &#39;ecc_enable_override&#39;.
+                (Note that use of the override may cause unknown side effects.)
+[   13.402873] EDAC amd64: DRAM ECC disabled.
+[   13.402888] EDAC amd64: ECC disabled in the BIOS or no ECC capability, module will not load.
+                Either enable ECC checking or force module loading by setting &#39;ecc_enable_override&#39;.
+                (Note that use of the override may cause unknown side effects.)
+[   13.453057] EDAC amd64: DRAM ECC disabled.
+[   13.453075] EDAC amd64: ECC disabled in the BIOS or no ECC capability, module will not load.
+                Either enable ECC checking or force module loading by setting &#39;ecc_enable_override&#39;.
+                (Note that use of the override may cause unknown side effects.)
+[   13.492978] EDAC amd64: DRAM ECC disabled.
+[   13.492992] EDAC amd64: ECC disabled in the BIOS or no ECC capability, module will not load.
+                Either enable ECC checking or force module loading by setting &#39;ecc_enable_override&#39;.
+                (Note that use of the override may cause unknown side effects.)
+[   13.532889] EDAC amd64: DRAM ECC disabled.
+[   13.532904] EDAC amd64: ECC disabled in the BIOS or no ECC capability, module will not load.
+                Either enable ECC checking or force module loading by setting &#39;ecc_enable_override&#39;.
+                (Note that use of the override may cause unknown side effects.)
+[   14.855416] r8169 0000:02:00.0 enp2s0: renamed from eth0
+[   15.663054] usblp 1-4:1.0: usblp1: USB Bidirectional printer dev 3 if 0 alt 0 proto 2 vid 0x04F9 pid 0x0045
+[   15.663231] usbcore: registered new interface driver usblp
+[   15.663347] mousedev: PS/2 mouse device common for all mice
+[   15.667077] vboxnetadp: disagrees about version of symbol consume_skb
+[   15.667080] vboxnetadp: Unknown symbol consume_skb (err -22)
+[   15.667110] vboxnetadp: disagrees about version of symbol unregister_netdev
+[   15.667112] vboxnetadp: Unknown symbol unregister_netdev (err -22)
+[   15.667115] vboxnetadp: disagrees about version of symbol ether_setup
+[   15.667117] vboxnetadp: Unknown symbol ether_setup (err -22)
+[   15.667121] vboxnetadp: disagrees about version of symbol alloc_netdev_mqs
+[   15.667122] vboxnetadp: Unknown symbol alloc_netdev_mqs (err -22)
+[   15.667144] vboxnetadp: disagrees about version of symbol register_netdev
+[   15.667146] vboxnetadp: Unknown symbol register_netdev (err -22)
+[   15.667150] vboxnetadp: disagrees about version of symbol free_netdev
+[   15.667152] vboxnetadp: Unknown symbol free_netdev (err -22)
+[   15.667155] vboxnetadp: disagrees about version of symbol ethtool_op_get_link
+[   15.667157] vboxnetadp: Unknown symbol ethtool_op_get_link (err -22)
+[   15.667194] vboxnetadp: disagrees about version of symbol netif_carrier_off
+[   15.667196] vboxnetadp: Unknown symbol netif_carrier_off (err -22)
+[   15.689605] vboxnetflt: disagrees about version of symbol skb_copy_bits
+[   15.689607] vboxnetflt: Unknown symbol skb_copy_bits (err -22)
+[   15.689609] vboxnetflt: disagrees about version of symbol skb_put
+[   15.689609] vboxnetflt: Unknown symbol skb_put (err -22)
+[   15.689612] vboxnetflt: disagrees about version of symbol dev_queue_xmit
+[   15.689612] vboxnetflt: Unknown symbol dev_queue_xmit (err -22)
+[   15.689626] vboxnetflt: disagrees about version of symbol consume_skb
+[   15.689627] vboxnetflt: Unknown symbol consume_skb (err -22)
+[   15.689641] vboxnetflt: disagrees about version of symbol dev_add_pack
+[   15.689642] vboxnetflt: Unknown symbol dev_add_pack (err -22)
+[   15.689667] vboxnetflt: disagrees about version of symbol dev_set_promiscuity
+[   15.689668] vboxnetflt: Unknown symbol dev_set_promiscuity (err -22)
+[   15.689708] vboxnetflt: disagrees about version of symbol eth_type_trans
+[   15.689709] vboxnetflt: Unknown symbol eth_type_trans (err -22)
+[   15.689710] vboxnetflt: disagrees about version of symbol kfree_skb
+[   15.689711] vboxnetflt: Unknown symbol kfree_skb (err -22)
+[   15.689724] vboxnetflt: disagrees about version of symbol skb_checksum_help
+[   15.689724] vboxnetflt: Unknown symbol skb_checksum_help (err -22)
+[   15.689751] vboxnetflt: disagrees about version of symbol dev_remove_pack
+[   15.689752] vboxnetflt: Unknown symbol dev_remove_pack (err -22)
+[   15.689764] vboxnetflt: disagrees about version of symbol skb_push
+[   15.689765] vboxnetflt: Unknown symbol skb_push (err -22)
+[   15.689792] vboxnetflt: disagrees about version of symbol netif_rx_ni
+[   15.689793] vboxnetflt: Unknown symbol netif_rx_ni (err -22)
+[   15.689805] vboxnetflt: disagrees about version of symbol netif_schedule_queue
+[   15.689806] vboxnetflt: Unknown symbol netif_schedule_queue (err -22)
+[   15.689820] vboxnetflt: disagrees about version of symbol __netdev_alloc_skb
+[   15.689821] vboxnetflt: Unknown symbol __netdev_alloc_skb (err -22)
+[   15.689909] vboxnetflt: disagrees about version of symbol netif_carrier_off
+[   15.689910] vboxnetflt: Unknown symbol netif_carrier_off (err -22)
+[   15.689923] vboxnetflt: disagrees about version of symbol skb_copy
+[   15.689924] vboxnetflt: Unknown symbol skb_copy (err -22)
+[   15.689925] vboxnetflt: disagrees about version of symbol netif_carrier_on
+[   15.689926] vboxnetflt: Unknown symbol netif_carrier_on (err -22)
+[   15.689981] vboxnetflt: disagrees about version of symbol __skb_gso_segment
+[   15.689982] vboxnetflt: Unknown symbol __skb_gso_segment (err -22)
+[   15.727567] EXT4-fs (sda7): mounting ext2 file system using the ext4 subsystem
+[   15.817182] EXT4-fs (sda7): mounted filesystem without journal. Opts: block_validity,barrier,user_xattr,acl
+[   16.135321] usbcore: registered new interface driver snd-usb-audio
+[   16.231785] microcode: CPU0: new patch_level=0x0600063d
+[   16.246566] microcode: CPU2: new patch_level=0x0600063d
+[   16.261355] microcode: CPU4: new patch_level=0x0600063d
+[   16.276130] microcode: CPU6: new patch_level=0x0600063d
+[   17.285231] r8169 0000:02:00.0 enp2s0: link down
+[   17.285288] IPv6: ADDRCONF(NETDEV_UP): enp2s0: link is not ready
+[   17.285294] r8169 0000:02:00.0 enp2s0: link down
+[   18.920322] r8169 0000:02:00.0 enp2s0: link up
+[   18.920334] IPv6: ADDRCONF(NETDEV_CHANGE): enp2s0: link becomes ready
+[  175.516574] fuse init (API version 7.26)
+[ 7376.511958] ata6.00: exception Emask 0x10 SAct 0x700000ff SErr 0x400000 action 0x6 frozen
+[ 7376.511967] ata6.00: irq_stat 0x08000000, interface fatal error
+[ 7376.511972] ata6: SError: { Handshk }
+[ 7376.511976] ata6.00: failed command: WRITE FPDMA QUEUED
+[ 7376.511986] ata6.00: cmd 61/c8:00:d8:dd:12/00:00:18:00:00/40 tag 0 ncq dma 102400 out
+                        res 40/00:3c:70:96:f9/00:00:1c:00:00/40 Emask 0x10 (ATA bus error)
+[ 7376.511991] ata6.00: status: { DRDY }
+[ 7376.511995] ata6.00: failed command: WRITE FPDMA QUEUED
+[ 7376.512003] ata6.00: cmd 61/08:08:00:ec:14/00:00:18:00:00/40 tag 1 ncq dma 4096 out
+                        res 40/00:3c:70:96:f9/00:00:1c:00:00/40 Emask 0x10 (ATA bus error)
+[ 7376.512007] ata6.00: status: { DRDY }
+[ 7376.512011] ata6.00: failed command: WRITE FPDMA QUEUED
+[ 7376.512019] ata6.00: cmd 61/10:10:10:96:3a/00:00:18:00:00/40 tag 2 ncq dma 8192 out
+                        res 40/00:3c:70:96:f9/00:00:1c:00:00/40 Emask 0x10 (ATA bus error)
+[ 7376.512023] ata6.00: status: { DRDY }
+[ 7376.512026] ata6.00: failed command: WRITE FPDMA QUEUED
+[ 7376.512034] ata6.00: cmd 61/10:18:d0:96:3a/00:00:18:00:00/40 tag 3 ncq dma 8192 out
+                        res 40/00:3c:70:96:f9/00:00:1c:00:00/40 Emask 0x10 (ATA bus error)
+[ 7376.512038] ata6.00: status: { DRDY }
+[ 7376.512041] ata6.00: failed command: WRITE FPDMA QUEUED
+[ 7376.512049] ata6.00: cmd 61/80:20:10:9d:57/00:00:16:00:00/40 tag 4 ncq dma 65536 out
+                        res 40/00:3c:70:96:f9/00:00:1c:00:00/40 Emask 0x10 (ATA bus error)
+[ 7376.512053] ata6.00: status: { DRDY }
+[ 7376.512057] ata6.00: failed command: WRITE FPDMA QUEUED
+[ 7376.512064] ata6.00: cmd 61/40:28:f8:95:f9/00:00:1c:00:00/40 tag 5 ncq dma 32768 out
+                        res 40/00:3c:70:96:f9/00:00:1c:00:00/40 Emask 0x10 (ATA bus error)
+[ 7376.512069] ata6.00: status: { DRDY }
+[ 7376.512072] ata6.00: failed command: WRITE FPDMA QUEUED
+[ 7376.512079] ata6.00: cmd 61/30:30:80:40:1d/00:00:18:00:00/40 tag 6 ncq dma 24576 out
+                        res 40/00:3c:70:96:f9/00:00:1c:00:00/40 Emask 0x10 (ATA bus error)
+[ 7376.512084] ata6.00: status: { DRDY }
+[ 7376.512087] ata6.00: failed command: WRITE FPDMA QUEUED
+[ 7376.512095] ata6.00: cmd 61/38:38:70:96:f9/00:00:1c:00:00/40 tag 7 ncq dma 28672 out
+                        res 40/00:3c:70:96:f9/00:00:1c:00:00/40 Emask 0x10 (ATA bus error)
+[ 7376.512099] ata6.00: status: { DRDY }
+[ 7376.512103] ata6.00: failed command: WRITE FPDMA QUEUED
+[ 7376.512110] ata6.00: cmd 61/80:e0:80:63:11/00:00:18:00:00/40 tag 28 ncq dma 65536 out
+                        res 40/00:3c:70:96:f9/00:00:1c:00:00/40 Emask 0x10 (ATA bus error)
+[ 7376.512115] ata6.00: status: { DRDY }
+[ 7376.512119] ata6.00: failed command: WRITE FPDMA QUEUED
+[ 7376.512126] ata6.00: cmd 61/00:e8:00:78:12/03:00:18:00:00/40 tag 29 ncq dma 393216 out
+                        res 40/00:3c:70:96:f9/00:00:1c:00:00/40 Emask 0x10 (ATA bus error)
+[ 7376.512131] ata6.00: status: { DRDY }
+[ 7376.512134] ata6.00: failed command: WRITE FPDMA QUEUED
+[ 7376.512142] ata6.00: cmd 61/00:f0:00:7c:12/08:00:18:00:00/40 tag 30 ncq dma 1048576 ou
+                        res 40/00:3c:70:96:f9/00:00:1c:00:00/40 Emask 0x10 (ATA bus error)
+[ 7376.512146] ata6.00: status: { DRDY }
+[ 7376.512151] ata6: hard resetting link
+[ 7377.335323] ata6: SATA link up 6.0 Gbps (SStatus 133 SControl 300)
+[ 7377.337810] ata6.00: configured for UDMA/100
+[ 7377.337935] ata6: EH complete
+[13327.858343] PM: Syncing filesystems ... done.
+[13328.386303] PM: Preparing system for sleep (mem)
+[13328.386759] Freezing user space processes ... (elapsed 0.004 seconds) done.
+[13328.391276] Freezing remaining freezable tasks ... (elapsed 0.001 seconds) done.
+[13328.392895] PM: Suspending system (mem)
+[13328.392907] Suspending console(s) (use no_console_suspend to debug)
+[13328.393479] sd 6:0:0:0: [sdb] Synchronizing SCSI cache
+[13328.397146] sd 5:0:0:0: [sda] Synchronizing SCSI cache
+[13328.401296] serial 00:07: disabled
+[13328.401300] serial 00:07: System wakeup disabled by ACPI
+[13328.401317] i8042 kbd 00:06: System wakeup enabled by ACPI
+[13328.401375] ACPI : EC: event blocked
+[13328.456509] sd 5:0:0:0: [sda] Stopping disk
+[13330.024349] PM: suspend of devices complete after 1631.211 msecs
+[13330.025242] PM: late suspend of devices complete after 0.890 msecs
+[13330.025979] ACPI : EC: interrupt blocked
+[13330.026103] pcieport 0000:00:07.0: System wakeup enabled by ACPI
+[13330.026111] pcieport 0000:00:05.0: System wakeup enabled by ACPI
+[13330.026245] pcieport 0000:00:04.0: System wakeup enabled by ACPI
+[13330.026395] ehci-pci 0000:00:16.2: System wakeup enabled by ACPI
+[13330.026431] ohci-pci 0000:00:16.0: System wakeup enabled by ACPI
+[13330.026463] ohci-pci 0000:00:14.5: System wakeup enabled by ACPI
+[13330.026631] ehci-pci 0000:00:13.2: System wakeup enabled by ACPI
+[13330.026636] ohci-pci 0000:00:13.0: System wakeup enabled by ACPI
+[13330.026674] ehci-pci 0000:00:12.2: System wakeup enabled by ACPI
+[13330.026723] ohci-pci 0000:00:12.0: System wakeup enabled by ACPI
+[13330.041240] PM: noirq suspend of devices complete after 15.996 msecs
+[13330.041965] ACPI: Preparing to enter system sleep state S3
+[13330.042025] ACPI: [Firmware Bug]: BIOS _OSI(Linux) query ignored
+[13330.042518] ACPI : EC: EC stopped
+[13330.042519] PM: Saving platform NVS memory
+[13330.042672] Disabling non-boot CPUs ...
+[13330.069610] smpboot: CPU 1 is now offline
+[13330.095824] smpboot: CPU 2 is now offline
+[13330.129119] smpboot: CPU 3 is now offline
+[13330.159111] smpboot: CPU 4 is now offline
+[13330.189022] smpboot: CPU 5 is now offline
+[13330.212347] smpboot: CPU 6 is now offline
+[13330.238928] smpboot: CPU 7 is now offline
+[13330.241624] ACPI: Low-level resume complete
+[13330.241654] ACPI : EC: EC started
+[13330.241654] PM: Restoring platform NVS memory
+[13330.241828] PCI-DMA: Resuming GART IOMMU
+[13330.241828] PCI-DMA: Restoring GART aperture settings
+[13330.241834] LVT offset 0 assigned for vector 0x400
+[13330.242048] Suspended for 29032.488 seconds
+[13330.247377] microcode: CPU0: new patch_level=0x0600063d
+[13330.247456] Enabling non-boot CPUs ...
+[13330.247486] x86: Booting SMP configuration:
+[13330.247487] smpboot: Booting Node 0 Processor 1 APIC 0x11
+[13330.250383]  cache: parent cpu1 should not be sleeping
+[13330.250692] CPU1 is up
+[13330.250714] smpboot: Booting Node 0 Processor 2 APIC 0x12
+[13330.253614]  cache: parent cpu2 should not be sleeping
+[13330.259140] microcode: CPU2: new patch_level=0x0600063d
+[13330.259270] CPU2 is up
+[13330.259285] smpboot: Booting Node 0 Processor 3 APIC 0x13
+[13330.262154]  cache: parent cpu3 should not be sleeping
+[13330.262502] CPU3 is up
+[13330.262518] smpboot: Booting Node 0 Processor 4 APIC 0x14
+[13330.265411]  cache: parent cpu4 should not be sleeping
+[13330.270918] microcode: CPU4: new patch_level=0x0600063d
+[13330.271095] CPU4 is up
+[13330.271112] smpboot: Booting Node 0 Processor 5 APIC 0x15
+[13330.274011]  cache: parent cpu5 should not be sleeping
+[13330.274367] CPU5 is up
+[13330.274382] smpboot: Booting Node 0 Processor 6 APIC 0x16
+[13330.277273]  cache: parent cpu6 should not be sleeping
+[13330.282792] microcode: CPU6: new patch_level=0x0600063d
+[13330.282979] CPU6 is up
+[13330.282994] smpboot: Booting Node 0 Processor 7 APIC 0x17
+[13330.285871]  cache: parent cpu7 should not be sleeping
+[13330.286268] CPU7 is up
+[13330.298867] ACPI: Waking up from system sleep state S3
+[13330.299490] ohci-pci 0000:00:12.0: System wakeup disabled by ACPI
+[13330.299491] ACPI : EC: interrupt unblocked
+[13330.299504] ohci-pci 0000:00:13.0: System wakeup disabled by ACPI
+[13330.299628] ohci-pci 0000:00:14.5: System wakeup disabled by ACPI
+[13330.299642] ohci-pci 0000:00:16.0: System wakeup disabled by ACPI
+[13330.313748] ehci-pci 0000:00:13.2: System wakeup disabled by ACPI
+[13330.313752] ehci-pci 0000:00:16.2: System wakeup disabled by ACPI
+[13330.313859] pcieport 0000:00:07.0: System wakeup disabled by ACPI
+[13330.313870] pcieport 0000:00:05.0: System wakeup disabled by ACPI
+[13330.313951] ehci-pci 0000:00:12.2: System wakeup disabled by ACPI
+[13330.314000] PM: noirq resume of devices complete after 14.719 msecs
+[13330.314727] PM: early resume of devices complete after 0.687 msecs
+[13330.314841] ACPI : EC: event unblocked
+[13330.314871] rtc_cmos 00:03: System wakeup disabled by ACPI
+[13330.314927] usb usb2: root hub lost power or was reset
+[13330.314928] usb usb3: root hub lost power or was reset
+[13330.314930] usb usb5: root hub lost power or was reset
+[13330.314931] usb usb6: root hub lost power or was reset
+[13330.314963] pcieport 0000:00:04.0: System wakeup disabled by ACPI
+[13330.314990] i8042 kbd 00:06: System wakeup disabled by ACPI
+[13330.315640] serial 00:07: activated
+[13330.333913] [drm] probing gen 2 caps for device 1002:5a16 = 33ed02/0
+[13330.333918] [drm] PCIE gen 2 link speeds already enabled
+[13330.340261] [drm] PCIE GART of 1024M enabled (table at 0x00000000001D6000).
+[13330.340378] radeon 0000:01:00.0: WB enabled
+[13330.340384] radeon 0000:01:00.0: fence driver on ring 0 use gpu addr 0x0000000040000c00 and cpu addr 0xffff880429050c00
+[13330.340388] radeon 0000:01:00.0: fence driver on ring 1 use gpu addr 0x0000000040000c04 and cpu addr 0xffff880429050c04
+[13330.340390] radeon 0000:01:00.0: fence driver on ring 2 use gpu addr 0x0000000040000c08 and cpu addr 0xffff880429050c08
+[13330.340393] radeon 0000:01:00.0: fence driver on ring 3 use gpu addr 0x0000000040000c0c and cpu addr 0xffff880429050c0c
+[13330.340396] radeon 0000:01:00.0: fence driver on ring 4 use gpu addr 0x0000000040000c10 and cpu addr 0xffff880429050c10
+[13330.340650] radeon 0000:01:00.0: fence driver on ring 5 use gpu addr 0x0000000000075a18 and cpu addr 0xffffc90002635a18
+[13330.344293] sd 5:0:0:0: [sda] Starting disk
+[13330.360843] radeon 0000:01:00.0: fence driver on ring 6 use gpu addr 0x0000000040000c18 and cpu addr 0xffff880429050c18
+[13330.360846] radeon 0000:01:00.0: fence driver on ring 7 use gpu addr 0x0000000040000c1c and cpu addr 0xffff880429050c1c
+[13330.436907] r8169 0000:02:00.0 enp2s0: link down
+[13330.883940] [drm] ring test on 0 succeeded in 1 usecs
+[13330.883943] [drm] ring test on 1 succeeded in 1 usecs
+[13330.883947] [drm] ring test on 2 succeeded in 1 usecs
+[13330.883959] [drm] ring test on 3 succeeded in 9 usecs
+[13330.883964] [drm] ring test on 4 succeeded in 3 usecs
+[13330.927258] usb 6-1: reset SuperSpeed USB device number 2 using xhci_hcd
+[13331.061077] [drm] ring test on 5 succeeded in 2 usecs
+[13331.061081] [drm] UVD initialized successfully.
+[13331.171127] [drm] ring test on 6 succeeded in 12 usecs
+[13331.171140] [drm] ring test on 7 succeeded in 4 usecs
+[13331.171140] [drm] VCE initialized successfully.
+[13331.171169] [drm] ib test on ring 0 succeeded in 0 usecs
+[13331.171193] [drm] ib test on ring 1 succeeded in 0 usecs
+[13331.171216] [drm] ib test on ring 2 succeeded in 0 usecs
+[13331.171245] [drm] ib test on ring 3 succeeded in 0 usecs
+[13331.171270] [drm] ib test on ring 4 succeeded in 0 usecs
+[13331.233708] usb 5-1: reset high-speed USB device number 2 using xhci_hcd
+[13331.843757] [drm] ib test on ring 5 succeeded
+[13331.857128] usb 5-1.1: reset high-speed USB device number 3 using xhci_hcd
+[13332.115766] r8169 0000:02:00.0 enp2s0: link up
+[13332.350381] [drm] ib test on ring 6 succeeded
+[13332.857043] [drm] ib test on ring 7 succeeded
+[13333.095277] PM: resume of devices complete after 2780.512 msecs
+[13333.095666] PM: Finishing wakeup.
+[13333.095667] Restarting tasks ... done.
+[13334.600305] ata6: SATA link up 6.0 Gbps (SStatus 133 SControl 300)
+[13335.051409] ata6.00: configured for UDMA/100
+[14656.613249] usb 4-1: USB disconnect, device number 2
+[14656.614051] sd 6:0:0:0: [sdb] Synchronizing SCSI cache
+[14656.614124] sd 6:0:0:0: [sdb] Synchronize Cache(10) failed: Result: hostbyte=0x01 driverbyte=0x00
+[14658.626222] usb 1-5: USB disconnect, device number 4
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185036"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/allon925/index.html">
+                <span class="post-username">allon925</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185036/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/allon925/topics/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/allon925/posts/index.html">
+                    310
+                </a>
+            </div>
+            <div>
+                Участник с: 14 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вывод после того как вставил 1 флэшку:<br /><pre><code>
+ 273.985991] usb 6-1: USB disconnect, device number 2
+[  273.986495] sd 6:0:0:0: [sdb] Synchronizing SCSI cache
+[  273.986524] sd 6:0:0:0: [sdb] Synchronize Cache(10) failed: Result: hostbyte=0x01 driverbyte=0x00
+[  291.891707] usb 6-1: new SuperSpeed USB device number 4 using xhci_hcd
+[  291.914196] usb-storage 6-1:1.0: USB Mass Storage device detected
+[  291.914428] scsi host6: usb-storage 6-1:1.0
+[  293.208231] scsi 6:0:0:0: Direct-Access     JetFlash Transcend 16GB   1100 PQ: 0 ANSI: 6
+[  293.209577] sd 6:0:0:0: [sdb] 30851072 512-byte logical blocks: (15.8 GB/14.7 GiB)
+[  293.210029] sd 6:0:0:0: [sdb] Write Protect is off
+[  293.210032] sd 6:0:0:0: [sdb] Mode Sense: 43 00 00 00
+[  293.210487] sd 6:0:0:0: [sdb] Write cache: enabled, read cache: enabled, doesn&#39;t support DPO or FUA
+[  293.214520]  sdb: sdb1
+[  293.216661] sd 6:0:0:0: [sdb] Attached SCSI removable disk
+
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185037"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/allon925/index.html">
+                <span class="post-username">allon925</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185037/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/allon925/topics/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/allon925/posts/index.html">
+                    310
+                </a>
+            </div>
+            <div>
+                Участник с: 14 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вывод после того как вставил 2 флэшку:<br /><br /><pre><code>
+
+377.877397] usb 6-2: new SuperSpeed USB device number 5 using xhci_hcd
+[  377.901263] usb-storage 6-2:1.0: USB Mass Storage device detected
+[  377.901595] scsi host7: usb-storage 6-2:1.0
+[  379.079057] scsi 7:0:0:0: Direct-Access     JetFlash Transcend 16GB   1100 PQ: 0 ANSI: 6
+[  379.080577] sd 7:0:0:0: [sdc] 30682240 512-byte logical blocks: (15.7 GB/14.6 GiB)
+[  379.081276] sd 7:0:0:0: [sdc] Write Protect is off
+[  379.081282] sd 7:0:0:0: [sdc] Mode Sense: 43 00 00 00
+[  379.082007] sd 7:0:0:0: [sdc] Write cache: enabled, read cache: enabled, doesn&#39;t support DPO or FUA
+[  379.086615]  sdc: sdc1
+[  379.090780] sd 7:0:0:0: [sdc] Attached SCSI removable disk
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185038"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/allon925/index.html">
+                <span class="post-username">allon925</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185038/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/allon925/topics/index.html">
+                    78
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/allon925/posts/index.html">
+                    310
+                </a>
+            </div>
+            <div>
+                Участник с: 14 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <pre><code>
+
+[<a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="7407110613110d3407110613110d39">[email&#160;protected]</a> ~]$ dmesg -k|grep -iE &#39; (usb|sd|scsi)&#39;
+[    1.811260] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 249)
+[    4.591308] SCSI subsystem initialized
+[    4.591362] ACPI: bus type USB registered
+[    4.591394] usbcore: registered new interface driver usbfs
+[    4.591407] usbcore: registered new interface driver hub
+[    4.591449] usbcore: registered new device driver usb
+[    4.592002] ohci_hcd: USB 1.1 &#39;Open&#39; Host Controller (OHCI) Driver
+[    4.592768] ehci_hcd: USB 2.0 &#39;Enhanced&#39; Host Controller (EHCI) Driver
+[    4.593182] ehci-pci 0000:00:12.2: new USB bus registered, assigned bus number 1
+[    4.603430] ehci-pci 0000:00:12.2: USB 2.0 started, EHCI 1.00
+[    4.603610] hub 1-0:1.0: USB hub found
+[    4.603782] xhci_hcd 0000:03:00.0: new USB bus registered, assigned bus number 2
+[    4.663446] hub 2-0:1.0: USB hub found
+[    4.663587] xhci_hcd 0000:03:00.0: new USB bus registered, assigned bus number 3
+[    4.663613] usb usb3: We don&#39;t know the algorithms for LPM for this host, disabling LPM.
+[    4.663743] hub 3-0:1.0: USB hub found
+[    4.663865] ehci-pci 0000:00:13.2: new USB bus registered, assigned bus number 4
+[    4.676852] ehci-pci 0000:00:13.2: USB 2.0 started, EHCI 1.00
+[    4.677023] hub 4-0:1.0: USB hub found
+[    4.677179] xhci_hcd 0000:04:00.0: new USB bus registered, assigned bus number 5
+[    4.789277] hub 5-0:1.0: USB hub found
+[    4.789409] xhci_hcd 0000:04:00.0: new USB bus registered, assigned bus number 6
+[    4.789429] usb usb6: We don&#39;t know the algorithms for LPM for this host, disabling LPM.
+[    4.789555] hub 6-0:1.0: USB hub found
+[    4.789669] ehci-pci 0000:00:16.2: new USB bus registered, assigned bus number 7
+[    4.800121] ehci-pci 0000:00:16.2: USB 2.0 started, EHCI 1.00
+[    4.800289] hub 7-0:1.0: USB hub found
+[    4.801700] scsi host0: ahci
+[    4.801824] scsi host1: ahci
+[    4.801942] scsi host2: ahci
+[    4.802034] scsi host3: ahci
+[    4.802142] scsi host4: ahci
+[    4.802231] scsi host5: ahci
+[    4.802385] ohci-pci 0000:00:12.0: new USB bus registered, assigned bus number 8
+[    4.861102] hub 8-0:1.0: USB hub found
+[    4.861313] ohci-pci 0000:00:13.0: new USB bus registered, assigned bus number 9
+[    4.921097] hub 9-0:1.0: USB hub found
+[    4.921290] ohci-pci 0000:00:14.5: new USB bus registered, assigned bus number 10
+[    4.981126] hub 10-0:1.0: USB hub found
+[    4.981292] ohci-pci 0000:00:16.0: new USB bus registered, assigned bus number 11
+[    4.983557] usb 1-4: new high-speed USB device number 3 using ehci-pci
+[    5.041127] hub 11-0:1.0: USB hub found
+[    5.206862] usb 8-3: new low-speed USB device number 2 using ohci-pci
+[    5.220366] usb 6-1: new SuperSpeed USB device number 2 using xhci_hcd
+[    5.245753] usb-storage 6-1:1.0: USB Mass Storage device detected
+[    5.245846] scsi host6: usb-storage 6-1:1.0
+[    5.245906] usbcore: registered new interface driver usb-storage
+[    5.246170] usbcore: registered new interface driver uas
+[    5.275920] scsi 5:0:0:0: Direct-Access     ATA      WDC WD5000AAKX-0 1H19 PQ: 0 ANSI: 5
+[    5.338420] sd 5:0:0:0: [sda] 976773168 512-byte logical blocks: (500 GB/466 GiB)
+[    5.338512] sd 5:0:0:0: [sda] Write Protect is off
+[    5.338515] sd 5:0:0:0: [sda] Mode Sense: 00 3a 00 00
+[    5.338550] sd 5:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn&#39;t support DPO or FUA
+[    5.390089] usb 11-3: new full-speed USB device number 2 using ohci-pci
+[    5.393277]  sda: sda1 sda2 sda4 sda5 sda7
+[    5.393794] sd 5:0:0:0: [sda] Attached SCSI disk
+[    5.395047] usbcore: registered new interface driver usbhid
+[    5.395048] usbhid: USB HID core driver
+[    5.395515] input: Logitech USB Laser Mouse as /devices/pci0000:00/0000:00:12.0/usb8/8-3/8-3:1.0/0003:046D:C069.0001/input/input1
+[    5.395555] hid-generic 0003:046D:C069.0001: input,hidraw0: USB HID v1.10 Mouse [Logitech USB Laser Mouse] on usb-0000:00:12.0-3/input0
+[    5.582230] input: Logitech USB Receiver as /devices/pci0000:00/0000:00:16.0/usb11/11-3/11-3:1.0/0003:046D:C52F.0002/input/input2
+[    5.582274] hid-generic 0003:046D:C52F.0002: input,hidraw1: USB HID v1.11 Mouse [Logitech USB Receiver] on usb-0000:00:16.0-3/input0
+[    5.590089] input: Logitech USB Receiver as /devices/pci0000:00/0000:00:16.0/usb11/11-3/11-3:1.1/0003:046D:C52F.0003/input/input3
+[    5.643604] hid-generic 0003:046D:C52F.0003: input,hiddev0,hidraw2: USB HID v1.11 Device [Logitech USB Receiver] on usb-0000:00:16.0-3/input1
+[    5.650021] usb 6-2: new SuperSpeed USB device number 3 using xhci_hcd
+[    5.670107] usb-storage 6-2:1.0: USB Mass Storage device detected
+[    5.670227] scsi host7: usb-storage 6-2:1.0
+[    5.916857] usb 11-4: new full-speed USB device number 3 using ohci-pci
+[    6.109096] input: C-Media Electronics Inc.       USB PnP Sound Device as /devices/pci0000:00/0000:00:16.0/usb11/11-4/11-4:1.3/0003:0D8C:013C.0004/input/input4
+[    6.163469] hid-generic 0003:0D8C:013C.0004: input,hidraw3: USB HID v1.00 Device [C-Media Electronics Inc.       USB PnP Sound Device] on usb-0000:00:16.0-4/input3
+[    6.548420] scsi 6:0:0:0: Direct-Access     JetFlash Transcend 16GB   1100 PQ: 0 ANSI: 6
+[    6.549351] sd 6:0:0:0: [sdb] 30851072 512-byte logical blocks: (15.8 GB/14.7 GiB)
+[    6.549878] sd 6:0:0:0: [sdb] Write Protect is off
+[    6.549880] sd 6:0:0:0: [sdb] Mode Sense: 43 00 00 00
+[    6.550383] sd 6:0:0:0: [sdb] Write cache: enabled, read cache: enabled, doesn&#39;t support DPO or FUA
+[    6.553945]  sdb: sdb1
+[    6.555656] sd 6:0:0:0: [sdb] Attached SCSI removable disk
+[    6.691169] scsi 7:0:0:0: Direct-Access     SMI      USB MEMORY BAR   1000 PQ: 0 ANSI: 5
+[    6.692056] sd 7:0:0:0: [sdc] Attached SCSI removable disk
+[    9.510720] scsi host8: vhba
+[   15.550371] usblp 1-4:1.0: usblp1: USB Bidirectional printer dev 3 if 0 alt 0 proto 2 vid 0x04F9 pid 0x0045
+[   15.550514] usbcore: registered new interface driver usblp
+[   15.856415] usbcore: registered new interface driver snd-usb-audio
+[  272.895964] usb usb6-port2: cannot disable (err = -32)
+[  272.895973] usb 6-2: USB disconnect, device number 3
+[  273.985982] usb usb6-port1: cannot disable (err = -32)
+[  273.985991] usb 6-1: USB disconnect, device number 2
+[  273.986495] sd 6:0:0:0: [sdb] Synchronizing SCSI cache
+[  273.986524] sd 6:0:0:0: [sdb] Synchronize Cache(10) failed: Result: hostbyte=0x01 driverbyte=0x00
+[  291.891707] usb 6-1: new SuperSpeed USB device number 4 using xhci_hcd
+[  291.914196] usb-storage 6-1:1.0: USB Mass Storage device detected
+[  291.914428] scsi host6: usb-storage 6-1:1.0
+[  293.208231] scsi 6:0:0:0: Direct-Access     JetFlash Transcend 16GB   1100 PQ: 0 ANSI: 6
+[  293.209577] sd 6:0:0:0: [sdb] 30851072 512-byte logical blocks: (15.8 GB/14.7 GiB)
+[  293.210029] sd 6:0:0:0: [sdb] Write Protect is off
+[  293.210032] sd 6:0:0:0: [sdb] Mode Sense: 43 00 00 00
+[  293.210487] sd 6:0:0:0: [sdb] Write cache: enabled, read cache: enabled, doesn&#39;t support DPO or FUA
+[  293.214520]  sdb: sdb1
+[  293.216661] sd 6:0:0:0: [sdb] Attached SCSI removable disk
+[  377.877397] usb 6-2: new SuperSpeed USB device number 5 using xhci_hcd
+[  377.901263] usb-storage 6-2:1.0: USB Mass Storage device detected
+[  377.901595] scsi host7: usb-storage 6-2:1.0
+[  379.079057] scsi 7:0:0:0: Direct-Access     JetFlash Transcend 16GB   1100 PQ: 0 ANSI: 6
+[  379.080577] sd 7:0:0:0: [sdc] 30682240 512-byte logical blocks: (15.7 GB/14.6 GiB)
+[  379.081276] sd 7:0:0:0: [sdc] Write Protect is off
+[  379.081282] sd 7:0:0:0: [sdc] Mode Sense: 43 00 00 00
+[  379.082007] sd 7:0:0:0: [sdc] Write cache: enabled, read cache: enabled, doesn&#39;t support DPO or FUA
+[  379.086615]  sdc: sdc1
+[  379.090780] sd 7:0:0:0: [sdc] Attached SCSI removable disk
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-185040"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/185040/index.html">#</a>
+            5 лет, 5 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вот это я нацедил из вашего первого дампа по второй флешке:<br /><pre><code>$ grep -iE &#39;(1-5|sd 7|scsi 7|sdc)&#39; /tmp/dump 
+[    5.235525] usb 1-5: new high-speed USB device number 4 using ehci-pci
+[    5.838684] usb-storage 1-5:1.0: USB Mass Storage device detected
+[    5.838758] scsi host7: usb-storage 1-5:1.0
+[    6.846608] scsi 7:0:0:0: Direct-Access     SMI      USB MEMORY BAR   1000 PQ: 0 ANSI: 5
+[    6.848974] sd 7:0:0:0: [sdc] Attached SCSI removable disk
+[14658.626222] usb 1-5: USB disconnect, device number 4</code></pre>При загрузке она опознана как-то очень странно, но судя по номеру в USB при отключении, это должна быть она.<br /><br />Похоже то ли на глюк контроллера, то ли на глюк ядра.<br />Первое можно проверить на другой машине, второе – на другом ядре, например, linux-lts<br />
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index28c8.html?next=/forum/topic/17257/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'74703b0acfbe0022',m:'5c5ABASr_SpDaqMyAFqvYD87pO0xRG9ditdR_.sXNqg-1662561953-0-AY9lPMOctiocLk64pgDii3MFyQdzrwCHkkG/IwkcDHn0c3md3g1Q4eSxIhZTp89ju8BfgaSjRM1xZ2N3gnuK15jH9QNTsrOGIoXDqNrd4CpD3BGcsA2wyn/1sUfGUO86UHA/NHkf/vE21S6YGEsS3kk=',s:[0xd9fb1fbac9,0x96884cd54f],u:'/cdn-cgi/challenge-platform/h/b'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../cdn-cgi/challenge-platform/h/b/scripts/alpha/invisible5615.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17257/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 22:28:28 GMT -->
+</html>

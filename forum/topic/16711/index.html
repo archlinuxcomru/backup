@@ -1,0 +1,886 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [РЕШЕНО]Управление блокировками systemd-inhibit или сон во время выключения
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[РЕШЕНО]Управление блокировками systemd-inhibit или сон во время выключения</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[РЕШЕНО]Управление блокировками systemd-inhibit или сон во время выключения</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-176701"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Sheykhnur/">
+                <span class="post-username">Sheykhnur</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/176701/">#</a>
+            5 лет, 10 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/d1/b6/d1b62754f45b5c4a783cd15c795c84b5.png" alt="Sheykhnur avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Sheykhnur/topics/">
+                    16
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Sheykhnur/posts/">
+                    244
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Намедни решил раскопать проблему выключения своего ноута, а именно: при выключении, если не дождаться завершения сессии графического окружения (кеды), закрытие крышки ноутбука приводит ко сну, а не к выключению. Если далее открыть крышку и разбудить, то завершение работы продолжится как ни в чём ни  бывало и комп выключится. Долгие и мучительные раскопки вопроса привели к тому, что тут шалит powerdevil кед; совсем отказываться от него не хочу, т.к. в остальном он меня устраивает (определение заряда батареи, переход в разные режимы и т.д.). Что интересно, на lxde такой ерунды не было, но там и нет менеджера питания: всё под контролем logind. Дальнейшее расследование показало, что logind не реагирует ни на что, несмотря на то, что я настроил, чтобы датчиком крышки ноутбука и кнопкой питания он управлял сам. Если в настройках powerdevil в кедах выставить на закрытие крышки «сон», то он, как и полагается засыпает, когда крышка закрывается, но появляется данная проблема (если закрыть крышку быстрее, чем успели завершиться кеды во время выключения); если же выставить в значение «ничего не делать», то он действительно ничего не делает, только экран при закрытии гаснет, но и logind&#39;у не отдаёт управление, сволочь. Дальше я выяснил, что происходит это по причине т.н. systemd-inhibit, который запрещает обработку logind&#39;ом каких бы то ни было событий питания; таким образом настраивать /etc/logind.conf бесполезно. Гугление на эту тему привело к весьма туманным результатам: описывается апи systemd-inhibit; то, что это всё дело управляется через dbus и т.д. В мане systemd-inhibit описано только как создавать энти самые запреты, а как ими управлять (удалять, временно блокировать и т.д.) ни слова. Теперь вопрос: кто что знает по этому поводу? Либо как «объяснить» powerdevil&#39;у, что мне нужно, чтобы события от кнопок управлялись logind&#39;ом, либо как исправить переход в сон во время завершения работы (повторюсь: выключается нормально, если закрыть крышку после того, когда кеды завершились и появилась консоль с журналом завершения работы)?<br /><br /><pre><code>systemd-inhibit --list
+     Who: NetworkManager (UID 0/root, PID 305/NetworkManager)
+    What: sleep
+     Why: NetworkManager needs to turn off networks
+    Mode: delay
+
+     Who: PowerDevil (UID 1000/bigboyuser, PID 552/org_kde_powerde)
+    What: handle-power-key:handle-suspend-key:handle-hibernate-key:handle-lid-switch
+     Why: KDE handles power events
+    Mode: block
+
+     Who: Telepathy (UID 1000/bigboyuser, PID 464/mission-control)
+    What: shutdown:sleep
+     Why: Disconnecting IM accounts before suspend/shutdown...
+    Mode: delay
+
+3 inhibitors listed.</code></pre>
+            
+                
+                    <div class="post-signature">
+                        <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dcaeb3b3a89caaaca9acb7b5b2">[email&#160;protected]</a># cat /dev/ass &gt; /dev/head
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-176702"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/176702/">#</a>
+            5 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Это читал <a href="https://www.freedesktop.org/wiki/Software/systemd/inhibit/">Inhibitor Locks</a> ?<br />Попробуй выключить с опцией ...<strong> i</strong> ... из командной строки, например, <strong>systemctl poweroff -i</strong><br />
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-176707"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/176707/">#</a>
+            5 лет, 10 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Если самому поставить block, например, на mc<br />$ <strong>systemd-inhibit --mode=block mc</strong><br />$ <strong>systemd-inhibit --list</strong><br /><pre><code>   What: shutdown:sleep:idle
+   Why: Unknown reason
+   Mode: block</code></pre>То вижу, что lock на <strong> shutdown</strong> и просто выключить ноутбук не могу, пока не завершу mc<br />$ <strong>systemctl poweroff</strong><br /><pre><code>Operation inhibited by &quot;mc&quot; (PID 737 &quot;systemd-inhibit&quot;, user ...), reason is &quot;Unknown reason&quot;.
+Please retry operation after closing inhibitors and logging out other users.
+Alternatively, ignore inhibitors and users with &#39;systemctl poweroff -i&#39;.</code></pre>Нужно или завершить работу mc или выключить командой  systemctl poweroff -i<br />У тебя же там наворочено много всего<br /><pre><code>What: handle-power-key:handle-suspend-key:handle-hibernate-key:handle-lid-switch</code></pre>И похоже все это прописывается при запуске powerdevil ...<br />И думаю, что можно попробовать только два простых варианта …. из сложных не знаю - я в кедах не разбираюсь<br />1. Перед выключением <u>убивать powerdevil</u> (можно через команду, повешанную на клавишу)<br />2. Выключать как уже писал с опцией i - <u>systemctl poweroff -i</u><br />По другому снять lock  не получится …..... или залазить в потроха и смотреть запуск этого  powerdevil …. сам по себе же этот lock не врубается...<br /><em>PS ….. Пришла еще одна идея — попробовать в <strong>/etc/systemd/logind.conf</strong>  раскомментировать опцию <strong>LidSwitchIgnoreInhibited</strong> и изменить параметр yes на <strong>no</strong> (это позволит systemd-inhibit блокировать уход в спящий режим при закрытии крышки ноутбука).... но, возможно, что ноутбук при этом просто и не выключится ...но попробовать стоит (с перегрузкой)</em>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-176712"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Sheykhnur/">
+                <span class="post-username">Sheykhnur</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/176712/">#</a>
+            5 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/d1/b6/d1b62754f45b5c4a783cd15c795c84b5.png" alt="Sheykhnur avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Sheykhnur/topics/">
+                    16
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Sheykhnur/posts/">
+                    244
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            vasek, спасибо за ответы, но дело в том, что logind игнорирует нажатия кнопок и переключения дисплея, т.к. взведены ингибиторы (даже с настроенными опциями в /etc/logind.conf, как вы писали выше; кстати, они и так установлены в yes по умолчанию), поэтому я и задал вопрос как <em> отключить</em> ингибиторы, т.е. позволить управление logind&#39;у, в то же время не отключая powerdevil, другими словами — можно ли их как-нибудь подружить? :-) естественно, в эмуляторе терминала <pre><code>systemctl poweroff -i</code></pre> работает корректно, более того, корректно работает и штатное выключение через меню и кнопку (если выставить в настройках powerdevil выключение, у меня пока настроено &quot;ничего не делать&quot;, чтобы убедиться, что это он виноват, собственно об этом и тема) вопрос в другом, что позволяя управление powerdevil, он некорректно обрабатывает закрытие крышки во время выключения, и переводит ноут в ждущий режим. Если дождаться, пока завершатся кеды (а с ними и powerdevil, соответственно) и появится ядреная консоль с логами завершения, то после этого крышку можно смело закрывать, — система выключится как положено. Соответственно, logind обрабатывает данное событие корректно (закрытие крышки во время выключения), а powerdevil нет. Вот и хотелось бы отобрать у него управление кнопками и оставить всё остальное, а кнопуи доверить logind&#39;у :-))) уф, многабукафф)) надеюсь, смог объяснить.
+            
+                
+                    <div class="post-signature">
+                        <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="afddc0c0dbefd9dfdadfc4c6c1">[email&#160;protected]</a># cat /dev/ass &gt; /dev/head
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-176713"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/176713/">#</a>
+            5 лет, 10 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В свое время немного гуглил об этих inhibitor (в чисто ознакомительном плане) … что за помнилось, так это наличие багов и иногда неуправляемости logind.conf — даже Поттеринг принимал участие в обсуждении (2-3 статьи с багами где то лежат в моей базе). И плюс к этому покапайся на BBS, там то же встречались топики на эту тему, в том числе упоминался и powerdevil.<br />И кажется мне, что это все-таки больше похоже на баг ...<br />Просьба - отписаться в случае решения проблемы или если нароешь что интересное....<br />PS … сейчас на BBS тупо, на скорую руку, вставил в строку поиска<br /><strong>What: handle-power-key:handle-suspend-key:handle-hibernate-key:handle-lid-switch</strong><br />и выскочило несколько топиков
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-176715"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Sheykhnur/">
+                <span class="post-username">Sheykhnur</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/176715/">#</a>
+            5 лет, 10 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/d1/b6/d1b62754f45b5c4a783cd15c795c84b5.png" alt="Sheykhnur avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Sheykhnur/topics/">
+                    16
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Sheykhnur/posts/">
+                    244
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Да, баг; только вот, сдаётся мне, это таки баг powerdevil kde, т.к. это он не справляется с обработкой события закрытия во время выключения :-) logind как раз таки нормально обрабатывает данную ситуацию (см. первый пост про вариант lxde, там у меня питание полностью отдано на откуп systemd :-) Кстати, vasek, зная вашу любовь к статистике: в systemd, в целом за время, что я с ним знаком (около четырёх лет) мало сталкивался с багами, по крайней мере, как админ <strike>холокоста</strike> локалхоста, а вот с багами различных прикладных приложений — регулярно. Я полагаю всё же системный код в линуксе пишут довольно качественно. А сколько срачей читал про системд, — в основном его хают за его концепцию, но я считаю это делом привычки (т.к. с инитом я успел столкнуться очень мало) и нежеланием переучиваться (уж так устроен наш мозг, что в 90℅ случаев нам просто лень учиться и принимать новое), а так некоторые люди отмечают его код технически правильным и хорошо документированным. Из чего я сделал для себя вывод, что все проблемы банально от непонимания сути ( в мире вообще много проблем от этой простой вещи ). Один из примеров: <a href="https://bbs.archlinux.org/viewtopic.php?id=204346">https://bbs.archlinux.org/viewtopic.php?id=204346</a>. P.s.: это лишь моё скромное мнение, и, т.к. тема про системд холиварная, я на этом закончу :-)<br />---<br />По теме: вообще говоря, я немного неверно передал суть проблемы в названии. То, что моя проблема — баг powerdevil kde, это я знал изначально, но, т.к. исходники я читать не сильно умею, и учётной записью на девелоперском сайте кед не обладаю, код кде очень изменчивый, мне тупо пока лень с ними разбираться (да-да, лень матушка), а из-за короткого срока жизни кода вообще мало желания. <strong> Поэтому</strong> мне проще подпереть костылями посредством systemd-inhibitors: т.е. убрать запрет на управление питанием logind&#39;у. В выводе команды это второй сервис, как следует из названия:<br /><pre><code>Who: PowerDevil (UID 1000/bigboyuser, PID 552/org_kde_powerde)
+    What: handle-power-key:handle-suspend-key:handle-hibernate-key:handle-lid-switch
+     Why: KDE handles power events
+    Mode: block</code></pre><strong>Вот это мне нужно как-то выловить и удалить запрет.</strong> В этом <em>суть</em> моего вопроса. Как работают ингибиторы, я полагаю, разобрался, но исходя из манов, их можно только создать, а как <em>удалить</em> нигде не написано! Как я понял блокировки реализуются посредством DBus API <a href="https://www.freedesktop.org/wiki/Software/systemd/inhibit/">[²]</a>. С Dbus я пока особо не разбирался, но, видимо, там и зарыта собака. Может как-то оттуда нужно удалять эти строки; где прописаны эти конфиги, — с этим мне и предстоит разбираться. Уж не знаю что легче: разобраться с логикой powerdevil и исправить её, или разобраться с dbus :-) Скорее всего пойду по второму пути, т.к. DBus уже много где используется и нужно с ним разобраться.<br /><br />Источники:<br /><a href="https://www.freedesktop.org/software/systemd/man/systemd-inhibit.html">[1]</a> <a href="https://www.freedesktop.org/wiki/Software/systemd/inhibit/">[2]</a> <a href="https://www.freedesktop.org/wiki/Software/systemd/logind/">[3]</a>
+            
+                
+                    <div class="post-signature">
+                        <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="592b36362d192f292c29323037">[email&#160;protected]</a># cat /dev/ass &gt; /dev/head
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-176717"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Sheykhnur/">
+                <span class="post-username">Sheykhnur</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/176717/">#</a>
+            5 лет, 10 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/d1/b6/d1b62754f45b5c4a783cd15c795c84b5.png" alt="Sheykhnur avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Sheykhnur/topics/">
+                    16
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Sheykhnur/posts/">
+                    244
+                </a>
+            </div>
+            <div>
+                Участник с: 05 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Приехал домой, попробовал ваш совет отредактировать <strong>/etc/systemd/logind.conf</strong> и раскомментировал <u>LidSwitchIgnoreInhibited</u>, но оставил параметр <em>yes</em>, также изменил параметр <u>PowerKeyIgnoreInhibited</u> на <em>yes</em>, всё заработало, настройки powerdevil&#39;а в отношении питания игнорируются, проверил ждущий режим и гибернацию, а также скрипт отложенной гибернации, всё работает. Спасибо за советы, тема закрыта!<br /><strong>P.S.:</strong> ещё мой косяк был в том, что я предположил, что значения в закомментированных строчках /etc/systemd/logind.conf являются значениями по умолчанию и поэтому по-настоящему выставил эти значения только сегодня, приехав домой, после этого всё встало на свои места.
+            
+                
+                    <div class="post-signature">
+                        <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1d3ceced5e1d7d1d4d1cac8cf">[email&#160;protected]</a># cat /dev/ass &gt; /dev/head
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-176720"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/176720/">#</a>
+            5 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Sheykhnur</em><br>ещё мой косяк был в том, что я предположил, что значения в закомментированных строчках /etc/systemd/logind.conf являются значениями по умолчанию</blockquote>это не косяк, ты все правильно предположил!!!<br /><a href="https://www.freedesktop.org/software/systemd/man/logind.conf.html">https://www.freedesktop.org/software/systemd/man/logind.conf.html</a><br /><blockquote>LidSwitchIgnoreInhibited= defaults to &quot;yes&quot;.</blockquote>
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/16711/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747af5224a049d8c',m:'Lx3SHegnLOPbvy0z6803wh0yEiTBGQ4M3VdnvrqVY0c-1662674433-0-AQiHVhuFx8ldWe69m2HerYXT6by7I1SoYRGnOexaC0Q/FadbtjRCGJ/F0h2xrhC3dEKo0JnxwzcTJkLJRn6p9Nv4mz/Y2R4wk+JJ3NIBOSN+/1VMKcTYuriQJGvwIj51YHUI7Ts9YmSxnCo+3r6jAFE=',s:[0x9f4eedb1e5,0x5670e8ebac],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

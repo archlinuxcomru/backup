@@ -1,0 +1,1135 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [Баг починен] systemd, virtualbox и dhcp
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[Баг починен] systemd, virtualbox и dhcp</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[Баг починен] systemd, virtualbox и dhcp</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11110"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/deniolp/">
+                <span class="post-username">deniolp</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11110/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f1/82/f18229b591518741b36978cbb9c95f5f.png" alt="deniolp avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/deniolp/topics/">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/deniolp/posts/">
+                    134
+                </a>
+            </div>
+            <div>
+                Участник с: 02 декабря 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>lampslave</em><br/>но резервную копию сделать всегда стоит :)</blockquote>Это точно.. Вроде сейчас все работает, так что сделаю резервную копию прямо сейчас, спасибо.
+            
+                
+                    <div class="post-signature">
+                        Arch awesome @各行其道@
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11111"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/deniolp/">
+                <span class="post-username">deniolp</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11111/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f1/82/f18229b591518741b36978cbb9c95f5f.png" alt="deniolp avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/deniolp/topics/">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/deniolp/posts/">
+                    134
+                </a>
+            </div>
+            <div>
+                Участник с: 02 декабря 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В общем, если кому то пригодится, напишу что получилось. Единственное, что все происходит не в virtualbox.<br/>Была такая проблема: модем в режиме роутера, есть dhcpcd, <div class="code"><pre>systemctl enable <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="02666a61726166422c716770746b6167">[email&#160;protected]</a></pre></div>было сделано, но инет включается через раз, как я писал выше,- иногда все в порядке, а иногда полностью все зависает. (<strong>lampslave</strong> хорошо все объяснил, почему так получается)<br/>Пришлось в качестве временного решения подправить <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7f1b171c0f1c1b3f510c1a0d09161c1a">[email&#160;protected]</a> файлик таким образом:<br/><div class="code"><pre>[Unit]
+Description=dhcpcd on %I
+Wants=network.target
+Before=network.target
+After=systemd-logind.service
+Requires=systemd-udev-settle.service
+[Service]
+Type=forking
+PIDFile=/run/dhcpcd-%I.pid
+ExecStart=/sbin/dhcpcd -A -q -w %I
+ExecStop=/sbin/dhcpcd -k %I
+[Install]
+<a href="/cdn-cgi/l/email-protection#efae83868e9cd2829a839b86c29a9c8a9dc19b8e9d888a9bc1988e819b9cc08b878c9f8c8baf8a9b87dfc19781c2c29c8a9d99868c8ad3c09f9d8ad1d3c08b8699d1c28a9e9f">Alias=multi-user.target.wants/<span class="__cf_email__" data-cfemail="ef8b878c9f8c8baf8a9b87dfc19c8a9d99868c8a">[email&#160;protected]</span></pre></div>В</a> результате, инет включается каждый раз, но (понятно), немного дольше стала проходить загрузка (правда, тоже, иногда, видимо, в зависимости от того, сколько им кого ждать приходится), например при последней загрузке было:<br/><div class="code"><pre>Startup finished in 4388ms (kernel) + 9950ms (userspace) = 14338ms</pre></div>а в прошлый раз - 25000ms.<br/>Вот такие дела. Вопрос решился, но будем ждать, как разрулят всё devs&#8230;
+            
+                
+                    <div class="post-signature">
+                        Arch awesome @各行其道@
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11112"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/lampslave/">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11112/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/lampslave/topics/">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/lampslave/posts/">
+                    4801
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я заранее извиняюсь за скорее всего нубский вопрос, просто мне сейчас не особо хочется читать английскую документацию по написанию юнитов, а на родном языке я её пока не видел. Или я плохо смотрел?<br/><br/>Так вот, а если изменить зависимости вот таким образом, будет всё работать или нет?<br/><br/><div class="code"><pre>[Unit]
+Description=dhcpcd on %I
+Before=network.target
+After=systemd-udev-settle.service</pre></div>И всё, без wants и requires.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11113"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/deniolp/">
+                <span class="post-username">deniolp</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11113/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f1/82/f18229b591518741b36978cbb9c95f5f.png" alt="deniolp avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/deniolp/topics/">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/deniolp/posts/">
+                    134
+                </a>
+            </div>
+            <div>
+                Участник с: 02 декабря 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ok, сейчас попробую.. ))
+            
+                
+                    <div class="post-signature">
+                        Arch awesome @各行其道@
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11114"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/deniolp/">
+                <span class="post-username">deniolp</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11114/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f1/82/f18229b591518741b36978cbb9c95f5f.png" alt="deniolp avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/deniolp/topics/">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/deniolp/posts/">
+                    134
+                </a>
+            </div>
+            <div>
+                Участник с: 02 декабря 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>lampslave</em><br/>Я заранее извиняюсь за скорее всего нубский вопрос, просто мне сейчас не особо хочется читать английскую документацию по написанию юнитов, а на родном языке я её пока не видел. Или я плохо смотрел?<br/><br/>Так вот, а если изменить зависимости вот таким образом, будет всё работать или нет?<br/><br/><div class="code"><pre>[Unit]
+Description=dhcpcd on %I
+Before=network.target
+After=systemd-udev-settle.service</pre></div>И всё, без wants и requires.</blockquote>Опа! Все работает и гораздо быстрее и каждый раз!<br/><div class="code"><pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5337363d133221303b">[email&#160;protected]</a> ~]$ systemd-analyze
+Startup finished in 4337ms (kernel) + 10248ms (userspace) = 14586ms</pre></div>Чудеса! Возникает вопрос, почему systemd-udev-settle.service мертвый?<br/><div class="code"><pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="07636269476675646f">[email&#160;protected]</a> ~]$ systemctl status systemd-udev-settle.service
+systemd-udev-settle.service - udev Wait for Complete Device Initialization
+	  Loaded: loaded (/usr/lib/systemd/system/systemd-udev-settle.service; disabled)
+	  Active: inactive (dead)
+	    Docs: man:udev(7)
+	          man:systemd-udevd.service(8)
+	  CGroup: name=systemd:/system/systemd-udev-settle.service</pre></div>Очень интересно! И я запутался..
+            
+                
+                    <div class="post-signature">
+                        Arch awesome @各行其道@
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11115"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/lampslave/">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11115/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/lampslave/topics/">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/lampslave/posts/">
+                    4801
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ну, по идее он ведь отвечает за обнаружение устройств, соответственно, когда всё обнаружено он спокойно может &ldquo;спать&rdquo;.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11116"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11116/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            мертвое все , что не работает, не важно удачно процесс отсчитался или не очень. Удев(грубо говоря, точнее надо сказать не удев, а этот юнит) отработал при старте системы, более он не нужен. У меня он тоже какбы мертвый в момент удачного логина.
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11117"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/deniolp/">
+                <span class="post-username">deniolp</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11117/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f1/82/f18229b591518741b36978cbb9c95f5f.png" alt="deniolp avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/deniolp/topics/">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/deniolp/posts/">
+                    134
+                </a>
+            </div>
+            <div>
+                Участник с: 02 декабря 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Понял.. Спасибо большое!
+            
+                
+                    <div class="post-signature">
+                        Arch awesome @各行其道@
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11118"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/lampslave/">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11118/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/lampslave/topics/">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/lampslave/posts/">
+                    4801
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>sleepycat</strong><br/>А то, что я Wants и Requires предложил убрать - это нормально или как?<br/>Хотя зря я наверное спрашиваю, переход-то не за горами, пора самому мануалами раскуриваться :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-11119"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/11119/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            линукс не винда, никто гарантии на работу системы на вашем железе не дает, я к тому, что каждый сам себе хозяин для пк. Поэтому есть конфиги, еслиб исправлять конфиги было бы неправильно, то их бы не было ;) . Ваши директивы в любом случае вызывают (ну если я правильно конечно понял ман) требуемый юнит , просто одна из них запустит юнит даже если требуемый юнит дал сбой, а др. в таком случае забракует юнит и он даже не будет пытаться взлетать. Вопрос наверно интереснее каким макаром вы поменяли юнит(правильно или неочень), но об этом пускай повторит nafanja, у него гдето было в сообщениях ;)) .
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/1145/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747ae9662cb515ee',m:'fQBdjSck4gHhV9YlEE.5m3c41edTFnt2rIVNyf6T.LY-1662673956-0-ARGCUGLikhQRu2teAR/PSeEhMveCDmPFErwQSCAMtLtuVWLqGbiSP62XXC9ZfTAuvG/geTQ23T8qMTusxMharzw2eoT4xJpdJJAr6yC9zERancdCj62XFMGAAjzLbCQsGiQsqKDgqZq+6MoxmsntaFY=',s:[0xd5185cb0f9,0xcd674b415c],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

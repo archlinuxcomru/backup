@@ -1,0 +1,1056 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        journalctl - Waiting for data... (interrupt to abort) - Элементарно, Ватсон?
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>journalctl - Waiting for data... (interrupt to abort) - Элементарно, Ватсон?</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>journalctl - Waiting for data... (interrupt to abort) - Элементарно, Ватсон?</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197097"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/bitrixbiz/">
+                <span class="post-username">bitrixbiz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/197097/">#</a>
+            4 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/bitrixbiz/topics/">
+                    26
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/bitrixbiz/posts/">
+                    165
+                </a>
+            </div>
+            <div>
+                Участник с: 29 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Здравствуйте!<br />хотелось простого, но не получилось.<br />История: Набрал journalctl прыгнул в конец (Ctrl+End), затем хотел глянуть, что перед этим было (PageUp), и ни в какую, пишет в конце Waiting for data... (interrupt to abort) и стоит колом.<br />Ну разве это дело?<br />Может есть секретная кнопка, а то ни Ctrl-c  ни Ctrl-Shift-c не помогают, только прерывают journalctl?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197098"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vinc/">
+                <span class="post-username">vinc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/197098/">#</a>
+            4 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vinc/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vinc/posts/">
+                    180
+                </a>
+            </div>
+            <div>
+                Участник с: 13 июня 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Это less у вас захлебывается от количества строк. Пройдет. Среагирует и на Q, и на Ctrl-C.<br />man journalctl, используйте что-нибудь из этого:<br />  -n, --lines=<br />  -e, --pager-end<br />  -r, --reverse<br />Ну и размером логов не мешало бы поинтересоваться.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197101"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kurych/">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/197101/">#</a>
+            4 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kurych/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kurych/posts/">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            На всякий случай можно еще поинтересоваться целостностью логов: journalctl --verify<br />У меня подобные тормоза были, когда проверка показывала множество битых кусков. Я долго плевался в сторону journald, пока не дошло, что сам диск &quot;сыпется&quot;.<br />Так что стоит и состояние диска проверить на всякий случай.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197106"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/bitrixbiz/">
+                <span class="post-username">bitrixbiz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/197106/">#</a>
+            4 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/bitrixbiz/topics/">
+                    26
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/bitrixbiz/posts/">
+                    165
+                </a>
+            </div>
+            <div>
+                Участник с: 29 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            у меня три машины и у всех такое поведение. journalctl --verify показал ошибки только на одной. Остальным что мешает?<br />Ради эксперимента почистил журнал до двух недель journalctl --vacuum-time=2weeks, но также виснет всё если в конец прыгнуть по Ctrl+End. На Ctrl-C всегда реагирует мгновенно, но оно и понятно, так и должно быть.<br />Ладно думаю, делаю journalctl -e, оказываюсь в конце журнала, Page+Up, Page+Down, листает нормально, но тут-же делаешь Ctrl+End всё! Зависон!<br />Не смертельно, но ... видимо баг?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197107"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/redix/">
+                <span class="post-username">redix</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/197107/">#</a>
+            4 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/85/25/8525b8b3d838c29f000f57cb18c9307a.png" alt="redix avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/redix/topics/">
+                    34
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/redix/posts/">
+                    3433
+                </a>
+            </div>
+            <div>
+                Участник с: 11 марта 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>bitrixbiz</em><br>а то ни Ctrl-c ни Ctrl-Shift-c не помогают, только прерывают</blockquote>Начет Ctrl-Shift-c не знаю, а команду <a href="https://ru.wikipedia.org/wiki/%D0%A1%D0%B8%D0%B3%D0%BD%D0%B0%D0%BB%D1%8B_(UNIX)">Ctrl-c терминал понимает как прерывание</a>.
+            
+                
+                    <div class="post-signature">
+                        In Tux We Trust
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197109"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/bitrixbiz/">
+                <span class="post-username">bitrixbiz</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/197109/">#</a>
+            4 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/bitrixbiz/topics/">
+                    26
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/bitrixbiz/posts/">
+                    165
+                </a>
+            </div>
+            <div>
+                Участник с: 29 апреля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Похоже это всё-же баг, т.к. это не зависит от размера журнала.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197111"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/redix/">
+                <span class="post-username">redix</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/197111/">#</a>
+            4 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/85/25/8525b8b3d838c29f000f57cb18c9307a.png" alt="redix avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/redix/topics/">
+                    34
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/redix/posts/">
+                    3433
+                </a>
+            </div>
+            <div>
+                Участник с: 11 марта 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>bitrixbiz</em><br>Похоже это всё-же баг</blockquote>Нажимая комбинацию Ctrl-c, вы посылаете терминалу команду прерывания операции.<br /><img src="http://storage8.static.itmages.ru/i/17/1113/h_1510570521_6585650_d81d3f1df0.png">
+            
+                
+                    <div class="post-signature">
+                        In Tux We Trust
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197112"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/197112/">#</a>
+            4 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>bitrixbiz</em><br>Похоже это всё-же баг, т.к. это не зависит от размера журнала.</blockquote><strong>Waiting for data... (interrupt to abort)</strong><br />Это не баг - раньше комбинация &quot;Ctrl+End&quot; частенько проходила, сейчас практически нет. Если посмотреть клавиши для навигации, то такой комбинации не найдешь.<br />Это не у тебя одного будет наблюдаться, а у многих (или с 1-ого раза после листания или с N-го при нажатии &quot;Ctrl+End&quot;) .<br />&quot;<strong>Interrupt to abort</strong>&quot; означает &quot;Нажмите Ctrl+C для прерывания (отмены)&quot;.<br /><strong>Чтобы этого не было</strong>, не применяй для навигации комбинацию &quot;Ctrl+End&quot; , используй просто &quot;<strong>End</strong>&quot;
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197114"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vinc/">
+                <span class="post-username">vinc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/197114/">#</a>
+            4 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vinc/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vinc/posts/">
+                    180
+                </a>
+            </div>
+            <div>
+                Участник с: 13 июня 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>&quot;<strong>Interrupt to abort</strong>&quot; означает &quot;Нажмите Ctrl+C для прерывания (отмены)&quot;.<br /><strong>Чтобы этого не было</strong>, не применяй для навигации комбинацию &quot;Ctrl+End&quot; , используй просто &quot;<strong>End</strong>&quot;</blockquote>Truth!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-197115"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kurych/">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/197115/">#</a>
+            4 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kurych/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kurych/posts/">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Чтобы этого не было, не применяй для навигации комбинацию &quot;Ctrl+End&quot;</blockquote>И в самом деле, откуда это вообще взялось? Действительно, либо &quot;Home&quot;, &quot;End&quot;, либо vi-подобные комбинации: &quot;g&quot; - в начало, &quot;G&quot; - в конец.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/17984/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747ab85e3b4a16a7',m:'47kAphOwHmmeMdopAxwLUYkMgFg.kohapGcP7ymmCKI-1662671945-0-AWFVLFOK7TAb/Csl7qaAv6ElQC61ud1ZzkqLNOJnbEBM+8xU4cQwkl4m4eoQXZM75IzZ6tOtQlBYxeR9hnmQ3B7n03vWWlO5x9m1TRDfsuAPplgVvzy0qM16vXp9KdsoiJ8Uc7vc4o1XGMvJ5q4itkg=',s:[0x7cc18d0a51,0xe27ffd1c90],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

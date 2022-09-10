@@ -1,0 +1,447 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        PPAPI Flash в Google Chrome и нагрузка на все ядра по 50%
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/10/">Мультимедиа</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>PPAPI Flash в Google Chrome и нагрузка на все ядра по 50%</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>PPAPI Flash в Google Chrome и нагрузка на все ядра по 50%</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-122173"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/marlock/">
+                <span class="post-username">marlock</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/122173/">#</a>
+            8 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/marlock/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/marlock/posts/">
+                    736
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июля 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Создаю новую тему, как и посоветовал т-щ vadik.<br/>Сразу скажу, что у меня Chakra, но я думаю все мы понимаем, что кроме понтов и названия различий нет.<br/>Собсно, суть. В Chrome включил Переопределение списка программного рендеринга, юзаю тамошний PPAPI. Пытаюсь играть в танчики онлайн и вот что не хорошо: на крутых картах начинает тормозить жестоко. Смотрю в htop - все четыре ядра процессорных на 50% заняты (всегда, даже в лобби, т.е. там, где 3D графики нет вообще). Грустно это всё. То ли аппаратное ускорение не до конца работает, то ли видюха слабенькая, али что?<br/>К слову, полтора или два года назад, когда у меня была ещё уиндавз сэван и карточка GeForce GT240, там со всеми ништяками включенными летали танчики онлайн. Сейчас у меня GT440 (очевидно, лучше, чем GT240, ну или, учитывая маркетинговую стратегию NVIDIA, такая же), а тормозит. Может, как-то ускорить всё это дело можно? Дрова, ессесно, проприетарные.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-122186"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/redix/">
+                <span class="post-username">redix</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/122186/">#</a>
+            8 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/85/25/8525b8b3d838c29f000f57cb18c9307a.png" alt="redix avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/redix/topics/">
+                    34
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/redix/posts/">
+                    3433
+                </a>
+            </div>
+            <div>
+                Участник с: 11 марта 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <ul><li>Переходим на страницу chrome://plugins, включаем PPAPI версию плеера (если был выключен).<br/></li></ul><ul><li>Переходим на страницу chrome://flags, включаем 5-ю опцию (Переопределение списка программного рендеринга — Override software rendering list).<br/></li></ul><ul><li>Перезагружаем Chrome.<br/></li></ul><ul><li>Переходим на страницу chrome://gpu/, видим «Flash Stage3D: Hardware accelerated» — АУ уже должно работать.<br/></li></ul>
+            
+                
+                    <div class="post-signature">
+                        In Tux We Trust
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-122198"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/marlock/">
+                <span class="post-username">marlock</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/122198/">#</a>
+            8 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/marlock/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/marlock/posts/">
+                    736
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июля 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Не хочу обижать/огорчать/казаться неблагодарным, но это есть в моём посте. Я это уже сделал.<br/>У меня всё <div class="code"><pre>Graphics Feature Status
+Canvas: Hardware accelerated
+Compositing: Hardware accelerated
+3D CSS: Hardware accelerated
+CSS Animation: Accelerated
+WebGL: Hardware accelerated
+WebGL multisampling: Hardware accelerated
+Flash 3D: Hardware accelerated
+Flash Stage3D: Hardware accelerated
+Flash Stage3D Baseline profile: Hardware accelerated
+Texture Sharing: Hardware accelerated
+Video Decode: Hardware accelerated
+Video: Hardware accelerated</pre></div>вот так. А процессор жрёт неплохонько так, да и подтормаживает.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/12553/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747bee9a2c5f9d6a',m:'bAo26ZZ1xe1Ee2WexWCa2zTTSlcJL_dXKS5B8A8IVn8-1662684650-0-AUgPge74j1KbYCOpLEc0MSvRgnQqaZX6S/jb3CKZQtVryc2LZrz4xkfK0/Exq2sFx945quxSvDJ93j/MHy52LDmxr8Frxtdv71QL7Gs6VXXP+hdjWG8tDyo+7D1ZK9/COmSGsAsLb60I5SInRi0LP1g=',s:[0x183588e6a9,0x1a2bf77bc5],u:'/cdn-cgi/challenge-platform/h/g'};var _cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/cb/invisible.js?cb=747bee9a2c5f9d6a',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

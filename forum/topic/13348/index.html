@@ -1,0 +1,927 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [РЕШЕНО] Zsh. автозагрузка функций для скриптов
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/5/">Разное</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/4/">/dev/null</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[РЕШЕНО] Zsh. автозагрузка функций для скриптов</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[РЕШЕНО] Zsh. автозагрузка функций для скриптов</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-134018"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/red/">
+                <span class="post-username">red</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/134018/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/fd/eb/fdeb672af87b7c02419e9c58404908a5.png" alt="red avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/red/topics/">
+                    30
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/red/posts/">
+                    1517
+                </a>
+            </div>
+            <div>
+                Участник с: 31 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ~/.zshenv<br /><pre><code>fpath=(${DIR}/fns ${fpath})</code></pre><br />~/.zshrc.local<br /><pre><code>autoload -U ${DIR}/fns/*(:t)</code></pre>${DIR} - путь где лежит папка со скриптами (fns)<br /><br />в терминале всё прекрасно работает как в основном так и в дочерних процессах, а вот в скриптах не хочет<br />точнее, если запускать так<br /><pre><code>% .  ./script</code></pre>работает<br /><br />а вот так<br /><pre><code>% ./script</code></pre>уже не хочет, и вместо вывода функций в скрипте выдаёт - command not found<br /><br />как правильно приготовить autoload функции для своих скриптов ?<br /><br />-------------------------------------------------------------------------<br /><strong>Решение:<br />вместо ~/.zshrc.local использовать ~/.zshenv или /etc/zsh/zshenv</strong>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-134029"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/134029/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я не специалист по zsh, но в стандартном шелле точка означает исполнение фрагмента кода <em>(то, что нужно для подключения функций из него)</em> , а простой вызов по имени запускает отдельный скрипт в отдельном процессе, и разумеется, никакие функции из него после завершения доступны не будут.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-134033"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/red/">
+                <span class="post-username">red</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/134033/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/fd/eb/fdeb672af87b7c02419e9c58404908a5.png" alt="red avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/red/topics/">
+                    30
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/red/posts/">
+                    1517
+                </a>
+            </div>
+            <div>
+                Участник с: 31 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            source (она же и точка) позволяет выполнять команды скрипта в контексте текущего экземпляра (процесса) интерпретатора, без этого скрипт выполняется в дочернем процессе.<br /><blockquote><em>Natrio</em><br>и разумеется, никакие функции из него после завершения доступны не будут.</blockquote>мне не нужно из него мне нужно в самом скрипте и его дочерних процессах.<br /><br />для ясности приведу пример<br /><br />имеем простую функцию<br />${DIR}/fns/func1<br /><pre><code>
+echo &quot;PPID=$PPID PID=$$&quot;
+</code></pre><br />~/.zshenv и ~/.zshrc.local аналогичны первому посту<br /><br />имеем, к примеру, такой скрипт в котором должна запускаться наша ф-я func1<br />script.sh<br /><pre><code>
+#!/usr/bin/env zsh
+func1
+</code></pre><br />пробуем запускать напрямую в нашем интерпретаторе<br /><pre><code>
+% exec zsh
+% echo $$
+2078
+% # запускаем нашу ф-ю
+% func1
+PPID=1870 PID=2078
+% # запускаем ф-ю в дочернем процессе
+% zsh
+% func1
+PPID=2078 PID=2145
+% exit
+% # как видим всё отлично работает
+</code></pre><br />теперь запускаем нашу функцию через скрипт<br />Первый вариант<br /><pre><code>
+% exec zsh
+% echo $$
+2078
+% # запускаем наш скрипт
+% source ./script.sh
+% PPID=1870 PID=2078
+% # всё работает
+</code></pre><br />Второй вариант<br /><pre><code>
+% exec zsh
+% echo $$
+2078
+% # запускаем наш скрипт
+% ./script.sh
+% command not found: func1
+% # неработает
+</code></pre><br />надо заметить если в наш скрипт добавить то что мы добавляли в .zshrc.local, а конкретно в нашем случае <strong>autoload -U func1</strong> то всё прекрасно выводится, но это не очень хороший вариант так как предполагается наличие множество ф-й которые  запускаются (часть из них) во многих дочерних процессах(скриптах).<br />как заставить нормально экспортироваться autoload ф-и для скриптов ?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-134034"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/134034/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            попробуй прописать<br /><pre><code>autoload -U ${DIR}/fns/*(:t)</code></pre>в ~/.zshenv
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-134035"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/134035/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Не работает у вас именно &quot;в дочерних процессах&quot;.<br /><br />Когда вы запускаете новый <strong>интерактивный</strong> экземпляр шелла, он <strong>не наследует</strong> функции, а <strong>заново загружает</strong> их из того же конфига.<br /><br />Когда вы запускаете скрипт, он <strong>всегда</strong> запускается <strong>в новом</strong> процессе, а поскольку этот процесс <strong>не интерактивный</strong>, он не читает ваш конфиг и не загружает ваши функции.<br /><br />Чтобы функции загружались для <strong>не интерактивного</strong> шелла (скрипта), вам нужно найти такой конфиг, который будет читаться в любом случае, или изменить процедуру начальной конфигурации шелла так, чтобы он всегда загружал ваши функции. Как это делается в zsh – вопрос к специалистам по нему.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-134038"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/red/">
+                <span class="post-username">red</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/134038/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/fd/eb/fdeb672af87b7c02419e9c58404908a5.png" alt="red avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/red/topics/">
+                    30
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/red/posts/">
+                    1517
+                </a>
+            </div>
+            <div>
+                Участник с: 31 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br>попробуй прописать<br /><pre><code>autoload -U ${DIR}/fns/*(:t)</code></pre>в ~/.zshenv</blockquote>...<br /><br /><strong>Natrio</strong>, спасибо, я примерно догадывался что <strong>интерактивный</strong> (командная строка интерпретатора zsh) и  <strong>не интерактивный</strong> (скрипты) режим немного разные вещи, и что собака зарыта именно в начальной инициализации, а примеры для интерактивного режима (мне по сути он и не нужен) я привёл чтобы показать общую работоспособность задачи.<br /><br />давайте тогда поправлю вопрос: как правильно инициализировать автозагрузку ф-й для скриптов средствами zsh ?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-134039"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/red/">
+                <span class="post-username">red</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/134039/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/fd/eb/fdeb672af87b7c02419e9c58404908a5.png" alt="red avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/red/topics/">
+                    30
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/red/posts/">
+                    1517
+                </a>
+            </div>
+            <div>
+                Участник с: 31 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br>попробуй прописать<br /><pre><code>autoload -U ${DIR}/fns/*(:t)</code></pre>в ~/.zshenv</blockquote><strong>nafanja</strong>, большое спасибо, так всё отлично работает<br />правда, на сколько это Ъ не знаю, так как рекомендуют там хранить только переменные, но главное что работает )<br /><br />у меня глюки или изначально твой пост был другой, про .zlogin ?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-134040"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/134040/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>red</em><br>у меня глюки или изначально твой пост был другой, про .zlogin ?</blockquote>да, я сначала не в тему написал, потом поправил.
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-134041"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/red/">
+                <span class="post-username">red</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/134041/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/fd/eb/fdeb672af87b7c02419e9c58404908a5.png" alt="red avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/red/topics/">
+                    30
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/red/posts/">
+                    1517
+                </a>
+            </div>
+            <div>
+                Участник с: 31 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            чуть внимательней почитал нашу вики<br /><a href="https://wiki.archlinux.org/index.php/Zsh#Autostarting_applications">Autostarting applications</a><br /><blockquote><br><strong>Zsh always executes /etc/zsh/zshenv and $ZDOTDIR/.zshenv so do not bloat these files.<br /></strong><br />If the shell is a login shell, commands are read from /etc/profile and then $ZDOTDIR/.zprofile. Then, if the <strong>shell is interactive</strong>, commands are read from /etc/zsh/zshrc and then $ZDOTDIR/.zshrc. Finally, if the shell is a login shell, /etc/zsh/zlogin and $ZDOTDIR/.zlogin are read.</blockquote><br />так что таки да, <strong>zshenv</strong> наше всё
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/13348/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747be9f1ef8c9d9f',m:'g49apJHOLymEyBsrGB.1520GlMPsVjKMJmh4CjAvvW0-1662684463-0-AQLsRDnBlcWUW3YanuadcA0cCvyDVIk5Zwpi3fWQQPlDxZdhagk2RJufae5Wna6FZqNys4MABn1LQqDiFkWzzgDFrIxmrC8v4zNNJU93wPOjmSCpUWtWyhVRyo9C+QuRi9Ke6LEvhXjWuykiLoDN1FQ=',s:[0x4c671d7304,0x57e87b6ecc],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

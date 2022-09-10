@@ -1,0 +1,1068 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        systemd, запуск демонов после поднятия сети
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>systemd, запуск демонов после поднятия сети</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>systemd, запуск демонов после поднятия сети</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6219"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/ProFfeSsoRr/">
+                <span class="post-username">ProFfeSsoRr</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6219/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/96/0a/960adce5ced4a532d34888cc7b42720e.png" alt="ProFfeSsoRr avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/ProFfeSsoRr/topics/">
+                    82
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/ProFfeSsoRr/posts/">
+                    948
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Была тут уже тема, где все решилось банальной опечаткой, у меня же опечаток нет, а проблема аналогична - демоны стартуют до сети. У меня парк машин, подключенных к домену, соответственно необходимо в первую очередь поднять сеть, потом nslcd демон, который разрезолвит все с домена, а потом уже можно общей кучей стартовать все остальное. Бьюсь над nslcd, прописал и After, и Requires строчки, писал в них уже и network.service,  и net-auto-wired.service, и <a href="/cdn-cgi/l/email-protection#d0beb5a4b3b6b790b5a4b8e0fea3b5a2a6b9b3"><span class="__cf_email__" data-cfemail="38565d4c5b5e5f785d4c5008164b5d4a4e515b">[email&#160;protected]</span></a> e, пробовал даже без netcfg, с помощью сервиса <a href="/cdn-cgi/l/email-protection#91f5f9f2e1f2f5d1f4e5f9a1bfe2f4e3e7f8f2"><span class="__cf_email__" data-cfemail="294d414a594a4d694c5d4119075a4c5b5f404a">[email&#160;protected]</span></a> e сделать (ибо сетевая всегда одна, всегда по проводам - следовательно eth0 и всегда по DHCP получает IPшник). Все равно все 3 демона, зависящие от сети (nslcd, avahi-daemon и openntpd) не загружаются, показывают статус failed. Что вообще можно придумать, как понять логику systemd в вопросе с сетью?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6220"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6220/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            network.target ? там не очепятка?
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6221"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/lampslave/">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6221/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/lampslave/topics/">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/lampslave/posts/">
+                    4801
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А в systemctl status демон никакой наводящей информации нет? И сами юниты покажите на всякий случай. Мало ли что.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6222"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/ProFfeSsoRr/">
+                <span class="post-username">ProFfeSsoRr</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6222/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/96/0a/960adce5ced4a532d34888cc7b42720e.png" alt="ProFfeSsoRr avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/ProFfeSsoRr/topics/">
+                    82
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/ProFfeSsoRr/posts/">
+                    948
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>network.target ? там не очепятка?</blockquote>ну да, конечно же network.target, он был в юнитах по умолчанию вписан, а все остальные мною перечисленные варианты я уже сам пробовал вписывать.<br/><br/><blockquote>И сами юниты покажите на всякий случай.</blockquote>Ну openntpd и avahi-daemon - стандартные юниты из их пакетов, мною никак, кроме строк After и Requires не измененные. На nslcd пришлось писать юнит самому, точнее - скопировать его с Fedora :)<br/><br/><div class="code"><pre>[Unit]
+Description=Naming services LDAP client daemon.
+After=syslog.target network.target
+Requires=network.target
+[Service]
+Type=forking
+PIDFile=/var/run/nslcd/nslcd.pid
+ExecStart=/usr/sbin/nslcd
+[Install]
+WantedBy=multi-user.target</pre></div><br/>Я пробовал убирать syslog.target (для чистоты эксперимента) - тоже не помогло.<br/><br/><blockquote>А в systemctl status демон никакой наводящей информации нет?</blockquote>все трое по таймауту отваливаются. avahi-daemon пишет, что resolv.conf нет (а откуда ж ему взяться-то, когда сети еще нет), остальные ничего не пишут кроме того, что по таймауту были убиты. Когда сеть поднята - все трое запускаются по systemctl start без проблем, так что ни на что кроме того, что сеть не успевает подняться к тому моменту, как systemd пытается запустить этих демонов, я не грешу.<br/><br/><strong>UPD</strong> Хаха, с nslcd все еще веселее, systemctl status nslcd показывает, что nslcd сообщает, что запущен и готов работать, а следующая строчка - Failed to start. Ну и статус юнита - failed (Result:timeout). Это вообще что за ерунда - systemd самовольно прибивает нормально работающего демона? оО
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6223"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/ProFfeSsoRr/">
+                <span class="post-username">ProFfeSsoRr</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6223/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/96/0a/960adce5ced4a532d34888cc7b42720e.png" alt="ProFfeSsoRr avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/ProFfeSsoRr/topics/">
+                    82
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/ProFfeSsoRr/posts/">
+                    948
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Итак, текущий результат такой. Установлены пакеты netcfg и ifplugd, в /etc/network.d лежит файл eth0, который суть есть копия ethernet-dhcp из примеров, в systemd включен юнит net-auto-wired. Сеть поднимается нереально долго, несколько минут (около 3-4), как поднялась - стартует и nslcd и все остальное, и дальше можно работать. nslcd не запускался потому, что нельзя просто тупо копировать чужие файлы - надо было путь до pid файла поправить, сейчас файл выглядит вот так:<br/><div class="code"><pre>[Unit]
+Description=Naming services LDAP client daemon.
+After=syslog.target network.target
+Requires=network.target
+[Service]
+Type=forking
+PIDFile=/run/nslcd.pid
+ExecStart=/usr/sbin/nslcd
+[Install]
+WantedBy=multi-user.target</pre></div><br/>Остается понять, почему сеть с systemd поднимается несколько минут вместо нескольких секунд. Я догадываюсь вообще почему - потому что системе нужен доступ до LDAP сервера, которого нет, т.к. нет сети, а нужен потому, что куча всяких gdm и прочего уже запустилась и ждет списка пользователей, и в итоге все это висит-висит, отваливается по таймауту и снова начинает&#8230; Один фиг непонятно, как же заставить сеть правильно и гарантировано подниматься (подняли модуль - получили интерфейс - подняли dhcp - отрапортовали, что все прошло успешно и можно идти дальше).
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6224"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kurych/">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6224/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kurych/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kurych/posts/">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>ProFfeSsoRr</em><br/>Остается понять, почему сеть с systemd поднимается несколько минут вместо нескольких секунд.</blockquote>В качестве предположения: у Вас подключение хостов, случайно, не через коммутатор Cisco какой-нибудь происходит?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6225"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6225/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            Могу предположить что сеть пытается настроится перед загрузкой сетевых устройств.<br/>Я когда то вышел из этого положения вот так<br/><strong>/etc/systemd/system/netcfg.service</strong><br/><div class="code"><pre>.include /usr/lib/systemd/system/netcfg.service
+[Unit]
+Requires=systemd-udev-settle.service
+After=systemd-udev-settle.service
+[Service]
+Restart=on-failure
+RestartSec=60</pre></div>Соответственно нужно подкорректировать <strong><u>нужные сервисы</u></strong> настраивающие подключение к сети<br/><br/>тут насильно запускается сервис <strong>systemd-udev-settle.service</strong> (этот сервис отрабатывает после того как <strong>udev</strong> закончит работу), и текущий сервис должен отработать после  <strong>systemd-udev-settle.service</strong>, если текущий сервис отработал с ошибкой, то подождать <strong>60сек</strong> и повторить попытку.<br/>соответственно остальные сервисы зависящие от <strong>network.target</strong> должны будут ждать пока правильно не отработает текущий сервис.
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6226"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/ProFfeSsoRr/">
+                <span class="post-username">ProFfeSsoRr</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6226/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/96/0a/960adce5ced4a532d34888cc7b42720e.png" alt="ProFfeSsoRr avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/ProFfeSsoRr/topics/">
+                    82
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/ProFfeSsoRr/posts/">
+                    948
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>у Вас подключение хостов, случайно, не через коммутатор Cisco какой-нибудь происходит?</blockquote>нет, DHCP сервер - тоже Arch (правда чуть постарее, там еще 3.5.6 ядро), между сервером и клиентами свитч D-Link управляемый, 3052.<br/><br/><blockquote>Могу предположить что сеть пытается настроится перед загрузкой сетевых устройств.</blockquote>я тоже к этому склоняюсь<br/><blockquote>тут насильно запускается сервис systemd-udev-settle.service (этот сервис отрабатывает после того как udev закончит работу), и текущий сервис должен отработать после systemd-udev-settle.service, если текущий сервис отработал с ошибкой, то подождать 60сек и повторить попытку.</blockquote>хм, а вот до этого я не докопался, сейчас буду экспериментировать, спасибо.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6227"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kurych/">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6227/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kurych/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kurych/posts/">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>ProFfeSsoRr</em><br/>между сервером и клиентами свитч D-Link управляемый, 3052.</blockquote>С D-Link 3052 лично не сталкивался. Но, т.к. он является управляемым свичем, то, скорее всего, на нем включен протокол STP (spanning tree protokol). По крайней мере, могу судить по коммутаторам Cisco. При включенном STP порт первые 40-50 секунд пытается определить, нет ли в сети петель. И только после этого порт становится доступен для передачи трафика. Глянул мельком на мануал этого 3052 - там еще их собственный протокол какой-то есть (loop detection). <br/>Так что рекомендую изучить документацию по настройке коммутатора и отключить на портах, которые идут к серверам и рабочим станциям, stp и другие ненужные в этом случае фичи. В цисковских терминах это: перевести порт в access mode и и включить  spanning-tree portfast на интерфейсе.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6228"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/ProFfeSsoRr/">
+                <span class="post-username">ProFfeSsoRr</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6228/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/96/0a/960adce5ced4a532d34888cc7b42720e.png" alt="ProFfeSsoRr avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/ProFfeSsoRr/topics/">
+                    82
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/ProFfeSsoRr/posts/">
+                    948
+                </a>
+            </div>
+            <div>
+                Участник с: 14 мая 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>При включенном STP порт первые 40-50 секунд пытается определить, нет ли в сети петель. И только после этого порт становится доступен для передачи трафика.</blockquote>про это в курсе, выключено. Да и если перезагружать машину - порт не отцепляется. А я вообще на виртуалке тестирую - физическая машина-то порт держит поднятым постоянно и соответственно даже включенный STP никак бы не помешал ;)<br/><br/>Сегодня к сожалению приболел и был дома, завтра продолжу эксперименты и отпишусь.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/684/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747b40aba8229d8d',m:'S5I7n7oXI_MtEAjjtB.ARIv44jvGrC6RGupTcdRzg6A-1662677533-0-Ac/ldKsEoD83+S+RHvc6N3i+iGEbtf3AGtdhObzjW952J/qJThLiw2d9BqoPWO12SgljPcXtoCZMf47hGotdQuszRB6Gmo19L4pe2/ElfrIqdwqiOdxrdi4Rsmp3r8FWfgACjillCflpoIw4dqJy0DA=',s:[0x9ab2dd93a3,0x14565a6486],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

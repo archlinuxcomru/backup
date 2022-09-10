@@ -1,0 +1,924 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/10144/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:11:18 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Постепенная утечка памяти.
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/9/index.html">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Постепенная утечка памяти.</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Постепенная утечка памяти.</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-94907"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/goom/index.html">
+                <span class="post-username">goom</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/94907/index.html">#</a>
+            15 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    15 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/goom/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/goom/posts/index.html">
+                    90
+                </a>
+            </div>
+            <div>
+                Участник с: 29 октября 2006
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Запущены fluxbox, psi, amarok и opera. Службы: (syslog-ng atd !hotplug !pcmcia network !netfs crond !cups hald autofs !iptables gpm !squid adsl !ddclient !httpd alsa). Во FreeBSD 6.1 stable с аналогичными программами памяти уходит лишь около 250 метров, в арче же:<br/><div class="code"><pre>[goom@goomhost ~]$ free
+             total       used       free     shared    buffers     cached
+Mem:        775732     337604     438128          0      36328     152436
+-/+ buffers/cache:     148840     626892
+Swap:      2000052          0    2000052
+]</pre></div>Первые двадцать процессов:<br/><div class="code"><pre>  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  GROUP    COMMAND  
+ 3428 goom      15   0  154m  45m  26m S  6.0  6.0   0:21.33 goom     amarokapp 
+    1 root      15   0  1564  528  464 S  0.0  0.1   0:00.72 root     init      
+    2 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 root     migration/
+    3 root      34  19     0    0    0 S  0.0  0.0   0:00.00 root     ksoftirqd/
+    4 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 root     watchdog/0
+    5 root      10  -5     0    0    0 S  0.0  0.0   0:00.13 root     events/0  
+    6 root      16  -5     0    0    0 S  0.0  0.0   0:00.00 root     khelper   
+    7 root      10  -5     0    0    0 S  0.0  0.0   0:00.00 root     kthread   
+   10 root      10  -5     0    0    0 S  0.0  0.0   0:00.00 root     kblockd/0 
+   11 root      20  -5     0    0    0 S  0.0  0.0   0:00.00 root     kacpid    
+  132 root      10  -5     0    0    0 S  0.0  0.0   0:00.01 root     kseriod   
+  180 root      25   0     0    0    0 S  0.0  0.0   0:00.00 root     pdflush   
+  181 root      15   0     0    0    0 S  0.0  0.0   0:00.00 root     pdflush   
+  182 root      20  -5     0    0    0 S  0.0  0.0   0:00.00 root     kswapd0   
+  183 root      20  -5     0    0    0 S  0.0  0.0   0:00.00 root     aio/0     
+  763 root      17  -5     0    0    0 S  0.0  0.0   0:00.00 root     ata/0     
+  764 root      17  -5     0    0    0 S  0.0  0.0   0:00.00 root     ata_aux   
+  921 root      10  -5     0    0    0 S  0.0  0.0   0:00.00 root     reiserfs/0
+  958 root      10  -5     0    0    0 S  0.0  0.0   0:00.00 root     khubd     
+  974 root      16  -4  2152 1116  372 S  0.0  0.1   0:00.36 root     udevd</pre></div>Примерно 100-150 кб памяти кем-то хавается раз в 1-3 секунды. Без иксов анализ не проводил.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-94908"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/zeus/index.html">
+                <span class="post-username">zeus</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/94908/index.html">#</a>
+            15 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/zeus/topics/index.html">
+                    95
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/zeus/posts/index.html">
+                    1094
+                </a>
+            </div>
+            <div>
+                Участник с: 28 октября 2006
+            </div>
+            
+        </td>
+        <td class="post-content">
+            занято 337 из них 150 - амарок<br/><br/>отсортируй top по памяти
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-94909"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/goom/index.html">
+                <span class="post-username">goom</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/94909/index.html">#</a>
+            15 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/goom/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/goom/posts/index.html">
+                    90
+                </a>
+            </div>
+            <div>
+                Участник с: 29 октября 2006
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <div class="code"><pre>top - 15:02:35 up 46 min,  1 user,  load average: 0.21, 0.34, 0.30
+Tasks:  63 total,   3 running,  60 sleeping,   0 stopped,   0 zombie
+Cpu(s): 15.9%us,  2.3%sy,  0.0%ni, 81.4%id,  0.0%wa,  0.0%hi,  0.3%si,  0.0%st
+Mem:    775732k total,   418912k used,   356820k free,    52880k buffers
+Swap:  2000052k total,        0k used,  2000052k free,   215208k cached
+  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  GROUP    COMMAND     
+ 3876 goom      15   0  154m  45m  26m S  0.0  6.0   0:00.00 goom     amarokapp    
+ 3647 goom      15   0  2092 1056  820 R  0.0  0.1   0:02.46 goom     top          
+ 3631 goom      15   0  4196 1688 1280 S  0.0  0.2   0:00.00 goom     bash         
+ 3630 goom      15   0 10044 3156 2268 S  0.0  0.4   0:00.07 goom     xterm        
+ 3567 goom      15   0  2652  796  700 S  0.0  0.1   0:00.00 goom     operaplugincl
+ 3436 goom      15   0  3752 2372 1148 S  0.0  0.3   0:00.03 goom     ruby         
+ 3430 goom      15   0  154m  45m  26m S  0.0  6.0   0:00.00 goom     amarokapp    
+ 3429 goom      15   0  154m  45m  26m S  0.3  6.0   0:26.60 goom     amarokapp    
+ 3428 goom      15   0  154m  45m  26m S  5.7  6.0   1:18.01 goom     amarokapp    
+ 3427 goom      15   0  154m  45m  26m S  0.0  6.0   0:00.00 goom     amarokapp    
+ 3421 goom      15   0  154m  45m  26m S  0.0  6.0   0:00.00 goom     amarokapp    
+ 3417 goom      15   0 38796  15m 7232 S  0.0  2.0   0:00.05 goom     kio_http     
+ 3414 goom      18   0 35504  14m 6432 S  0.0  1.9   0:00.00 goom     kio_file     
+ 3395 goom      15   0  154m  45m  26m R  0.0  6.0   0:03.89 goom     amarokapp    
+ 3390 goom      15   0 38748  18m  10m S  0.0  2.5   0:01.09 goom     kded         
+ 3388 goom      15   0 35372  14m 7292 S  0.0  2.0   0:00.04 goom     klauncher    
+ 3384 goom      15   0 33220  12m 5500 S  0.0  1.7   0:00.07 goom     dcopserver   
+ 3380 goom      16   0 33428  13m 6016 S  0.0  1.8   0:00.05 goom     kdeinit      
+ 3356 goom      15   0  4192 1684 1280 S  0.0  0.2   0:00.01 goom     bash         
+ 3355 goom      15   0 10248 4088 2304 R  0.3  0.5   0:00.33 goom     xterm        
+ 3341 goom      15   0  128m  64m  17m S  6.7  8.5   1:11.75 goom     opera        
+ 3331 goom      15   0 44992  21m  12m S  0.0  2.9   0:00.44 goom     psi          
+ 3322 goom      15   0 10772 6492 4628 S  0.0  0.8   0:04.98 goom     fluxbox      
+ 3309 root      17   0  3516 1316 1048 S  0.0  0.2   0:00.00 root     kdm          
+ 3306 root      15   0 53368  30m 6500 S  6.0  4.0   1:57.80 root     X            
+ 3292 root      18   0  2988  892  740 S  0.0  0.1   0:00.00 root     kdm          
+ 3291 root      18   0  1564  496  432 S  0.0  0.1   0:00.00 root     agetty       
+ 3290 root      18   0  1560  496  432 S  0.0  0.1   0:00.00 root     agetty       
+ 3289 root      18   0  1564  500  432 S  0.0  0.1   0:00.00 root     agetty       
+ 3288 root      18   0  1560  496  432 S  0.0  0.1   0:00.00 root     agetty       
+ 3287 root      18   0  1560  496  432 S  0.0  0.1   0:00.00 root     agetty       
+ 3286 root      18   0  1560  496  432 S  0.0  0.1   0:00.01 root     agetty       
+ 3259 nobody    15   0  1604  600  520 S  0.0  0.1   0:00.93 nobody   pppoe        
+ 3258 root      15   0  2480  948  788 S  0.0  0.1   0:00.01 root     pppd         
+ 3236 root      25   0  2744 1284 1068 S  0.0  0.2   0:00.00 root     pppoe-connect
+ 3225 root      15   0  1776  456  376 S  0.0  0.1   0:00.00 root     gpm          
+ 3214 root      18   0  1724  692  584 S  0.0  0.1   0:00.00 root     automount    
+ 3167 root      15   0  1728  556  480 S  0.0  0.1   0:00.00 root     crond        
+ 3146 daemon    25   0  1768  396  312 S  0.0  0.1   0:00.00 daemon   atd          
+ 3136 root      15   0  1980  652  424 S  0.0  0.1   0:00.00 root     syslog-ng  </pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-94910"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/zeus/index.html">
+                <span class="post-username">zeus</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/94910/index.html">#</a>
+            15 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/zeus/topics/index.html">
+                    95
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/zeus/posts/index.html">
+                    1094
+                </a>
+            </div>
+            <div>
+                Участник с: 28 октября 2006
+            </div>
+            
+        </td>
+        <td class="post-content">
+            откуда стока копий амарока?<br/>ты вроде не отсорировал по VIRT -\
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-94911"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/goom/index.html">
+                <span class="post-username">goom</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/94911/index.html">#</a>
+            15 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    15 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/goom/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/goom/posts/index.html">
+                    90
+                </a>
+            </div>
+            <div>
+                Участник с: 29 октября 2006
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Закрыл амарок - убились все amarokapp, но память не освободилась.<br/><div class="code"><pre>
+ Tasks:  47 total,   2 running,  45 sleeping,   0 stopped,   0 zombie
+Cpu(s): 27.2%us,  3.3%sy,  0.0%ni, 66.9%id,  0.0%wa,  0.3%hi,  2.3%si,  0.0%st
+Mem:    775732k total,   401456k used,   374276k free,    54556k buffers
+Swap:  2000052k total,        0k used,  2000052k free,   229236k cached
+  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  GROUP    COMMAND     
+ 3341 goom      15   0  128m  64m  17m S 14.3  8.5   1:58.74 goom     opera        
+ 3306 root      15   0 49840  30m 6500 S 17.0  4.0   3:16.41 root     X            
+ 3331 goom      15   0 45404  21m  12m S  0.0  2.9   0:00.46 goom     psi          
+ 3322 goom      15   0 10904 6652 4632 S  0.7  0.9   0:07.31 goom     fluxbox      
+ 3355 goom      15   0 10248 4112 2320 R  0.0  0.5   0:01.81 goom     xterm        
+ 3356 goom      15   0  4192 1700 1288 S  0.0  0.2   0:00.24 goom     bash         
+ 3309 root      17   0  3516 1316 1048 S  0.0  0.2   0:00.00 root     kdm          
+ 3236 root      25   0  2744 1284 1068 S  0.0  0.2   0:00.00 root     pppoe-connect
+  974 root      16  -4  2152 1116  372 S  0.0  0.1   0:00.36 root     udevd        
+ 4079 goom      15   0  2096 1044  828 R  0.0  0.1   0:00.24 goom     top          
+ 3258 root      15   0  2480  948  788 S  0.0  0.1   0:00.01 root     pppd         
+ 3292 root      18   0  2988  892  740 S  0.0  0.1   0:00.00 root     kdm          
+ 3567 goom      15   0  2652  796  700 S  0.0  0.1   0:00.00 goom     operaplugincl
+ 3214 root      18   0  1724  692  584 S  0.0  0.1   0:00.00 root     automount    
+ 3136 root      15   0  1980  652  424 S  0.0  0.1   0:00.00 root     syslog-ng    
+ 3259 nobody    15   0  1604  600  520 S  0.0  0.1   0:01.61 nobody   pppoe        
+ 3167 root      15   0  1728  556  480 S  0.0  0.1   0:00.00 root     crond        
+    1 root      15   0  1564  528  464 S  0.0  0.1   0:00.72 root     init         
+ 3289 root      18   0  1564  500  432 S  0.0  0.1   0:00.00 root     agetty       
+ 3286 root      18   0  1560  496  432 S  0.0  0.1   0:00.01 root     agetty       
+ 3287 root      18   0  1560  496  432 S  0.0  0.1   0:00.00 root     agetty       
+ 3288 root      18   0  1560  496  432 S  0.0  0.1   0:00.00 root     agetty       
+ 3290 root      18   0  1560  496  432 S  0.0  0.1   0:00.00 root     agetty       
+ 3291 root      18   0  1564  496  432 S  0.0  0.1   0:00.00 root     agetty       
+ 3225 root      15   0  1776  456  376 S  0.0  0.1   0:00.00 root     gpm          
+ 3146 daemon    18   0  1768  396  312 S  0.0  0.1   0:00.00 daemon   atd          
+    2 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 root     migration/0  
+    3 root      34  19     0    0    0 S  0.0  0.0   0:00.03 root     ksoftirqd/0  
+    4 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 root     watchdog/0   
+    5 root      10  -5     0    0    0 S  0.0  0.0   0:00.16 root     events/0     
+    6 root      10  -5     0    0    0 S  0.0  0.0   0:00.01 root     khelper      
+    7 root      10  -5     0    0    0 S  0.0  0.0   0:00.00 root     kthread      
+   10 root      10  -5     0    0    0 S  0.0  0.0   0:00.00 root     kblockd/0    
+   11 root      20  -5     0    0    0 S  0.0  0.0   0:00.00 root     kacpid       
+  132 root      10  -5     0    0    0 S  0.0  0.0   0:00.01 root     kseriod      
+  180 root      25   0     0    0    0 S  0.0  0.0   0:00.00 root     pdflush      
+  181 root      15   0     0    0    0 S  0.0  0.0   0:00.03 root     pdflush      
+  182 root      20  -5     0    0    0 S  0.0  0.0   0:00.00 root     kswapd0      
+  183 root      20  -5     0    0    0 S  0.0  0.0   0:00.00 root     aio/0        
+  763 root      17  -5     0    0    0 S  0.0  0.0   0:00.00 root     ata/0           </pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-94912"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/goom/index.html">
+                <span class="post-username">goom</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/94912/index.html">#</a>
+            15 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/goom/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/goom/posts/index.html">
+                    90
+                </a>
+            </div>
+            <div>
+                Участник с: 29 октября 2006
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Скорее всего течет опера с амароком. После загрузки иксов памяти юзается около 150 метров и потребление не растет. При серфе оперой и слушании музыки амароком начинается цирк. Естественно, при их закрытии память не освобождается.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-94913"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/mit3z/index.html">
+                <span class="post-username">mit3z</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/94913/index.html">#</a>
+            15 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/mit3z/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/mit3z/posts/index.html">
+                    18
+                </a>
+            </div>
+            <div>
+                Участник с: 04 ноября 2006
+            </div>
+            
+        </td>
+        <td class="post-content">
+            я б сказал, что это амарок, ибо опера у меня память освобождает. Кстати, какая версия?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-94914"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/zeus/index.html">
+                <span class="post-username">zeus</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/94914/index.html">#</a>
+            15 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/zeus/topics/index.html">
+                    95
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/zeus/posts/index.html">
+                    1094
+                </a>
+            </div>
+            <div>
+                Участник с: 28 октября 2006
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>mit3z</em><br/>я б сказал, что это амарок, ибо опера у меня память освобождает. Кстати, какая версия?<br/></blockquote>у мну амарок вполне цивильно. не течет Ж)<br/>вполне возможно что амарок и опера грузят шареные в память. а после кеды не выгружают ибо юзаются.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index17f0.html?next=/forum/topic/10144/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/10144/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:11:18 GMT -->
+</html>

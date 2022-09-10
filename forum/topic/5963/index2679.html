@@ -1,0 +1,780 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        udev - fix problem with CD,DVD-RW, etc
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/3/">Пакетная система</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/8/">Сборка пакетов</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>udev - fix problem with CD,DVD-RW, etc</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>udev - fix problem with CD,DVD-RW, etc</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57935"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/bobart/">
+                <span class="post-username">bobart</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57935/">#</a>
+            12 лет назад
+            
+                (отредактировано
+                
+                    12 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/bobart/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/bobart/posts/">
+                    2537
+                </a>
+            </div>
+            <div>
+                Участник с: 28 ноября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Привет. Это касается тех, у кого после обновления udev-160-1 &gt; 161-1 и т.д. перестали нормально монтироваться CD, DVD и прочее. Не буду долго описывать как был достигнут сегодняшний результат. Приложили руку <strong>Amigo</strong> (в качестве пинателя в нужном направлениии), <strong>S.Pupykin</strong> (аналогично, плюс советы по промежуточным решениям) и <strong>vadik</strong>, в качестве сборщика, пинателя и сообщника. Иными словами &ldquo;всем спасибо&rdquo;. <br/>Теперь о пакете.<br/>Он собирается на основе udev/trank с <a href="https://repos.archlinux.org/wsvn/packages/udev/trunk/">http://repos.archlinux.org/wsvn/packages/udev/trunk/</a> и исходников с <a href="https://git.kernel.org/?p=linux/hotplug/udev.git%3Ba=tree">http://git.kernel.org/?p=linux/hotplug/udev.git;a=tree</a> <br/>Почему-то не могу прикрепить файл архива (чьи происки?), поэтому:<br/>1. Качаете архив отсюда: <a href="https://repos.archlinux.org/wsvn/packages/udev/trunk/">http://repos.archlinux.org/wsvn/packages/udev/trunk/</a> <br/>2. Распаковываете в произвольную папку сборки (например ~/udev_test), удаляете оттуда &ldquo;arch-udev-rules.patch&rdquo; (он всё равно пустой).<br/>3. Заменяете оригинальный PKGBUILD из архива этим:<br/><div class="code"><pre># This is an example PKGBUILD file. Use this as a start to creating your own,
+# and remove these comments. For more information, see 'man PKGBUILD'.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+# See <a href="https://wiki.archlinux.org/index.php/VCS_PKGBUILD_Guidelines">http://wiki.archlinux.org/index.php/VCS_PKGBUILD_Guidelines</a>
+# for more information on packaging from GIT sources.
+# Contributor: Your Name &lt;<a href="/cdn-cgi/l/email-protection#661f091314030b070f0a2602090b070f084805090b"><span class="__cf_email__" data-cfemail="6b12041e190e060a02072b0f04060a020545080406">[email&#160;protected]</span></a>
+pkgname=udev
+pkgver=20100903
+pkgrel=1
+pkgdesc=""
+arch=(i686 x86_64)
+url="http://git.kernel.org/"
+license=('GPL')
+groups=('base')
+depends=()
+makedepends=('git' 'glibc' 'coreutils' 'util-linux' 'libusb' 'glib2' 'kernel26' 'gperf' 'libxslt' 'gobject-introspection' 'gtk-doc' )
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+noextract=()
+source=(80-drivers.rules 
+        81-arch.rules 
+        load-modules.sh 
+        cdsymlinks.sh)
+md5sums=('4427855146513a4703ab5c7eb8a0156e' 
+        'f17c99779173ddc79f866cf3a5de5e68' 
+        'f91fddc67609b45b244a624977c4247b' 
+        '2e808ee78d237c478b57af2a68d43769')
+_gitroot="git://git.kernel.org/pub/scm/linux/hotplug/udev.git"
+_gitname="udev"
+build() {
+  cd "$srcdir"
+  msg "Connecting to GIT server...."
+  if [ -d $_gitname ] ; then
+    cd $_gitname &amp;&amp; git pull origin
+    msg "The local files are updated."
+  else
+    git clone $_gitroot $_gitname
+  fi
+  msg "GIT checkout done or server timeout"
+  msg "Starting make..."
+  rm -rf "$srcdir/$_gitname-build"
+  git clone "$srcdir/$_gitname" "$srcdir/$_gitname-build"
+  cd "$srcdir/$_gitname-build"
+  #
+  # BUILD HERE
+  #
+  ./autogen.sh --without-selinux
+  ./configure --prefix="" --mandir=/usr/share/man\
+                          --includedir=/usr/include\
+                          --libexecdir=/lib/udev\
+                          --datarootdir=/usr/share
+  make
+}
+  
+package_udev() {
+  pkgdesc="The userspace dev tools (udev)"
+  depends=('glibc' 'coreutils' 'util-linux' 'libusb' 'glib2'
+           'module-init-tools&gt;=3.11')
+  install=udev.install
+  backup=(etc/udev/udev.conf
+          etc/modprobe.d/framebuffer_blacklist.conf)
+  conflicts=('pcmcia-cs' 'hotplug' 'initscripts&lt;2009.07')
+  replaces=('devfsd')
+  
+  cd "$srcdir/$_gitname-build"
+  make DESTDIR=${pkgdir} install
+  # Fix pkgconfig path
+  install -d -m755 $pkgdir/usr/lib
+  mv $pkgdir/lib/pkgconfig $pkgdir/usr/lib
+  # Fix ConsoleKit path
+  mv $pkgdir/lib/ConsoleKit $pkgdir/usr/lib
+  # Replace original 80-drivers.rules with custom one.
+  install -D -m644 $srcdir/80-drivers.rules $pkgdir/lib/udev/rules.d/80-drivers.rules
+  # Install our rule for permissions and symlinks
+  install -D -m644 $srcdir/81-arch.rules $pkgdir/lib/udev/rules.d/81-arch.rules
+  # install our module loading subsystem
+  install -D -m755 $srcdir/load-modules.sh $pkgdir/lib/udev/load-modules.sh
+  # install cdsymlinks.sh
+  install -D -m755 $srcdir/cdsymlinks.sh $pkgdir/lib/udev/cdsymlinks.sh
+  # disable error logging to prevent startup failures printed to vc on boot
+  sed -i -e 's|udev_log="err"|udev_log="0"|g' $pkgdir/etc/udev/udev.conf
+  # disable persistent cdromsymlinks and network by default 
+  # and move it to /etc/udev/rules.d
+  mv $pkgdir/lib/udev/rules.d/75-persistent-net-generator.rules \
+     $pkgdir/etc/udev/rules.d/75-persistent-net-generator.rules.optional
+  mv $pkgdir/lib/udev/rules.d/75-cd-aliases-generator.rules \
+     $pkgdir/etc/udev/rules.d/75-cd-aliases-generator.rules.optional
+  # create framebuffer blacklist
+  mkdir -p $pkgdir/etc/modprobe.d/
+  for mod in $(find /lib/modules/*/kernel/drivers/video -name '*fb.ko' -exec basename {} .ko \;); do 
+	echo "blacklist $mod" &gt;&gt; $pkgdir/etc/modprobe.d/framebuffer_blacklist.conf
+  done
+  # create static devices in /lib/udev/devices/
+  mkdir ${pkgdir}/lib/udev/devices/pts
+  mkdir ${pkgdir}/lib/udev/devices/shm
+  mknod -m 0600 ${pkgdir}/lib/udev/devices/console c 5 1
+  mknod -m 0666 ${pkgdir}/lib/udev/devices/null c 1 3
+  mknod -m 0660 ${pkgdir}/lib/udev/devices/zero c 1 5
+  mknod -m 0666 ${pkgdir}/lib/udev/devices/kmsg c 1 11
+  ln -snf /proc/self/fd ${pkgdir}/lib/udev/devices/fd
+  ln -snf /proc/self/fd/0 ${pkgdir}/lib/udev/devices/stdin
+  ln -snf /proc/self/fd/1 ${pkgdir}/lib/udev/devices/stdout
+  ln -snf /proc/self/fd/2 ${pkgdir}/lib/udev/devices/stderr
+  ln -snf /proc/kcore ${pkgdir}/lib/udev/devices/core
+  # these static devices are created for convenience, to autoload the modules if necessary
+  # /dev/loop0
+  mknod -m 0660 ${pkgdir}/lib/udev/devices/loop0 b 7 0
+  chgrp disk ${pkgdir}/lib/udev/devices/loop0
+  # /dev/net/tun
+  mkdir ${pkgdir}/lib/udev/devices/net
+  mknod -m 0666 ${pkgdir}/lib/udev/devices/net/tun c 10 200
+  # /dev/fuse
+  mknod -m 0666 ${pkgdir}/lib/udev/devices/fuse c 10 229 
+  # /dev/ppp
+  mknod -m 0600 ${pkgdir}/lib/udev/devices/ppp c 108 0
+  # Replace dialout/tape/cdrom group in rules with uucp/storage/optical group
+  for i in $pkgdir/lib/udev/rules.d/*.rules; do
+    sed -i -e 's#GROUP="dialout"#GROUP="uucp"#g;
+               s#GROUP="tape"#GROUP="storage"#g;
+               s#GROUP="cdrom"#GROUP="optical"#g' $i
+  done
+  mv "${pkgdir}/lib/girepository-1.0" "${pkgdir}/usr/lib/"
+}</pre></div>4. В итоге, в папке сборки должно быть 6 файлов: <br/>80-drivers.rules<br/>81-arch.rules<br/>cdsymlinks.sh<br/>load-modules.sh<br/>PKGBUILD<br/>udev.install<br/>5. <div class="code"><pre>cd ~/папка_сборки &amp;&amp; makepkg</pre></div>Есть момент: подвисает на &ldquo;очистке&rdquo;. Если так, то жмём пару раз Ctrl+D в окне сборки и всё благополучно завершается.<br/>Ну, и конечно <div class="code"><pre>pacman -U udev-20100903-1-i686.pkg.tar.xz</pre></div>Если всё хорошо, можно (и нужно) писать &ldquo;куда-то там разрабам&rdquo;, чтобы они обратили внимание и &ldquo;что-нибудь сделали&rdquo;. Я понимаю, снапшот из <a href="https://git.kernel.org">git.kernel.org</a> рано или поздно перейдёт в основную ветку, потом в арч. репы и т.п. Но - главное: &ldquo;когда?&rdquo; На сегодняшний день, как я понимаю, уже второе обновление udev не сулит ничего хорошего тем, кто попал на этот баг. То есть, &ldquo;сидим на 160-1 и не жужжим&rdquo;. Нехорошо, товарищи! Не сознательно!<br/>PS. Проверено на <div class="code"><pre>Linux arch 2.6.35-ARCH #1 SMP PREEMPT Fri Aug 27 16:22:18 UTC 2010 i686 Intel(R) Core(TM)2 Duo CPU E8200 @ 2.66GHz GenuineIntel GNU/Linux</pre></div>GNOME 2.30 (gnome-desktop 2.30.2-1)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57936"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sw/">
+                <span class="post-username">sw</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57936/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sw/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sw/posts/">
+                    35
+                </a>
+            </div>
+            <div>
+                Участник с: 07 февраля 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            однако ;)<br/>./autogen.sh: line 3: gtkdocize: команда не найдена<br/>    Преждевременный выход&#8230;<br/><br/>так, для сведения ;)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57937"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vadik/">
+                <span class="post-username">vadik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57937/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vadik/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vadik/posts/">
+                    5395
+                </a>
+            </div>
+            <div>
+                Участник с: 17 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Аналогично, причем пакет <strong>base-devel</strong> установлен.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57938"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/bobart/">
+                <span class="post-username">bobart</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57938/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/bobart/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/bobart/posts/">
+                    2537
+                </a>
+            </div>
+            <div>
+                Участник с: 28 ноября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня собралось без выкрутасов. Разруливаем&#8230;<br/>PS/ Добавил в зависимости для сборки &lsquo;gtk-doc&rsquo;<br/><div class="code"><pre>makedepends=('git' 'glibc' 'coreutils' 'util-linux' 'libusb' 'glib2' 'kernel26' 'gperf' 'libxslt' 'gobject-introspection' 'gtk-doc' )</pre></div><div class="code"><pre><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="593b363b19382b3a31">[email&#160;protected]</a>:~$ pacman -Q gtk-doc
+gtk-doc 1.14-2</pre></div>Видимо, он у меня уже был когда-то поставлен, неизвестно для чего. Да, вот так, тернист путь красноглазика.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57939"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sw/">
+                <span class="post-username">sw</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57939/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sw/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sw/posts/">
+                    35
+                </a>
+            </div>
+            <div>
+                Участник с: 07 февраля 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            щас проверю )))<br/>есть, правда, нюанс - откат не предыдущую версию udev проблемы automount не решил, возможно мой pcmanfm глючит.<br/><br/>ps<br/>проверил - пакет собирается, но проблемы не решает, возможно таки pcmanfm-git<br/><br/>pps<br/>да, вопрос решен, поправил polkit, обновил pcmanfm, но - где зарыли собаку теперь уже не узнать ;) <br/><br/>bobart<br/>благодарю за проделанную работу ))
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57940"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/bobart/">
+                <span class="post-username">bobart</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57940/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/bobart/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/bobart/posts/">
+                    2537
+                </a>
+            </div>
+            <div>
+                Участник с: 28 ноября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Незачто. Благодарности отсылай выше (см. первое сообщение), а мне не влом было повозиться. Методом тыка нащупалось решение.<br/>зы. Где эта собака сейчас уже только разработчики знают. Один из команды (<a href="https://git.kernel.org">git.kernel.org</a>, мантейнер Martin Pitt) сделал патч, потом пакет, уже пропатченный - он и висит в гите. Арчевские - правила сборки и доп. скрипты. А я оказался за свою инициативу &ldquo;крайним&rdquo;, он мне ответил на письмо и я попал)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/5963/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747bc60e183b7b47',m:'tzQYRudpPa3k_L0.csRDIAT3WkOHJR6JcMLaGMMkjCU-1662682989-0-AVApuyNN4JLWJw7wHA6QcF7hadi2f8OYbvaV2VwlogynOBEX41NVJtIPJws7wZ9E3lh9JIJYMWnqlQmrKOXYq8ZjZmr8hf9hUR1dnE4PFlkQc7f+RMaKYcQj9bcUe+NjHBVB37nm5T/MoeA75EPFCp4=',s:[0x7811722aad,0x570c11921f],u:'/cdn-cgi/challenge-platform/h/g'};var _cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/cb/invisible.js?cb=747bc60e183b7b47',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

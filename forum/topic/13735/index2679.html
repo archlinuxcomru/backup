@@ -1,0 +1,968 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Особенности деления жесткого диска на разделы под Linux
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/5/">Разное</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/4/">/dev/null</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Особенности деления жесткого диска на разделы под Linux</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Особенности деления жесткого диска на разделы под Linux</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-139036"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/xSPiRiTx/">
+                <span class="post-username">xSPiRiTx</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/139036/">#</a>
+            8 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/xSPiRiTx/topics/">
+                    110
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/xSPiRiTx/posts/">
+                    574
+                </a>
+            </div>
+            <div>
+                Участник с: 21 февраля 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Есть ли разница или какие-нибудь нюансы при делении жесткого диска на разделы при установке Linux?<br /><br />  -имеет ли роль в каком месте я создам swap раздел? в начале диска, или в конце, или вообще неизвестно где.<br />  -раздел swap должен быть равен объёму, в полтора раза больше, чем объем DDR? (например, если у нас 2GB DDR, то swap должен быть 3GB?)<br />  -почему иногда некоторые люди не используют раздел swap?<br />  -важен ли раздел /boot. имеет ли значение в каком месте диска я его создам (начало, конец....)<br />  -почему раздел /boot форматируют в ext2, а не в ext4?<br />  -имеет ли значение создам ли я разделы boot, swap, root как основные или логические, либо какие-то из них как основные, а какие-то как логические?<br />  -что мне нужно знать о выборе файловой системы? в каких ситуациях применяется та или иная?<br />  -при каких случаях возможна потеря скорости работы/загрузки системы?<br />  -зачем на серверах создаются отдельные разделы под /var и /tmp?<br /><br />Вопросы эти интересуют как на десктопе так и на сервере?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-139040"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/maisvendoo/">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/139040/">#</a>
+            8 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/maisvendoo/topics/">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/maisvendoo/posts/">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>xSPiRiTx</em><br>раздел swap должен быть равен объёму, в полтора раза больше, чем объем DDR?</blockquote>По разному, но лучше чуть больше объема RAM, оставляя возможность использовать гибернацию. Я делаю x2 RAM<br /><br /><blockquote><em>xSPiRiTx</em><br>почему иногда некоторые люди не используют раздел swap?</blockquote><br />потому что у них много ОЗУ, у меня допустим 16 Gb, в принципе зачем тут swap. Хотя на всякий случай он у меня имеется, ибо столько памяти для того чтобы гонять вирутальные машины. А они жрут<br /><br /><blockquote><em>xSPiRiTx</em><br>важен ли раздел /boot. имеет ли значение в каком месте диска я его создам (начало, конец....)</blockquote>нужен, чтобы сделать загрузчик системнонезависимым и при падении одной из установленных систем загузчик оставался цел. Такая же фича есть и в win7 кстати.<br /><br /><blockquote><em>xSPiRiTx</em><br>имеет ли значение создам ли я разделы boot, swap, root как основные или логические, либо какие-то из них как основные, а какие-то как логические?</blockquote>Для линукса не имеет<br /><br /><blockquote><em>xSPiRiTx</em><br>-имеет ли роль в каком месте я создам swap раздел? в начале диска, или в конце, или вообще неизвестно где.</blockquote>По моему тоже не важно<br /><br /><blockquote><em>xSPiRiTx</em><br>-почему раздел /boot форматируют в ext2, а не в ext4?</blockquote>раньше grub не понимал ext4. Хотя могу ошибаться
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-139043"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/jim945/">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/139043/">#</a>
+            8 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/jim945/topics/">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/jim945/posts/">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>xSPiRiTx</em><br>-имеет ли роль в каком месте я создам swap раздел? в начале диска, или в конце, или вообще неизвестно где.</blockquote>Говорят, что в начале диска скорость выше. К ssd это не относится.<br /><blockquote><em>xSPiRiTx</em><br>-важен ли раздел /boot. имеет ли значение в каком месте диска я его создам (начало, конец....)</blockquote>опять же. Если будет лежать в начале, то ядро прочитается немного быстрее.<br /><blockquote><em>xSPiRiTx</em><br>-почему раздел /boot форматируют в ext2, а не в ext4?</blockquote>Запись в него достаточно редкое явление, поэтому журналирование там лишнее.<br /><blockquote><em>xSPiRiTx</em><br>-имеет ли значение создам ли я разделы boot, swap, root как основные или логические, либо какие-то из них как основные, а какие-то как логические?</blockquote>Переходите на GPT уже и забудьте про это.
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-139044"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/jim945/">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/139044/">#</a>
+            8 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/jim945/topics/">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/jim945/posts/">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>xSPiRiTx</em><br>-что мне нужно знать о выборе файловой системы?</blockquote>ВСЁ!!!<br /><blockquote><em>xSPiRiTx</em><br>в каких ситуациях применяется та или иная?</blockquote>Тогда с этим вопросом проблем не будет.<br />ПС. В сети полно информации.
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-139048"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Aivar/">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/139048/">#</a>
+            8 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Aivar/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Aivar/posts/">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>xSPiRiTx</em><br>-почему иногда некоторые люди не используют раздел swap?</blockquote>Я с 4 гигами долгое время не использовал своп, пока однажды к куче открытого софта не запустил виртуальную машину. С тех пор считаю, что своп - как презерватив: пусть лучше он не пригодится, но всегда будет в кармане, чем его там не окажется в нужный момент.<br /><br /><blockquote><em>xSPiRiTx</em><br>-имеет ли роль в каком месте я создам swap раздел? в начале диска, или в конце, или вообще неизвестно где.</blockquote>Некоторые полагают, что место ему в конце диска, особенно если использоваться он будет редко.<br /><br /><blockquote><em>xSPiRiTx</em><br>-что мне нужно знать о выборе файловой системы? в каких ситуациях применяется та или иная?</blockquote>А этой инфы, действительно, много. Все может зависеть от того, какие у вас раки: крупные по 5 или мелкие по 3.<br />А если не заморачиваться - то EXT4.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-139049"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/52th/">
+                <span class="post-username">52th</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/139049/">#</a>
+            8 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/52th/topics/">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/52th/posts/">
+                    462
+                </a>
+            </div>
+            <div>
+                Участник с: 01 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><br>xSPiRiTx<br />-что мне нужно знать о выборе файловой системы?</blockquote><strong>ext4</strong> - быстрая и надёжная система. широко применяется в разных областях науки и техники, хорошо себя зарекомендовала<br /><strong>btrfs</strong> - относительно новая ФС с кучей ништяков, уже довольно стабильная, хотя в критически выжных местах не рекомендуют её использовать<br /><strong>zfs</strong>   - ФС для работы с гигантскими объемами информации, куча наворотов, на десктопе впринципе не нужных<br /><br />Дома на каждый день вполне подойдёт <strong>ext4</strong> или <strong>btrfs</strong>, или их связка (для корня -  <strong>ext4</strong>, для хомяка (отдельный раздел) -  <strong>btrfs</strong>. И да, гугль в помощь ))
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-139052"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/xSPiRiTx/">
+                <span class="post-username">xSPiRiTx</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/139052/">#</a>
+            8 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/xSPiRiTx/topics/">
+                    110
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/xSPiRiTx/posts/">
+                    574
+                </a>
+            </div>
+            <div>
+                Участник с: 21 февраля 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            спасибо вам, ребятки, все прояснили!<br /><br />а зачем все-таки отделять /var, /tmp.<br />какую пользу это даст? чем удобнее делать бэкап в этом случае?<br /><br />если будет у кого желание и время можете расписать какие у вас партиции и какие точки монтирования, и почему
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-139053"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/139053/">#</a>
+            8 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>xSPiRiTx</em><br>а зачем все-таки отделять /var, /tmp.</blockquote><strong>/tmp</strong> отделять у нас не надо, по умолчанию он в памяти, в основном отделяют на другой винт для большей скорости.<br /><strong>/var</strong> тут хранятся часто изменяемые данные и серверные данные. отделяют в основном на серверах для большей надежности и скорости, тоже на другой винт/raid массив.<br /><strong>на десктопе это лишнее.</strong>
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-139057"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Rarog/">
+                <span class="post-username">Rarog</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/139057/">#</a>
+            8 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/06/76/067611aa1978ade1ccad0549291deba4.png" alt="Rarog avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Rarog/topics/">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Rarog/posts/">
+                    188
+                </a>
+            </div>
+            <div>
+                Участник с: 22 января 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>xSPiRiTx</em><br>а зачем все-таки отделять /var, /tmp.</blockquote>Как пример...<br />Когда на универские ПК ставили Linux, специально вынесли /var на отдельный раздел, т.к. только 1 ПК в классе имеет доступ в интернет, затем остальным машинам в локалке примонтировали этот /var и локально все нужные пакеты доставили.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-139074"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/akorop/">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/139074/">#</a>
+            8 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/akorop/topics/">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/akorop/posts/">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>xSPiRiTx</em><br>а зачем все-таки отделять /var, /tmp.<br />какую пользу это даст? чем удобнее делать бэкап в этом случае?</blockquote>У меня /var/cache на отдельном разделе именно из соображений бэкапа: полный бэкап раздела системы не засоряется скачанными пакетами, которые, по большому счёту, в бэкапе не нуждаются.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/13735/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747becbecd6116b7',m:'Gx3jbj0IVvenRhFvBxtCGTTJsQt1Ca8CTsbnt7TGAmU-1662684583-0-AcvCraNEGR0FDxJ3c9WQLS1p7s56mUfHsEyYdBmZsKe2gD/ZS4bafCdmMG48OIlA/W0olp1wNRM1XvmFHOzC3bPOlYm5hAQBukWVxP90cXdqyXM5fChd7c5ELfVjqjgMgUy6NNsD46V1wa0EVfJHJNM=',s:[0xd476f5805d,0x936fd7a91a],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

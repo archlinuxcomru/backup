@@ -1,0 +1,976 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Отладка ждущего и спящего режимов (pm-utils)
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Отладка ждущего и спящего режимов (pm-utils)</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Отладка ждущего и спящего режимов (pm-utils)</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8712"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/shara/">
+                <span class="post-username">shara</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/8712/">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/2a/4b/2a4bbe5d6f92b620023c99258db4c9db.png" alt="shara avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/shara/topics/">
+                    13
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/shara/posts/">
+                    43
+                </a>
+            </div>
+            <div>
+                Участник с: 02 сентября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Вот что имеем:</strong><br/><br/>Gigabyte M55S-S3<br/>AMD Athlon&trade; 64 X2 Dual Core Processor 4600+<br/>RAM 4GB<br/>GeForce 7300 GT<br/><br/><div class="code"><pre>/dev/sda1            4096    12587007     6291456   82  Linux своп / Solaris
+/dev/sda2        12587008    75501567    31457280   83  Linux
+/dev/sda3        75501568  1753223167   838860800   83  Linux</pre></div>Arch + slim + xfce4.10<br/><br/><strong>И не имеем:</strong><br/><br/>1) Ждущий режим (pm-suspend) <br/>Запускается, компьютер засыпает и тут же просыпается.<br/><a href="https://bbs.archlinux.org/viewtopic.php?pid=755757#p755757">Метод</a> отключения usb добавлением usbcore в SUSPEND_MODULES не помог. Устройства отключаются, но машина все равно самовольно просыпается.<br/>Да и вообще отключать usb устройства совсем не интересно - хочется будить машину с клавиатуры.<br/><br/>2) Спящий режим (pm-hibernate)<br/>Запускается, уход сопровождается вспыхивающим графическим мусором на черном фоне и тучей &ldquo;Write-error on swap-device&rdquo;<br/>Однако система запускается вполне работоспособной, нельзя сказать что гибернация не работает. Диск новый, бэдов нет.<br/><br/><div class="code"><pre>/etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT="noapic"
+GRUB_CMDLINE_LINUX="resume=/dev/sda1"</pre></div><div class="code"><pre>/etc/mkinitcpio.conf
+HOOKS="base udev autodetect pata scsi sata resume filesystems usbinput fsck"</pre></div><br/>Помогите продиагностировать проблему. Цель не решить ее как можно быстрее, а понять в чём суть.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8713"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/8713/">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>засыпает и тут же просыпается</blockquote>Если она действительно засыпает, и уже после этого просыпается, то это скорей всего не программная, а аппаратная, &ldquo;железная&rdquo; проблема, поскольку проявляется в момент, когда никакие программы уже не работают.<br/><br/>Скорей всего, пробуждение происходит из-за какого-то электрического переходного процесса на материнке, или аналогичного в каком-то из устройств, которым разрешено будить машину. Попробуйте проверить это в BIOS и отключать по очереди, там и физически, всё, что можно отключить для проверки.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8714"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/8714/">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            по первому вопросу, покажи что выдает<br/><strong>cat /proc/acpi/wakeup</strong>
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8715"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/shara/">
+                <span class="post-username">shara</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/8715/">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/2a/4b/2a4bbe5d6f92b620023c99258db4c9db.png" alt="shara avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/shara/topics/">
+                    13
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/shara/posts/">
+                    43
+                </a>
+            </div>
+            <div>
+                Участник с: 02 сентября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Не уверен что зысыпает до конца, но винты паркует, потом заново раскручивает.<br/>Видео тоже отключает, дисплей переходит в режим ожидания и тут же снова находит сигнал.<br/><br/><div class="code"><pre>cat /proc/acpi/wakeup
+Device	S-state	  Status   Sysfs node
+HUB0	  S5	*disabled  pci:0000:00:06.0
+XVR0	  S5	*disabled  pci:0000:00:0f.0
+XVR1	  S5	*disabled  
+XVR2	  S5	*disabled  
+XVR3	  S5	*disabled  
+XVR4	  S5	*disabled  
+XVR5	  S5	*disabled  
+USB0	  S3	*enabled   pci:0000:00:02.0
+USB2	  S3	*enabled   pci:0000:00:02.1
+AZAD	  S5	*disabled  pci:0000:00:06.1
+MMAC	  S5	*disabled  pci:0000:00:08.0
+UAR1	  S5	*disabled  pnp:00:07</pre></div>Пересоздал swap раздел - сообщение об ошибке записи пропало, но не факт что насовсем, буду тестить. Графический шум однако остался - косяк дравйвера nvidia?<br/><br/>Только что запустил suspend, проснулся и после выхода &ldquo;испачкал&rdquo; некоторые окна <img src="https://dl.dropbox.com/u/12532926/Screens/171958256.png"></img><br/>Линии стираются обновлением участка окна.<br/>Полосок вне окон небыло, похоже они проявились на scrot. Так же теперь они появляются спонтанно.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8716"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/8716/">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            А теперь попробуй выполнить в консоле под рутом<br/><strong>echo USB0 &gt; /proc/acpi/wakeup</strong><br/>или<br/><strong>echo USB2 &gt; /proc/acpi/wakeup</strong><br/>и попробуй уйти в ждущий режим.
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8717"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/shara/">
+                <span class="post-username">shara</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/8717/">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/2a/4b/2a4bbe5d6f92b620023c99258db4c9db.png" alt="shara avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/shara/topics/">
+                    13
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/shara/posts/">
+                    43
+                </a>
+            </div>
+            <div>
+                Участник с: 02 сентября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <div class="code"><pre>sudo echo USB0 &gt; /proc/acpi/wakeup
+bash: /proc/acpi/wakeup: Отказано в доступе
+sudo sh -c "echo USB0 &gt; /proc/acpi/wakeup"
+sudo sh -c "echo USB2 &gt; /proc/acpi/wakeup"
+USB0	  S3	*disabled  pci:0000:00:02.0
+USB2	  S3	*disabled  pci:0000:00:02.1</pre></div>Никакой разницы<br/><br/><div class="code"><pre>Initial commandline parameters: 
+Чт. сент. 13 20:25:08 MSK 2012: Running hooks for suspend.
+Running hook /usr/lib/pm-utils/sleep.d/00logging suspend suspend:
+Linux amd 3.5.3-1-ARCH #1 SMP PREEMPT Sun Aug 26 09:14:51 CEST 2012 x86_64 GNU/Linux
+Module                  Size  Used by
+fuse                   68908  4 
+usb_storage            44760  0 
+uas                     8823  0 
+snd_hda_codec_realtek    59152  1 
+nvidia              11195142  40 
+saa7134_alsa           10910  2 
+tuner_simple           13321  1 
+tuner_types            11121  1 tuner_simple
+tda9887                 8773  1 
+tda8290                12714  0 
+powernow_k8            13360  1 
+mperf                   1267  1 powernow_k8
+kvm_amd                52109  0 
+tuner                  16840  2 
+i2c_nforce2             5064  0 
+edac_mce_amd           12469  0 
+firewire_ohci          31653  0 
+firewire_core          52733  1 firewire_ohci
+kvm                   363714  1 kvm_amd
+rc_avermedia            1158  0 
+saa7134               169136  1 saa7134_alsa
+tveeprom               13809  1 saa7134
+snd_hda_intel          25700  2 
+videobuf_dma_sg         7936  2 saa7134,saa7134_alsa
+videobuf_core          16231  2 videobuf_dma_sg,saa7134
+snd_hda_codec          97432  2 snd_hda_codec_realtek,snd_hda_intel
+v4l2_common             5370  2 tuner,saa7134
+videodev              100564  3 tuner,saa7134,v4l2_common
+snd_hwdep               6300  1 snd_hda_codec
+snd_pcm                74926  3 snd_hda_codec,snd_hda_intel,saa7134_alsa
+snd_page_alloc          7217  2 snd_pcm,snd_hda_intel
+media                  10405  1 videodev
+snd_timer              18966  1 snd_pcm
+rc_core                13056  3 saa7134,rc_avermedia
+snd                    60021  15 snd_hda_codec_realtek,snd_hwdep,snd_timer,snd_pcm,snd_hda_codec,snd_hda_intel,saa7134_alsa
+edac_core              37609  0 
+i2c_core               20508  10 tuner,saa7134,tda8290,tda9887,nvidia,v4l2_common,tveeprom,tuner_simple,i2c_nforce2,videodev
+crc_itu_t               1363  1 firewire_core
+ppdev                   5902  0 
+parport_pc             30669  0 
+k8temp                  3410  0 
+parport                31395  2 ppdev,parport_pc
+forcedeth              56161  0 
+soundcore               5442  1 snd
+evdev                   9882  5 
+nv_tco                  4864  0 
+vboxdrv              1791912  0 
+button                  4502  0 
+processor              27015  1 powernow_k8
+pcspkr                  1899  0 
+ext4                  438807  2 
+crc16                   1359  1 ext4
+jbd2                   78720  1 ext4
+mbcache                 5977  1 ext4
+hid_generic             1113  0 
+sd_mod                 29271  5 
+usbhid                 36812  0 
+pata_amd               11427  0 
+hid                    85608  2 hid_generic,usbhid
+pata_acpi               3408  0 
+ohci_hcd               21752  0 
+sata_nv                21220  4 
+ata_generic             3327  0 
+ehci_hcd               41058  0 
+usbcore               147434  5 uas,usb_storage,ohci_hcd,ehci_hcd,usbhid
+libata                167675  4 pata_acpi,sata_nv,pata_amd,ata_generic
+scsi_mod              132896  4 uas,usb_storage,libata,sd_mod
+usb_common               954  1 usbcore
+             total       used       free     shared    buffers     cached
+Mem:       4054036    2040768    2013268          0      55376     682240
+-/+ buffers/cache:    1303152    2750884
+Swap:      6291452       8836    6282616
+/usr/lib/pm-utils/sleep.d/00logging suspend suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/00powersave suspend suspend:
+/usr/lib/pm-utils/sleep.d/00powersave suspend suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/01grub suspend suspend:
+/usr/lib/pm-utils/sleep.d/01grub suspend suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/49bluetooth suspend suspend:
+/usr/lib/pm-utils/sleep.d/49bluetooth suspend suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/75modules suspend suspend:
+/usr/lib/pm-utils/sleep.d/75modules suspend suspend: success.
+Running hook /etc/pm/sleep.d/90alsa suspend suspend:
+/etc/pm/sleep.d/90alsa suspend suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/90clock suspend suspend:
+/usr/lib/pm-utils/sleep.d/90clock suspend suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/94cpufreq suspend suspend:
+/usr/lib/pm-utils/sleep.d/94cpufreq suspend suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/95led suspend suspend:
+/usr/lib/pm-utils/sleep.d/95led suspend suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/98video-quirk-db-handler suspend suspend:
+nVidia binary video drive detected, not using quirks.
+/usr/lib/pm-utils/sleep.d/98video-quirk-db-handler suspend suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/99video suspend suspend:
+kernel.acpi_video_flags = 0
+/usr/lib/pm-utils/sleep.d/99video suspend suspend: success.
+Чт. сент. 13 20:25:10 MSK 2012: performing suspend
+Чт. сент. 13 20:25:43 MSK 2012: Awake.
+Чт. сент. 13 20:25:43 MSK 2012: Running hooks for resume
+Running hook /usr/lib/pm-utils/sleep.d/99video resume suspend:
+/usr/lib/pm-utils/sleep.d/99video resume suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/98video-quirk-db-handler resume suspend:
+/usr/lib/pm-utils/sleep.d/98video-quirk-db-handler resume suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/95led resume suspend:
+/usr/lib/pm-utils/sleep.d/95led resume suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/94cpufreq resume suspend:
+/usr/lib/pm-utils/sleep.d/94cpufreq resume suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/90clock resume suspend:
+/usr/lib/pm-utils/sleep.d/90clock resume suspend: success.
+Running hook /etc/pm/sleep.d/90alsa resume suspend:
+Playing raw data '/dev/zero' : Unsigned 8 bit, Rate 8000 Hz, Mono
+/etc/pm/sleep.d/90alsa resume suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/75modules resume suspend:
+Reloaded unloaded modules.
+/usr/lib/pm-utils/sleep.d/75modules resume suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/49bluetooth resume suspend:
+/usr/lib/pm-utils/sleep.d/49bluetooth resume suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/01grub resume suspend:
+/usr/lib/pm-utils/sleep.d/01grub resume suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/00powersave resume suspend:
+/usr/lib/pm-utils/sleep.d/00powersave resume suspend: success.
+Running hook /usr/lib/pm-utils/sleep.d/00logging resume suspend:
+/usr/lib/pm-utils/sleep.d/00logging resume suspend: success.
+Чт. сент. 13 20:25:51 MSK 2012: Finished.</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8718"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/8718/">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            странно, должно было помочь с не входом в ждущий режим.<br/>наверное точно стоит в биосе покопаться&#8230;
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-8719"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/shara/">
+                <span class="post-username">shara</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/8719/">#</a>
+            9 лет, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/2a/4b/2a4bbe5d6f92b620023c99258db4c9db.png" alt="shara avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/shara/topics/">
+                    13
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/shara/posts/">
+                    43
+                </a>
+            </div>
+            <div>
+                Участник с: 02 сентября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Покопался, сменил способ засыпания на Suspend to RAM<br/><br/>До изменения:<br/><img src="https://dl.dropbox.com/u/12532926/s1.jpg"></img><br/>После:<br/><img src="https://dl.dropbox.com/u/12532926/s3.jpg"></img><br/>Никаких изменений (и <strike>сережа</strike> с отключенным usb тоже)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/913/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747ab7389ec2169f',m:'izSlQaJmwLUMPqJoMss.9cEgaIyM_e6CP3UXkM2DPYs-1662671905-0-AVN/VzWAlD7i0fz8ZYoNgwijyLbzNdWwKbWwjFEW1O3gpkGCW1aUdOkiMuXqbT6nRSZz0XI0kYQAaZVCHK8GMCz2Paz6de+9BDbiPIKeTghD0MroETJz/GysZf5K75YvyN+mucvgEMXPwUWuAexyobo=',s:[0x803e82c33a,0xa162e4074b],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

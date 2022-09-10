@@ -1,0 +1,1220 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Systemd Journal
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Systemd Journal</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Systemd Journal</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6517"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/samson4747/">
+                <span class="post-username">samson4747</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6517/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/23/59232634ea8a7ff311ad2fe4a29f66e9.png" alt="samson4747 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/samson4747/topics/">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/samson4747/posts/">
+                    534
+                </a>
+            </div>
+            <div>
+                Участник с: 23 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Доброго времени суток.<br/><br/>Имеется конечно глуповатый вопрос, но всё же задам:<br/><br/>Первое) Сейчас уже окончательно переехали на Systemd и при загрузке он чего-то быстро пишет, и есть сообщение следующее <em>failed listen to syslog socket</em>. Как исправить?<br/><br/>Второе) Логи следующего вида <a href="http://paste.org.ru/?3ztdxu">/var/log/boot</a> уже в прошлом, читал <a href="https://wiki.archlinux.org/index.php/Systemd#Systemd_Journal">тут</a>, но у меня видимо, что-то не получается, всё очень неинформативно:<br/><div class="code"><pre>$ sudo journalctl _SYSTEMD_UNIT=NetworkManager.service
+Пароль: 
+Logs begin at Fri, 31 Aug 2012 20:24:44 +0400, end at Sat, 01 Sep 2012 18:26:25 +0400.
+$ sudo journalctl /usr/lib/systemd/systemd-fsck
+Logs begin at Fri, 31 Aug 2012 20:24:44 +0400, end at Sat, 01 Sep 2012 18:26:25 +0400.
+$ sudo journalctl /usr/lib/systemd/systemd
+Logs begin at Sun, 02 Sep 2012 13:09:41 +0400, end at Sun, 02 Sep 2012 13:10:26 +0400.
+Sep 02 13:09:46 myhost systemd[1]: Startup finished in 2s 897ms 325us (kernel) +
+...skipping...
+Sep 02 13:09:46 myhost systemd[1]: Startup finished in 2s 897ms 325us (kernel) +
+$</pre></div><br/>Хочу глянуть ошибки при загрузке и как раньше было  <a href="http://paste.org.ru/?3ztdxu">boot</a>, но в большой куче ничего дающего эту информацию не нашёл.<br/><div class="code"><pre>$ ls /usr/lib/systemd/
+arch-modules-load      systemd-fsck	       systemd-shutdown
+ntp-units.d	       systemd-hostnamed       systemd-shutdownd
+scripts		       systemd-initctl	       systemd-sleep
+system		       systemd-journald        systemd-sysctl
+system-generators      systemd-localed	       systemd-timedated
+system-shutdown        systemd-logind	       systemd-timestamp
+system-sleep	       systemd-modules-load    systemd-udevd
+systemd		       systemd-multi-seat-x    systemd-update-utmp
+systemd-ac-power       systemd-quotacheck      systemd-user-sessions
+systemd-binfmt	       systemd-random-seed     systemd-vconsole-setup
+systemd-cgroups-agent  systemd-readahead       user
+systemd-coredump       systemd-remount-fs      user-generators
+systemd-cryptsetup     systemd-reply-password</pre></div><br/>Посоветуйте пожалуйста, как всё посмотреть нормально?<br/>Или может чем другим смотреть?<br/><br/>Если сделаем как полагается, то имеем:<br/><div class="code"><pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bed0d0d7d5d7cadffed3c7d6d1cdca">[email&#160;protected]</a> ~]$ sudo journalctl
+[sudo] password for nnikita: 
+Logs begin at Sun, 02 Sep 2012 13:09:41 +0400, end at Sat, 08 Sep 2012 16:13:45 +0400.
+Sep 02 13:09:41 myhost kernel: Initializing cgroup subsys cpuset
+Sep 02 13:09:41 myhost kernel: Initializing cgroup subsys cpu
+Sep 02 13:09:41 myhost kernel: Linux version 3.5.3-1-ARCH (<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dfabb0bdb6beac9f8bf28f90889ef29387">[email&#160;protected]</a>) (gcc version 4.7.1 20120721 (prerelease) (GCC) ) #1 SMP PREEMPT
+Sep 02 13:09:41 myhost kernel: e820: BIOS-provided physical RAM map:
+Sep 02 13:09:41 myhost kernel: BIOS-e820: [mem 0x0000000000000000-0x000000000009fbff] usable
+Sep 02 13:09:41 myhost kernel: BIOS-e820: [mem 0x000000000009fc00-0x000000000009ffff] reserved
+Sep 02 13:09:41 myhost kernel: BIOS-e820: [mem 0x00000000000e4000-0x00000000000fffff] reserved
+Sep 02 13:09:41 myhost kernel: BIOS-e820: [mem 0x0000000000100000-0x00000000c7faffff] usable
+Sep 02 13:09:41 myhost kernel: BIOS-e820: [mem 0x00000000c7fb0000-0x00000000c7fbdfff] ACPI data
+Sep 02 13:09:41 myhost kernel: BIOS-e820: [mem 0x00000000c7fbe000-0x00000000c7feffff] ACPI NVS
+Sep 02 13:09:41 myhost kernel: BIOS-e820: [mem 0x00000000c7ff0000-0x00000000c7ffffff] reserved
+Sep 02 13:09:41 myhost kernel: BIOS-e820: [mem 0x00000000ffb80000-0x00000000ffffffff] reserved
+Sep 02 13:09:41 myhost kernel: Notice: NX (Execute Disable) protection missing in CPU!
+Sep 02 13:09:41 myhost kernel: DMI 2.3 present.
+Sep 02 13:09:41 myhost kernel: DMI: System manufacturer System Product Name/P5GD1, BIOS 1011.002 06/16/2005
+Sep 02 13:09:41 myhost kernel: e820: update [mem 0x00000000-0x0000ffff] usable ==&gt; reserved
+Sep 02 13:09:41 myhost kernel: e820: remove [mem 0x000a0000-0x000fffff] usable
+Sep 02 13:09:41 myhost kernel: e820: last_pfn = 0xc7fb0 max_arch_pfn = 0x100000
+Sep 02 13:09:41 myhost kernel: MTRR default type: uncachable
+Sep 02 13:09:41 myhost kernel: MTRR fixed ranges enabled:
+Sep 02 13:09:41 myhost kernel:   00000-9FFFF write-back
+Sep 02 13:09:41 myhost kernel:   A0000-DFFFF uncachable
+Sep 02 13:09:41 myhost kernel:   E0000-EFFFF write-through
+Sep 02 13:09:41 myhost kernel:   F0000-FFFFF write-protect
+Sep 02 13:09:41 myhost kernel: MTRR variable ranges enabled:
+Sep 02 13:09:41 myhost kernel:   0 base 000000000 mask F80000000 write-back
+Sep 02 13:09:41 myhost kernel:   1 base 080000000 mask FC0000000 write-back
+Sep 02 13:09:41 myhost kernel:   2 base 0C0000000 mask FF8000000 write-back
+Sep 02 13:09:41 myhost kernel:   3 disabled
+Sep 02 13:09:41 myhost kernel:   4 disabled
+Sep 02 13:09:41 myhost kernel:   5 disabled
+Sep 02 13:09:41 myhost kernel:   6 disabled
+Sep 02 13:09:41 myhost kernel:   7 disabled
+Sep 02 13:09:41 myhost kernel: x86 PAT enabled: cpu 0, old 0x7040600070406, new 0x7010600070106
+Sep 02 13:09:41 myhost kernel: found SMP MP-table at [mem 0x000ff780-0x000ff78f] mapped at [c00ff780]
+Sep 02 13:09:41 myhost kernel: initial memory mapped: [mem 0x00000000-0x01bfffff]
+Sep 02 13:09:41 myhost kernel: Base memory trampoline at [c009b000] 9b000 size 16384
+Sep 02 13:09:41 myhost kernel: init_memory_mapping: [mem 0x00000000-0x377fdfff]
+Sep 02 13:09:41 myhost kernel:  [mem 0x00000000-0x003fffff] page 4k
+Sep 02 13:09:41 myhost kernel:  [mem 0x00400000-0x373fffff] page 2M
+Sep 02 13:09:41 myhost kernel:  [mem 0x37400000-0x377fdfff] page 4k
+Sep 02 13:09:41 myhost kernel: kernel direct mapping tables up to 0x377fdfff @ [mem 0x01bfa000-0x01bfffff]
+Sep 02 13:09:41 myhost kernel: RAMDISK: [mem 0x37a28000-0x37d0bfff]
+Sep 02 13:09:41 myhost kernel: Allocated new RAMDISK: [mem 0x3751a000-0x377fd62f]
+Sep 02 13:09:41 myhost kernel: Move RAMDISK from [mem 0x37a28000-0x37d0b62f] to [mem 0x3751a000-0x377fd62f]
+Sep 02 13:09:41 myhost kernel: ACPI: RSDP 000fade0 00024 (v02 ACPIAM)
+Sep 02 13:09:41 myhost kernel: ACPI: XSDT c7fb0100 00044 (v01 A M I  OEMXSDT  06000516 MSFT 00000097)
+Sep 02 13:09:41 myhost kernel: ACPI: FACP c7fb0290 000F4 (v03 A M I  OEMFACP  06000516 MSFT 00000097)
+Sep 02 13:09:41 myhost kernel: ACPI: DSDT c7fb0400 06A75 (v01  A0045 A0045001 00000001 INTL 02002026)
+Sep 02 13:09:41 myhost kernel: ACPI: FACS c7fbe000 00040
+Sep 02 13:09:41 myhost kernel: ACPI: APIC c7fb0390 00070 (v01 A M I  OEMAPIC  06000516 MSFT 00000097)
+:</pre></div>а дальше нужно щёлкать Enter.<br/><br/>Можно ли сделать, чтобы отображалось за определённую дату, или хотя бы день загрузки системы.<br/><br/>Также имеем красные строки - Ошибки такого вида:<div class="code"><pre>Sep 02 13:09:41 myhost systemd[1]: Socket service syslog.service not loaded, refusing.
+...
+Sep 02 13:09:46 myhost crond[321]: unable to scan directory /var/spool/cron
+...
+Sep 02 13:10:23 myhost pppd[336]: Unable to complete PPPoE Discovery
+...
+Sep 02 13:10:26 myhost kernel: end_request: I/O error, dev fd0, sector 0
+Sep 02 13:10:26 myhost kernel: end_request: I/O error, dev fd0, sector 0
+...
+Sep 02 13:10:53 myhost pppd[336]: Cannot determine ethernet address for proxy ARP
+...
+Sep 02 13:24:36 myhost systemd-tmpfiles[958]: stat(/run/user/1000/gvfs) failed: Permission denied</pre></div>Как лечить? И всё-таки хотелось бы глянуть вывод при загрузке сейчас, а то может и нет уже этих ошибок.<br/> <br/>С Уважением, samson4747
+            
+                
+                    <div class="post-signature">
+                        &quot;If you try to hide the complexity of the system, you&#39;ll end up with a more complex system&quot;. Layers of abstraction that serve to hide internals are never a good thing. Instead, the internals should be designed in a way such that they NEED no hiding.     <a href="http://phraktured.net/">—Aaron Griffin</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6518"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Ostland/">
+                <span class="post-username">Ostland</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6518/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/eb/d2/ebd2103f330fc91a7a04926cbeafdedd.png" alt="Ostland avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Ostland/topics/">
+                    34
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Ostland/posts/">
+                    389
+                </a>
+            </div>
+            <div>
+                Участник с: 22 сентября 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+             <a href="https://www.freedesktop.org/software/systemd/man/journalctl.html">http://www.freedesktop.org/software/sys &#8230; alctl.html</a> 
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6519"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/bujhm666/">
+                <span class="post-username">bujhm666</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6519/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/bujhm666/topics/">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/bujhm666/posts/">
+                    70
+                </a>
+            </div>
+            <div>
+                Участник с: 14 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            journalctl -b  - покажет лог с последней загрузки.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6520"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6520/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            А вот вопрос, как технически отделить бут от не бут логов, что считать точкой где заканчивается бут?<br/>Например многие считают что бут заканчивается когда выводится приглашение для ввода логина и пароля. Но технически это не правильно.<br/><br/>Могу посоветовать создать сервис который будет в лог выводить какое нибудь сообщение и запускать этот сервис например после запуска консоли. А потом в выводе журнала все что до этого сообщения считать бут логом.<br/><br/>А так же можно посмотреть командой <strong>systemd-analyze</strong> общее время загрузки и прикинуть в логе где бут а где не бут.
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6521"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Aivar/">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6521/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Aivar/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Aivar/posts/">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>samson4747</em><br/>есть сообщение следующее <em>failed listen to syslog socket</em>. Как исправить?</blockquote>Вероятно Вы пользуетесь смешанной системой инициализации, ибо такое впечатление, что запущен демон syslog-nd. Запретите его запуск и пользуйтесь (или не пользуйтесь) одноименным сервисом systemd.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6522"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/samson4747/">
+                <span class="post-username">samson4747</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6522/">#</a>
+            9 лет, 11 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/23/59232634ea8a7ff311ad2fe4a29f66e9.png" alt="samson4747 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/samson4747/topics/">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/samson4747/posts/">
+                    534
+                </a>
+            </div>
+            <div>
+                Участник с: 23 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Bujhm666</em><br/>journalctl -b - покажет лог с последней загрузки.</blockquote>Благодарю.<br/><a href="http://paste.org.ru/?6z7qre">Имеем.</a> <br/><br/><blockquote><em>nafanja</em><br/>systemd-analyze</blockquote><div class="code"><pre>$ systemd-analyze
+Startup finished in 2803ms (kernel) + 22741ms (userspace) = 25544ms
+$</pre></div><br/><blockquote><em>Aivar</em><br/>запущен демон syslog-nd. Запретите его запуск и пользуйтесь (или не пользуйтесь) одноименным сервисом systemd</blockquote>Удалил демон syslog-nd из rc.conf. Ошибка ушла.<br/><br/><em>DAEMONS=(dbus crond acpid adsl cupsd gdm)</em><br/><br/>Имеем ошибки:<br/>Oct 13 18:29:43 myhost crond: unable to scan directory /var/spool/cron<br/>Oct 13 18:29:56 myhost pppd: Cannot determine ethernet address for proxy ARP<br/>Oct 13 18:30:10 myhost pulseaudio:  bluetooth-util.c: org.bluez.Manager.ListAdapters() failed: org.freedesktop.systemd1.Loa<br/>Oct 13 18:30:23 myhost pulseaudio:  bluetooth-util.c: org.bluez.Manager.ListAdapters() failed: org.freedesktop.systemd1.Loa<br/>Oct 13 18:30:23 myhost pulseaudio:  pid.c: Daemon already running.<br/>Oct 13 18:30:33 myhost kernel: end_request: I/O error, dev fd0, sector 0<br/>Oct 13 18:30:33 myhost kernel: end_request: I/O error, dev fd0, sector 0
+            
+                
+                    <div class="post-signature">
+                        &quot;If you try to hide the complexity of the system, you&#39;ll end up with a more complex system&quot;. Layers of abstraction that serve to hide internals are never a good thing. Instead, the internals should be designed in a way such that they NEED no hiding.     <a href="http://phraktured.net/">—Aaron Griffin</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6523"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/samson4747/">
+                <span class="post-username">samson4747</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6523/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/23/59232634ea8a7ff311ad2fe4a29f66e9.png" alt="samson4747 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/samson4747/topics/">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/samson4747/posts/">
+                    534
+                </a>
+            </div>
+            <div>
+                Участник с: 23 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Так же мне не нравятся следующие строки:<br/><br/><div class="code"><pre>...
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): GdmSignalHandler: Registering for 10 signals
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): GdmSignalHandler: Adding handler 9: signum=15 0x8062fe0
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): GdmSignalHandler: Registering for 15 signals
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): GdmSignalHandler: Adding handler 10: signum=2 0x8062fe0
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): GdmSignalHandler: Registering for 2 signals
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): fill: *** Getting session 'gdm-shell'
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): fill: *** Looking if /var/lib/gdm/.config/gnome-session/sessions/gdm-shell.session is a
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): Cannot use session '/var/lib/gdm/.config/gnome-session/sessions/gdm-shell.session': non
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): fill: *** Looking if /etc/xdg/gnome-session/sessions/gdm-shell.session is a valid sessi
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): Cannot use session '/etc/xdg/gnome-session/sessions/gdm-shell.session': non-existing or
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): fill: *** Looking if /usr/share/gdm/greeter/gnome-session/sessions/gdm-shell.session is
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): Cannot use session '/usr/share/gdm/greeter/gnome-session/sessions/gdm-shell.session': n
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): fill: *** Looking if /usr/local/share/gnome-session/sessions/gdm-shell.session is a val
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): Cannot use session '/usr/local/share/gnome-session/sessions/gdm-shell.session': non-exi
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): fill: *** Looking if /usr/share/gnome-session/sessions/gdm-shell.session is a valid ses
+Oct 14 10:59:54 myhost gnome-session[536]: DEBUG(+): fill: *** Launching helper 'bash -c 'gnome-shell --help | grep -q gdm-mode &amp;&amp; /usr/lib/
+...</pre></div>
+            
+                
+                    <div class="post-signature">
+                        &quot;If you try to hide the complexity of the system, you&#39;ll end up with a more complex system&quot;. Layers of abstraction that serve to hide internals are never a good thing. Instead, the internals should be designed in a way such that they NEED no hiding.     <a href="http://phraktured.net/">—Aaron Griffin</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6524"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sleepycat/">
+                <span class="post-username">sleepycat</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6524/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f2/c0/f2c02cdf7ab1395c1ebcd403ff0c9d53.png" alt="sleepycat avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sleepycat/topics/">
+                    98
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sleepycat/posts/">
+                    3291
+                </a>
+            </div>
+            <div>
+                Участник с: 19 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ну очевидно же, что имхо курить над сессиями гноме ну или (скорее всего) dm'а.
+            
+                
+                    <div class="post-signature">
+                        Лозунг у них был такой: &quot;Познание бесконечности требует бесконечного времени&quot;. С этим я не спорил, но они делали из этого неожиданный вывод: &quot;А потому работай не работай — все едино&quot;. И в интересах неувеличения энтропии Вселенной они не работали. (с)
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6516"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/samson4747/">
+                <span class="post-username">samson4747</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6516/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/23/59232634ea8a7ff311ad2fe4a29f66e9.png" alt="samson4747 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/samson4747/topics/">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/samson4747/posts/">
+                    534
+                </a>
+            </div>
+            <div>
+                Участник с: 23 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sleepycat</em><br/>ну очевидно же, что имхо курить над сессиями гноме ну или (скорее всего) dm'а.</blockquote>Можно поподробнее пожалуйста?..<br/>Раньше в <em>/var/log/boot</em>, подобного никогда не было.<br/><br/>На строки серые и выделенные не особо обращаю внимания, а вот следующие ошибки не дают мне покоя:<br/><br/>Хотя выделенные строки меня беспокоят тоже особенно <a href="http://paste.org.ru/?itejuh">предупреждения и отладки</a>.<br/><br/><div class="code"><pre>...
+Oct 17 15:39:13 myhost crond[314]: unable to scan directory /var/spool/cron
+...
+Oct 17 15:39:26 myhost pppd[321]: Cannot determine ethernet address for proxy ARP
+...
+Oct 17 15:39:42 myhost pulseaudio[610]: [pulseaudio] bluetooth-util.c: org.bluez.Manager.ListAdapters() failed: org.freedesktop.systemd1.Loa
+...
+Oct 17 15:40:26 myhost pulseaudio[724]: [pulseaudio] bluetooth-util.c: org.bluez.Manager.ListAdapters() failed: org.freedesktop.systemd1.Loa
+...
+Oct 17 15:40:26 myhost pulseaudio[738]: [pulseaudio] pid.c: Daemon already running.
+...
+Oct 17 15:40:32 myhost kernel: end_request: I/O error, dev fd0, sector 0
+Oct 17 15:40:32 myhost kernel: end_request: I/O error, dev fd0, sector 0
+...
+Oct 17 15:54:03 myhost systemd-tmpfiles[945]: stat(/run/user/1000/gvfs) failed: Permission denied
+...</pre></div>
+            
+                
+                    <div class="post-signature">
+                        &quot;If you try to hide the complexity of the system, you&#39;ll end up with a more complex system&quot;. Layers of abstraction that serve to hide internals are never a good thing. Instead, the internals should be designed in a way such that they NEED no hiding.     <a href="http://phraktured.net/">—Aaron Griffin</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-6525"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/samson4747/">
+                <span class="post-username">samson4747</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/6525/">#</a>
+            9 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/59/23/59232634ea8a7ff311ad2fe4a29f66e9.png" alt="samson4747 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/samson4747/topics/">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/samson4747/posts/">
+                    534
+                </a>
+            </div>
+            <div>
+                Участник с: 23 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Было <em>DAEMONS=(dbus crond acpid adsl cupsd gdm)</em>, стало <em>DAEMONS=(dbus @crond adsl cupsd gdm)</em>, не помогло.<br/><br/>Исправил только этот <span style="color:#bf0000">Oct 17 15:39:13 myhost crond: unable to scan directory /var/spool/cron</span> косяк, а всё остальное сохранилось. Сейчас <strong>acpid</strong> наверно верну, а так больше не знаю куда копать.
+            
+                
+                    <div class="post-signature">
+                        &quot;If you try to hide the complexity of the system, you&#39;ll end up with a more complex system&quot;. Layers of abstraction that serve to hide internals are never a good thing. Instead, the internals should be designed in a way such that they NEED no hiding.     <a href="http://phraktured.net/">—Aaron Griffin</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/718/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747afbb359f89dae',m:'JaVavFnTtgolNCSbW7sxdqfXr5bA1FBjCSARTP__eCk-1662674705-0-AW/1USIN+wnoHlPn8Yk0EE/Cch8PYnIcjb1tbf6tgqnBPujKkxdKHXS69wAFpc6mgWpZJdw9NEzppZgo2nFRUh62DVSd1SNOp4P7Nca895U4hMmof7gnaQ1xScMXIrAwEvg3AsOfs0ClN1Kq3yUB+X0=',s:[0x98d053d935,0x52bfc4612a],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

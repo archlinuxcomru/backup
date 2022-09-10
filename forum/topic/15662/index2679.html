@@ -1,0 +1,1113 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Libinput и Evdev в чём отличие драйверов для NVIDIA? Что стабильнее?
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Libinput и Evdev в чём отличие драйверов для NVIDIA? Что стабильнее?</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Libinput и Evdev в чём отличие драйверов для NVIDIA? Что стабильнее?</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+            
+
+<div class="poll">
+  <h2>Опрос</h2>
+  <table class="table table-bordered poll">
+    <thead>
+    <tr class="poll-question">
+      <th colspan="2">
+        Какой пакет посоветуете установить? (PS: первый раз провожу опрос, без комментариев конечно не то, но, любопытно)
+      </th>
+    </tr>
+    </thead>
+
+    <tbody class="poll-answers">
+    
+      
+        <tr class="poll-answer">
+          <td colspan="2">xf86-input-evdev</td>
+        </tr>
+      
+        <tr class="poll-answer">
+          <td colspan="2">xf86-input-libinput</td>
+        </tr>
+      
+        <tr class="poll-answer">
+          <td colspan="2">советую обратиться в поисковик и поискать ещё</td>
+        </tr>
+      
+    
+    </tbody>
+  </table>
+</div>
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-162853"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Max-Sk/">
+                <span class="post-username">Max-Sk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/162853/">#</a>
+            6 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Max-Sk/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Max-Sk/posts/">
+                    37
+                </a>
+            </div>
+            <div>
+                Участник с: 27 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Всем доброго времени суток</strong><br />Страшно уже задавать вопросы, но, я готов...<br /><br />При установке драйвера видеокарты NVIDIA GeForce 8600 GT (rev1), pacman предложил на выбор два пакета<br /><li>xf86-input-evdev</li><li>xf86-input-libinput</li><br /><strong>В чём их отличие? Что надёжнее? Исходя из информации которую я нашёл ниже, хочу отдать предпочтение  xf86-input-evdev, но сомневаюсь так как на некоторых сайтах темы были не про драйвера видеокарты, а на форуме в обсуждениях, как я понял - лишь тестировали, может, кто-нибудь, что подскажет?</strong> про evdev сложностей не писали, или я плохо искал...<br /><br />При попытке найти ответ:<br /> <li>была найдена новость, где упамяналось что есть выбор, и рассуждения (форум Arch). <a href="https://archlinux.org.ru/forum/topic/15425/">ссылка</a></li><li>был найден сайт с таким содержимым <a href="https://www.opennet.ru/openforum/vsluhforumID3/104421.html">ссылка</a></li><br />Исходя из этой информации, получается libinput грубо говоря, использует один большой объединяющий универсальный драйвер, а evdev отдельные дравера для каждого устройства, мышки, тачскрина и т.п.  Получается пользователям ноутбуков надо будет меньше возиться с настройкой оборудования. <strong>Тогда, в чём разница в драйвере для видеокарты?</strong> С evdev можно сделать более тонкие настройки?<br />типо в xf86-input-evdev я смогу самостоятельно регулировать частоту вращения вентилятора и какие-нибудь другие характеристики, а libinput - нет? (PS: вращение вентилятора я трогать не хотел бы)<br /><br />цитата показавшаяся мне полезной с этого же сайта:<br /><em>Вот как прочёл про &quot;без возни с конфигурацией&quot; - сраз плохое заподозрил, полез-таки в документацию. И не зря.<br />У них там та же архитектурная проблема, что в вейланде в целом - они не дают возможности  глобально задать полиси. Другими словами, библиотека может конфигурироваться кучей способов - но сделать это может только клиент, никаких вариантов для конфигурации извне нет. То есть что в клиенте не сделали - того не будет, и простого способа перетащить куда-то привычную конфигурацию ввода тоже нет. Есть система, в которой на выбор можно запустить вейланд или иксы - с вероятностью ввод буде себя вести по-разному.<br />Они это даже в FAQ честно указали - &quot;This has an effect on the availability of configuration options: if an option is not exposed by the intermediary, it cannot be configured by the client.&quot;<br />Ещё одна странность - нормализация: &quot;libinput does partial normalization of relative input. For devices with a resolution of 1000dpi and higher, motion events are normalized to a default of 1000dpi before pointer acceleration is applied. As a result, devices with 1000dpi and above feel the same&quot;.<br />Плюс к тому значения dpi и частоты оно берёт из udev, и переопределить откуда-то ещё их  нельзя.<br />в общем, странное оно на первый взгляд. Идея хороша, но реализация...</em><br /><br /><li>была найдена информация о тестировании и его прекращении в Arch&#39;e <a href="https://bugs.archlinux.org/task/43856">ссылка</a></li><li>была найдена подобная тема, правда вопрос поставлен иначе и человека послали читать wiki про xorg, полазив по wiki, я не нашёл в чём их отличие и почему выбор предпочтительнее отдать первому или второму пакету. (<a href="https://archlinux.org.ru/forum/topic/15516/">ссылка на подобную тему</a>)</li><br />В общих чертах мне понятно чем отличаются, но что касается драйвера видеокарты так и осталось вопросом...<br />Заранее спасибо.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-162860"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Aivar/">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/162860/">#</a>
+            6 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Aivar/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Aivar/posts/">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Max-Sk</em><br>При установке драйвера видеокарты NVIDIA GeForce 8600 GT (rev1), pacman предложил на выбор два пакета</blockquote>Какая связь между драйвером видеокарты и устройствами ввода?<br />xorg-server требует xf86-input-driver и тут предоставляется выбор между xf86-input-evdev и xf86-input-libinput.<br /><br /><blockquote><em>Max-Sk</em><br>получается libinput грубо говоря, использует один большой объединяющий универсальный драйвер, а evdev отдельные дравера для каждого устройства, мышки, тачскрина и т.п.</blockquote>xf86-input-evdev - всегда был &quot;всё в одном&quot;, вместо которого раньше можно было ставить отдельно драйвер для клавиатуры, мыши, тачпада и т.д. Сейчас он (или xf86-input-libinput) является зависимостью xorg-server.<br />libinput - это тоже &quot;всё в одном&quot;, но имеет расширенную поддержку тачпадов, сенсорных экранов и т.д.<br />Что вам нужнее - решать вам.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-162861"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Max-Sk/">
+                <span class="post-username">Max-Sk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/162861/">#</a>
+            6 лет, 7 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Max-Sk/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Max-Sk/posts/">
+                    37
+                </a>
+            </div>
+            <div>
+                Участник с: 27 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Aivar</em><br>Какая связь между драйвером видеокарты и устройствами ввода?</blockquote>Связи нет. Но на данную сложность наткнулся при установке драйверов видеокарты и записал, отсюда и возникла новая тема.<br />Нашёл где-то в ветке (если можно так выразится) nvidia-340xx-libgl (конкретно что прописывал до этого, не помню, так как Arch пришлось устанавливать несколько раз)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-162862"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Max-Sk/">
+                <span class="post-username">Max-Sk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/162862/">#</a>
+            6 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Max-Sk/topics/">
+                    6
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Max-Sk/posts/">
+                    37
+                </a>
+            </div>
+            <div>
+                Участник с: 27 октября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            xf86-input-evdev<br />xf86-input-libinput<br />может тогда это зависимость а не драйвер? В любом случае при установке Arch, pacman каждый раз спрашивает какой вариант я выберу из двух.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-162863"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Aivar/">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/162863/">#</a>
+            6 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Aivar/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Aivar/posts/">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Вы сначала устанавливайте все что требуется из группы xorg, а уж затем драйвер видеокарты.<br /><br />У мну на десктопе установлен xf86-input-evdev. Пару лет назад на чужой ноут дополнительно устанавливал xf86-input-synaptics, потому как без него тачпад не реагировал на двойное касание.<br />libinput - это относительно новая штука, не пробовал.<br /><br /><blockquote><em>Max-Sk</em><br>xf86-input-evdev<br />xf86-input-libinput<br />может тогда это зависимость а не драйвер?</blockquote>Это драйверы устройств ввода. О зависимостях я писал в предыдущем посте.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165263"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Aivar/">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165263/">#</a>
+            6 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Aivar/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Aivar/posts/">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Возвращаясь к напечатанному.<br /><br />Все же любят у нас новинки. Заметил, что потроха xf86-input-evdev у меня никому не нужны, зато libinput, который является одной из зависимостей xf86-input-libinput, хочет так же qt5-base, который, в свою очередь, хотят многие:<br /><pre><code>$ pactree -r -d 2 libinput
+libinput
+├─qt5-base
+│ ├─djview
+│ ├─mkvtoolnix-gui
+│ ├─qt5-script
+│ ├─qt5-x11extras
+│ ├─qt5-xmlpatterns
+│ └─shotcut
+└─xf86-input-libinput
+  └─xorg-server</code></pre>Посему снес xf86-input-evdev в пользу xf86-input-libinput.<br />Первое, что бросилось в глаза - абсолютно другие, нежели при xf86-input-evdev, свойства мыши:<br /><pre><code>$ xinput list-props 11
+Device &#39;ImPS/2 Generic Wheel Mouse&#39;:
+	Device Enabled (142):	1
+	Coordinate Transformation Matrix (144):	1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
+	libinput Accel Speed (277):	-0.500000
+	libinput Accel Speed Default (278):	0.000000
+	libinput Accel Profiles Available (279):	1, 1
+	libinput Accel Profile Enabled (280):	1, 0
+	libinput Accel Profile Enabled Default (281):	1, 0
+	libinput Natural Scrolling Enabled (282):	0
+	libinput Natural Scrolling Enabled Default (283):	0
+	libinput Send Events Modes Available (261):	1, 0
+	libinput Send Events Mode Enabled (262):	0, 0
+	libinput Send Events Mode Enabled Default (263):	0, 0
+	libinput Left Handed Enabled (284):	0
+	libinput Left Handed Enabled Default (285):	0
+	libinput Scroll Methods Available (286):	0, 0, 1
+	libinput Scroll Method Enabled (287):	0, 0, 0
+	libinput Scroll Method Enabled Default (288):	0, 0, 0
+	libinput Button Scrolling Button (289):	2
+	libinput Button Scrolling Button Default (290):	274
+	libinput Middle Emulation Enabled (291):	0
+	libinput Middle Emulation Enabled Default (292):	0
+	Device Node (264):	&quot;/dev/input/event18&quot;
+	Device Product ID (265):	2, 5
+	libinput Drag Lock Buttons (293):	&lt;no items&gt;
+	libinput Horizonal Scroll Enabled (266):	1</code></pre>Так что теперь все иначе. Зато настройка скорости разгона, по сравнению с описанной <a href="https://archlinux.org.ru/forum/topic/14807/?page=1#post-151434">здесь</a>, показалась более логичной:<br /><pre><code>$ xinput set-prop 11 277 -.5</code></pre>Хотя теперь не пойму как инвертировать направления движения мыши. Не очень то надо, но все же...<br /><br />А по сути, простой смертный разницы в этих драйверах не заметит.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165266"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vdemin/">
+                <span class="post-username">vdemin</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165266/">#</a>
+            6 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/2a/e3/2ae3c3ef2445b4fba1c6e557e16ab155.png" alt="vdemin avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vdemin/topics/">
+                    54
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vdemin/posts/">
+                    1615
+                </a>
+            </div>
+            <div>
+                Участник с: 24 января 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Да, тоже заметил на днях, что libinput по зависимостям подтянулся. Но пока лень перебираться на xf86-input-libinput.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165267"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Xts/">
+                <span class="post-username">Xts</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165267/">#</a>
+            6 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/3f/87/3f87893d757d80855bcd79de6d5c0854.png" alt="Xts avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Xts/topics/">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Xts/posts/">
+                    973
+                </a>
+            </div>
+            <div>
+                Участник с: 13 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Aivar</em><br>Зато настройка скорости разгона</blockquote>немного не в тему, но можно как то сделать нормальную сенсу, без ускорения вообще? то есть ускорение 0, сенса сколько то. (нужно такое же поведение мыши как и в винде)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165268"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Aivar/">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165268/">#</a>
+            6 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Aivar/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Aivar/posts/">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Xts</strong>, как говорится, почувствуйте разницу... С уверенностью можно сказать, что libinput таких настроек не имеет. <a href="https://bugs.freedesktop.org/show_bug.cgi?id=89485">Вот</a> народ возмущается и вопрошает, не тайный ли проект Гнома ентот libinput, потому как настройку действительно урезали донельзя. Там же, кажись, есть и решение для вас (под evdev!):<br /><pre><code>Option &quot;AccelerationProfile&quot; &quot;-1&quot;
+Option &quot;AccelerationScheme&quot; &quot;none&quot;</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-165273"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/165273/">#</a>
+            6 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            а подскажите, как узнать что используется если установлено и evdev и libinput
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/15662/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747c10fc7aad1667',m:'HmWX_KFYd3w7JIuD8NvV7X3HVKWLno_SSB0YIAdNQaQ-1662686059-0-ASBbGvginOWaS32idxj/nK3nosBVLIQGUrz+wNXPTL7ingMN+DdO5CmRoQg2HfOt2elWccinhzJh8Ddy/zfycT6flVB1/vUATD4PG7Yq8poFrBQyY/BwVje9g/A1ZtZ0e2mf44bodEHA2V4qGYzhHAc=',s:[0x42d829427b,0xfaedca2a29],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

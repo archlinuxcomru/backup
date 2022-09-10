@@ -1,0 +1,702 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Сломалась печать через CUPS в ядре 2.6.30
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Сломалась печать через CUPS в ядре 2.6.30</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Сломалась печать через CUPS в ядре 2.6.30</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-78344"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/alexdsp/">
+                <span class="post-username">alexdsp</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/78344/">#</a>
+            13 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/alexdsp/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/alexdsp/posts/">
+                    307
+                </a>
+            </div>
+            <div>
+                Участник с: 07 февраля 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Печать работала через CUPS, принтер Samsung ML-2015 со своим штатным PPD файлом. Арч 64 битный, обновлён, ядро 2.6.30-5. Всё работало до поры хорошо. Через некоторое время обнаружил мёртвые зависания при попытке чего бы то ни было напечатать. Зависания действительно мёртвые, не реагирует ни на клавиатуру ни на мышку, даже acpi по кнопке питания не выключает&#8230; Откатил ядро (и драйверы nvidia) до 2.6.29-1 - зависания прекратились, через веб-морду localhost:631 печатается тестовая страница и на этом все радости заканчиваются&#8230; Изо всех остальных программ (FIrefox, Konqueror, Openoffice) печать запускается, но печатаются девственно чистые листы&#8230; уже просто голова кругом идёт от всего этого&#8230;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-78343"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/tchgefest/">
+                <span class="post-username">tchgefest</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/78343/">#</a>
+            13 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/tchgefest/topics/">
+                    51
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/tchgefest/posts/">
+                    1505
+                </a>
+            </div>
+            <div>
+                Участник с: 20 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>alexdsp</em><br/>Печать работала через CUPS, принтер Samsung ML-2015 со своим штатным PPD файлом. Арч 64 битный, обновлён, ядро 2.6.30-5. Всё работало до поры хорошо. Через некоторое время обнаружил мёртвые зависания при попытке чего бы то ни было напечатать. Зависания действительно мёртвые, не реагирует ни на клавиатуру ни на мышку, даже acpi по кнопке питания не выключает&#8230; Откатил ядро (и драйверы nvidia) до 2.6.29-1 - зависания прекратились, через веб-морду localhost:631 печатается тестовая страница и на этом все радости заканчиваются&#8230; Изо всех остальных программ (FIrefox, Konqueror, Openoffice) печать запускается, но печатаются девственно чистые листы&#8230; уже просто голова кругом идёт от всего этого&#8230;</blockquote>Может попробовать переустановить community/splix<br/>Потом удалить и заново поставить принтер<br/>У меня такое было на 2.6.28 только<br/>Правда у меня arch x86,но ядро 2.6.30-5.Принтер Samsung ML-2015,все печатает,зависаний нет.<br/>Может порт вылетил usb?А в логах cupsa есть что-либо.
+            
+                
+                    <div class="post-signature">
+                        Последний крик моды - эхо 30-летней давности.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-78342"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/alexdsp/">
+                <span class="post-username">alexdsp</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/78342/">#</a>
+            13 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/alexdsp/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/alexdsp/posts/">
+                    307
+                </a>
+            </div>
+            <div>
+                Участник с: 07 февраля 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>tchgefest</em><br/>Может попробовать переустановить community/splix<br/>Потом удалить и заново поставить принтер<br/>У меня такое было на 2.6.28 только<br/>Правда у меня arch x86,но ядро 2.6.30-5.Принтер Samsung ML-2015,все печатает,зависаний нет.<br/>Может порт вылетил usb?А в логах cupsa есть что-либо.</blockquote>Порт не вылетел, печатет ведь, но только чистые листы&#8230; А с ядром 2.6.30 при попытке печати было такое жёсткое зависание процессора, что только аппаратный ресет помогал. Сейчас только что пытался напечатать кусочек страницы из firefox - одно ядро процессора ушло в полную загрузку демоном cups, но ничего не печатало.<br/>В файле /var/log/cups/error_log    такие фразы:<br/>W  IP lookup failed - connection from localhost closed!<br/>W  IP lookup failed - connection from localhost closed!<br/>W  IP lookup failed - connection from localhost closed!<br/>и так далее&#8230;<br/><div class="code"><pre>$ dmesg | grep usb
+usbcore: registered new interface driver usbfs
+usbcore: registered new interface driver hub
+usbcore: registered new device driver usb
+usb usb1: configuration #1 chosen from 1 choice
+usb 1-2: new high speed USB device using ehci_hcd and address 2
+usb 1-2: configuration #1 chosen from 1 choice
+usb 1-2.4: new low speed USB device using ehci_hcd and address 3
+usb 1-2.4: configuration #1 chosen from 1 choice
+usb usb2: configuration #1 chosen from 1 choice
+usbcore: registered new interface driver usbserial
+usbcore: registered new interface driver usbserial_generic
+usbserial: USB Serial Driver core
+usb 1-2.4: HID-&gt;COM RS232 Adapter converter now attached to ttyUSB0
+usbcore: registered new interface driver cypress
+usbcore: registered new interface driver hiddev
+usbcore: registered new interface driver usbhid
+usbhid: v2.6:USB HID core driver
+usb 1-2.3: new full speed USB device using ehci_hcd and address 4
+usb 1-2.3: configuration #1 chosen from 1 choice
+usblp0: USB Bidirectional printer dev 4 if 0 alt 0 proto 2 vid 0x04E8 pid 0x326C
+usbcore: registered new interface driver usblp</pre></div>т.е. с USB вроде бы всё в порядке, принтер находится&#8230;<br/>Причём, припоминая последовательность событий - сначала, пару недель назад начала глючить печать из опеноффиса - печатались чистые страницы, а теперь вот только проверка печати из страницы настройки CUPS проходит&#8230;<br/><br/>P.S. Сейчас глянул - у меня splix вообще не был установлен, я подсовывал при установке принтера файл (Samsung-ML-2010-gdi.ppd) который с этой моделью всегда работал&#8230; думаю, не в нём дело.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-78341"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/tchgefest/">
+                <span class="post-username">tchgefest</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/78341/">#</a>
+            13 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/tchgefest/topics/">
+                    51
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/tchgefest/posts/">
+                    1505
+                </a>
+            </div>
+            <div>
+                Участник с: 20 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>alexdsp</em><br/><blockquote><em>tchgefest</em><br/>Может попробовать переустановить community/splix<br/>Потом удалить и заново поставить принтер<br/>У меня такое было на 2.6.28 только<br/>Правда у меня arch x86,но ядро 2.6.30-5.Принтер Samsung ML-2015,все печатает,зависаний нет.<br/>Может порт вылетил usb?А в логах cupsa есть что-либо.</blockquote>Порт не вылетел, печатет ведь, но только чистые листы&#8230; А с ядром 2.6.30 при попытке печати было такое жёсткое зависание процессора, что только аппаратный ресет помогал. Сейчас только что пытался напечатать кусочек страницы из firefox - одно ядро процессора ушло в полную загрузку демоном cups, но ничего не печатало.<br/>В файле /var/log/cups/error_log    такие фразы:<br/>W  IP lookup failed - connection from localhost closed!<br/>W  IP lookup failed - connection from localhost closed!<br/>W  IP lookup failed - connection from localhost closed!<br/>и так далее&#8230;<br/><div class="code"><pre>$ dmesg | grep usb
+usbcore: registered new interface driver usbfs
+usbcore: registered new interface driver hub
+usbcore: registered new device driver usb
+usb usb1: configuration #1 chosen from 1 choice
+usb 1-2: new high speed USB device using ehci_hcd and address 2
+usb 1-2: configuration #1 chosen from 1 choice
+usb 1-2.4: new low speed USB device using ehci_hcd and address 3
+usb 1-2.4: configuration #1 chosen from 1 choice
+usb usb2: configuration #1 chosen from 1 choice
+usbcore: registered new interface driver usbserial
+usbcore: registered new interface driver usbserial_generic
+usbserial: USB Serial Driver core
+usb 1-2.4: HID-&gt;COM RS232 Adapter converter now attached to ttyUSB0
+usbcore: registered new interface driver cypress
+usbcore: registered new interface driver hiddev
+usbcore: registered new interface driver usbhid
+usbhid: v2.6:USB HID core driver
+usb 1-2.3: new full speed USB device using ehci_hcd and address 4
+usb 1-2.3: configuration #1 chosen from 1 choice
+usblp0: USB Bidirectional printer dev 4 if 0 alt 0 proto 2 vid 0x04E8 pid 0x326C
+usbcore: registered new interface driver usblp</pre></div>т.е. с USB вроде бы всё в порядке, принтер находится&#8230;<br/>Причём, припоминая последовательность событий - сначала, пару недель назад начала глючить печать из опеноффиса - печатались чистые страницы, а теперь вот только проверка печати из страницы настройки CUPS проходит&#8230;<br/><br/>P.S. Сейчас глянул - у меня splix вообще не был установлен, я подсовывал при установке принтера файл (Samsung-ML-2010-gdi.ppd) который с этой моделью всегда работал&#8230; думаю, не в нём дело.</blockquote>Попробуйте удалить принтер,установить splix,потом установить принтер,презапустить cups.А вы его не заправляли сами?
+            
+                
+                    <div class="post-signature">
+                        Последний крик моды - эхо 30-летней давности.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-78340"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/alexdsp/">
+                <span class="post-username">alexdsp</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/78340/">#</a>
+            13 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/alexdsp/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/alexdsp/posts/">
+                    307
+                </a>
+            </div>
+            <div>
+                Участник с: 07 февраля 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В общем так&#8230; продолжение банкета. Вроде бы заработало, но&#8230; слишком уж странно всё это.<br/>Сначала с ядром 2.6.29<br/>Установил community/splix как и было мне предложено.<br/>Переустановил всё что в вики (я когда-то по вики всё и ставил):<br/>cups, ghostscript, gutenprint, foomatic, foomatic-db, foomatic-db-engine, foomatic-db-ppd, foomatic-filters<br/>Переустановил принтер на тот, что идёт в splix для samsung ml-2010<br/>Перезапустил cups - печать пошла и вроде бы отовсюду.<br/><br/>Решил попробовать на новом ядре 2.6.30, с которым были зависоны - обновил также всё, что связано с nvidia<br/>Результат - тот же жёсткий завис безо всяких логов!<br/>Потом возникла мысль отсоединить хаб и подключить всю медленную периферию (там были сканер, ups и принтер) напрямую.<br/>И о чудо! Всё заработало! Точнее - это называется безобразие какое-то :) <br/>Похоже ядро лочит какой-то модуль типа usblp, раз это как-то оказалось с USB связано, и это просто немыслимо&#8230; из-за банального подключения внешнего хаба можно завесить весь компьютер!<br/><br/>Кстати, раз уж такое дело, не подскажете, может в установленных пакетах печати из вики что-то можно выкинуть? Типа всяких фуматиков и т.д. Не очень понимаю что и зачем там надо, а лишнее таскать тоже неохота&#8230;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-78339"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/tchgefest/">
+                <span class="post-username">tchgefest</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/78339/">#</a>
+            13 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/tchgefest/topics/">
+                    51
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/tchgefest/posts/">
+                    1505
+                </a>
+            </div>
+            <div>
+                Участник с: 20 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я не знаю что можно выкидывать.<br/>Просто,когда взял принтер ml-2015 и поставил он у меня ставил dpi только 600x600<br/>Я пошарился в гугле,где было предложено поставить splix,тем более  на <a href="http://linuxprinting.org">linuxprinting.org</a> было сказано,что он должен работать 1200x600.Вот я и посоветовал.А столько много я точно не ставил.<br/>А по поводу зависонов,может быть модуль какой выбросили или еще что.<br/>Вы попробуйте из хаба по-одному устройству убирать.<br/>Может из устройств не так цепляется.Вет теперь HAL рулит.
+            
+                
+                    <div class="post-signature">
+                        Последний крик моды - эхо 30-летней давности.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/8172/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b005db95e498d',m:'ZUSUSIW.VI_jZvVg_UMD18BvsGTTWCUf0.KgcAVio4U-1662674892-0-AcMw4unmuxvaqnCkY/x9spTQXOcxPawLhN157XC2J5/8kpVVtkciQY+tsoc1QSB/YfByRQU0A3XqO4YvB3stqhxpp68a9fkepwQzEG4a0JsMQ/6316PVdZkfBgYxuSaEBjKxIv6wA4vH6ozpj3S2CiU=',s:[0xf17f404551,0xf0ee5c4ab3],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

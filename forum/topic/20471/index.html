@@ -1,0 +1,966 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20471/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 07:42:45 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        watchdog: BUG: soft lockup - CPU#0 stuck for 22s! [swapper/0:0]
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/9/index.html">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>watchdog: BUG: soft lockup - CPU#0 stuck for 22s! [swapper/0:0]</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>watchdog: BUG: soft lockup - CPU#0 stuck for 22s! [swapper/0:0]</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-239501"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/heylc/index.html">
+                <span class="post-username">heylc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/239501/index.html">#</a>
+            1 год, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/heylc/topics/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/heylc/posts/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Участник с: 17 января 2021
+            </div>
+            
+        </td>
+        <td class="post-content">
+            (Dual boot с 10 виндой)<br />Поставил вчера арч по инструкции, запустилось всё установил xfce, посидел чуток. Потом система намертво зависла, не работал ни Ctrl+Alt+Backspace ни Alt+PrintScreen R E I S U B не помогло, ребутнулся кнопкой на компе.<br />Запустил опять, всё ок, спустя время опять тоже самое, перезагрузил,  ввёл пароль оно опять залагало. Ребутнулся снова но теперь уже просто мигал курсор.<br />Снёс арч, решил поставить манжару, там при запуске выписало <pre><code>watchdog: BUG: soft lockup - CPU#0 stuck for 22s!</code></pre> , забил.<br /><br />Сегодня опять арч поставил, прошла установка, всё отлично. Ребутнулся уже в систему написал <pre><code>pacman -S xorg</code></pre> пошла загрузка, и тут мне вылезло это<pre><code> watchdog: BUG: soft lockup - CPU#0 stuck for 22s! [swapper/0:0] </code></pre> ждал, ничего, нажал Ctrl+C написал <pre><code>pacman -R xorg</code></pre> мне выбило что не установлено ничего, снова попробовал скачать, вылетела туча ошибок типа *файл* пуст, потом попытался скачать lightdm вышло тоже самое.<br /><br />Как быть, что делать? Хотелось арч второй системой поставить, но тут такая дичь. Был установлен Дебиан, на нём тоже были подобные лаги как в начале написанного, но после переустановки всё было ок.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-239503"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Vadim/index.html">
+                <span class="post-username">Vadim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/239503/index.html">#</a>
+            1 год, 7 месяцев назад
+            
+                (отредактировано
+                
+                    1 год, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/72/22/7222132327ed41066e6514a2df7291c9.png" alt="Vadim avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Vadim/topics/index.html">
+                    280
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Vadim/posts/index.html">
+                    1909
+                </a>
+            </div>
+            <div>
+                Участник с: 20 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            какое железо,проц,видеокарта?<a href="https://forum.ubuntu.ru/index.php?topic=282907.0">может сильно старое или слишком новое?</a><br />может ядро lts надо поставить.в общем напиши какое железо.<br /><a href="https://www.opennet.ru/openforum/vsluhforumID1/86862.html#1">вот еще</a>
+            
+                
+                    <div class="post-signature">
+                        Linux Forever!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-239506"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/heylc/index.html">
+                <span class="post-username">heylc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/239506/index.html">#</a>
+            1 год, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/heylc/topics/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/heylc/posts/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Участник с: 17 января 2021
+            </div>
+            
+        </td>
+        <td class="post-content">
+            CPU: AMD Athlon II X2 250 (2 ядра 3гц)<br />GPU: GT 710 DDR3 1gb<br />ОЗУ: 6 гб DDR3<br /><br />Комп старый, но дело в том что до этого я уже ставил ту же манжару всё было окей, а сейчас не пашет.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-239508"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/239508/index.html">#</a>
+            1 год, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Рекомендую не лениться и по гуглить, чтобы понять саму причину этих логов …<br /><blockquote><em>heylc</em><br>watchdog: BUG: soft lockup - CPU#0 stuck for 22s!</blockquote>В кратце - это мягкая блокировка, какой то процесс захватил ядро/процессор и не пускает другие процессы. Причина - сразу и не скажешь, начиная от бага ядра и до аппаратных ошибок.<br />Чтобы понять причину, нужно дебажить дамп ядра - но это только для спецов и разработчиков. Для простых юзеров можно попробовать получить малый дамп/лог падения ядра, используя ramoops. Но для этого необходимо вывести ядро из зависания и перегрузить его, SysRq скорее всего не сработает<br /><blockquote><em>heylc</em><br>Alt+PrintScreen R E I S U B не помогло</blockquote>даже если параметр kernel.sysrq = 1<br />Чтобы заставит перегружать ядро автоматом, а не кнопкой выключения, попробуй пропиши в /etc/sysctl.d/99-sysctl.conf дополнительно параметр kernel.softlockup_panic (по дефолту он равен нулю)<br /><pre><code>kernel.sysrq=1
+kernel.softlockup_panic=1
+kernel.panic=10</code></pre>и обнови конфигурацию: sudo sysctl -p /etc/sysctl.d/99-sysctl.conf<br />После этого при очередном зависании комп должен уйти на перегрузку через 10c.<br />Ну и ищи причину, начни с установки другого ядра, пробуй загрузится с liveUSB.<br />В части аппаратных ошибок - возможно блок питания не обеспечивает достаточную мощность процессора (такое встречалось не раз) … хотя все это гадание - нужен детальный анализ …
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-239509"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/239509/index.html">#</a>
+            1 год, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>heylc</em><br>swapper</blockquote>покажите<br /><pre><code>df -h
+lsblk -f
+swapon -s</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-239511"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/heylc/index.html">
+                <span class="post-username">heylc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/239511/index.html">#</a>
+            1 год, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/heylc/topics/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/heylc/posts/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Участник с: 17 января 2021
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vs220</em><br><blockquote><em>heylc</em><br>swapper</blockquote>покажите<br /><pre><code>df -h
+lsblk -f
+swapon -s</code></pre></blockquote>Там было не только swapper, ещё был [migration/0:13] когда xfce4 качал.<br /><blockquote>Для простых юзеров можно попробовать получить малый дамп/лог падения ядра, используя ramoops. Но для этого необходимо вывести ядро из зависания и перегрузить его, SysRq скорее всего не сработает</blockquote>Не смогу уже, снёс, после ввода пароля безвыходный лаг.<br /><br /><pre><code>даже если параметр kernel.sysrq = 1</code></pre>Да, этого параметра не было, но так или иначе я не смог бы его уже ввести ибо система сдохла<br /><br /><blockquote>Рекомендую не лениться и по гуглить, чтобы понять саму причину этих логов …</blockquote>Гуглил, ничего толком не нашёл, у всех разные причины, пробовал в Grub вписывать какие то параметры не попёрло.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-239512"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/heylc/index.html">
+                <span class="post-username">heylc</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/239512/index.html">#</a>
+            1 год, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/heylc/topics/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/heylc/posts/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Участник с: 17 января 2021
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В общем без логов я уже ничего толком не добьюсь, но всё равно спасибо что отписались.<br />Позже попытаюсь опять установить но с lts ядром.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-239513"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/239513/index.html">#</a>
+            1 год, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            пробовали ?<br /><blockquote><em>Vadim</em><br>lts надо</blockquote>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-239514"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/239514/index.html">#</a>
+            1 год, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>heylc</em><br>опять установить но с lts ядром.</blockquote>На установленный можно лтс ядро поставить<br /><br />На лайве арча у вас не крашится?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-239515"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/239515/index.html">#</a>
+            1 год, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            И видеодрайвер какой используете?<br />Может просто xfce на nouveau
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index0bdf.html?next=/forum/topic/20471/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20471/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 07:42:45 GMT -->
+</html>

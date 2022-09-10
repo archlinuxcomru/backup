@@ -1,0 +1,1105 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        netctl и dhcpcd воюют за мой ethernet [Решено]
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>netctl и dhcpcd воюют за мой ethernet [Решено]</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>netctl и dhcpcd воюют за мой ethernet [Решено]</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-143880"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/neobrave/">
+                <span class="post-username">neobrave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/143880/">#</a>
+            7 лет, 10 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/neobrave/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/neobrave/posts/">
+                    64
+                </a>
+            </div>
+            <div>
+                Участник с: 22 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Добрый день, друзья.<br />Уже 5-й день пытаюсь заставить нормально работать мой Ethernet. Проблемы возникали еще при установке системы, когда pacman пытался подключится к сети через кабель... Тогда решить проблему не получилось, был установлен dialog и wifi-menu быстро решило проблему. Далее сеть была только беспроводная и запускалась (и по сей день) скриптом<br /><pre><code>#!/bin/bash
+sudo ip link set wlp6s0 up
+sudo wpa_supplicant -B -Dwext -i wlp6s0 -c /etc/wpa_supplicant.conf
+sudo dhcpcd wlp6s0</code></pre>Скрипт, конечно, очень дебильный (менялся несколько раз всвязи с обновлениями dhcpcd), и по идее надо писать юнит, или настраивать через netctl. Но пока все очень устраивало. Сейчас же появилась малинка вместе которая должна выполнять функции небольшого NAS для фильмов и взаимодействее с ней решено было вести через ethernet. Вместе с armArch записанного на нее возобновилзась и проблема игнорирования ethernet. Отягощается все отсутствием под нее дисплея. То есть мой путь через ssh, который по идее должен ждать стука, но ни ноут, ни роутер не видят соединение (в смысле лампочка мегает, а IP не дает).<br />Решил сначала решить проблему на ноуте. И вот собственно проблема<br />Создаю провиль в netctl - копирую профиля из examples ethernet-dhcp или ethernet-static (пробовал оба) и менял интерфейс (вместо eth0).<br />Ifconfig выдает все в норме.<br />Роутер тем не менее не видит.<br />На форуме Archlinuxarm, коекретно <a href="https://archlinuxarm.org/forum/viewtopic.php?f=31&amp;t=5685&amp;sid=f6b914d70d00d9d49d7e1089e3c07985&amp;start=10">тут</a> было предложено решение:<br /><pre><code>dhcpcd (имя интерфейса)</code></pre>которое как ни удивительно сработало. Роутер увиделся через ethernet. И пропал wifi.., который не кроме как перезапуском не поднять, даже если убить все wpa_supplicant, netctl и dhcpcd.<br />Думал, что косяки с профилями в netctl - но благодаря Arcanis есть gui, котрый хоть и насоздавал профилей подключится так и не смог.<br />Уже больше года не пользовался мастдаем, но в нем такие проблемы решаются за считанные секунды.<br />Не подскажете ли, как сделать так, чтобы wlan как и раньше работал себе c dhcp, а ethernet со static. И чтобы не только один, а оба сразу... Сейчас рою в сторону dhcpcd -S, но тогда вырубается wlan, через который идет интернет.<br />Благодарю всех, кто до этого места дочитал, много текста - старался очень подробно описать проблему.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-143884"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/143884/">#</a>
+            7 лет, 10 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            подключите распери к роутеру...<br /><br />p.s. немогу даже представить чем такое решение может неустроить)), но если вдруг что бы работало как вы написали вам нужно создать две разные подсети и всё будет работать, правда без правильной маршрутизации  достучатся кроме как с ноутбука будет проблематично...<br /><br />p.p.s скрипт хороший все им пользуются:))<br /><pre><code>sudo ip link set dev $1 up &amp;
+wpa_passphrase $2 $3 &gt; /tmp/wpa &amp;
+sudo wpa_supplicant -i $1 -c /tmp/wpa &amp;
+sudo dhcpcd $1
+</code></pre>
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-143894"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/neobrave/">
+                <span class="post-username">neobrave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/143894/">#</a>
+            7 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/neobrave/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/neobrave/posts/">
+                    64
+                </a>
+            </div>
+            <div>
+                Участник с: 22 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><br>подключите распери к роутеру...</blockquote>Так подключаю... Роутер не видит ее, в смысле лампочки мегают, но ip адрес распбери не дается. И тоже самое с ноутом с момента установки. Ethernet не поднимается c dhcp. Сейчас пробовал создать профиль в network.d.<br />вот он - статический, который по идее не должен мешать динамическому wlan<br /><pre><code>
+[Match]
+Name-enp8s0
+Host=matrix
+Virtualization=no
+
+[Address]
+Address= 192.168.0.101/24
+</code></pre>При запуске вот что выкидывается в журнал<br /><pre><code>systemd-networkd.service - Network Service
+   Loaded: loaded (/usr/lib/systemd/system/systemd-networkd.service; enabled)
+   Active: failed (Result: start-limit) since Вс 2014-11-02 18:02:10 CET; 2min 39s ago
+     Docs: man:systemd-networkd.service(8)
+  Process: 2111 ExecStart=/usr/lib/systemd/systemd-networkd (code=exited, status=1/FAILURE)
+ Main PID: 2111 (code=exited, status=1/FAILURE)
+   Status: &quot;Shutting down...&quot;
+</code></pre><a href="https://bbs.archlinux.org/viewtopic.php?pid=1471753">Тут</a> посоветовали сделать так<br /><pre><code># sed -i &#39;s/ remote-fs.target$//&#39; /usr/lib/systemd/system/systemd-journal-flush.service</code></pre>результата особенно тоже не дало...<br /><br />Не вижу чем этот код лучше моего...<br /><pre><code>sudo ip link set dev $1 up &amp;
+wpa_passphrase $2 $3 &gt; /tmp/wpa &amp;
+sudo wpa_supplicant -i $1 -c /tmp/wpa &amp;
+sudo dhcpcd $1</code></pre>так как при автоматическом запуске так и так надо отключать пароль от sudo что не есть хорошо...<br />Я практически уверен, что трабла скрывается на границах netctl dhcpcd и где-то может в systemd.<br />
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-143897"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/143897/">#</a>
+            7 лет, 10 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>neobrave</em><br>На форуме Archlinuxarm, коекретно тут было предложено решение:<br />dhcpcd (имя интерфейса)<br />которое как ни удивительно сработало</blockquote><br />вы же написали что у вас dhcpcd нормально работает, что вам ещё надо?
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-143900"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/neobrave/">
+                <span class="post-username">neobrave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/143900/">#</a>
+            7 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/neobrave/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/neobrave/posts/">
+                    64
+                </a>
+            </div>
+            <div>
+                Участник с: 22 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            dhcpcd-то работает, то только на одном интерфейсе...<br />Если я делаю...<br /><pre><code>dhcpcd enp8s0</code></pre>то автоматически вылетает wlp6s0 (wlan), который мне нужен для инета...<br />Пробовал наобум включить оба сразу... как результат - forked to background, но инета все равно нет...<br />Говорят, есть выход - определить ip адрес заранее через -S, но wlan все равно падает...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-143902"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/143902/">#</a>
+            7 лет, 10 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 10 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            так начнём сначала:<br />к роутеру подключен кабелем ноутбук, этот же ноутбук подключен к этому же роутеру по вайфай?
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-143903"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/neobrave/">
+                <span class="post-username">neobrave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/143903/">#</a>
+            7 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/neobrave/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/neobrave/posts/">
+                    64
+                </a>
+            </div>
+            <div>
+                Участник с: 22 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Удалил скрипт, подключающий к wifi. И перешел на сторону зла - netctl, который раньше не хотел запускать профил с вафлей. Теперь же  все сработало без лишних вопросов. Почему-то правда не подключается профиль с ethernet. Ни вместе ни по отдельности.<br />Вот текст профиля в netctl<br /><pre><code>
+Connection=ethernet
+Interface=enp8s0
+Description=&#39;ethernet&#39;
+IP=dhcp
+IP6=dhcp
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-143905"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/neobrave/">
+                <span class="post-username">neobrave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/143905/">#</a>
+            7 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/neobrave/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/neobrave/posts/">
+                    64
+                </a>
+            </div>
+            <div>
+                Участник с: 22 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Очень криво... Ну очень коряво удалось решить проблему таким путем...<br />wifi запускается через netctl.<br />Ethernet netctl так и не научился подцеплять...<br />Поэтому после подключения вафли в консоли вбиваю<br /><pre><code>
+dhcpcd enp8s0
+</code></pre>Пингуется и роутер, к которому подключен ethernet и интернет не пропал.<br />Пока не сталвю [Решено], может кто решил подобную проблему другим способом, не таким топорным. Буду признателен за совет.<br />
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-143908"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/neobrave/">
+                <span class="post-username">neobrave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/143908/">#</a>
+            7 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/neobrave/topics/">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/neobrave/posts/">
+                    64
+                </a>
+            </div>
+            <div>
+                Участник с: 22 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>ind.indeviral</em><br>так начнём сначала:<br />к роутеру подключен кабелем ноутбук, этот же ноутбук подключен к этому же роутеру по вайфай?</blockquote>Не совсем... Есть роутер, который раздает интернет (он же LTE-модем). Ноут (пока ноут, а в будущем Raspberry) подключен по кабелю к другому совсем роутеру.<br />И проблема в том, что при подключении к одному роутеру - подключение ко второму падает... Сейчас в случае netctl к ethernet вообще не подключается (решил через dhcpcd - как написал выше). Решение нужно для того, чтобы написать правильно все конфиги и может скрипты по автоматическому подъему сети на SDшку Raspi. Дабы можно было подключится по ssh. Так как экрана к ней под рукой нет.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-143910"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/143910/">#</a>
+            7 лет, 10 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            у вас есть:<br />ноутбук (wlan + 1 lan)<br />роутер LTE (wlan +4 lan + 3G wan )<br />совсем другой роутер (wlan + 4lan + wan) ?<br /><br />опишите более менее корректно что вы хотите получить?
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/14158/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b8e2fe9358fcd',m:'LtdnDxG7.IYxHReszbIiiqa6lcsV4T_7a4jDIt22knQ-1662680702-0-Ad+/C7+732tiaAAcy0pc1x1bffN2kI9Dbr2jVqBgu5T3XnfA23+4LWDtRh5ssYy8YrCd4DphMKhF2H8fW9QevzBO8TalwudRDXMjTu4S80VxP9J9Rf3xeiB6CFWg/RZCjEE2aYjhYTLHSskaEFxanLA=',s:[0x593bcc92b7,0xe4b378acd8],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

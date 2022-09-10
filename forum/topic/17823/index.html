@@ -1,0 +1,1275 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [Решено] Ошибка при монтировании /boot раздела после обновления ядра + кривое uefi
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/12/">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[Решено] Ошибка при монтировании /boot раздела после обновления ядра + кривое uefi</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[Решено] Ошибка при монтировании /boot раздела после обновления ядра + кривое uefi</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=8">8</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195001"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Heinardt/">
+                <span class="post-username">Heinardt</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195001/">#</a>
+            4 года, 12 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 12 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Heinardt/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Heinardt/posts/">
+                    40
+                </a>
+            </div>
+            <div>
+                Участник с: 11 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Всем привет. Сегодня после обновления ядра столкнулся с ошибкой при загрузке - невозможно примонтировать раздел /boot, из-за того, что система не понимает формат vfat. Погуглил немного и большинство полученной информации говорит о том, что в новом ядре обновился модуль vfat(fat) и он не загрузился, т.к. загружались модули старого ядра. Я проверил в аварийном режиме, действительно модуля vfat или вообще какого-либо fat по lsmod не было. Но раз проблема возникла только у меня, значит я где то накосячил. Проблему я конечно устранил с live-usb, пересоздав раздел с новым ядром и подправив fstab, но если я не ошибаюсь, такого не должно происходить при правильной установке. Прошу помочь в определении изначальной причины.<br /><pre><code>/dev/sda1      2048 41945087 41943040   20G Linux root (x86)
+/dev/sda2  41945088 83888127 41943040   20G Linux home
+/dev/sda3  83888128 84936703  1048576  512M EFI System
+/dev/sda4  84936704 93325311  8388608    4G Linux swap</code></pre><pre><code>NAME   FSTYPE LABEL UUID                                 MOUNTPOINT
+sda
+├─sda1 ext4         88e83a97-67fd-44bd-af65-f030d37b84b0 /
+├─sda2 ext4         3f34f909-d05c-49ed-a178-a811ac0e3b42 /home
+├─sda3 vfat         7545-47B8                            /boot
+└─sda4 swap         6fcbefbe-e4a9-4fb0-a772-d5777cc664ac [SWAP]</code></pre>/boot<br /><pre><code>drwxr-xr-x 4 root root     4096 Sep 11 11:26 EFI
+drwxr-xr-x 6 root root     4096 Sep 11 11:27 grub
+-rwxr-xr-x 1 root root 24210689 Sep 11 11:26 initramfs-linux-fallback.img
+-rwxr-xr-x 1 root root  6684310 Sep 11 11:26 initramfs-linux.img
+-rwxr-xr-x 1 root root  5437712 Sep 10 10:42 vmlinuz-linux</code></pre><br /><pre><code>#
+# /etc/fstab: static file system information
+#
+# &lt;file system&gt;	&lt;dir&gt;	&lt;type&gt;	&lt;options&gt;	&lt;dump&gt;	&lt;pass&gt;
+# /dev/sda1
+UUID=88e83a97-67fd-44bd-af65-f030d37b84b0	/         	ext4      	rw,relatime,data=ordered	0 1
+
+# /dev/sda2
+UUID=3f34f909-d05c-49ed-a178-a811ac0e3b42	/home     	ext4      	rw,relatime,data=ordered	0 2
+
+# /dev/sda3
+UUID=7545-47B8      	/boot     	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro	0 2
+
+# /dev/sda4
+UUID=6fcbefbe-e4a9-4fb0-a772-d5777cc664ac	none      	swap      	defaults  	0 0</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195002"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/zotkindm/">
+                <span class="post-username">zotkindm</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195002/">#</a>
+            4 года, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/zotkindm/topics/">
+                    70
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/zotkindm/posts/">
+                    567
+                </a>
+            </div>
+            <div>
+                Участник с: 21 мая 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Два вопроса:<br />1. Зачем бут отдельный?<br />2. Кто надоумил делать его в fat32?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195003"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Heinardt/">
+                <span class="post-username">Heinardt</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195003/">#</a>
+            4 года, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Heinardt/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Heinardt/posts/">
+                    40
+                </a>
+            </div>
+            <div>
+                Участник с: 11 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>zotkindm</em><br>Два вопроса:<br />1. Зачем бут отдельный?<br />2. Кто надоумил делать его в fat32?</blockquote><a href="https://wiki.archlinux.org/index.php/Installation_guide">https://wiki.archlinux.org/index.php/Installation_guide</a><br /><br /><blockquote>For example, an EFI System Partition must contain a FAT32 (mkfs.vfat) file system, and the file system containing the /boot directory must be supported by the boot loader.</blockquote><blockquote>Create mount points for any remaining partitions and mount them accordingly, for example:<br /># mkdir /mnt/boot<br /># mount /dev/sda2 /mnt/boot</blockquote>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195004"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Morisson/">
+                <span class="post-username">Morisson</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195004/">#</a>
+            4 года, 12 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 12 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/fc/2a/fc2a5885cc81044b2e305ed013376ff2.png" alt="Morisson avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Morisson/topics/">
+                    18
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Morisson/posts/">
+                    1408
+                </a>
+            </div>
+            <div>
+                Участник с: 11 января 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>zotkindm</strong>, затем, что UEFI и ему нужен только fat32)<br /><br /><strike><strong>Heinardt</strong>, а у тебя случаем не Manjaro?</strike>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195005"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Heinardt/">
+                <span class="post-username">Heinardt</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195005/">#</a>
+            4 года, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Heinardt/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Heinardt/posts/">
+                    40
+                </a>
+            </div>
+            <div>
+                Участник с: 11 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Morisson</em><br>Heinardt, а у тебя случаем не Manjaro?</blockquote><pre><code>Linux arch 4.12.12-1-ARCH #1 SMP PREEMPT Sun Sep 10 09:41:14 CEST 2017 x86_64 GNU/Linux</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195006"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Morisson/">
+                <span class="post-username">Morisson</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195006/">#</a>
+            4 года, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/fc/2a/fc2a5885cc81044b2e305ed013376ff2.png" alt="Morisson avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Morisson/topics/">
+                    18
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Morisson/posts/">
+                    1408
+                </a>
+            </div>
+            <div>
+                Участник с: 11 января 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Попробуй так:<br /><pre><code>sudo nano /etc/mkinitcpio.conf</code></pre><br />Добавь в MODULES:<br /><pre><code>ahci sd_mod</code></pre>Потом <pre><code>sudo mkinitcpio -p linux</code></pre>Аккуратней, смотри выхлоп на предмет ошибок.<br />Это через чрут, наверное, нужно будет делать,- у тебя ж система не запускается?)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195007"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Heinardt/">
+                <span class="post-username">Heinardt</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195007/">#</a>
+            4 года, 12 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 12 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Heinardt/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Heinardt/posts/">
+                    40
+                </a>
+            </div>
+            <div>
+                Участник с: 11 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Morisson</em><br>Это через чрут, наверное, нужно будет делать,- у тебя ж система не запускается?)</blockquote><br /><blockquote><em>Heinardt</em><br>Проблему я конечно устранил с live-usb, пересоздав раздел с новым ядром и подправив fstab</blockquote><br />Система сейчас работает. Я просто выясняю на будущее, чтобы ситуация не повторилось. Вдруг не будет при себе live-usb. Из emergency не получится примонтировать же.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195008"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Morisson/">
+                <span class="post-username">Morisson</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195008/">#</a>
+            4 года, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/fc/2a/fc2a5885cc81044b2e305ed013376ff2.png" alt="Morisson avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Morisson/topics/">
+                    18
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Morisson/posts/">
+                    1408
+                </a>
+            </div>
+            <div>
+                Участник с: 11 января 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Heinardt</strong>, testing?<br />))))
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195009"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Heinardt/">
+                <span class="post-username">Heinardt</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195009/">#</a>
+            4 года, 12 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 12 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Heinardt/topics/">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Heinardt/posts/">
+                    40
+                </a>
+            </div>
+            <div>
+                Участник с: 11 сентября 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Morisson</em><br><strong>Heinardt</strong>, testing?<br />))))</blockquote>Нет, обычная дефолтная установка. Подключены только мультилибы для работы steam.<br /><br /><pre><code>#
+# /etc/pacman.conf
+#
+# See the pacman.conf(5) manpage for option and repository directives
+
+#
+# GENERAL OPTIONS
+#
+[options]
+# The following paths are commented out with their default values listed.
+# If you wish to use different paths, uncomment and update the paths.
+#RootDir     = /
+#DBPath      = /var/lib/pacman/
+#CacheDir    = /var/cache/pacman/pkg/
+#LogFile     = /var/log/pacman.log
+#GPGDir      = /etc/pacman.d/gnupg/
+#HookDir     = /etc/pacman.d/hooks/
+HoldPkg     = pacman glibc
+#XferCommand = /usr/bin/curl -C - -f %u &gt; %o
+#XferCommand = /usr/bin/wget --passive-ftp -c -O %o %u
+#CleanMethod = KeepInstalled
+#UseDelta    = 0.7
+Architecture = auto
+
+# Pacman won&#39;t upgrade packages listed in IgnorePkg and members of IgnoreGroup
+#IgnorePkg   =
+#IgnoreGroup =
+
+#NoUpgrade   =
+#NoExtract   =
+
+# Misc options
+#UseSyslog
+Color
+#TotalDownload
+CheckSpace
+#VerbosePkgLists
+ILoveCandy
+# By default, pacman accepts packages signed by keys that its local keyring
+# trusts (see pacman-key and its man page), as well as unsigned packages.
+SigLevel    = Required DatabaseOptional
+LocalFileSigLevel = Optional
+#RemoteFileSigLevel = Required
+
+# NOTE: You must run `pacman-key --init` before first using pacman; the local
+# keyring can then be populated with the keys of all official Arch Linux
+# packagers with `pacman-key --populate archlinux`.
+
+#
+# REPOSITORIES
+#   - can be defined here or included from another file
+#   - pacman will search repositories in the order defined here
+#   - local/custom mirrors can be added here or in separate files
+#   - repositories listed first will take precedence when packages
+#     have identical names, regardless of version number
+#   - URLs will have $repo replaced by the name of the current repo
+#   - URLs will have $arch replaced by the name of the architecture
+#
+# Repository entries are of the format:
+#       [repo-name]
+#       Server = ServerName
+#       Include = IncludePath
+#
+# The header [repo-name] is crucial - it must be present and
+# uncommented to enable the repo.
+#
+
+# The testing repositories are disabled by default. To enable, uncomment the
+# repo name header and Include lines. You can add preferred servers immediately
+# after the header, and they will be used before the default mirrors.
+
+#[testing]
+#Include = /etc/pacman.d/mirrorlist
+
+[core]
+Include = /etc/pacman.d/mirrorlist
+
+[extra]
+Include = /etc/pacman.d/mirrorlist
+
+#[community-testing]
+#Include = /etc/pacman.d/mirrorlist
+
+[community]
+Include = /etc/pacman.d/mirrorlist
+
+# If you want to run 32 bit applications on your x86_64 system,
+# enable the multilib repositories as required here.
+
+#[multilib-testing]
+#Include = /etc/pacman.d/mirrorlist
+
+[multilib]
+Include = /etc/pacman.d/mirrorlist
+
+# An example of a custom package repository.  See the pacman manpage for
+# tips on creating your own repositories.
+#[custom]
+#SigLevel = Optional TrustAll
+#Server = file:///home/custompkgs</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-195010"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/195010/">#</a>
+            4 года, 12 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            какая то пагубная тенденция пошла монтировать UEFI раздел просто в /boot, а не как везде в <strong>/boot/efi</strong> (((<br />замечена у новичков...
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=8">8</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/17823/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747c9654ec3d9d96',m:'fc0dJyycLhse34O08YTCkhBVE4TuX6Wxozt4hkvNZO8-1662691524-0-AYGMBo24bEdiMbYI1YVqcJPaqLm9krXog/Qq2Eo+EQXFFrqYvUVRjiiIj601Eyvq9E/Yst0rAOHO19503X2UL5HZT1WzuuQ69ZMYKUEBXeDF9eJgeaU7gj56J1c+NHgS79md564JybpW19qJ3n1Z7lY=',s:[0x93c4e5ac90,0x021711fd07],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

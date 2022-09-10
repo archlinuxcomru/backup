@@ -1,0 +1,1191 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Systemd-udevd активно потребляет ресурсы ЦП
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/12/">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Systemd-udevd активно потребляет ресурсы ЦП</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Systemd-udevd активно потребляет ресурсы ЦП</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201443"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Shatur/">
+                <span class="post-username">Shatur</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201443/">#</a>
+            4 года, 6 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4d/9f/4d9f0d3dcf63ba77a7f946a6cf39f1a3.png" alt="Shatur avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Shatur/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Shatur/posts/">
+                    323
+                </a>
+            </div>
+            <div>
+                Участник с: 26 марта 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Не в этом дело, а в том, что на шине 2:1.7 сидит 3 устройства</blockquote>А, отключить можно только всю шину, нельзя выключить конкретное устройство? Жаль...<br />А BCM2046B1 это, вроде, Wi-Fi:)<br /><br />Ну ладно, вырублю все сразу, значит, при следующем тесте. Просто подключу стороннюю клаву по USB, не страшно.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201444"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201444/">#</a>
+            4 года, 6 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Shatur</em><br>А, отключить можно только всю шину, нельзя выключить конкретное устройство?</blockquote>Ну у тебя же не получается отключить отдельно тачпад, остается отключить по цепочке выше, а это хаб, на котором три устройства.<br />Или я не правильно понимаю твою схему? Чтобы проверить, остается эксперимент, можешь проверить это и сейчас, на текущем ядре.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201445"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201445/">#</a>
+            4 года, 6 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Shatur</em><br>А BCM2046B1 это, вроде, Wi-Fi:)</blockquote>Вот это мне и странно - устройство и к тому же еще и являетмя хабом. Никогда такого раньше не встречал.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201446"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vs220/">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201446/">#</a>
+            4 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vs220/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vs220/posts/">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А как то правилом udev отключать, или на крайний случай вообще останавливать демон через некоторое время после загрузки когда все оборудование определено.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201493"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Shatur/">
+                <span class="post-username">Shatur</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201493/">#</a>
+            4 года, 6 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4d/9f/4d9f0d3dcf63ba77a7f946a6cf39f1a3.png" alt="Shatur avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Shatur/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Shatur/posts/">
+                    323
+                </a>
+            </div>
+            <div>
+                Участник с: 26 марта 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Итак, ядро linux-lts 4.14.19, баг все еще присутствует(<br /><blockquote><em>vs220</em><br>А udev монитор показывает постоянное подключение?</blockquote>Да, показывает, привожу часть лога (флудит постоянно):<br /><pre><code>KERNEL[286.301223] bind     /devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0 (usb)
+ACTION=bind
+DEVPATH=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0
+DEVTYPE=usb_interface
+DRIVER=usbfs
+INTERFACE=3/1/2
+MODALIAS=usb:v413Cp8158d0100dc00dsc00dp00ic03isc01ip02in00
+PRODUCT=413c/8158/100
+SEQNUM=105508
+SUBSYSTEM=usb
+TYPE=0/0/0
+
+KERNEL[286.301396] unbind   /devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0 (usb)
+ACTION=unbind
+DEVPATH=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0
+DEVTYPE=usb_interface
+INTERFACE=3/1/2
+PRODUCT=413c/8158/100
+SEQNUM=105509
+SUBSYSTEM=usb
+TYPE=0/0/0
+
+UDEV  [286.301714] bind     /devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0 (usb)
+ACTION=bind
+DEVPATH=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0
+DEVTYPE=usb_interface
+DRIVER=usbfs
+HID2HCI_SWITCH=1
+ID_MODEL_FROM_DATABASE=Integrated Touchpad / Trackstick
+ID_VENDOR_FROM_DATABASE=Dell Computer Corp.
+INTERFACE=3/1/2
+MODALIAS=usb:v413Cp8158d0100dc00dsc00dp00ic03isc01ip02in00
+PRODUCT=413c/8158/100
+SEQNUM=54022
+SUBSYSTEM=usb
+TYPE=0/0/0
+USEC_INITIALIZED=14466185
+
+KERNEL[286.306279] bind     /devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0 (usb)
+ACTION=bind
+DEVPATH=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0
+DEVTYPE=usb_interface
+DRIVER=usbfs
+INTERFACE=3/1/2
+MODALIAS=usb:v413Cp8158d0100dc00dsc00dp00ic03isc01ip02in00
+PRODUCT=413c/8158/100
+SEQNUM=105510
+SUBSYSTEM=usb
+TYPE=0/0/0
+
+KERNEL[286.306475] unbind   /devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0 (usb)
+ACTION=unbind
+DEVPATH=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0
+DEVTYPE=usb_interface
+INTERFACE=3/1/2
+PRODUCT=413c/8158/100
+SEQNUM=105511
+SUBSYSTEM=usb
+TYPE=0/0/0
+
+UDEV  [286.306813] unbind   /devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0 (usb)
+ACTION=unbind
+DEVPATH=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0
+DEVTYPE=usb_interface
+HID2HCI_SWITCH=1
+INTERFACE=3/1/2
+PRODUCT=413c/8158/100
+SEQNUM=54023
+SUBSYSTEM=usb
+TYPE=0/0/0
+USEC_INITIALIZED=14466185</code></pre>А как эта <strike>содомия</strike> udev вырубается вообще?) Пытаюсь, а он все равно работает (пишет, что может быть активирован сокетами), а еще примечательны ошибки в статусе этого сервиса:<br /><pre><code>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1176747f7051507d78747f667063745c202469">[email&#160;protected]</a> ~]sudo systemctl stop systemd-udevd
+Warning: Stopping systemd-udevd.service, but it can still be activated by:
+  systemd-udevd-kernel.socket
+  systemd-udevd-control.socket
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cdaaa8a3ac8d8ca1a4a8a3baacbfa880fcf8b5">[email&#160;protected]</a> ~]$ sudo systemctl status systemd-udevd
+● systemd-udevd.service - udev Kernel Device Manager
+   Loaded: loaded (/usr/lib/systemd/system/systemd-udevd.service; static; vendor preset: disabled)
+   Active: active (running) since Thu 2018-02-15 01:34:40 EET; 22s ago
+     Docs: man:systemd-udevd.service(8)
+           man:udev(7)
+ Main PID: 23124 (systemd-udevd)
+   Status: &quot;Processing with 24 children at max&quot;
+    Tasks: 24
+   CGroup: /system.slice/systemd-udevd.service
+           ├─23124 /usr/lib/systemd/systemd-udevd
+           ├─23125 /usr/lib/systemd/systemd-udevd
+           └─29145 /usr/lib/udev/hid2hci --method=dell --devpath=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0
+
+фев 15 01:35:02 AlienwareM15x systemd-udevd[23125]: Process &#39;hid2hci --method=dell --devpath=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0&#39; failed with exit code 1.
+фев 15 01:35:02 AlienwareM15x systemd-udevd[23125]: Process &#39;hid2hci --method=dell --devpath=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0&#39; failed with exit code 1.
+фев 15 01:35:02 AlienwareM15x systemd-udevd[23125]: Process &#39;hid2hci --method=dell --devpath=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0&#39; failed with exit code 1.
+фев 15 01:35:02 AlienwareM15x systemd-udevd[23125]: Process &#39;hid2hci --method=dell --devpath=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0&#39; failed with exit code 1.
+фев 15 01:35:02 AlienwareM15x systemd-udevd[23125]: Process &#39;hid2hci --method=dell --devpath=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0&#39; failed with exit code 1.
+фев 15 01:35:02 AlienwareM15x systemd-udevd[23125]: Process &#39;hid2hci --method=dell --devpath=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0&#39; failed with exit code 1.
+фев 15 01:35:02 AlienwareM15x systemd-udevd[23125]: Process &#39;hid2hci --method=dell --devpath=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0&#39; failed with exit code 1.
+фев 15 01:35:02 AlienwareM15x systemd-udevd[23125]: Process &#39;hid2hci --method=dell --devpath=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0&#39; failed with exit code 1.
+фев 15 01:35:02 AlienwareM15x systemd-udevd[23125]: Process &#39;hid2hci --method=dell --devpath=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0&#39; failed with exit code 1.
+фев 15 01:35:02 AlienwareM15x systemd-udevd[23125]: Process &#39;hid2hci --method=dell --devpath=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0&#39; failed with exit code 1.</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201494"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Shatur/">
+                <span class="post-username">Shatur</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201494/">#</a>
+            4 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4d/9f/4d9f0d3dcf63ba77a7f946a6cf39f1a3.png" alt="Shatur avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Shatur/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Shatur/posts/">
+                    323
+                </a>
+            </div>
+            <div>
+                Участник с: 26 марта 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ага, проанализировав статус сервиса udev я пришел к выводу, что виноват не тачпад, а bluetooth:<br /><pre><code>фев 15 01:35:02 AlienwareM15x systemd-udevd[23125]: Process &#39;hid2hci --method=dell --devpath=/devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.7/2-1.7.2/2-1.7.2:1.0&#39; failed with exit code 1.</code></pre>Так я догадался, что проблема в правиле udev, которое предоставляет пакет <a href="https://www.archlinux.org/packages/extra/x86_64/bluez-hid2hci/">bluez-hid2hci</a>. Правда, без него у меня не работает Bluetooth. Заметил, что такая проблема не только у меня, погуглив в таком ключе. И тоже у всех с новыми ядрами. Ну, Bluetooth пока что не сильно нужен :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201496"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201496/">#</a>
+            4 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <a href="https://bbs.archlinux.org/viewtopic.php?id=232890">В топике на BBS</a> описан твой случай.<br /><blockquote><em>Shatur</em><br>Ну, Bluetooth пока что не сильно нужен :)</blockquote>Попробуй удалить bluez-hid2hci и поставить bluez-utils (настройка с помощью bluetoothctl) - с этим пакетом, насколько я понял, cpu не грузит, но у ТС с этим пакетом не находится адаптер<br /><pre><code>…couldn&#39;t find any bluetooth adapters in bluetoothctl...</code></pre>Может у тебя будет нормально.<br /><strong>UPD</strong> - вот только я так и не понял насчет тачпада - шина (2:1.7.2) вроде его, а не Bluetooth Mini-card (2:1.7.3)...
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201501"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Shatur/">
+                <span class="post-username">Shatur</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201501/">#</a>
+            4 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4d/9f/4d9f0d3dcf63ba77a7f946a6cf39f1a3.png" alt="Shatur avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Shatur/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Shatur/posts/">
+                    323
+                </a>
+            </div>
+            <div>
+                Участник с: 26 марта 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Попробуй удалить bluez-hid2hci</blockquote>Ну да, я так и сделал) Но выше написал, что Bluetooth без него не работает. Но ничего, может пофиксят еще. Я Bluetooth не пользуюсь особо, не страшно.<br /><blockquote><em>vasek</em><br>UPD - вот только я так и не понял насчет тачпада - шина (2:1.7.2) вроде его, а не Bluetooth Mini-card (2:1.7.3)&#8230;</blockquote>Да, очень странно. Причем, не только у меня так, судя по <a href="https://forum.manjaro.org/t/high-cpu-usage-on-kernel-4-14-and-4-15-from-systemd-udevd-which-seems-to-be-the-synaptic-touchpad-driver/35972">этой</a> теме тут люди тоже думали, что это тачпад. Странно)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201504"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201504/">#</a>
+            4 года, 6 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Shatur</em><br>Но выше написал, что Bluetooth без него не работает.</blockquote>Выше писал, попробуй вместо bluez-hid2hci установить <strong>bluez-utils</strong>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-201505"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Shatur/">
+                <span class="post-username">Shatur</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/201505/">#</a>
+            4 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4d/9f/4d9f0d3dcf63ba77a7f946a6cf39f1a3.png" alt="Shatur avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Shatur/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Shatur/posts/">
+                    323
+                </a>
+            </div>
+            <div>
+                Участник с: 26 марта 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Выше писал, попробуй вместо bluez-hid2hci установить bluez-utils</blockquote>Без bluez-hid2hci у меня даже сервис не стартует:(<br />Вот:<br /><pre><code>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c1a6a4afa08180ada8a4afb6a0b3a48cf0f4b9">[email&#160;protected]</a> ~]$ sudo systemctl start bluetooth
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6304060d0223220f0a060d140211062e52561b">[email&#160;protected]</a> ~]$ bluetoothctl
+Waiting to connect to bluetoothd...
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fa9d9f949bbabb96939f948d9b889fb7cbcf82">[email&#160;protected]</a> ~]$ systemctl status bluetooth
+● bluetooth.service - Bluetooth service
+   Loaded: loaded (/usr/lib/systemd/system/bluetooth.service; enabled; vendor preset: disabled)
+   Active: inactive (dead)
+     Docs: man:bluetoothd(8)</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/18227/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747a44735bb71625',m:'WPKAqW1HZ.ZjpGuC8cmjP8qAv4NdNF5CeKYT85OXmr4-1662667203-0-AeqKuGtwSfpj4RyjeEb9fqZvDRSU4Ss02phw/vPXsajNP7ZpS8+KcUBdLPRZyzQwSnQIOffqtwuiBgxuSLzhSioYV4mGGlfUqmclUlass8wiVfwqNcmLZ9iabJZJb4yA2bWrj6oWNbpS6jvaILUmAHI=',s:[0x442a6edaba,0x3de4c3c009],u:'/cdn-cgi/challenge-platform/h/g'};var _cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/cb/invisible.js?cb=747a44735bb71625',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

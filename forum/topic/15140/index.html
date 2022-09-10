@@ -1,0 +1,973 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Dual boot Ubuntu и Arch через EFISTUB из rEFInd.
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/23/">Демоны и загрузка системы</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Dual boot Ubuntu и Arch через EFISTUB из rEFInd.</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Dual boot Ubuntu и Arch через EFISTUB из rEFInd.</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155437"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/madhatter/">
+                <span class="post-username">madhatter</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155437/">#</a>
+            7 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/60/70/60700d62c9f96f817126f9b9816a240a.png" alt="madhatter avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/madhatter/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/madhatter/posts/">
+                    6
+                </a>
+            </div>
+            <div>
+                Участник с: 29 августа 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Установил Ubuntu в UEFI режиме. При разметке создал ESP раздел, всё как полагается.<br />Grub автоматически &quot;записался&quot; на ESP раздел.<br />Установил Arch. В процессе установки примонтировал ESP раздел в /boot, как в мануале по установке.<br />При установке туда записались vmlinuz и ram-диск. Установил rEFInd. Он всё нашёл и всё грузит.<br />Вот только Arch он грузит напрямую, т.е. через EFISTUB, как я понимаю, т.к. его ядро и ram лежат в ESP.<br />Зато Ubuntu он так не грузит. Он нашёл на ESP grub.efi и вызывает его, а он в свою очередь загружает Ubuntu.<br />Т.е. получается Start -&gt; rEFInd -&gt; Grub2 -&gt; Ubuntu. Вопрос: как мне настроить rEFInd, чтобы он грузил ядро Ubuntu напрямую, как Arch.<br />Просто скопировать ядро Ubuntu в ESP не подходит, т.к. это придётся делать после каждого обновления. Как сказать ему искать не только на ESP или что в этом роде?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155440"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/scorpid/">
+                <span class="post-username">scorpid</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155440/">#</a>
+            7 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/0d/a4/0da4f56adfecb050fac8e5a4b3725636.png" alt="scorpid avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/scorpid/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/scorpid/posts/">
+                    294
+                </a>
+            </div>
+            <div>
+                Участник с: 14 апреля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В файле refind.conf покапайтесь, там есть строчки где он будет искать из какого места загружать, раскомментируйте. Где ядро Ubuntu лежит ??
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155452"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/madhatter/">
+                <span class="post-username">madhatter</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155452/">#</a>
+            7 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/60/70/60700d62c9f96f817126f9b9816a240a.png" alt="madhatter avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/madhatter/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/madhatter/posts/">
+                    6
+                </a>
+            </div>
+            <div>
+                Участник с: 29 августа 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ядро Ubuntu на её разделе, в корне. Разметка такая: sda1 - ESP, sda2 - Ubuntu, sda3 - Arch, sda4 - мультимедиа, sda5 - swap.<br />Уже смотрел refind.conf, посмотрю ещё.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155453"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/scorpid/">
+                <span class="post-username">scorpid</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155453/">#</a>
+            7 лет назад
+            
+                (отредактировано
+                
+                    7 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/0d/a4/0da4f56adfecb050fac8e5a4b3725636.png" alt="scorpid avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/scorpid/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/scorpid/posts/">
+                    294
+                </a>
+            </div>
+            <div>
+                Участник с: 14 апреля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Создайте ручками пункт меню в refind.conf для Ubuntu, описано в Wiki <a href="https://wiki.archlinux.org/index.php/REFInd">ТЫЦ</a>, там есть ссылки на сайт разработчика.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155464"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/madhatter/">
+                <span class="post-username">madhatter</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155464/">#</a>
+            7 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/60/70/60700d62c9f96f817126f9b9816a240a.png" alt="madhatter avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/madhatter/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/madhatter/posts/">
+                    6
+                </a>
+            </div>
+            <div>
+                Участник с: 29 августа 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я читал вики и был на сайте разработчика. Даже нашёл вот это: <a href="https://www.rodsbooks.com/refind/linux.html#reconfigure">http://www.rodsbooks.com/refind/linux.html#reconfigure</a><br />Я не слишком силён в английском, но у него в примере про Ubuntu на ESP лежит bzImage, а у меня его там нет, а просто копировать туда ядро и ram я не хочу.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155472"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/elsonador/">
+                <span class="post-username">elsonador</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155472/">#</a>
+            7 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c4/74/c4744210be47d6c1692ba03d7d1a5b83.png" alt="elsonador avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/elsonador/topics/">
+                    63
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/elsonador/posts/">
+                    996
+                </a>
+            </div>
+            <div>
+                Участник с: 09 апреля 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Снести загрузчик в <strong>Ubuntu</strong> и настроить <strong>rEFInd</strong>. Или тупо создать загрузочные записи прямо в <strong>UEFI</strong> и выбирать нужное по горячей клавише.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155507"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/scorpid/">
+                <span class="post-username">scorpid</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155507/">#</a>
+            7 лет назад
+            
+                (отредактировано
+                
+                    7 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/0d/a4/0da4f56adfecb050fac8e5a4b3725636.png" alt="scorpid avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/scorpid/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/scorpid/posts/">
+                    294
+                </a>
+            </div>
+            <div>
+                Участник с: 14 апреля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В соответствии с разделом <a href="https://www.rodsbooks.com/refind/linux.html#easiest">Мануала</a> Вам надо сделать следующее:<br />1. В раздел EFI/refind/ в создать папку drivers<br />2. В папку EFI/refind/drivers положить драйвера той файловой системы на которой стоит Бубунта (вернее её папка boot), скорее всего это ext4.<br />3. Создать в папке /boot Бубунты файл refind_linux.conf с примерно таким  содержанием (UUID ставь свой):<br /><br />&quot;Boot with standard options&quot; &quot;root=UUID=1cd95082-bce0-494c-a290-d2e642dd82b7 ro quiet splash vt.handoff=7&quot;<br />&quot;Boot to single-user mode&quot;   &quot;root=UUID=1cd95082-bce0-494c-a290-d2e642dd82b7 ro single&quot;<br />&quot;Boot with minimal options&quot;  &quot;root=UUID=1cd95082-bce0-494c-a290-d2e642dd82b7 ro&quot;<br /><br />4. В файле refid.conf раскомментируй строчку scan_all_linux_kernels.<br />5. Profit :).
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155509"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/wau/">
+                <span class="post-username">wau</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155509/">#</a>
+            7 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/wau/topics/">
+                    132
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/wau/posts/">
+                    960
+                </a>
+            </div>
+            <div>
+                Участник с: 11 октября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Это случаем не на мак-бук ли? В моем случае на оставшийся от мак-оси раздел, который вопреки мануалам я даже и не монтирую, так вот если его смонтировать и скопировать соотв. директорий, то появится соотв. вариант меню в Рефинде. И наоборот - снес директорий Макоси, и нет его в меню загрузки.<br />начинал я свои эксперименты осторожно - сперва просто скопировал директорий, из которого грузился Арч (тогда еще Deb) и уже со скопированным упражнялся.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155511"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/madhatter/">
+                <span class="post-username">madhatter</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155511/">#</a>
+            7 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/60/70/60700d62c9f96f817126f9b9816a240a.png" alt="madhatter avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/madhatter/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/madhatter/posts/">
+                    6
+                </a>
+            </div>
+            <div>
+                Участник с: 29 августа 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>scorpid</em><br>В соответствии с разделом <a href="https://www.rodsbooks.com/refind/linux.html#easiest">Мануала</a> Вам надо сделать следующее:<br />1. В раздел EFI/refind/ в создать папку drivers<br />2. В папку EFI/refind/drivers положить драйвера той файловой системы на которой стоит Бубунта (вернее её папка boot), скорее всего это ext4.<br />3. Создать в папке /boot Бубунты файл refind_linux.conf с примерно таким  содержанием (UUID ставь свой):<br /><br />&quot;Boot with standard options&quot; &quot;root=UUID=1cd95082-bce0-494c-a290-d2e642dd82b7 ro quiet splash vt.handoff=7&quot;<br />&quot;Boot to single-user mode&quot;   &quot;root=UUID=1cd95082-bce0-494c-a290-d2e642dd82b7 ro single&quot;<br />&quot;Boot with minimal options&quot;  &quot;root=UUID=1cd95082-bce0-494c-a290-d2e642dd82b7 ro&quot;<br /><br />4. В файле refid.conf раскомментируй строчку scan_all_linux_kernels.<br />5. Profit :).</blockquote><br />Спасибо большое за разъяснение, я попробую ;)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-155534"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/scorpid/">
+                <span class="post-username">scorpid</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/155534/">#</a>
+            7 лет назад
+            
+                (отредактировано
+                
+                    7 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/0d/a4/0da4f56adfecb050fac8e5a4b3725636.png" alt="scorpid avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/scorpid/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/scorpid/posts/">
+                    294
+                </a>
+            </div>
+            <div>
+                Участник с: 14 апреля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А вообще надо было Бубунте boot монтировать на раздел EFI и не ставить GRUB, т.е. идти по пути efistub. Либо подправить конфиг груба, чтобы он без задержек быстро грузил Бубунту, т.е через Refind шелкаешь по Grub,а он сам быстро без выбора грузит Бубунту.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/15140/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b8eeae88d76ad',m:'2us6dELwIvpk5_UIQGAGiiwOUJnhc1I0dGiFbU7d_oQ-1662680733-0-AW4D3pII7Jeun7i6bHU9Yp566FRnlJKAS3dp4slEu0HzCYHBpKJRSVpz2skV4TIS6/7c2Eyw1HOaldA20o3h0hs8S8c+pQKagt0Sb6maxZ6r44Xw//PuoDQGWLCvkcIDNOR0YHCv3vaXLwyRTW4drSM=',s:[0x764174435e,0xd0391c8ba9],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

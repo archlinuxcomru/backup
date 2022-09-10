@@ -1,0 +1,1422 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Насущный вопрос о systemd. Не холливора ради
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/5/">Разное</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/4/">/dev/null</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Насущный вопрос о systemd. Не холливора ради</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Насущный вопрос о systemd. Не холливора ради</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=9">9</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144742"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/stalker_tk/">
+                <span class="post-username">stalker_tk</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144742/">#</a>
+            7 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/58/77/58774e93d51a2c1e2b96ecf481dbf672.png" alt="stalker_tk avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/stalker_tk/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/stalker_tk/posts/">
+                    65
+                </a>
+            </div>
+            <div>
+                Участник с: 09 марта 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Лично мне интересно, что будет с поддержкой <strong>Debian GNU/kFreeBSD</strong> тоже на systemd переведут?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144745"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/marlock/">
+                <span class="post-username">marlock</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144745/">#</a>
+            7 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/marlock/topics/">
+                    35
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/marlock/posts/">
+                    736
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июля 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            systemd работает исключительно в Linux
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144756"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/yaroslav/">
+                <span class="post-username">yaroslav</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144756/">#</a>
+            7 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/yaroslav/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/yaroslav/posts/">
+                    140
+                </a>
+            </div>
+            <div>
+                Участник с: 30 апреля 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>palpalych</em><br><blockquote><em>jim945</em><br>А зачем на арче? Centos 7 с системд. Вполне комфортно, понятно (после арча), и стабильно.</blockquote>да и серваком на арче проблем не испытываю...</blockquote>Просто разворачивать арч на сотни машин не всегда удобно бывает. Поэтому дебиан выбирают.
+            
+                
+                    <div class="post-signature">
+                        PGP: <a href="https://pgp.mit.edu/pks/lookup?op=vindex&amp;search=0xB8C89275ACC50145">0xB8C89275ACC50145</a>. Arch GNU/Linux, KDE 5.<br /><em>Мы за Newnix</em>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144757"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Perfect_Gentleman/">
+                <span class="post-username">Perfect_Gentleman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144757/">#</a>
+            7 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Perfect_Gentleman/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Perfect_Gentleman/posts/">
+                    1039
+                </a>
+            </div>
+            <div>
+                Участник с: 29 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>yaroslav</em><br>Смешно).</blockquote>смешно пока всё работает, потом что-то отваливается и хз где искать.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144759"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/yaroslav/">
+                <span class="post-username">yaroslav</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144759/">#</a>
+            7 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/yaroslav/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/yaroslav/posts/">
+                    140
+                </a>
+            </div>
+            <div>
+                Участник с: 30 апреля 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Perfect_Gentleman</em><br>смешно пока всё работает, потом что-то отваливается и хз где искать.</blockquote>Тогда мне кажется пора переходить на генту). Просто я не сталкивался с большими проблемами и с sysvinit, и с systemd.
+            
+                
+                    <div class="post-signature">
+                        PGP: <a href="https://pgp.mit.edu/pks/lookup?op=vindex&amp;search=0xB8C89275ACC50145">0xB8C89275ACC50145</a>. Arch GNU/Linux, KDE 5.<br /><em>Мы за Newnix</em>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144774"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Perfect_Gentleman/">
+                <span class="post-username">Perfect_Gentleman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144774/">#</a>
+            7 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Perfect_Gentleman/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Perfect_Gentleman/posts/">
+                    1039
+                </a>
+            </div>
+            <div>
+                Участник с: 29 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <pre><code>$ sudo systemctl -a
+  UNIT                         LOAD      ACTIVE   SUB       DESCRIPTION
+  proc-sys-fs-binfmt_misc.automount loaded    active   waiting   Arbitrary Executable
+  dev-disk-by\x2did-ata\x2dHGST_HUS724030ALE640_PK1234P8JGU6VP.device loaded    active
+  dev-disk-by\x2did-ata\x2dHGST_HUS724030ALE640_PK1234P8JGU6VP\x2dpart1.device loaded
+  dev-disk-by\x2did-ata\x2dHGST_HUS724030ALE640_PK1234P8JGUYMP.device loaded    active
+  dev-disk-by\x2did-ata\x2dHGST_HUS724030ALE640_PK1234P8JGUYMP\x2dpart1.device loaded
+  dev-disk-by\x2did-ata\x2dST2000DM001\x2d1CH164_Z1E11EXF.device loaded    active   pl
+  dev-disk-by\x2did-ata\x2dST2000DM001\x2d1CH164_Z1E11EXF\x2dpart1.device loaded    ac
+  dev-disk-by\x2did-ata\x2dWDC_WD2000FYYZ\x2d01UL1B1_WD\x2dWMC1P0352331.device loaded
+  dev-disk-by\x2did-ata\x2dWDC_WD2000FYYZ\x2d01UL1B1_WD\x2dWMC1P0352331\x2dpart1.devic
+  dev-disk-by\x2did-usb\x2dKingston_DataTraveler_2.0_001FD05EC537BDB0995E2031\x2d0:0.d
+  dev-disk-by\x2did-usb\x2dKingston_DataTraveler_2.0_001FD05EC537BDB0995E2031\x2d0:0\x
+  dev-disk-by\x2did-usb\x2dKingston_DataTraveler_2.0_001FD05EC537BDB0995E2031\x2d0:0\x
+  dev-disk-by\x2did-wwn\x2d0x5000c5004dd73188.device loaded    active   plugged   ST20
+  dev-disk-by\x2did-wwn\x2d0x5000c5004dd73188\x2dpart1.device loaded    active   plugg
+  dev-disk-by\x2did-wwn\x2d0x5000cca22ce2eae1.device loaded    active   plugged   HGST
+  dev-disk-by\x2did-wwn\x2d0x5000cca22ce2eae1\x2dpart1.device loaded    active   plugg
+  dev-disk-by\x2did-wwn\x2d0x5000cca22ce2eda3.device loaded    active   plugged   HGST
+  dev-disk-by\x2did-wwn\x2d0x5000cca22ce2eda3\x2dpart1.device loaded    active   plugg
+  dev-disk-by\x2did-wwn\x2d0x50014ee0ae6bfc21.device loaded    active   plugged   WDC_
+  dev-disk-by\x2did-wwn\x2d0x50014ee0ae6bfc21\x2dpart1.device loaded    active   plugg
+  dev-disk-by\x2dlabel-HUS724030ALE.device loaded    active   plugged   HGST_HUS724030
+  dev-disk-by\x2dlabel-root.device loaded    active   plugged   DataTraveler_2.0 root
+  dev-disk-by\x2dlabel-ST2000DM001.device loaded    active   plugged   ST2000DM001-1CH
+  dev-disk-by\x2dlabel-WD2000FYYZ.device loaded    active   plugged   WDC_WD2000FYYZ-0
+  dev-disk-by\x2dpartlabel-HUS724030ALE640.device loaded    active   plugged   HGST_HU
+  dev-disk-by\x2dpartlabel-root.device loaded    active   plugged   DataTraveler_2.0 r
+  dev-disk-by\x2dpartlabel-ST2000DM001.device loaded    active   plugged   ST2000DM001
+  dev-disk-by\x2dpartlabel-WD2000FYYZ.device loaded    active   plugged   WDC_WD2000FY
+  dev-disk-by\x2dpartuuid-27a2092d\x2df311\x2d4ba4\x2d850b\x2d91e96ab36ef1.device load
+  dev-disk-by\x2dpartuuid-3f690978\x2df57b\x2d4b92\x2da06d\x2d69c670f46bdf.device load
+  dev-disk-by\x2dpartuuid-54ee3dbf\x2d24ab\x2d46c1\x2d8788\x2da21cb06b0417.device load
+  dev-disk-by\x2dpartuuid-6aafae12\x2d294c\x2d4c95\x2d8728\x2db58ef91ef464.device load
+  dev-disk-by\x2dpartuuid-b482b095\x2daf88\x2d4810\x2d9743\x2dbb850e86ac30.device load
+  dev-disk-by\x2dpartuuid-d9134cfd\x2d4017\x2d4870\x2d8a89\x2dbacac05c78cf.device load
+  dev-disk-by\x2dpath-pci\x2d0000:00:13.2\x2dusb\x2d0:1:1.0\x2dscsi\x2d0:0:0:0.device
+  dev-disk-by\x2dpath-pci\x2d0000:00:13.2\x2dusb\x2d0:1:1.0\x2dscsi\x2d0:0:0:0\x2dpart
+  dev-disk-by\x2dpath-pci\x2d0000:00:13.2\x2dusb\x2d0:1:1.0\x2dscsi\x2d0:0:0:0\x2dpart
+  dev-disk-by\x2duuid-2b8c8b35\x2d1eac\x2d43ea\x2db8b5\x2dfee41172ca3c.device loaded
+  dev-disk-by\x2duuid-3f27dd62\x2dc9bf\x2d43e8\x2d8782\x2d659d90518115.device loaded
+  dev-disk-by\x2duuid-42930ae1\x2de4ca\x2d4f7b\x2daf90\x2ddcaadff6797f.device loaded
+  dev-disk-by\x2duuid-bb168213\x2dfb93\x2d4308\x2d926c\x2d6f6e1c2e61e6.device loaded
+  dev-disk-by\x2duuid-f2ffc3c4\x2dc806\x2d49f5\x2dac79\x2d63acdc9ff9d3.device loaded
+  dev-sda.device               loaded    active   plugged   WDC_WD2000FYYZ-01UL1B1
+  dev-sda1.device              loaded    active   plugged   WDC_WD2000FYYZ-01UL1B1 WD2
+  dev-sdb.device               loaded    active   plugged   ST2000DM001-1CH164
+  dev-sdb1.device              loaded    active   plugged   ST2000DM001-1CH164 ST2000D
+  dev-sdc.device               loaded    active   plugged   HGST_HUS724030ALE640
+  dev-sdc1.device              loaded    active   plugged   HGST_HUS724030ALE640 HUS72
+  dev-sdd.device               loaded    active   plugged   HGST_HUS724030ALE640
+  dev-sdd1.device              loaded    active   plugged   HGST_HUS724030ALE640 HUS72
+  dev-sde.device               loaded    active   plugged   DataTraveler_2.0
+  dev-sde1.device              loaded    active   plugged   DataTraveler_2.0 root
+  dev-sde2.device              loaded    active   plugged   DataTraveler_2.0 2
+  dev-ttyS0.device             loaded    active   plugged   /dev/ttyS0
+  dev-ttyS1.device             loaded    active   plugged   /dev/ttyS1
+  dev-ttyS2.device             loaded    active   plugged   /dev/ttyS2
+  dev-ttyS3.device             loaded    active   plugged   /dev/ttyS3
+  sys-devices-pci0000:00-0000:00:06.0-0000:02:00.0-net-enp2s0.device loaded    active
+  sys-devices-pci0000:00-0000:00:11.0-ata1-host0-target0:0:0-0:0:0:0-block-sda-sda1.de
+  sys-devices-pci0000:00-0000:00:11.0-ata1-host0-target0:0:0-0:0:0:0-block-sda.device
+  sys-devices-pci0000:00-0000:00:11.0-ata2-host1-target1:0:0-1:0:0:0-block-sdb-sdb1.de
+  sys-devices-pci0000:00-0000:00:11.0-ata2-host1-target1:0:0-1:0:0:0-block-sdb.device
+  sys-devices-pci0000:00-0000:00:11.0-ata3-host2-target2:0:0-2:0:0:0-block-sdc-sdc1.de
+  sys-devices-pci0000:00-0000:00:11.0-ata3-host2-target2:0:0-2:0:0:0-block-sdc.device
+  sys-devices-pci0000:00-0000:00:11.0-ata4-host3-target3:0:0-3:0:0:0-block-sdd-sdd1.de
+  sys-devices-pci0000:00-0000:00:11.0-ata4-host3-target3:0:0-3:0:0:0-block-sdd.device
+  sys-devices-pci0000:00-0000:00:13.2-usb5-5\x2d1-5\x2d1:1.0-host4-target4:0:0-4:0:0:0
+  sys-devices-pci0000:00-0000:00:13.2-usb5-5\x2d1-5\x2d1:1.0-host4-target4:0:0-4:0:0:0
+  sys-devices-pci0000:00-0000:00:13.2-usb5-5\x2d1-5\x2d1:1.0-host4-target4:0:0-4:0:0:0
+  sys-devices-platform-serial8250-tty-ttyS0.device loaded    active   plugged   /sys/d
+  sys-devices-platform-serial8250-tty-ttyS1.device loaded    active   plugged   /sys/d
+  sys-devices-platform-serial8250-tty-ttyS2.device loaded    active   plugged   /sys/d
+  sys-devices-platform-serial8250-tty-ttyS3.device loaded    active   plugged   /sys/d
+  sys-module-configfs.device   loaded    active   plugged   /sys/module/configfs
+  sys-subsystem-net-devices-enp2s0.device loaded    active   plugged   NetXtreme BCM57
+  -.mount                      loaded    active   mounted   /
+  dev-hugepages.mount          loaded    active   mounted   Huge Pages File System
+  dev-mqueue.mount             loaded    active   mounted   POSIX Message Queue File S
+  home-HUS724030ALE640_1.mount loaded    active   mounted   /home/HUS724030ALE640_1
+  home-HUS724030ALE640_2.mount loaded    active   mounted   /home/HUS724030ALE640_2
+  home-ST2000DM001.mount       loaded    active   mounted   /home/ST2000DM001
+  home-WD2000FYYZ.mount        loaded    active   mounted   /home/WD2000FYYZ
+  proc-fs-nfsd.mount           loaded    active   mounted   NFSD configuration filesys
+  proc-sys-fs-binfmt_misc.mount loaded    inactive dead      Arbitrary Executable File
+  run-user-1000.mount          loaded    active   mounted   /run/user/1000
+  sys-fs-fuse-connections.mount loaded    inactive dead      FUSE Control File System
+  sys-kernel-config.mount      loaded    active   mounted   Configuration File System
+  sys-kernel-debug.mount       loaded    active   mounted   Debug File System
+  tmp.mount                    loaded    active   mounted   Temporary Directory
+  var-lib-nfs-rpc_pipefs.mount loaded    active   mounted   RPC Pipe File System
+  systemd-ask-password-console.path loaded    active   waiting   Dispatch Password Req
+  systemd-ask-password-wall.path loaded    active   waiting   Forward Password Request
+  session-c6.scope             loaded    active   running   Session c6 of user perfect
+● auditd.service               not-found inactive dead      auditd.service
+  auth-rpcgss-module.service   loaded    inactive dead      Kernel Module supporting R
+  dbus.service                 loaded    active   running   D-Bus System Message Bus
+● display-manager.service      not-found inactive dead      display-manager.service
+  dm-event.service             loaded    inactive dead      Device-mapper event daemon
+  emergency.service            loaded    inactive dead      Emergency Shell
+  <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="70171504040930040409415e03150206191315">[email&#160;protected]</a>           loaded    active   running   Getty on tty1
+● gssproxy.service             not-found inactive dead      gssproxy.service
+  kmod-static-nodes.service    loaded    active   exited    Create list of required st
+  ldconfig.service             loaded    inactive dead      Rebuild Dynamic Linker Cac
+  logrotate.service            loaded    inactive dead      Rotate log files
+  man-db.service               loaded    inactive dead      Update man-db cache
+  mkinitcpio-generate-shutdown-ramfs.service loaded    inactive dead      Generate shu
+  nfs-config.service           loaded    active   exited    Preprocess NFS configurati
+  nfs-idmapd.service           loaded    active   running   NFSv4 ID-name mapping serv
+  nfs-mountd.service           loaded    active   running   NFS Mount Daemon
+  nfs-server.service           loaded    active   exited    NFS server and services
+  nfs-utils.service            loaded    inactive dead      NFS server and client serv
+● plymouth-quit-wait.service   not-found inactive dead      plymouth-quit-wait.service
+● plymouth-start.service       not-found inactive dead      plymouth-start.service
+  rescue.service               loaded    inactive dead      Rescue Shell
+  rpc-gssd.service             loaded    inactive dead      RPC security service for N
+  rpc-statd-notify.service     loaded    active   exited    Notify NFS peers of a rest
+  rpc-statd.service            loaded    active   running   NFS status monitor for NFS
+  rpc-svcgssd.service          loaded    inactive dead      RPC security service for N
+  rpcbind.service              loaded    active   running   RPC bind service
+  shadow.service               loaded    inactive dead      Verify integrity of passwo
+  sshd.service                 loaded    inactive dead      OpenSSH Daemon
+  <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f88b8b909cb8ced5c9c1cad6c9cec0d6c0c0d6ca">[email&#160;protected]</a>:22-192.168.88.11:41951.service loaded    active   running   Open
+  sshdgenkeys.service          loaded    inactive dead      SSH Key Generation
+● syslog.service               not-found inactive dead      syslog.service
+  systemd-ask-password-console.service loaded    inactive dead      Dispatch Password
+  systemd-ask-password-wall.service loaded    inactive dead      Forward Password Requ
+  systemd-binfmt.service       loaded    inactive dead      Set Up Additional Binary F
+  systemd-firstboot.service    loaded    inactive dead      First Boot Wizard
+  systemd-fsck-root.service    loaded    inactive dead      File System Check on Root
+  systemd-initctl.service      loaded    inactive dead      /dev/initctl Compatibility
+  systemd-journal-catalog-update.service loaded    inactive dead      Rebuild Journal
+  systemd-journal-flush.service loaded    active   exited    Trigger Flushing of Journ
+  systemd-journald.service     loaded    active   running   Journal Service
+  systemd-logind.service       loaded    active   running   Login Service
+  systemd-modules-load.service loaded    active   exited    Load Kernel Modules
+  systemd-networkd.service     loaded    active   running   Network Service
+  systemd-random-seed.service  loaded    active   exited    Load/Save Random Seed
+  systemd-remount-fs.service   loaded    active   exited    Remount Root and Kernel Fi
+  systemd-shutdownd.service    loaded    inactive dead      Delayed Shutdown Service
+  systemd-sysctl.service       loaded    active   exited    Apply Kernel Variables
+  systemd-sysusers.service     loaded    inactive dead      Create System Users
+  systemd-timesyncd.service    loaded    active   running   Network Time Synchronizati
+  systemd-tmpfiles-clean.service loaded    inactive dead      Cleanup of Temporary Dir
+  systemd-tmpfiles-setup-dev.service loaded    active   exited    Create Static Device
+  systemd-tmpfiles-setup.service loaded    active   exited    Create Volatile Files an
+  systemd-udev-hwdb-update.service loaded    inactive dead      Rebuild Hardware Datab
+  systemd-udev-trigger.service loaded    active   exited    udev Coldplug all Devices
+  systemd-udevd.service        loaded    active   running   udev Kernel Device Manager
+  systemd-update-done.service  loaded    inactive dead      Update is Completed
+  systemd-update-utmp.service  loaded    active   exited    Update UTMP about System B
+  systemd-user-sessions.service loaded    active   exited    Permit User Sessions
+  systemd-vconsole-setup.service loaded    active   exited    Setup Virtual Console
+  <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f085839582b0c1c0c0c0de83958286999395">[email&#160;protected]</a>            loaded    active   running   User Manager for UID 1000
+  -.slice                      loaded    active   active    Root Slice
+  system-getty.slice           loaded    active   active    system-getty.slice
+  system-sshd.slice            loaded    active   active    system-sshd.slice
+  system-systemd\x2dfsck.slice loaded    inactive dead      system-systemd\x2dfsck.sli
+  system.slice                 loaded    active   active    System Slice
+  user-1000.slice              loaded    active   active    user-1000.slice
+  user.slice                   loaded    active   active    User and Session Slice
+  dbus.socket                  loaded    active   running   D-Bus System Message Bus S
+  dm-event.socket              loaded    active   listening Device-mapper event daemon
+  rpcbind.socket               loaded    active   running   RPCbind Server Activation
+  sshd.socket                  loaded    active   listening sshd.socket
+  syslog.socket                loaded    inactive dead      Syslog Socket
+  systemd-initctl.socket       loaded    active   listening /dev/initctl Compatibility
+  systemd-journald-dev-log.socket loaded    active   running   Journal Socket (/dev/lo
+  systemd-journald.socket      loaded    active   running   Journal Socket
+  systemd-shutdownd.socket     loaded    active   listening Delayed Shutdown Socket
+  systemd-udevd-control.socket loaded    active   running   udev Control Socket
+  systemd-udevd-kernel.socket  loaded    active   running   udev Kernel Socket
+  basic.target                 loaded    active   active    Basic System
+  cryptsetup.target            loaded    active   active    Encrypted Volumes
+  emergency.target             loaded    inactive dead      Emergency Mode
+  getty.target                 loaded    active   active    Login Prompts
+  graphical.target             loaded    active   active    Graphical Interface
+  local-fs-pre.target          loaded    active   active    Local File Systems (Pre)
+  local-fs.target              loaded    active   active    Local File Systems
+  multi-user.target            loaded    active   active    Multi-User System
+  network-online.target        loaded    active   active    Network is Online
+  network-pre.target           loaded    inactive dead      Network (Pre)
+  network.target               loaded    active   active    Network
+  nss-lookup.target            loaded    active   active    Host and Network Name Look
+  nss-user-lookup.target       loaded    inactive dead      User and Group Name Lookup
+  paths.target                 loaded    active   active    Paths
+  remote-fs-pre.target         loaded    inactive dead      Remote File Systems (Pre)
+  remote-fs.target             loaded    active   active    Remote File Systems
+  rescue.target                loaded    inactive dead      Rescue Mode
+  rpcbind.target               loaded    active   active    RPC Port Mapper
+  shutdown.target              loaded    inactive dead      Shutdown
+  slices.target                loaded    active   active    Slices
+  sockets.target               loaded    active   active    Sockets
+● swap.target                  masked    inactive dead      swap.target
+  sysinit.target               loaded    active   active    System Initialization
+  time-sync.target             loaded    active   active    System Time Synchronized
+  timers.target                loaded    active   active    Timers
+  umount.target                loaded    inactive dead      Unmount All Filesystems
+  logrotate.timer              loaded    active   waiting   Daily rotation of log file
+  man-db.timer                 loaded    active   waiting   Daily man-db cache update
+  shadow.timer                 loaded    active   waiting   Daily verification of pass
+  systemd-tmpfiles-clean.timer loaded    active   waiting   Daily Cleanup of Temporary</code></pre>это на файлопомойке без ИКСов.<br /><br />а это на десктопе с КЕДами<br /><pre><code>$ sudo rc-status -a
+Runlevel: default
+ localmount                                                              [  started  ]
+ bootmisc                                                                [  started  ]
+ syslog-ng                                                               [  started  ]
+ razerd                                                                  [  started  ]
+ dbus                                                                    [  started  ]
+ consolekit                                                              [  started  ]
+ xdm                                                                     [  started  ]
+ net.eth0                                                                [  started  ]
+ nfsmount                                                                [  started  ]
+ amuled                                                                  [  started  ]
+ chronyd                                                                 [  started  ]
+ minidlna                                                                [  started  ]
+ local                                                                   [  started  ]
+Runlevel: sysinit
+ devfs                                                                   [  started  ]
+ kmod-static-nodes                                                       [  started  ]
+ sysfs                                                                   [  started  ]
+ dmesg                                                                   [  started  ]
+ tmpfiles.dev                                                            [  started  ]
+ udev                                                                    [  started  ]
+Runlevel: boot
+ hwclock                                                                 [  started  ]
+ modules                                                                 [  started  ]
+ fsck                                                                    [  started  ]
+ root                                                                    [  started  ]
+ mtab                                                                    [  started  ]
+ localmount                                                              [  started  ]
+ procfs                                                                  [  started  ]
+ hostname                                                                [  started  ]
+ sysctl                                                                  [  started  ]
+ bootmisc                                                                [  started  ]
+ termencoding                                                            [  started  ]
+ loopback                                                                [  started  ]
+ urandom                                                                 [  started  ]
+ keymaps                                                                 [  started  ]
+ alsasound                                                               [  started  ]
+ tmpfiles.setup                                                          [  started  ]
+Runlevel: shutdown
+ killprocs                                                               [  stopped  ]
+ savecache                                                               [  stopped  ]
+ mount-ro                                                                [  stopped  ]
+Dynamic Runlevel: hotplugged
+Dynamic Runlevel: needed
+ rpcbind                                                                 [  started  ]
+ rpc.pipefs                                                              [  started  ]
+ rpc.idmapd                                                              [  started  ]
+ rpc.statd                                                               [  started  ]
+ xdm-setup                                                               [  started  ]
+Dynamic Runlevel: manual</code></pre>разница, по-моему, очевидна
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144780"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144780/">#</a>
+            7 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Perfect_Gentleman</em><br>разница, по-моему, очевидна</blockquote>второй вариант не информативен! )))
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144781"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Perfect_Gentleman/">
+                <span class="post-username">Perfect_Gentleman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144781/">#</a>
+            7 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Perfect_Gentleman/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Perfect_Gentleman/posts/">
+                    1039
+                </a>
+            </div>
+            <div>
+                Участник с: 29 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br>второй вариант не информативен! )))</blockquote>ога, если не уметь читать.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144782"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/yaroslav/">
+                <span class="post-username">yaroslav</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144782/">#</a>
+            7 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/yaroslav/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/yaroslav/posts/">
+                    140
+                </a>
+            </div>
+            <div>
+                Участник с: 30 апреля 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Perfect_Gentleman</em><br>разница, по-моему, очевидна</blockquote>Мда, действительно. Но системд сейчас отвечает за любой чих. Так что неудивительно.
+            
+                
+                    <div class="post-signature">
+                        PGP: <a href="https://pgp.mit.edu/pks/lookup?op=vindex&amp;search=0xB8C89275ACC50145">0xB8C89275ACC50145</a>. Arch GNU/Linux, KDE 5.<br /><em>Мы за Newnix</em>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-144783"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/arcanis/">
+                <span class="post-username">arcanis</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/144783/">#</a>
+            7 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8e/cd/8ecde9b9bf77f0b2a47300c7eb3d904f.png" alt="arcanis avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/arcanis/topics/">
+                    31
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/arcanis/posts/">
+                    1496
+                </a>
+            </div>
+            <div>
+                Участник с: 09 сентября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Perfect_Gentleman</em><br>разница, по-моему, очевидна</blockquote>уберите из этого все что не *.service, т.к. эт немного из другой серии и получите то же самое. &quot;Регексп&quot; для грепа <strong>&quot;\.service&quot;</strong> =)
+            
+                
+                    <div class="post-signature">
+                        PGP <a href="http://pgp.mit.edu:11371/pks/lookup?op=vindex&amp;fingerprint=on&amp;exact=on&amp;search=0x779CD2942629B7FA04AB8F172E89012331361F01">0x31361F01</a><br /><a href="https://repo.arcanis.me/">arcanisrepo</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=8">8</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=9">9</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/14214/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747ab7ea5ad87b53',m:'Yi_3qm3c7s5cYrKC9pzqcaYwaE8CU4zgoS0MI1.q8ds-1662671928-0-Adq+MmQKDGiz2rwIvd6saOPI4C7Is4hPjjAYoqZC2h7Xg/bdwAn/R2PkRbjZBDEDGyhtU3qj1dzgQabmSA/ln61EUaEc5Q9OLLSRp4nPfKZzDtB2V24nzmkPnf0gOH1RuMNl+bT3gwwviVMekQakHcY=',s:[0x0f35fde458,0x0c6df244b6],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

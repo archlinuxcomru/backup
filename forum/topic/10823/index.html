@@ -1,0 +1,667 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Настройка pptpd
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Настройка pptpd</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Настройка pptpd</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-99867"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/archangel153/">
+                <span class="post-username">archangel153</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/99867/">#</a>
+            9 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/archangel153/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/archangel153/posts/">
+                    6
+                </a>
+            </div>
+            <div>
+                Участник с: 25 ноября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Помогите настроить pptpd.<br/><br/>Цель такая: сделать возможным подключение компьютеров под Windows 7/XP к внутренней сети извне через pptp соединение.<br/><br/>После моей настройки подключение моментально выпадает с ошибкой 619 ещё на стадии подключения.<br/><br/>Вот лог сервера<br/><div class="code"><pre>pppd options in effect:
+logfile /var/log/pptpd.log		# (from /etc/ppp/pptpd-options)
+dump		# (from /etc/ppp/pptpd-options)
+require-mschap-v2		# (from /etc/ppp/pptpd-options)
+refuse-pap		# (from /etc/ppp/pptpd-options)
+refuse-chap		# (from /etc/ppp/pptpd-options)
+refuse-mschap		# (from /etc/ppp/pptpd-options)
+name pptpd		# (from /etc/ppp/pptpd-options)
+115200		# (from command line)
+lock		# (from /etc/ppp/pptpd-options)
+local		# (from command line)
+asyncmap 0		# (from /etc/ppp/options)
+mru 1350		# (from /etc/ppp/pptpd-options)
+mtu 1350		# (from /etc/ppp/pptpd-options)
+lcp-echo-failure 4		# (from /etc/ppp/options)
+lcp-echo-interval 30		# (from /etc/ppp/options)
+hide-password		# (from /etc/ppp/options)
+ipparam 10.0.0.3		# (from command line)
+nodefaultroute		# (from /etc/ppp/pptpd-options)
+proxyarp		# (from /etc/ppp/pptpd-options)
+nobsdcomp		# (from /etc/ppp/pptpd-options)
+require-mppe		# (from /etc/ppp/pptpd-options)
+require-mppe-128		# (from /etc/ppp/pptpd-options)
+noipx		# (from /etc/ppp/options)
+Couldn't set tty to PPP discipline: Invalid argument</pre></div>(Меня больше волнует последняя строчка)<br/><br/>Cервер на archlinux с сетевыми интерфейсами:<br/>ethlocal - смотрит во внутреннюю сеть<br/>ethnet - подключен к сети провайдера<br/>ppp0 - подключен к провайдеру через ethnet для забирания интернета<br/><br/>Оформлен белый ip и доменное имя, которое указывает на этот ip.<br/><br/>Вот конфиг (на всякий случай):<br/>/etc/pptpd.conf<br/><div class="code"><pre>###############################################################################
+# $Id: pptpd.conf,v 1.10 2006/09/04 23:30:57 quozl Exp $
+#
+# Sample Poptop configuration file /etc/pptpd.conf
+#
+# Changes are effective when pptpd is restarted.
+###############################################################################
+# TAG: ppp
+#	Path to the pppd program, default '/usr/sbin/pppd' on Linux
+#
+#ppp /usr/sbin/pppd
+# TAG: option
+#	Specifies the location of the PPP options file.
+#	By default PPP looks in '/etc/ppp/options'
+#
+option /etc/ppp/pptpd-options
+# TAG: debug
+#	Turns on (more) debugging to syslog
+#
+debug
+# TAG: stimeout
+#	Specifies timeout (in seconds) on starting ctrl connection
+#
+# stimeout 10
+# TAG: noipparam
+#       Suppress the passing of the client's IP address to PPP, which is
+#       done by default otherwise.
+#
+#noipparam
+# TAG: logwtmp
+#	Use wtmp(5) to record client connections and disconnections.
+#
+#logwtmp
+# TAG: bcrelay &lt;if&gt;
+#	Turns on broadcast relay to clients from interface &lt;if&gt;
+#
+bcrelay ethlocal
+# TAG: delegate
+#	Delegates the allocation of client IP addresses to pppd.
+#
+#       Without this option, which is the default, pptpd manages the list of
+#       IP addresses for clients and passes the next free address to pppd.
+#       With this option, pptpd does not pass an address, and so pppd may use
+#       radius or chap-secrets to allocate an address.
+#
+delegate
+# TAG: connections
+#       Limits the number of client connections that may be accepted.
+#
+#       If pptpd is allocating IP addresses (e.g. delegate is not
+#       used) then the number of connections is also limited by the
+#       remoteip option.  The default is 100.
+connections 10</pre></div><br/>/etc/ppp/pptpd-options<br/><div class="code"><pre>name pptpd
+auth
+refuse-pap
+refuse-chap
+refuse-mschap
+require-mschap-v2
+require-mppe-128
+require-mppe
+proxyarp
+nodefaultroute
+lock
+nobsdcomp
+logfile /var/log/pptpd.log
+dump
+mtu 1350
+mru 1350 </pre></div><br/>/etc/ppp/options<br/><div class="code"><pre># /etc/ppp/options
+# async character map -- 32-bit hex; each bit is a character
+# that needs to be escaped for pppd to receive it.  0x00000001
+# represents '\x01', and 0x80000000 represents '\x1f'.
+asyncmap 0
+# Require the peer to authenticate itself before allowing network
+# packets to be sent or received.
+# Please do not disable this setting. It is expected to be standard in
+# future releases of pppd. Use the call option (see manpage) to disable
+# authentication for specific peers.
+auth
+# Use hardware flow control (i.e. RTS/CTS) to control the flow of data
+# on the serial port.
+crtscts
+# Use software flow control (i.e. XON/XOFF) to control the flow of data
+# on the serial port.
+#xonxoff
+# Specifies that certain characters should be escaped on transmission
+# (regardless of whether the peer requests them to be escaped with its
+# async control character map).  The characters to be escaped are
+# specified as a list of hex numbers separated by commas.  Note that
+# almost any character can be specified for the escape option, unlike
+# the asyncmap option which only allows control characters to be
+# specified.  The characters which may not be escaped are those with hex
+# values 0x20 - 0x3f or 0x5e.
+#escape 11,13,ff
+# Don't use the modem control lines.
+#local
+# Specifies that pppd should use a UUCP-style lock on the serial device
+# to ensure exclusive access to the device.
+#lock
+# Don't show the passwords when logging the contents of PAP packets.
+# This is the default.
+hide-password
+# When logging the contents of PAP packets, this option causes pppd to
+# show the password string in the log message.
+#show-password
+# Use the modem control lines.  On Ultrix, this option implies hardware
+# flow control, as for the crtscts option.  (This option is not fully
+# implemented.)
+modem
+# Add an entry to this system's ARP [Address Resolution Protocol]
+# table with the IP address of the peer and the Ethernet address of this
+# system.
+proxyarp
+# Use the system password database for authenticating the peer using
+# PAP. Note: mgetty already provides this option. If this is specified
+# then dialin from users using a script under Linux to fire up ppp wont work.
+# login
+# If this option is given, pppd will send an LCP echo-request frame to the
+# peer every n seconds. Normally the peer should respond to the echo-request
+# by sending an echo-reply. This option can be used with the
+# lcp-echo-failure option to detect that the peer is no longer connected.
+lcp-echo-interval 30
+# If this option is given, pppd will presume the peer to be dead if n
+# LCP echo-requests are sent without receiving a valid LCP echo-reply.
+# If this happens, pppd will terminate the connection.  Use of this
+# option requires a non-zero value for the lcp-echo-interval parameter.
+# This option can be used to enable pppd to terminate after the physical
+# connection has been broken (e.g., the modem has hung up) in
+# situations where no hardware modem control lines are available.
+lcp-echo-failure 4
+# Disable the IPXCP and IPX protocols.
+# To let pppd pass IPX packets comment this out --- you'll probably also
+# want to install ipxripd, and have the Internal IPX Network option enabled
+# in your kernel.  /usr/doc/HOWTO/IPX-HOWTO.gz contains more info.
+noipx</pre></div><br/>/etc/ppp/chap-secrets<br/><div class="code"><pre># Secrets for authentication using CHAP
+# client	server	secret		IP addresses
+#username	pptpd	password	*
+net		pptpd	net12		10.0.0.21 </pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-99881"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kurych/">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/99881/">#</a>
+            9 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kurych/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kurych/posts/">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Попробуйте перед запуском туннеля <a href="http://pptpclient.sourceforge.net/howto-diagnosis.phtml#tty_einval">подгрузить модуль</a><br/><div class="code"><pre>modprobe ppp_async</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-99933"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/archangel153/">
+                <span class="post-username">archangel153</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/99933/">#</a>
+            9 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/archangel153/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/archangel153/posts/">
+                    6
+                </a>
+            </div>
+            <div>
+                Участник с: 25 ноября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ха. Прописал и заметил, что ничего не поменялось.<br/>Затем прописал<br/><div class="code"><pre>modinfo ppp_async</pre></div>А мне пишет вот чего<br/><div class="code"><pre>modinfo: ERROR: Module alias ppp_async not found.</pre></div>&lt;s&gt;Где взять модуль и&lt;/s&gt; как так получилось, что его нету в ядре?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-149846"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/archangel153/">
+                <span class="post-username">archangel153</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/149846/">#</a>
+            7 лет, 5 месяцев назад
+            
+                (отредактировано
+                
+                    7 лет, 5 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/archangel153/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/archangel153/posts/">
+                    6
+                </a>
+            </div>
+            <div>
+                Участник с: 25 ноября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            После очередного обновления ядра я вновь столкнулся с той же проблемой.<br /><br />Напомню:<br /><pre><code>Couldn&#39;t set tty to PPP discipline: Invalid argument</code></pre><br />Если попробовать подгрузить модуль ppp_async, то modprobe вообще молчит, а modinfo выдает вот что:<br /><pre><code>modinfo: ERROR: Module alias ppp_async not found.</code></pre>(хотя такой алиас есть, я проверил)<br /><br />Решение проблемы фантастически простО:<br />После обновления pacman -Syu перезагрузка системы не происходит, что и является причиной проблемы. Для того, чтобы modinfo перестал тупить, достаточно перезагрузить систему.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/10823/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747bb68b0d7316b7',m:'0BsjJFZxlFMzQAUpMf7Z5k822pSgj8s5KzitVpzlZbM-1662682354-0-Aa3VfYMy2J9wuc6wY8yjLduceAlEvyagVoHE1eQeIRIHHavXehDml50DunL8BKSCcgz/QrH9LmNe1IENamqDNH4kxfbmNAC3gis8M6AlryXvHeofvcEgggqpSHqUdXgGUF1km5ycdzwFfo03WVx2KiA=',s:[0xeba96dceea,0x1219c5ec17],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

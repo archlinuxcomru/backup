@@ -1,0 +1,1107 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [РЕШЕНО] systemd-212-1 - сломали автомонтирование udev
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/12/">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[РЕШЕНО] systemd-212-1 - сломали автомонтирование udev</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[РЕШЕНО] systemd-212-1 - сломали автомонтирование udev</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133784"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133784/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <em>P.S.</em><br /><blockquote><em>akorop</em><br>нет возможности различить, вставили диск или вынули</blockquote>Есть такая команда <pre><code>udevadm monitor -p</code></pre> Запустите в консоли и смотрите выхлоп при загрузке и извлечении диска. Там будут знакомые вам параметры udev, а также его переменные окружения, которые тоже можно использовать в правилах. Если сомневаетесь, является ли тот или иной параметр переменной, можно посмотреть, как он используется в штатных правилах udev:<pre><code>$ grep -r DISK_EJECT_REQUEST /usr/lib/udev/rules.d
+/usr/lib/udev/rules.d/60-persistent-storage.rules:KERNEL==&quot;sr*&quot;, ENV{DISK_EJECT_REQUEST}!=&quot;?*&quot;, ENV{ID_CDROM_MEDIA_TRACK_COUNT_DATA}==&quot;?*&quot;, ENV{ID_CDROM_MEDIA_SESSION_LAST_OFFSET}==&quot;?*&quot;, \
+/usr/lib/udev/rules.d/60-persistent-storage.rules:KERNEL==&quot;sr*&quot;, ENV{DISK_EJECT_REQUEST}!=&quot;?*&quot;, ENV{ID_CDROM_MEDIA_TRACK_COUNT_DATA}==&quot;?*&quot;, ENV{ID_CDROM_MEDIA_SESSION_LAST_OFFSET}==&quot;&quot;, \
+/usr/lib/udev/rules.d/60-cdrom_id.rules:ENV{DISK_EJECT_REQUEST}==&quot;?*&quot;, RUN+=&quot;cdrom_id --eject-media $devnode&quot;, GOTO=&quot;cdrom_end&quot;</code></pre><br />Запрос на извлечение диска <em>(кнопкой на приводе)</em> можно опознать по признаку <pre><code>ENV{DISK_EJECT_REQUEST}==&quot;?*&quot;</code></pre>Загруженный диск обнаруживается так <em>(в противном случае диска нет)</em>: <pre><code>ENV{ID_CDROM_MEDIA}==&quot;?*&quot;</code></pre>Тип ФС udev определяет <strong>сам</strong>, запускать определение ещё раз совершенно не обязательно. Наличие ФС можно проверить так: <pre><code>ENV{ID_FS_TYPE}==&quot;?*&quot;</code></pre><br /><blockquote><br>твёрдой рукой загоняют в счастливое будущее</blockquote> На самом деле, запуск юнита из udev с помощью systemctl придумал я сам, просто как первый подвернувшийся и самый очевидный способ запустить процесс так, чтобы он не был дочерним, и не задерживал udev.<br /><br />Убивать &quot;зависшие&quot; дочерние процессы udev начал уже довольно давно, когда загрузка модулей была переведена с modprobe на libkmod, и тут выяснилось, что некоторые модули грузятся ужасно долго, а процесс udev, который теперь делает это через не имеющею собственного процесса библиотеку, останавливается и тупо ждёт непонятно чего. Когда стало понятно, что модернизировать все-все-все модули ядра <em>(особенно старые и редко обновляемые)</em> их разработчики не спешат, авторы udev начали решать проблему на своей стороне, путём введения таймаутов.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133785"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/indeviral/">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133785/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/indeviral/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/indeviral/posts/">
+                    3196
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            udev<br />ACTION==&quot;change&quot; KERNEL==&quot;sr0&quot; RUN+=&quot;/bin/systemctl start <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="89e4e6fce7fdc9">[email&#160;protected]</a>%k&quot;<br />unit<br />ExecStart=/patch/script.sh %I<br />shell<br />rmdir /mnt/dir-$1<br /><br />%k--&gt;%i--&gt;$1<br /><br />дальше в таком же духе)<br />ps. Type=oneshot в последних версиях уже имеет мелкий таймаут...
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133795"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/tchgefest/">
+                <span class="post-username">tchgefest</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133795/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/tchgefest/topics/">
+                    51
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/tchgefest/posts/">
+                    1505
+                </a>
+            </div>
+            <div>
+                Участник с: 20 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Извините,но или я настолько туп или вы здесь выпендриваетесь?<br />У меня есть правило(wiki),которое просто и без мудрости делает mount в /media на все диски,и umount.<br />А вы думаете,как круче примонтировать диск скриптами?<br />Я пишу тучу скриптов(Natrio),а я делаю так пишет(ind.indeviral),но копируют у вас конфиги(простые юзеры),и потом получается <a href="https://archlinux.org.ru/forum/topic/12758/">http://archlinux.org.ru/forum/topic/12758/</a><br />Но может я не сталкивался с проблемами CD/DVD/Bluray и flash,так скажите,что делаю неправильно,читая вики или форум?<br />У меня работают и монтируются flash,SD,cd(внешний dvd и запись на него).<br />А то если честно я уже не могу понять,поставил систему,сделай это:<br /><a href="https://archlinux.org.ru/forum/topic/12698/">http://archlinux.org.ru/forum/topic/12698/</a> или так<br /><a href="https://archlinux.org.ru/forum/topic/12758/">http://archlinux.org.ru/forum/topic/12758/</a>
+            
+                
+                    <div class="post-signature">
+                        Последний крик моды - эхо 30-летней давности.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133799"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/akorop/">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133799/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/akorop/topics/">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/akorop/posts/">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br>Там будут знакомые вам параметры udev, а также его переменные окружения, которые тоже можно использовать в правилах.</blockquote>Весьма привлекательно, но почему-то не работает. Вот такое правило приводит к (многократному) запуску сервиса:<br /><strong>KERNEL==&quot;sr0&quot;, ACTION==&quot;change&quot;, RUN+=&quot;/usr/bin/systemctl start autodvd.service&quot;</strong><br /><br />А вот такое правило не срабатывает никогда, ни при вставлении диска, ни при извлечении:<br /><strong>KERNEL==&quot;sr0&quot;, ACTION==&quot;change&quot;, ENV{ID_FS_TYPE}==&quot;?*&quot;, RUN+=&quot;/usr/bin/systemctl start autodvd.service&quot;</strong><br /><br />Я принял к сведению, что в этом направлении можно копать, спасибо. Но, наверно, остановлюсь на том, что уже у меня есть, только подполирую маленько.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133800"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/elsonador/">
+                <span class="post-username">elsonador</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133800/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c4/74/c4744210be47d6c1692ba03d7d1a5b83.png" alt="elsonador avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/elsonador/topics/">
+                    63
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/elsonador/posts/">
+                    996
+                </a>
+            </div>
+            <div>
+                Участник с: 09 апреля 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>tchgefest</em><br>Очень глупый вопрос,а для чего автомонтирование в иксах</blockquote><br />Потому что люди по религиозным, вероятно, соображениям не хотят ставить себе полноценную <strong>desktop environment</strong>, зато хотят иметь её возможности. И начинают городить их на скриптах, кто как умеет.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133802"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/tchgefest/">
+                <span class="post-username">tchgefest</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133802/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/tchgefest/topics/">
+                    51
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/tchgefest/posts/">
+                    1505
+                </a>
+            </div>
+            <div>
+                Участник с: 20 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>elsonador</em><br>зато хотят иметь её возможности. И начинают городить их на скриптах, кто как умеет.</blockquote>Вот в этом и печаль,линукс 21 века,раньше RH4.0 ставилась на Р100 без проблем и стоила 1€ на базаре.
+            
+                
+                    <div class="post-signature">
+                        Последний крик моды - эхо 30-летней давности.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133814"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133814/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>akorop</strong>, возможно, ваша проблема в &quot;номере&quot; правила. Насколько я понимаю, правила udev выполняются процессом по порядку. Если ваше правило номер 14 выполняется раньше того, которое создаёт переменную, то разумеется, оно ничего в ней не найдёт.<br /><br />Попробуйте сменить &quot;номер&quot; на 99 и сделать <pre><code>udevadm control --reload-rules</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133825"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/akorop/">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133825/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/akorop/topics/">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/akorop/posts/">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>elsonador</em><br><blockquote><em>tchgefest</em><br>Очень глупый вопрос,а для чего автомонтирование в иксах</blockquote>Потому что люди по религиозным, вероятно, соображениям не хотят ставить себе полноценную <strong>desktop environment</strong>, зато хотят иметь её возможности. И начинают городить их на скриптах, кто как умеет.</blockquote>Может, хватит глупость повторять?<br />В &quot;полноценных&quot; DE автомонтированием занимается всего лишь файловый менеджер. И никто не мешает это самый (или другой) ФМ запустить пол openbox в режиме десктопа или демона. И если, например, я этого не делаю, то не по религиознгым соображениям, а потому что мне вообще не нужен этот убогий ФМ, который и на 50% не имеет функциональности mc. А &quot;полноценную&quot; DE я не ставлю тоже не по религиозным соображениям, а потому что хочу иметь большее удобство, чем дают все эти DE. В своё время, я и под KDE посидел, и под Гномом, не говоря уже об OS/2 и винде, имею с чем сравнивать.<br />
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133826"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/akorop/">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133826/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/akorop/topics/">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/akorop/posts/">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br>akorop, возможно, ваша проблема в &quot;номере&quot; правила. Насколько я понимаю, правила udev выполняются процессом по порядку. Если ваше правило номер 14 выполняется раньше того, которое создаёт переменную, то разумеется, оно ничего в ней не найдёт.</blockquote>Точно! Спасибо. Особо я не уточнял, но с номером 64 переменные работают.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-133834"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/maisvendoo/">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/133834/">#</a>
+            8 лет, 5 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/maisvendoo/topics/">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/maisvendoo/posts/">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>elsonador</em><br>Потому что люди по религиозным, вероятно, соображениям не хотят ставить себе полноценную desktop environment</blockquote>Не по религиозным, а потому что система способна выполнять указанные операции безо всяких DE/ФМ. И решение штатными средствами саоме надежное, без упования на &quot;умный&quot; ФМ
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/13322/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747b8a1beb4b7a75',m:'Uehl.aLEpraQhnClaqkNMWl2DuZBYNF1LEUC.1ZiyS8-1662680539-0-AVw7Q2rUzlqagTBcNmHtCLZ7xD7Z75GhieTukNVvw50wDT1PBHT0BSSPdPmJyOdtZMGaYIb0gLMWLpGm73J2ezBuKuNJ7aYrSWWRQLEL8kK2/U5Uob11jBHE0djY6pzzHczCFK0nelIFTNrVTSzOeIU=',s:[0x7cad38cb57,0x4abb7bd45d],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

@@ -1,0 +1,1106 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17049/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:08:54 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Анализ и отладка упавшей/сбойной системы
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/8/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/25/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Анализ и отладка упавшей/сбойной системы</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Анализ и отладка упавшей/сбойной системы</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180440"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180440/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 месяца, 1 неделя назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Смотрю новички теряются, когда у них падает система — не могут даже посмотреть логи, откатиться и др.<br />Написано наспех ..... возможны и ошибки ...... прошу строго не судить ...<br />Чтобы ориентироваться в причинах сбоя/падения системы, желательно знать на каком этапе загрузки произошел сбой — это, можно сказать, половина успеха. А потому необходимо знать этапы начальной загрузки системы, которые хорошо описаны и разбирать их не будем.<br />Простейшую схему загрузки (без UEFI) можно представить так<br />     <strong>BIOS  —  MBR  —  GRUB  —  KERNEL —  INIT</strong><br />Подробно описывать не буду (все можно найти в интернете), но кратко опишу последний этап загрузки - загрузчик загружает в память образ ядра, которое инициализирует и подготавливает память, оборудование , монтирует корневой раздел для загрузки остальной системы. И если все нормально и ошибок нет, то после инициализации ядро передает управление процеcсу init (первому системному процессу с PID=1). В качестве процесса init Archlinux использует systemd.<br />Как правило, в большинстве случаев, сбой/падение системы наблюдается после процесса монтирования корневого раздела для загрузки системы и  передачи управления процессу init. А следовательно, для просмотра логов, отладки и действий по дальнейшему восстановлению системы в этом случае удобнее воспользоваться средствами systemd, а именно <strong>emergency.target</strong> и <strong>debug-shell.service</strong>.<br />Конечно,  debug-shell.service не панацея от всех бед и, следует помнить, что его возможности успешны если затык произошел в процессе загрузки systemd …. и чем дальше продвинулась загрузка systemd, тем лучше. И, главное, не нужен сhroot …. Но, не сомненно, есть ситуации когда без chroot (или live CD) никуда. Но я обычно всегда в 1-ую очередь пытаюсь пробовать emergency.target и debug-shell.service.<br />Чтобы примерно определиться на каком этапе произошел сбой/падение (если это не ясно из сообщений о падении системы), можно загрузиться в режим emergency  - аварийный режим - аналог (но не полный) однопользовательского режима (single user mode) - базовая система сконфигурирована, но демоны не запущены (останов после передачи управления процессу init - сразу после приветствия Arch Linux). Если загрузились успешно и нам предлагают ввести пароль root, то мы перед падением, что облегчает дальнейший анализ.<br />Если загрузка неуспешная, разумно предположить, что наиболее вероятными причинами могут быть проблемы с загрузчиком, ядром, иницилизацией оборудования, монтированием корневого раздела. Это можно также проверить  загрузившись с параметром  <strong>break</strong> или <strong>break=premount</strong> и если загрузка до конца не состоится, то это означает, что падение произошло до монтирования файловой системы …..<br />Во всех этих случаях конкретное место падения можно также определить по сообщениям на экране монитора и для этого целесообразно увеличить информационность логирования, например, загрузившись с параметром <strong>debug</strong> (некоторые советуют добавить дополнительно и параметр  <strong>ignore_loglevel</strong>).<br />Но проведение анализа и устранение причин в этих случаях средствами  systemd не возможно.  Восстановление системы в тяжелых случаях падения, когда  применение emergency mode и debug-shell.service бесполезно, лучше проводить  средствами <a href="https://wiki.archlinux.org/index.php/Change_root">chroot - Wiki</a><br /><br /><strong>Загрузка в  режим emergency</strong><br />Прописываем в меню grub параметр загрузки <strong>emergency</strong> и <strong>F10</strong> для продолжения загрузи. Чтобы попасть в меню grub нажимаем «<strong>e</strong>» на выбранной системе.<br />После останова загрузки в данном режиме и ввода пароля root можно<br />- смотреть логи, например, для просмотра лога предыдущей сбойной загрузки journalctl -b -1<br />- выполнить откат к старому пакету (если старый пакет находится здесь же)<br />- другие операции, выполняемые с pacman<br />- что то записать<br />- и др.<br />Удобно работать с mc, но один большой минус — не отображается кирилица.<br /><br /><strong>EDIT</strong> - уточнение.  В Linux есть такое понятие - <strong>Recovery shells</strong> - получение интерактивной оболочки на этапе процесса загрузки, что можно использовать для решения определенных проблем с системой - грубо говоря, можно остановить загрузку на определенном этапе, определяемом выбором Recovery shells, выполнить соответствующие действия и продолжить загрузку.<br />Существует 3 типа Recovery shells (названия используются в качестве параметров загрузки)<br /><strong>rescue</strong> (другое название single) - режим восстановления -  в котором все локальные файловые системы будут примонтированы, но только некоторые важные службы будут запущены.<br /><strong>emergency</strong> - аварийный режим - в котором файловые системы еще не смонтированы, службы и сокеты не запущены. Из режима emergency можно продолжить загрузку с остановом в режиме rescue используя команду systemctl rescue.<br /><strong>init=/bin/sh</strong> - в этом режиме загрузка осуществляется прямо в оболочку (shell), что позволяет  использовать это в случае, когда не получается загрузиться в аварийном режиме, например, в случае испорченных библиотек systemd, повреждения файловой системы.<br /><br />Но чтобы предпринять более существенные действия по восстановлению системы, возможному подключению интернета и другим действиям, желательно активировать <strong>debug-shell.service</strong>.  Для чего выполняем следующие действия<br /><pre><code>mount -o remount,rw / …..# сейчас запускается в режиме rw (но лучше выполнить)
+cd /etc/systemd/system
+mkdir -p sysinit.target.wants
+ln -s /usr/lib/systemd/system/debug-shell.service sysinit.target.wants/</code></pre>и перегружаемся.....<br /><strong>Загрузка  debug-shell.service</strong><br />Прописываем в меню grub<br /><strong>systemd.log_level=debug systemd.log_target=kmsg log_buf_len=1M</strong><br />F10 и после, как увидим приглашение - Welcome to Arch Linux .... , переходим в текстовую консоль F9 (<strong>Ctrl+Alt+F9</strong>) ....и попадаем в root shell .<br />Смотрим загрузку и где затык....можно  посмотреть зависшие процессы systemctl list-jobs, поработать с pacman, проверить возможность подключения к интернет (я это делаю через 3G modem), выполнить обновления и многое другое.<br />UPD....после окончания работы с debug-shell.service не забываем выполнить<br />systemctl disable debug-shell.service ...... в целях безопасности....<br />Можно, конечно, активировать  debug-shell.service на постоянку (systemctl enable debug-shell.service) и тогда не нужно будет активировать его из emergency mode........ но это на любителя и не забывайте, что этот сервис дает полный доступ к системе.<br /><br /><strong>Дополнение в части debug-shell.service</strong> - появился новый параметр ядра, очень удобный - позволяет активировать debug-shell.service только на текущую загрузку (режим runtime), а не на постоянку ... то есть юнит не прописывается в /etc/systemd/system. ... Для активации нужно в момент загрузки в меню Grub нажать <strong>e</strong> на загружаемой системе и дописать параметр ядра <strong>systemd.debug-shell=1</strong> а для увеличения логирования можно дописать <strong>systemd.log_level=debug</strong> .... и нажать F10<br />Далее в процессе загрузки или после остановки переключится в консоль debug-shell - <strong>Alt+Ctrl+F9</strong><br /><br />UPD …..<br />Проверка файловой системы <a href="https://wiki.archlinux.org/index.php/Fsck">fsck - Wiki</a><br />Проверку можно выполнить, загрузившись с параметром загрузки break или break=premount (останов загрузки до монтирования файловой системы) <strike>и по рекомендации Wiki «To automatically repair damaged portions, run: fsck -a »</strike> ... лучше по старинке с опцией -f<br /><br />PS ... Забыл дать ссылку на нашу Wiki - <a href="https://wiki.archlinux.org/index.php/General_troubleshooting">General troubleshooting</a> (Устранение общих неполадок в системе) — возможно пригодится ... <u>лучше читать en</u><br /><br /><strong>Проблемы с выключением</strong><br /><br />1. <strong>Долгое выключение</strong> — получаем лог shutdown и анализуруем его (смотрим тайм-ауты и др.). Для получения лога<br />- создаем скрипт <strong>/usr/lib/systemd/system-shutdown/debug.sh</strong> (не забыть сделать его исполняемым):<br /><pre><code>#!/bin/sh
+mount -o remount,rw /
+dmesg &gt; /shutdown-log.txt
+mount -o remount,ro /</code></pre>- перегружаемся со следующими параметрами:<br /><strong>systemd.log_level=debug systemd.log_target=kmsg log_buf_len=1M printk.devkmsg=on</strong><br />- выключаем ….... включаем и анализируем файл /shutdown-log.txt<br />Начало завершения/выключения — ищем строку типа systemd[1]: Stopping Session 1 of user …такой-то.....<br />(в начале будет идти дата и время, если что тормозит, смотрим на время) ........<br /><br />2. <strong>Не выключается</strong><br />Если реагирует на клавиатуру и дает попасть в другую консоль, пробуем принудительно перегрузить/выключить командами<br />#<strong> sync &amp;&amp; reboot -f</strong><br /># <strong>sync &amp;&amp; poweroff -f</strong><br />Если на клавиатуру не реагирует, пробуем  принудительно перегрузить/выключить используя волшебные кнопки -<br /><strong>R E I S U B</strong> / <strong>R E I S U O</strong>  (при этом <strong><u>sysrq должен быть равен 1</u></strong>)<br />Если ни одна из команд не работает, то это ошибка ядра - если работают, то это ошибка systemd или железа.<br />Для чтения логов в этом случае необходимо применять другие способы (последовательная консоль, ssh и т. п.), чего как правило, у большинства нет.<br />Но можно попробовать использовать <strong>debug-shell.service</strong> …....<br />- # systemctl enable debug-shell.service<br />- перегружаемся со следующими параметрами:<br />systemd.log_level=debug systemd.log_target=kmsg log_buf_len=1M<br />(…. log_buf_len=1M ….... не обязателен)<br />- shutdown ….. и идем в <strong>tty9</strong>, запускам dmesg и смотрим …. + ps aux и смотрим не завершенные процессы …. + можно и systemctl list-jobs ...  и в конце poweroff --force и смотрим его работу …<br /><br /><strong>ДОПОЛНЕНИЕ</strong> - иногда возникают и ситуации, что система не упала, работоспособна, но имеют случаи отдельные зависания системы … или имеются проблемы с работой отделных сервисов systemd … или можно спокойно загрузиться в текстовую консоль, а вот при загрузке X-ов возникают проблемы и другое. Не стал описывать здесь, а вынес в отдельные блоги следующие две темы<br /><br /><a href="../19282/index.html">Анализ зависшего процесса</a> - описаны способы определения зависшего процесса, статья чисто ознакомительная, чтобы не теряться, а хотя бы иметь представление, что можно предпринять для простого анализа возникшей проблемы.<br /><br /><a href="../19783/index.html">Способы нестандартной отладки/трассировки Х-ов, unit-ов systemd, udev, модулей</a> - описаны способы получения дополнительной информации при решении проблем с Xorg, сервисов systemd, модулей, в случаях когда стандартных логов, например, journal не достаточно.<br /><br /><strong>ДОПОЛНЕНИЕ в части логирования initramfs</strong><br />Иногда, правда редко, дело до загрузки systemd не доходит, система падает при загрузке initramfs - и в этом случае могут помочь следующие параметры командной строки ядра, наличие которых позволит получить логи initramfs - польза, конечно, не большая, но, как говоротся, на без рыбье и рак рыба ...<br /><strong>rd.log=</strong><strong>console</strong>|<strong>file</strong>|<strong>kmsg</strong>|<strong>all</strong> - включает запись ранних сообщений  в пространстве пользователя. Имеет 4 параметра: console, file, kmsg, all - несколько опций можно объединить с помощью символа «|». Сообщения всегда записываются на консоль, если не передан параметр quiet. Если параметр не указан, предполагается kmsg | console. Если rd.log отсутствует в командной строке ядра, регистрация не производится.<br /><strong>console</strong> - записывает вывод в консоле (/dev/console)<br /><strong>file</strong> - записывает вывод в файл <strong>/run/initramfs/init.log</strong><br /><strong>kmsg</strong> -  записывает вывод в лог kmsg (/dev/kmsg device)<br /><strong>all</strong> - записывает вывод в  во все перечисленные цели<br /><br /><strong>rd.debug</strong> - включает отладку оболочки (xtrace). Если rd.log не пррописан, то подразумевается rd.log=console<br /><br />Нюанс в части сохранения логов а файл - файл хранится только в текущей загрузке, при не удачной загрузке и перегрузке файла уже не будет. В этом случае придется смотреть лог в консоле,  лучше прописывать <strong>rd.debug</strong> <strong>rd.log=all</strong><br /><br /><strong>ДОПОЛНЕНИЕ в части логирования grub</strong><br />Лог еще нигде не пишется, но посмотреть его можно ... одно но, бежит он очень быстро, можно что то прочитать, если будет останов/задержка. Для этого нужно прописать в grub.cfg две строчки<br /><pre><code>set pager=1
+set debug=all</code></pre>параметр <strong>set pager=1</strong> нужен для того, чтобы быстро не бежало и можно было листать логи в консоле.<br /><br /><strong>ДОПОЛНЕНИЕ в части ступенчатой загрузки</strong><br />Иногда для выявления/уточнения места затыка удобно использовать ступенчатую загрузку: <strong>emergency mode &mdash; rescue mode &mdash; default mode</strong><br />- сначала грузимся в emergency mode - если все нормально и увидели «Welcome to ArchLinux!» и предложение ввести пароль root, то вводи пароль … и грузимся дальше в в rescue mode, для чего вводим команду <strong>systemctl rescue</strong> и если все нормально и предложили ввести пароль root, то в вводим снова пароль root (при необходимости смотри/делаем что необходимо, уточнение - если установлен и активирован DM, то в этих режимах он пока еще не задействован). Если опять все нормально, грузимся дальше в default mode (обычный режим работы по дефолту), для чего  вводим команду <strong>systemctl defaut</strong> (вот если DM активирован, то он на этом этапе и сработает).<br /><br /><strong>ДОПОЛНЕНИЕ в части анализа нагрузки cpu, памяти и др.</strong><br />Иногда полезно помониторить нагрузку cpu, памяти и др. в динамике, за определенный промежуток времени. Хорошо подходит для этих целей утилита <strong>atop</strong>. Лучшей утилиты для анализа затыка в системе вряд ли найдется - есть, конечно, еще один профессиональный комбайн, но для нас, обычных юзеров, все-таки atop намного проще.<br />Несомненно, не имею ничего протов утилит типа <strong>top</strong>, <strong>htop</strong>, <strong>bpytop</strong> и др., но это все утилиты типа посмотреть, что там сейчас твориться в системе. Но сидеть и тупо смотреть в монитор, отлавливая виновника проблем не очень то и хороший способ. Проще всего запустить atop и ни о чем не думая продолжить работу на компьютере - atop запишет в бинарный файл с указанной Вами периодичностью все параметры системы и будет хранить их столько время, сколько Вы ему укажите.<br />Выбрав свободное время можете заняться анализом - смотреть логи, точнее тот же вывод atop, но последовательно, как развивались события, одним нажатием клавиши, просто как листая журнал - и можете увидеть как менялись параметры системы по времени.<br />Но можно посмотреть и проще - например, посмотреть за определенный промежуток времени как менялись значения ОЗУ, например, 15.12.2020 с  17:10:00 до 18:00:00<br /><strong>atopsar -r /var/log/atop/atop_20201215 -m -b 17:10:00 -e 18:00:00</strong><br /><pre><code>-------------------------- analysis date: 2020/12/15 --------------------------
+
+17:11:54  memtotal memfree buffers cached dirty slabmem  swptotal swpfree _mem_
+17:21:54     5875M   3802M    240M   818M    0M    320M        0M      0M
+17:31:54     5875M   3806M    241M   817M    0M    320M        0M      0M
+17:41:54     5875M    137M    269M   771M    0M    227M        0M      0M
+17:51:54     5875M   3978M    242M   804M    0M    227M        0M      0M
+17:55:33     5875M   4074M    243M   740M    0M    227M        0M      0M</code></pre>И что там за приложение так много потребляло памяти? - выведем тройку жрущих процессов за тот же период времени<br /><strong>atopsar -r /var/log/atop/atop_20201215 -G -b 17:10:00 -e 18:00:00</strong><br /><pre><code>-------------------------- analysis date: 2020/12/15 --------------------------
+
+17:11:54    pid command  mem% |   pid command  mem% |   pid     command   mem%_top3_
+17:21:54    802 palemoon  11%    |   472 tilix                1% |   457        Xorg             1%
+17:31:54    802 palemoon  11%    |   472 tilix                1% |   457        Xorg             1%
+17:41:54  98846 mirage    22%    | 99092 mirage        22% | 98808     mirage          12%
+17:51:54    802 palemoon   8%    | 99894 soffice.          3% |   457        Xorg             2%
+17:55:33    802 palemoon   9%    |   472 tilix                 1% |   457         Xorg            1%</code></pre>Ну вот, обжорством занимался mirage - как минимум было открыто 3 приложения, который забрали более половины памяти.<br /><strong>PS</strong> - Интерсно и то, что памяти практически не осталось, но система не висла - отработал <strong>earlyoom</strong>, установленный у меня.<br /><br />Также можно посмотреть и нагрузку cpu за тот же период (тройку наиболее жрущих)<br /><strong>atopsar -r /var/log/atop/atop_20201215 -O -b 17:10:00 -e 18:00:00</strong><br /><pre><code>-------------------------- analysis date: 2020/12/15 --------------------------
+
+17:11:54    pid  command  cpu% |   pid   command  cpu% |   pid   command  cpu%_top3_
+17:21:54    802 palemoon   10% |   457      Xorg          3% |   472      tilix              1%
+17:31:54    472 tilix              3% |   457      Xorg          2% |   802     palemoon      2%
+17:41:54    472 tilix              3% | 97828    gmain        2% |   457       Xorg            2%
+17:51:54    457 Xorg            3% | 99894    soffice.      3% |   472        tilix             2%
+17:55:33    802 palemoon     6% | 99894   pool-sof     5% |   457       Xorg            3%</code></pre>Как видим нагрузка cpu особо и не менялась.<br />Можно эти команды и не писать, а просто выбрать нужный день и запустить atop, типа  <strong>atop -r /var/log/atop/atop_20201215</strong> и смотреть экран atop в динамике - просто листая, как книгу:  t - вперед,  t + Shift - назад (будет вывод похожий на top, но в разные моменты времени)<br /><br /><strong>PS</strong> - для обладателей <strong>nvidia</strong> - можно смотреть <strong>GPU statistics</strong> (но нужно установить один модуль) - что это такое, не пробовал<br /><br /><strong>ДОПОЛНЕНИЕ в части анализа проблем с DRM (Direct Rendering Manager) - проблем при загрузке Х-ов</strong> ... и не только при загрузке ...<br />Если Вы столкнулись при загрузке Х-ов с некоторыми проблемами графики, дисплеем и др., то можно увеличить логирование драйвера DRM, что может помочь понять причину проблем.<br />Включение отладочных сообщений выполняется с помощью параметра <strong>drm.debug</strong> с активированием соотвествующего бита:<br /><pre><code>drm.debug=0x1 will enable CORE messages
+drm.debug=0x2 will enable DRIVER messages
+drm.debug=0x3 will enable CORE and DRIVER messages
+…
+drm.debug=0x1ff will enable all messages</code></pre>Рекомендую начать с параметра <strong>drm.debug=0xe</strong> или, если имеются проблемы с отображением, использовать <strong>drm.debug=0x1e</strong><br />При этом следует прописывать два параметра, например<br /><pre><code>drm.debug=0x1e  log_buf_len=8M</code></pre><strong>PS</strong> - значение параметра drm.debug прописано в /sys/module/drm/parameters/debug, то есть его можно и посмотреть и даже изменить в загруженной системе (то есть можно настроить логирование без выполнения reboot, если проблемы возникают в процессе работы)<br />Забыл отметить - отладочные сообщения будут прописаны в <strong>journal</strong> ... смотрим journalctl &lt;соответствующий параметр&gt;
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180448"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/R.V/index.html">
+                <span class="post-username">R.V.</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180448/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/R.V/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/R.V/posts/index.html">
+                    1100
+                </a>
+            </div>
+            <div>
+                Участник с: 10 января 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Очень даже полезная тема! +1
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180450"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180450/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Насчет о возможности отката пакетов ..... лучше даю ссылку из одного топика по обсуждению упавшей системы<br /><blockquote><em>lo7ev</em><br>Зашел через emergency откатил linux, linux-headers, acpi_call, systems. Все починилоь</blockquote>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180570"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Romshot/index.html">
+                <span class="post-username">Romshot</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180570/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Romshot/topics/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Romshot/posts/index.html">
+                    50
+                </a>
+            </div>
+            <div>
+                Участник с: 06 октября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ИМХО, но здесь немного не место, где подобную инструкцию можно разместить. Может запилить совместными усилиями на вики? Во всяком случае, там можно будет алгоритм хорошо структурировать, а еще, после хорошего допила и на главной разместить, поскольку очень полезная идея.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180583"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/ZeniaM/index.html">
+                <span class="post-username">ZeniaM</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180583/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/46/f2/46f25eccb1fdf24be8ab37f09c8cc1df.png" alt="ZeniaM avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/ZeniaM/topics/index.html">
+                    37
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/ZeniaM/posts/index.html">
+                    299
+                </a>
+            </div>
+            <div>
+                Участник с: 20 сентября 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            vasek спасибо!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180586"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180586/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Romshot</em><br>ИМХО, но здесь немного не место, где подобную инструкцию можно разместить. Может запилить совместными усилиями на вики? Во всяком случае, там можно будет алгоритм хорошо структурировать, а еще, после хорошего допила и на главной разместить, поскольку очень полезная идея.</blockquote>В принципе это не инструкция, просто приведены основные положения/направления ....... <u>чтобы можно было от чего то оттолкнуться</u> .... всего не опишешь, все варианты не предусмотришь … и предстоит дополнительное и гугление и анализ ...<br />Имеется много чего по отладке, но все это раскидано. Думал постепенно дополнять ...<br />Но гложет мысль, что все это лишнее - система уже практически и не падает (сам уже года 2 как вообще перестал делать backup системы, только важной документации) .... а у новичков больше проблем по отладке приложений, а это уже совсем другое ...
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-180593"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Romshot/index.html">
+                <span class="post-username">Romshot</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/180593/index.html">#</a>
+            5 лет, 7 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Romshot/topics/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Romshot/posts/index.html">
+                    50
+                </a>
+            </div>
+            <div>
+                Участник с: 06 октября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Но гложет мысль, что все это лишнее - система уже практически и не падает (сам уже года 2 как вообще перестал делать backup системы, только важной документации) .... а у новичков больше проблем по отладке приложений, а это уже совсем другое ...</blockquote>Не  сомневайтесь. Эта статья  - отличная идея. Лично я, как приду домой, обязательно  всё внимательно прочитаю и добавлю в закладки.  Это, конечно, не инструкция по выживанию, но кому-то это точно  понадобится. Я  (да и  не только я), к примеру,  пополню свои знания о системе (изучение системы и притянуло меня к лину, арче). По поводу стабильности системы в целом,  то, если не считать проблем  в результате  моих экспериментов, то из проблем с системой, было разве что отвал груба 2-3  года тому назад.<br />И, конечно, спасибо за статью
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-182228"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/182228/index.html">#</a>
+            5 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Добавил ........  <strong>Проблемы с выключением</strong>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183665"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/R.V/index.html">
+                <span class="post-username">R.V.</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/183665/index.html">#</a>
+            5 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/R.V/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/R.V/posts/index.html">
+                    1100
+                </a>
+            </div>
+            <div>
+                Участник с: 10 января 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У нас там закрыли одну интересную тему из-за неадекватного пользователя, к сожалению. А можно немножко подробнее осветить вопрос ремонта установленной системы из Live CD?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183680"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/R.V/index.html">
+                <span class="post-username">R.V.</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/183680/index.html">#</a>
+            5 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/R.V/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/R.V/posts/index.html">
+                    1100
+                </a>
+            </div>
+            <div>
+                Участник с: 10 января 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <a href="../../post/183585/index.html">Полезная информация</a>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexde50.html?next=/forum/topic/17049/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17049/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:08:54 GMT -->
+</html>

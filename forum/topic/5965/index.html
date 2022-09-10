@@ -1,0 +1,1093 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Iptables раздаем инет с фильтрацией [Решено]
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Iptables раздаем инет с фильтрацией [Решено]</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Iptables раздаем инет с фильтрацией [Решено]</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57944"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/shaman/">
+                <span class="post-username">shaman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57944/">#</a>
+            12 лет назад
+            
+                (отредактировано
+                
+                    12 лет назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/16/96/1696c03302ce705853be872aaa2550a6.png" alt="shaman avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/shaman/topics/">
+                    26
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/shaman/posts/">
+                    379
+                </a>
+            </div>
+            <div>
+                Участник с: 13 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            добрый вечер :)<br/>я уже задолбался с этим файрволом, тупо сейчас сижу и перебираю варианты настроек ибо самые логичные отказались работать.<br/>есть сетка 192.168.0.0/24, туда смотрит eth1<br/>сетка 192.168.2.0/24, wlan0<br/>есть интерфейс ppp0, он смотрит в инет.<br/>задача: предоставить полный доступ в инет через ppp0 некоторым машинам из 192.168.0.0/24 и всем из 192.168.2.0/24.<br/>как я делал: разрешал маскарадинг, все машины в инет ходят. цепочка OUTPUT по умолчанию ACCEPT.<br/>фильтрую цепочку INPUT в filter (-A INPUT -i wlan0 -m mac &ndash;mac-source xx:xx:xx:xx:xx:xx -j ACCEPT)<br/>далее я предполагаю что в FORWARD аналогично фильтруем все с eth1 (все что не попадает в правило дропается)<br/>но как только я добавляю соответствующие настройки, инет пропадает и в wlan0. хорошо делаем правило для него, все равно инета нет.<br/>надеюсь на вашу помощь, я теперь даже понимать начал как это работает, вот только фигня творится.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57945"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/gard/">
+                <span class="post-username">gard</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57945/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/5c/f5/5cf5a07c0739d7bc6ac7ac27f4f6a0be.png" alt="gard avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/gard/topics/">
+                    66
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/gard/posts/">
+                    1167
+                </a>
+            </div>
+            <div>
+                Участник с: 15 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Покажите лучше ваш скрипт..
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57943"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/shaman/">
+                <span class="post-username">shaman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57943/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/16/96/1696c03302ce705853be872aaa2550a6.png" alt="shaman avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/shaman/topics/">
+                    26
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/shaman/posts/">
+                    379
+                </a>
+            </div>
+            <div>
+                Участник с: 13 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            а скрипта нету :) я тупо вручную перебираю все :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57946"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/aduser/">
+                <span class="post-username">aduser</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57946/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/aduser/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/aduser/posts/">
+                    26
+                </a>
+            </div>
+            <div>
+                Участник с: 21 августа 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            `iptables -t nat -vL -n` и  `iptables -t filter -vL -n` - в студию
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57947"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/villi/">
+                <span class="post-username">villi</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57947/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/villi/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/villi/posts/">
+                    144
+                </a>
+            </div>
+            <div>
+                Участник с: 07 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Я бы порекомендовал установить <span style="color:blue">ipset</span>, в нём создать множество macipmap, типа:<br/><div class="code"><pre>eval /sbin/ipset --create AccessList macipmap --network 192.168.2.0/24.
+eval /sbin/ipset --add AccessList 192.168.2.2,AA:BB:CC:00:99:33
+...</pre></div>, по которому и пускать в инет, по подобию этого:<br/><div class="code"><pre>eval /sbin/iptables --table filter --append FORWARD --in-interface eth1 --match set --match-set AccessList --protocol tcp --dport 80 --match conntrack --ctstate NEW --syn --jump ACCEPT
+eval /sbin/iptables --table nat --append POSTROUTING --source eth1 --out-interface ppp0 --jump MASQUERADE</pre></div>Пока завершусь, что-то писать лень :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57948"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/shaman/">
+                <span class="post-username">shaman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57948/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/16/96/1696c03302ce705853be872aaa2550a6.png" alt="shaman avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/shaman/topics/">
+                    26
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/shaman/posts/">
+                    379
+                </a>
+            </div>
+            <div>
+                Участник с: 13 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            nat:<br/><div class="code"><pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6b1904041f2b3f0e18070a">[email&#160;protected]</a> ~]# iptables -t nat -vL -n
+Chain PREROUTING (policy ACCEPT 651 packets, 60710 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+Chain OUTPUT (policy ACCEPT 1 packets, 72 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+Chain POSTROUTING (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+  102  6329 SNAT       all  --  *      ppp0    0.0.0.0/0            0.0.0.0/0           to:94.180.152.253 </pre></div>тут проблем нет, убрал маскарадинг и скриптом прикрутил снат, тоже рабочий вариант, тормозов меньше.<br/>filter:<br/>вот так работает<br/><div class="code"><pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="01736e6e75415564726d60">[email&#160;protected]</a> ~]# iptables -t filter -vL -n
+Chain INPUT (policy ACCEPT 522 packets, 45045 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+Chain FORWARD (policy ACCEPT 364 packets, 248K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+  482  107K ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           MAC 00:15:AF:D1:52:C6
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           MAC ! 00:15:AF:D1:52:C6 
+Chain OUTPUT (policy ACCEPT 87 packets, 11616 bytes)
+ pkts bytes target     prot opt in     out     source               destination  </pre></div>а вот так нет:<br/><div class="code"><pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3e4c51514a7e6a5b4d525f">[email&#160;protected]</a> ~]# iptables -t filter -vL -n
+Chain INPUT (policy ACCEPT 522 packets, 45045 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+Chain FORWARD (policy ACCEPT 364 packets, 248K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+  482  107K ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           MAC 00:15:AF:D1:52:C6           
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0
+Chain OUTPUT (policy ACCEPT 87 packets, 11616 bytes)
+ pkts bytes target     prot opt in     out     source               destination  </pre></div>последний вариант настройки вроде полностью логичен. разрешить некоторые маки и дропать все остальное.<br/>насколько я понял логику файрвола, если первое правило проходит, то до второго пакет не доберется.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57949"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/villi/">
+                <span class="post-username">villi</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57949/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/villi/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/villi/posts/">
+                    144
+                </a>
+            </div>
+            <div>
+                Участник с: 07 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Если у Вас политики по-умолчанию - ACCEPT, то зачем <div class="code"><pre> --jump ACCEPT</pre></div>?<br/>Мона, даже нуна - <div class="code"><pre>RETURN</pre></div>Поправьте меня, если я не прав
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57950"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/shaman/">
+                <span class="post-username">shaman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57950/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/16/96/1696c03302ce705853be872aaa2550a6.png" alt="shaman avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/shaman/topics/">
+                    26
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/shaman/posts/">
+                    379
+                </a>
+            </div>
+            <div>
+                Участник с: 13 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            упс, мой косяк.<br/>политику по умолчанию делам DROP, и разрешаем маки. те как-то так будет:<br/><div class="code"><pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="73011c1c07332716001f12">[email&#160;protected]</a> ~]# iptables -t filter -vL -n
+Chain INPUT (policy ACCEPT 522 packets, 45045 bytes)
+pkts bytes target     prot opt in     out     source               destination         
+Chain FORWARD (policy DROP 364 packets, 248K bytes)
+pkts bytes target     prot opt in     out     source               destination         
+  482  107K ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           MAC 00:15:AF:D1:52:C6
+Chain OUTPUT (policy ACCEPT 87 packets, 11616 bytes)
+pkts bytes target     prot opt in     out     source               destination</pre></div>и тоже не работает, хотя судя по цифрам слева от правила пакеты все же ходят, но пинги не идут, браузер ничего не открывает и тд.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57951"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/villi/">
+                <span class="post-username">villi</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57951/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/villi/topics/">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/villi/posts/">
+                    144
+                </a>
+            </div>
+            <div>
+                Участник с: 07 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Теперь стоит уточнить <div class="code"><pre>--in-interfaces, --out-interfaces</pre></div>в цепочке FORWARD
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-57952"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/shaman/">
+                <span class="post-username">shaman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/57952/">#</a>
+            12 лет назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/16/96/1696c03302ce705853be872aaa2550a6.png" alt="shaman avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/shaman/topics/">
+                    26
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/shaman/posts/">
+                    379
+                </a>
+            </div>
+            <div>
+                Участник с: 13 декабря 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            out в данном случае это ppp0 так?<br/><div class="code"><pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="75071a1a01352110061914">[email&#160;protected]</a> ~]# iptables -t filter -vL -n
+Chain INPUT (policy ACCEPT 158 packets, 15073 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+Chain FORWARD (policy DROP 105 packets, 16892 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+   58 12888 ACCEPT     all  --  wlan0  ppp0    0.0.0.0/0            0.0.0.0/0           MAC 00:15:AF:D1:52:C6 
+Chain OUTPUT (policy ACCEPT 48 packets, 8125 bytes)
+ pkts bytes target     prot opt in     out     source               destination  </pre></div>один фиг дропает все.<br/>зы в идеале все пакеты должны сейчас проходить ибо в wlan0 сейчас кроме меня никого нету.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/5965/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747bba801f959d6f',m:'owYUi8CoE43twljBCurj77xN7bw6pNUiSvaGEaU_adQ-1662682520-0-AVkZ/CSyIEYJOgxhg1HtFijpQCKlYhjLJ4q287b5HDJNt9gu3J3iCyCg/u7VXWyPhPm/h0W0+pIh17goL20TaFMbAmJpVeGpDzc5Gc5RIy2tOjnFcXjUB2+qVWoiTneVp52E6DZYgrfCfiZadJNeCW4=',s:[0xe4943572dc,0x6247ce8534],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

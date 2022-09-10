@@ -1,0 +1,1205 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19585/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:14:44 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [РЕШЕНО] Настройка сети на VPS KVM
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/13/index.html">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[РЕШЕНО] Настройка сети на VPS KVM</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[РЕШЕНО] Настройка сети на VPS KVM</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223067"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Nebulosa/index.html">
+                <span class="post-username">Nebulosa</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/223067/index.html">#</a>
+            2 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4a/9b/4a9bd66c7a2a170b1585f3b56cdb48de.png" alt="Nebulosa avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Nebulosa/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Nebulosa/posts/index.html">
+                    830
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Приветствую!<br /><br />Никак не могу победить проблему автоматического поднятия сети в Archlinux после перезагрузки. А точнее сеть стартует только после того как через VNC доступ пытаешься залогиниться - просто вводишь имя пользователя и на момент запроса пароля поднимается сеть - знаю это потому, что параллельно пытаюсь зайти через SSH. Пробовал ждать больше времени, но это не помогает, чётко в момент логина и запроса пароля.<br /><br />Сеть настроена через systemd-networkd.  Пробовал настраивать через netctl - ситуация та же.<br /><br /><pre><code>
+Сервисы при старте:
+Startup finished in 2.944s (kernel) + 19.700s (userspace) = 22.645s
+graphical.target reached after 17.949s in userspace
+19.376s systemd-random-seed.service
+13.413s systemd-networkd-wait-online.service
+ 3.417s systemd-logind.service
+ 1.709s systemd-networkd.service
+ 1.603s dev-vda1.device
+  967ms systemd-journald.service
+  953ms systemd-timesyncd.service
+  942ms systemd-udevd.service
+  267ms wg-quick@wg0.service
+  243ms systemd-udev-trigger.service
+  202ms iptables.service
+   75ms systemd-user-sessions.service
+   69ms systemd-sysctl.service
+   66ms user@1000.service
+   63ms systemd-journal-flush.service
+   46ms systemd-tmpfiles-setup-dev.service
+   43ms systemd-remount-fs.service
+   41ms var-lib-systemd\x2dswap-swapfc-1.swap
+   40ms systemd-tmpfiles-setup.service
+   36ms dev-hugepages.mount
+   35ms dev-mqueue.mount
+   34ms sys-kernel-debug.mount
+   34ms systemd-update-utmp.service
+   31ms sys-kernel-config.mount
+   29ms kmod-static-nodes.service
+   28ms tmp.mount
+   23ms systemd-tmpfiles-clean.service
+   18ms user-runtime-dir@1000.service
+</code></pre><br />Информация о системе хосте, возможно это тоже поможет..<br /><pre><code>
+OS: Arch Linux x86_64
+Host: KVM RHEL 7.6.0 PC (i440FX + PIIX, 1996)
+Kernel: 5.3.11-arch1-1
+Uptime: 1 day, 13 hours, 51 mins
+Packages: 201 (pacman)
+Shell: bash 5.0.11
+Terminal: /dev/pts/0
+CPU: Common KVM (1) @ 2.197GHz
+GPU: 00:02.0 Cirrus Logic GD 5446
+Memory: 90MiB / 478MiB
+</code></pre>Подозреваю, что в системе-госте мне нужно прописать какую-то команду или конфигурационный файл, о чём смутно для меня намекает вики, но пока не нашёл ничего полезного.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223071"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/52th/index.html">
+                <span class="post-username">52th</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/223071/index.html">#</a>
+            2 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/52th/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/52th/posts/index.html">
+                    462
+                </a>
+            </div>
+            <div>
+                Участник с: 01 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А а в логах что?<br />Например, команда<br /><pre><code>journalctl -n 30  -u systemd-networkd</code></pre>Выведет последние 30 записей  systemd-networkd.<br />Ну и неплохо бы посмотреть, как у Вас конфиги systemd-networkd написаны.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223150"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Nebulosa/index.html">
+                <span class="post-username">Nebulosa</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/223150/index.html">#</a>
+            2 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4a/9b/4a9bd66c7a2a170b1585f3b56cdb48de.png" alt="Nebulosa avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Nebulosa/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Nebulosa/posts/index.html">
+                    830
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В логах пусто:<br /><pre><code>
+$ journalctl -n 30  -u systemd-networkd
+-- Logs begin at Wed 2019-11-20 01:31:42 MSK, end at Wed 2019-11-20 21:42:44 MSK. --
+Nov 20 09:24:04 vpshost systemd-networkd[304]: ens3: Gained carrier
+Nov 20 09:24:06 vpshost systemd-networkd[304]: ens3: Gained IPv6LL
+Nov 20 09:24:17 vpshost systemd-networkd[304]: wg0: Gained carrier
+Nov 20 09:24:18 vpshost systemd-networkd[304]: wg0: Lost carrier
+Nov 20 09:32:27 vpshost systemd[1]: Stopping Network Service...
+Nov 20 09:32:27 vpshost systemd[1]: systemd-networkd.service: Succeeded.
+Nov 20 09:32:27 vpshost systemd[1]: Stopped Network Service.
+-- Reboot --
+Nov 20 09:32:43 vpshost systemd[1]: Starting Network Service...
+Nov 20 09:32:44 vpshost systemd-networkd[296]: Enumeration completed
+Nov 20 09:32:44 vpshost systemd[1]: Started Network Service.
+Nov 20 09:32:44 vpshost systemd-networkd[296]: ens3: Interface name change detected, ens3 has been renamed to eth0.
+Nov 20 09:32:44 vpshost systemd-networkd[296]: eth0: Interface name change detected, eth0 has been renamed to ens3.
+Nov 20 09:32:44 vpshost systemd-networkd[296]: ens3: IPv6 successfully enabled
+Nov 20 09:32:44 vpshost systemd-networkd[296]: ens3: Gained carrier
+Nov 20 09:32:46 vpshost systemd-networkd[296]: ens3: Gained IPv6LL
+Nov 20 09:32:57 vpshost systemd-networkd[296]: wg0: Gained carrier
+Nov 20 09:33:35 vpshost systemd-networkd[296]: wg0: Lost carrier
+Nov 20 09:33:35 vpshost systemd[1]: Stopping Network Service...
+Nov 20 09:33:35 vpshost systemd[1]: systemd-networkd.service: Succeeded.
+Nov 20 09:33:35 vpshost systemd[1]: Stopped Network Service.
+-- Reboot --
+Nov 20 09:33:52 vpshost systemd[1]: Starting Network Service...
+Nov 20 09:33:53 vpshost systemd-networkd[299]: Enumeration completed
+Nov 20 09:33:53 vpshost systemd[1]: Started Network Service.
+Nov 20 09:33:53 vpshost systemd-networkd[299]: ens3: Interface name change detected, ens3 has been renamed to eth0.
+Nov 20 09:33:53 vpshost systemd-networkd[299]: eth0: Interface name change detected, eth0 has been renamed to ens3.
+Nov 20 09:33:53 vpshost systemd-networkd[299]: ens3: IPv6 successfully enabled
+Nov 20 09:33:53 vpshost systemd-networkd[299]: ens3: Gained carrier
+Nov 20 09:33:55 vpshost systemd-networkd[299]: ens3: Gained IPv6LL
+Nov 20 09:34:07 vpshost systemd-networkd[299]: wg0: Gained carrier
+Nov 20 09:34:06 vpshost systemd-networkd[299]: wg0: Lost carrier
+</code></pre><br />при этом логин через SSH каждый раз проходил по схеме описанной выше:<br />пример:<br /><pre><code>➤ 	 [Abnormal Disconnect 20 Nov 2019, 09:23:46]
+➤ 	 [Abnormal Disconnect 20 Nov 2019, 09:23:49]
+➤ 	 [Abnormal Disconnect 20 Nov 2019, 09:24:01]
+➤ 	 [Abnormal Disconnect 20 Nov 2019, 09:24:04]
+➤ 	 [Abnormal Disconnect 20 Nov 2019, 09:24:07]
+➤ 	 [Abnormal Disconnect 20 Nov 2019, 09:24:10]
+➤ 	 [Abnormal Disconnect 20 Nov 2019, 09:24:13]
+➤ 	 [Abnormal Disconnect 20 Nov 2019, 09:24:17]
+➤ 	 [Connected 20 Nov 2019, 09:24:21]</code></pre>Файлы настройки сети стандартные:<br /><br /><pre><code>cat /etc/systemd/network/default.network
+[Match]
+Name=ens3
+
+[Network]
+Gateway=&lt;ip_gateway&gt;
+Address=&lt;ip&gt;/24
+DNS=1.1.1.1</code></pre>Немного поковырялся, получается что сеть настроена через сокет и каким-то образом (видимо при логине на tty ) сеть поднимается. Значит надо как-то переключить чтобы сеть поднималась сама, автоматически. Попробовал тупо удалить файл сокета и активировать сервис, но без файла сокета ничего не активируется..<br /><br /><pre><code>$ systemctl list-unit-files | grep systemd-network
+systemd-network-generator.service          disabled
+systemd-networkd-wait-online.service       enabled
+systemd-networkd.service                   enabled
+systemd-networkd.socket                    enabled </code></pre><br />Какие мысли, в правильном направлении думаю?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223188"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/eikoninaru/index.html">
+                <span class="post-username">eikoninaru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/223188/index.html">#</a>
+            2 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/5e/57/5e57433b711b23d6765069cba7e564c9.png" alt="eikoninaru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/eikoninaru/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/eikoninaru/posts/index.html">
+                    115
+                </a>
+            </div>
+            <div>
+                Участник с: 18 декабря 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Nebulosa</em><br>Uptime: 1 day, 13 hours, 51 mins</blockquote>за день аптайма обновлял ядро?<br />если да перезагрузи машину и попробуй подключиться
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223195"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/223195/index.html">#</a>
+            2 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Nebulosa</em><br>При логине на tty сеть поднимается. Значит надо как-то переключить чтобы сеть поднималась сама, автоматически</blockquote>Это не проблема<br /><pre><code>loginctl enable-linger &quot;ваш user&quot;</code></pre>Но такие нюансы больше характерны для пользовательских service, системные так себя вести не должны.
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223204"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/52th/index.html">
+                <span class="post-username">52th</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/223204/index.html">#</a>
+            2 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/52th/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/52th/posts/index.html">
+                    462
+                </a>
+            </div>
+            <div>
+                Участник с: 01 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Лично меня смущают эти две подряд идущие записи:<br /><pre><code>Nov 20 09:32:44 vpshost systemd-networkd[296]: ens3: Interface name change detected, ens3 has been renamed to eth0.
+Nov 20 09:32:44 vpshost systemd-networkd[296]: eth0: Interface name change detected, eth0 has been renamed to ens3.</code></pre>То есть сначала ens3 переименовывают в eth0, а затем обратно.<br />Может копнуть в эту сторону: переименовать интерфейс вручную?<br />(Поменяйте МАС-адрес на свой)<br /><pre><code>
+nano /etc/udev/rules.d/10-network.rules
+SUBSYSTEM==&quot;net&quot;, ACTION==&quot;add&quot;, ATTR{address}==&quot;12:34:56:78:9a:bc&quot;, NAME=&quot;inpt01&quot;
+</code></pre><br />Альтернатива <a href="https://www.freedesktop.org/software/systemd/man/systemd.link.html">Ссыль</a>:<br /><pre><code>
+nano  /etc/systemd/network/default.link
+[Match]
+MACAddress=12:34:56:78:9a:bc
+
+[Link]
+Name=inpt01
+
+</code></pre>И затем поправить /etc/systemd/network/default.network:<br /><br /><pre><code>
+[Match]
+Name=inpt01
+
+[Network]
+Gateway=&lt;ip_gateway&gt;
+Address=&lt;ip&gt;/24
+DNS=1.1.1.1
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223210"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Nebulosa/index.html">
+                <span class="post-username">Nebulosa</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/223210/index.html">#</a>
+            2 года, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4a/9b/4a9bd66c7a2a170b1585f3b56cdb48de.png" alt="Nebulosa avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Nebulosa/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Nebulosa/posts/index.html">
+                    830
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>eikoninaru</em><br><blockquote><em>Nebulosa</em><br>Uptime: 1 day, 13 hours, 51 mins</blockquote>за день аптайма обновлял ядро?<br />если да перезагрузи машину и попробуй подключиться</blockquote>Несколько раз обновлял и перезагружал, конечно же.<br /><blockquote><em>indeviral</em><br><blockquote><em>Nebulosa</em><br>При логине на tty сеть поднимается. Значит надо как-то переключить чтобы сеть поднималась сама, автоматически</blockquote>Это не проблема<br /><pre><code>loginctl enable-linger &quot;ваш user&quot;</code></pre>Но такие нюансы больше характерны для пользовательских service, системные так себя вести не должны.</blockquote>К сожалению, не помогло.<br /><br /><pre><code>
+$ loginctl user-status
+nebulosa (1000)
+           Since: Fri 2019-11-22 21:52:08 MSK; 4min 14s ago
+           State: active
+        Sessions: *2
+          Linger: yes
+            Unit: user-1000.slice
+                  ├─session-2.scope
+                  │ ├─6623 sshd: nebulosa [priv]
+                  │ ├─6641 sshd: nebulosa@pts/0
+                  │ ├─6642 -bash
+                  │ ├─8203 loginctl user-status
+                  │ └─8204 less
+                  └─user@1000.service
+                    └─init.scope
+                      ├─874 /usr/lib/systemd/systemd --user
+                      └─878 (sd-pam)
+
+Nov 22 21:52:08 vpshost systemd[874]: Listening on GnuPG cryptographic agent and passphrase cache (access for web browse&gt;
+Nov 22 21:52:08 vpshost systemd[874]: Listening on GnuPG cryptographic agent and passphrase cache (restricted).
+Nov 22 21:52:08 vpshost systemd[874]: Listening on GnuPG cryptographic agent (ssh-agent emulation).
+Nov 22 21:52:08 vpshost systemd[874]: Listening on GnuPG cryptographic agent and passphrase cache.
+Nov 22 21:52:08 vpshost systemd[874]: Listening on p11-kit server.
+Nov 22 21:52:08 vpshost systemd[874]: Listening on D-Bus User Message Bus Socket.
+Nov 22 21:52:08 vpshost systemd[874]: Reached target Sockets.
+Nov 22 21:52:08 vpshost systemd[874]: Reached target Basic System.
+Nov 22 21:52:08 vpshost systemd[874]: Reached target Main User Target.
+Nov 22 21:52:08 vpshost systemd[874]: Startup finished in 87ms.
+</code></pre><blockquote><em>52th</em><br>Лично меня смущают эти две подряд идущие записи:<br /><pre><code>Nov 20 09:32:44 vpshost systemd-networkd[296]: ens3: Interface name change detected, ens3 has been renamed to eth0.
+Nov 20 09:32:44 vpshost systemd-networkd[296]: eth0: Interface name change detected, eth0 has been renamed to ens3.</code></pre>То есть сначала ens3 переименовывают в eth0, а затем обратно.<br />Может копнуть в эту сторону: переименовать интерфейс вручную?</blockquote><br />Также не помогло, потом вернул обратно. Оба варианта пробовал.<br /><br /><pre><code>
+$ journalctl -n 30  -u systemd-networkd
+-- Logs begin at Thu 2019-11-21 01:09:36 MSK, end at Fri 2019-11-22 21:40:39 MSK. --
+Nov 22 21:24:11 vpshost systemd-networkd[317]: ens3: IPv6 successfully enabled
+Nov 22 21:24:11 vpshost systemd-networkd[317]: ens3: Gained carrier
+Nov 22 21:24:12 vpshost systemd-networkd[317]: ens3: Gained IPv6LL
+Nov 22 21:24:23 vpshost systemd-networkd[317]: wg0: Gained carrier
+Nov 22 21:24:23 vpshost systemd-networkd[317]: wg0: Lost carrier
+Nov 22 21:34:58 vpshost systemd[1]: Stopping Network Service...
+Nov 22 21:34:58 vpshost systemd[1]: systemd-networkd.service: Succeeded.
+Nov 22 21:34:58 vpshost systemd[1]: Stopped Network Service.
+-- Reboot --
+Nov 22 21:35:14 vpshost systemd[1]: Starting Network Service...
+Nov 22 21:35:15 vpshost systemd-networkd[302]: Enumeration completed
+Nov 22 21:35:15 vpshost systemd[1]: Started Network Service.
+Nov 22 21:35:15 vpshost systemd-networkd[302]: ens3: Interface name change detected, ens3 has been renamed to eth0.
+Nov 22 21:35:15 vpshost systemd-networkd[302]: eth0: Interface name change detected, eth0 has been renamed to ens3.
+Nov 22 21:37:16 vpshost systemd-networkd[302]: wg0: Gained carrier
+Nov 22 21:40:07 vpshost systemd-networkd[302]: wg0: Lost carrier
+Nov 22 21:40:07 vpshost systemd-networkd[302]: Could not emit changed properties: Transport endpoint is not connected
+Nov 22 21:40:07 vpshost systemd-networkd[302]: Could not emit changed properties: Transport endpoint is not connected
+Nov 22 21:40:07 vpshost systemd[1]: Stopping Network Service...
+Nov 22 21:40:07 vpshost systemd[1]: systemd-networkd.service: Succeeded.
+Nov 22 21:40:07 vpshost systemd[1]: Stopped Network Service.
+-- Reboot --
+Nov 22 21:40:22 vpshost systemd[1]: Starting Network Service...
+Nov 22 21:40:23 vpshost systemd-networkd[302]: Enumeration completed
+Nov 22 21:40:23 vpshost systemd[1]: Started Network Service.
+Nov 22 21:40:23 vpshost systemd-networkd[302]: ens3: Interface name change detected, ens3 has been renamed to eth0.
+Nov 22 21:40:23 vpshost systemd-networkd[302]: eth0: Interface name change detected, eth0 has been renamed to ens3.
+Nov 22 21:40:23 vpshost systemd-networkd[302]: ens3: IPv6 successfully enabled
+Nov 22 21:40:23 vpshost systemd-networkd[302]: ens3: Gained carrier
+Nov 22 21:40:25 vpshost systemd-networkd[302]: ens3: Gained IPv6LL
+Nov 22 21:40:37 vpshost systemd-networkd[302]: wg0: Gained carrier
+</code></pre><br />Заметил ещё одну вещь, теперь достаточно только подключиться через VNC и уже без ввода логина поднимается сеть. Возможно и до этого работало - я не ждал вводил логин сразу, а тут отвлёкся и увидел такое поведение.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223211"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/223211/index.html">#</a>
+            2 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Nebulosa</em><br>достаточно только подключиться через VNC и уже без ввода логина</blockquote>Ну так может и проблема тогда в webui или через что вы там vnc используете
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223212"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Nebulosa/index.html">
+                <span class="post-username">Nebulosa</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/223212/index.html">#</a>
+            2 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4a/9b/4a9bd66c7a2a170b1585f3b56cdb48de.png" alt="Nebulosa avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Nebulosa/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Nebulosa/posts/index.html">
+                    830
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>indeviral</em><br><blockquote><em>Nebulosa</em><br>достаточно только подключиться через VNC и уже без ввода логина</blockquote>Ну так может и проблема тогда в webui или через что вы там vnc используете</blockquote>Ммм... не понимаю как это связано..<br /><br />Без сети это единственный способ взаимодействовать с хостом. Что вебvnc что другие клиенты делают одно и то же - стучатся на tty1 - пробовал все варианты клиентов какие нашёл.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-223219"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Nebulosa/index.html">
+                <span class="post-username">Nebulosa</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/223219/index.html">#</a>
+            2 года, 9 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4a/9b/4a9bd66c7a2a170b1585f3b56cdb48de.png" alt="Nebulosa avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Nebulosa/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Nebulosa/posts/index.html">
+                    830
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Итак, всё решилось! Хотя и не совсем понятно как это связано.<br /><br />Смотрел на время загрузки (здесь boottime: alias boottime=&#39;sudo systemd-analyze&amp;&amp;sudo systemd-analyze blame --no-pager&#39;)<br /><pre><code>
+$ boottime
+[sudo] password for nebulosa:
+Startup finished in 2.848s (kernel) + 17.872s (userspace) = 20.721s
+graphical.target reached after 17.872s in userspace
+13.373s systemd-networkd-wait-online.service
+10.320s systemd-random-seed.service
+ 3.341s systemd-logind.service
+ 1.659s dev-vda1.device
+ 1.620s systemd-networkd.service
+  979ms systemd-journald.service
+  945ms systemd-udevd.service
+  915ms systemd-timesyncd.service
+  284ms wg-quick@wg0.service
+  240ms systemd-udev-trigger.service
+  229ms iptables.service
+  124ms user@1000.service
+   82ms systemd-user-sessions.service
+   81ms systemd-journal-flush.service
+   62ms systemd-sysctl.service
+   42ms systemd-tmpfiles-setup-dev.service
+   42ms systemd-remount-fs.service
+   41ms var-lib-systemd\x2dswap-swapfc-1.swap
+   36ms dev-hugepages.mount
+   36ms systemd-tmpfiles-setup.service
+   35ms dev-mqueue.mount
+   35ms systemd-update-utmp.service
+   33ms sys-kernel-debug.mount
+   32ms kmod-static-nodes.service
+   27ms tmp.mount
+   23ms user-runtime-dir@1000.service
+   21ms sys-kernel-config.mount
+   20ms systemd-tmpfiles-clean.service
+   10ms proc-sys-fs-binfmt_misc.mount
+</code></pre><br />Решил уточнить почему сервис systemd-random-seed.service стартует так долго, нашёл данный тред: <a href="https://bbs.archlinux.org/viewtopic.php?pid=1863155#p1863155">https://bbs.archlinux.org/viewtopic.php?pid=1863155#p1863155</a> там жаловались на низкую энтропию, у меня она была ещё меньше 122 вместо 189. Установил пакет, стартовал, активировал, перезагрузился. Всё заработало, энтропия теперь 1919, сеть поднимается.<br /><br />¯＼_(ツ)_/¯
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexb8c3.html?next=/forum/topic/19585/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19585/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:14:44 GMT -->
+</html>

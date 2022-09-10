@@ -1,0 +1,1198 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Спонтанный Suspend через 10 секунд после загрузки ядра
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Спонтанный Suspend через 10 секунд после загрузки ядра</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Спонтанный Suspend через 10 секунд после загрузки ядра</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199883"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Werd/">
+                <span class="post-username">Werd</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199883/">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Werd/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Werd/posts/">
+                    204
+                </a>
+            </div>
+            <div>
+                Участник с: 15 августа 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sirocco</em><br><blockquote><em>Werd</em><br>А вот назад по нажатию power button он не выходит =/</blockquote>Кнопка поломалась?</blockquote><br />Не знаю =/ не могу понять.. Возможно что поломалась, бывают проблемы с включением иногда.<br /> Вот сейчас он опять спонтанно ушел в саспенд уже через 10 минут после загрузки. В логах написано что lid switch вызвал саспенд. По совету <strong>vs220</strong> отключил lid switch, ну вроде норм пока все.<br />Но основной вопрос как выходить из саспенда, войти то в него командой можно, а выйти как? =/
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199920"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Aivar/">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199920/">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Aivar/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Aivar/posts/">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Werd</em><br>как выходить из саспенда</blockquote>Кнопкой питания.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199927"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vs220/">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199927/">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vs220/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vs220/posts/">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Aivar</em><br>Кнопкой питания.</blockquote><blockquote><em>Werd</em><br>по нажатию power button он не выходит</blockquote>Что то у него наверно с acpi не в порядке если systemd не правильно кнопки и крышку определяет
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199930"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Werd/">
+                <span class="post-username">Werd</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199930/">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Werd/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Werd/posts/">
+                    204
+                </a>
+            </div>
+            <div>
+                Участник с: 15 августа 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Aivar</em><br><blockquote><em>Werd</em><br>как выходить из саспенда</blockquote>Кнопкой питания.</blockquote>Так не выходит он кнопкой питания. Включается ей, но из саспенда кнопкой питания не выходит.<br />Может можно как то перенастроить это поведение в logind, я пока не смог разобраться. Там что то вроде<br />HandlePowerKey=suspend например сделать, чтобы power key использовался для саспенда, для входа и выхода из него
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199937"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vs220/">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199937/">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vs220/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vs220/posts/">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Werd</em><br>HandlePowerKey=suspend например сделать, чтобы power key использовался для саспенда, для входа и выхода из него</blockquote>Для суспенда можно настроить событие acpi смотрите <pre><code>man logind.conf</code></pre>вот только они у вас вроде не правильно определяются.<br />Пробуждение же работает по acpi/wakeup смотрите по какому событию у вас включено<br /><pre><code>cat /proc/acpi/wakeup</code></pre>Посмотрите ошибки systemctl suspend   system.journal _SYSTEMD_UNIT=systemd-logind.service<br />Ошибки acpi таблицы <a href="https://wiki.archlinux.org/index.php/DSDT">wiki.archlinux.org/index.php/DSDT</a><br />Если раньше suspend работал можно попробовать откатиться или лтс ядро
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199944"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Werd/">
+                <span class="post-username">Werd</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199944/">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Werd/topics/">
+                    28
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Werd/posts/">
+                    204
+                </a>
+            </div>
+            <div>
+                Участник с: 15 августа 2017
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <pre><code>$ cat /proc/acpi/wakeup
+Device	S-state	  Status   Sysfs node
+P0P1	  S4	*disabled
+EHC1	  S3	*enabled   pci:0000:00:1d.0
+EHC2	  S3	*enabled   pci:0000:00:1a.0
+HDEF	  S3	*disabled  pci:0000:00:1b.0
+RP01	  S3	*disabled  pci:0000:00:1c.0
+PXSX	  S4	*disabled  pci:0000:02:00.0
+RP02	  S3	*disabled  pci:0000:00:1c.1
+PXSX	  S4	*disabled  pci:0000:03:00.0
+RP03	  S3	*disabled
+PXSX	  S4	*disabled
+RP04	  S3	*disabled  pci:0000:00:1c.3
+PXSX	  S4	*enabled   pci:0000:04:00.0
+RP05	  S3	*disabled  pci:0000:00:1c.4
+PXSX	  S4	*disabled
+RP06	  S4	*disabled  pci:0000:00:1c.5
+PXSX	  S4	*enabled   pci:0000:06:00.0
+RP07	  S3	*disabled
+PXSX	  S4	*disabled
+RP08	  S3	*disabled
+PXSX	  S4	*disabled
+PEG0	  S4	*disabled  pci:0000:00:01.0
+PEGP	  S4	*disabled  pci:0000:01:00.0
+LID0	  S3	*enabled   platform:PNP0C0D:00</code></pre><br />Вот такая команда у меня не работает.<br /><blockquote><em>vs220</em><br>Посмотрите ошибки systemctl suspend system.journal _SYSTEMD_UNIT=systemd-logind.service</blockquote><br />Могу только лог посмотреть вот так:<br /><br /><pre><code>$ journalctl -b _SYSTEMD_UNIT=systemd-logind.service
+-- Logs begin at Sun 2017-08-27 21:26:16 IST, end at Tue 2018-01-16 14:49:52 IST
+янв 16 08:55:19 dell systemd-logind[436]: New seat seat0.
+янв 16 08:55:19 dell systemd-logind[436]: Watching system buttons on /dev/input/
+янв 16 08:55:19 dell systemd-logind[436]: Watching system buttons on /dev/input/
+янв 16 08:55:19 dell systemd-logind[436]: Watching system buttons on /dev/input/
+янв 16 08:55:19 dell systemd-logind[436]: Watching system buttons on /dev/input/
+янв 16 08:55:19 dell systemd-logind[436]: Watching system buttons on /dev/input/
+янв 16 08:55:28 dell systemd-logind[436]: New session c1 of user ptah.
+янв 16 08:56:44 dell systemd-logind[436]: Lid closed.
+янв 16 08:56:45 dell systemd-logind[436]: Lid opened.
+янв 16 08:57:35 dell systemd-logind[436]: Watching system buttons on /dev/input/
+янв 16 09:02:46 dell systemd-logind[436]: Lid closed.
+янв 16 09:02:47 dell systemd-logind[436]: Lid opened.
+янв 16 09:04:28 dell systemd-logind[436]: Lid closed.
+янв 16 09:04:29 dell systemd-logind[436]: Lid opened.
+янв 16 09:04:38 dell systemd-logind[436]: Lid closed.
+янв 16 09:04:39 dell systemd-logind[436]: Lid opened.
+янв 16 09:04:40 dell systemd-logind[436]: Lid closed.
+янв 16 09:04:42 dell systemd-logind[436]: Lid opened.
+янв 16 11:58:11 dell systemd-logind[436]: Lid closed.
+янв 16 11:58:12 dell systemd-logind[436]: Lid opened.
+янв 16 11:58:12 dell systemd-logind[436]: Lid opened.
+янв 16 12:35:06 dell systemd-logind[436]: Lid closed.
+янв 16 12:35:06 dell systemd-logind[436]: Lid opened.
+янв 16 12:41:42 dell systemd-logind[436]: Lid closed.
+янв 16 12:41:45 dell systemd-logind[436]: Lid opened.
+янв 16 12:41:46 dell systemd-logind[436]: Lid closed.
+янв 16 12:41:46 dell systemd-logind[436]: Lid opened.
+янв 16 12:46:06 dell systemd-logind[436]: Lid closed.
+янв 16 12:46:08 dell systemd-logind[436]: Lid opened.
+янв 16 12:46:09 dell systemd-logind[436]: Lid closed.
+янв 16 12:46:10 dell systemd-logind[436]: Lid opened.
+янв 16 12:46:12 dell systemd-logind[436]: Lid closed.
+янв 16 12:46:13 dell systemd-logind[436]: Lid opened.
+янв 16 12:56:27 dell systemd-logind[436]: Watching system buttons on /dev/input/
+янв 16 14:40:53 dell systemd-logind[436]: Lid closed.
+янв 16 14:40:54 dell systemd-logind[436]: Lid opened.
+янв 16 14:44:39 dell systemd-logind[436]: Lid closed.
+янв 16 14:44:42 dell systemd-logind[436]: Lid opened.
+янв 16 14:45:10 dell systemd-logind[436]: Lid closed.
+янв 16 14:45:10 dell systemd-logind[436]: Lid opened.
+янв 16 14:48:57 dell systemd-logind[436]: Lid closed.
+янв 16 14:49:01 dell systemd-logind[436]: Lid opened.
+янв 16 14:49:50 dell systemd-logind[436]: Lid closed.
+янв 16 14:49:52 dell systemd-logind[436]: Lid opened.</code></pre><br />Очень много тут событий с крышкой, хотя крышку я не трогал, закрыл только один раз чтобы проверить сработает ли событие, остальные срабатывания ложные.<br /><br />Еще обнаружил интересную вещь, получается выйти из саспенда нажатием левой кнопки тачпада.. =/<br />Правда тачпад кажется не корректно работает, или не совсем корректно... там какая то проблема с железом видимо...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199947"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199947/">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Werd</em><br>Очень много тут событий с крышкой, хотя крышку я не трогал, закрыл только один раз чтобы проверить сработает ли событие, остальные срабатывания ложные.</blockquote>Что то мне это напоминает один bug, наблюдаемый на некоторых типах ноутбуках и системах.<br />Точно не помню, но что то типа ошибки системы при иницилизации статуса крышки - эти ошибки происходят при открытии/закрытии крышки и система не понимает ее состояние (а это как раз и происходит в suspend - закрытие крышки).<br />Думаю это можно проверить - отправь ноутбук в suspend <strong>командой</strong>, крышку не закрывай, подожди секунд 10-20 и выведи из suspend. Если все нормально, то, думаю, этот bug и у тебя. <u>Лечение от этого есть</u>.<br /><strong>UPD</strong> - вот только не уверен в правильности этой прверки, придумал сам, но по логике вроде бы правильно.<br /><br /><strong>EDIT -1</strong> — нашел у себя лечение — попробуй загрузиться с параметром <strong>button.lid_init_state=open</strong><br />Но, думаю, можно попробовать и без перегрузки<br /><strong>su</strong> …. # <strong>echo open &gt; /sys/module/button/parameters/lid_init_state</strong><br />и попробуй уйти в suspend с закрытием крышки и выйти затем.<br />Конечно, это все мои предположения, но проверить стоит.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199950"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vs220/">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199950/">#</a>
+            4 года, 7 месяцев назад
+            
+                (отредактировано
+                
+                    4 года, 7 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vs220/topics/">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vs220/posts/">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Werd</em><br>cat /proc/acpi/wakeup</blockquote>Пробуждение по крышке включено, повер кнопки PWRB не видно.<br />На остальные включенные надо смотреть что это такое <pre><code>dmesg | grep  0000:06:00.0
+dmesg | grep 0000:00:1d.0</code></pre><br /><blockquote><em>Werd</em><br>команда у меня не работает.</blockquote>Я имел ввиду усыпить systemctl suspend и посмотреть лог systemd-logind.service<br />Очень много тут событий с крышкой может баг vasek написал, может неверная таблица DSDT, аппаратная проблема - датчик холла может глючит.<br />Гляньте события в  input крышки /dev/input/event3 (lid switch) судя по вашему прошлому логу<br />но лучше проверить номер event <pre><code>cat /proc/bus/input/devices</code></pre>Отследить события<br /><pre><code>sudo cat /dev/input/event3</code></pre>ничего не нажимать<br />если ничего нет cat будет пустой<br />если определяется нажатие будет выводить кракозябры<br />В dmesg может ругань какая на lid acpi<br /><br />Попробуйте еще обновится и переустановить acpi<br /><pre><code>pacman -Suy acpi</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199951"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199951/">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vs220</em><br>датчик холла может глючит</blockquote>То же приходила такая мысль, но уж очнь редко ломается.<br />В свое время хотел ради интереса погуглить, как проверить его работоспособность, да так и не собрался.<br />Если что то есть на эту тему (проверки), дай пожалуйста ссылки.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-199952"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/vasek/">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/199952/">#</a>
+            4 года, 7 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/vasek/topics/">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/vasek/posts/">
+                    11340
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Werd</strong>, насчет бага - это просто одно из предположений - если интересует, почитай на эту тему подробнее, здесь не так все просто и нужно разбираться — в каких случаях что использовать. Вообщем погугли на эту тему (можно по параметру загрузки).<br />В части <strong> button.lid_init_state=open</strong> я брал отсюда<br /><pre><code>The OS does not detect that the lid has been opened if the laptop is suspended. This can be fixed through the following modification:
+Add button.lid_init_state=open to the end of the GRUB_CMDLINE_LINUX_DEFAULT option</code></pre>В других источниках пишут немного другое -  <strong>button.lid_init_state=method</strong><br />Посмотрел исходники, там вообще несколько значений и open и close (closed) и  ignore (не помню как точно пишется, пишу по памяти).
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=1" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=2">2 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=7">7</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=3" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/18154/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b7c699d769d8d',m:'HKnWfPO9MkyhsFwu37_SuZq8fJMmIDiwbO9nnjyVtYI-1662679973-0-ARBe8u5Jmtc4aLMHE795dWM9K1Jmaa2bakW3fey66HtBmwXxgpt7KYQUccCSykrZesi9YsTvhhLbeTUVnzfYqnLDtcVQQzNXwt1Q135a4yyA9mLkCqFF4zy6Sfb46Xq69PAHi9WJzGVmNxjs8IksUgM=',s:[0x0311fd8dee,0xaff54cfb74],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

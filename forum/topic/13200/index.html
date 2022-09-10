@@ -1,0 +1,1082 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/13200/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:10:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        В systemd-210 изменилась реализация именования сетевых интерфейсов
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/1/index.html">Основное</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/1/index.html">Новости Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>В systemd-210 изменилась реализация именования сетевых интерфейсов</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>В systemd-210 изменилась реализация именования сетевых интерфейсов</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132015"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132015/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В ArchLinux произошло обновление systemd до версии <a href="http://www.opennet.ru/opennews/art.shtml?num=39181"><strong><u>210</u></strong></a>.<br />Кроме всего прочего, теперь за постоянное именование сетевых интерфейсов отвечает новый компонент.<br />Сами имена измениться теоретически не должны, но при обновлении выдаётся предупреждение:<br /><pre><code>:: Network device naming is now controlled by udev&#39;s net_setup_link
+   builtin. Refer to the NETWORK LINK CONFIGURATION section of the
+   udev manpage for a full description.
+:: Renaming 80-net-name-slot.rules to 80-net-setup-link.rules in order
+   to preserve existing network naming behavior.
+«etc/udev/rules.d/80-net-name-slot.rules» -&gt; «etc/udev/rules.d/80-net-setup-link.rules»</code></pre>В системах с ранее заблокированным постоянным именованием, загрушка <strong>/etc/udev/rules.d/80-net-name-slot.rules</strong> автоматически переименована в <strong>80-net-setup-link.rules</strong>, а во вновь устанавливаемых следует иметь в виду её изменившееся имя.<br /><br />Вмешательства пользователя после обновления, скорей всего, не потребуется, но на всякий случай желательно проверить и убедиться, что после перезагрузки имена интерфейсов остались прежними.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132052"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/farwayer/index.html">
+                <span class="post-username">farwayer</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132052/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/16/f5/16f5cbfb000c892f9ee33b90af9e06e0.png" alt="farwayer avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/farwayer/topics/index.html">
+                    12
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/farwayer/posts/index.html">
+                    181
+                </a>
+            </div>
+            <div>
+                Участник с: 30 апреля 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            К слову: настройку сети теперь можно делать через systemd, без netctl, самописных скриптов и юнитов.<br /><br /><blockquote><br>Новый компонент &quot;systemd-networkd&quot;, предназначенный для унификации компонентов дистрибутивов, используемых для настройки параметров сети (скрипты /etc/network, /etc/sysconfig/network, /etc/sysconfig/network-scripts/ifcfg-* и т.п.). Сервис systemd-networkd реализован в форме фонового процесса и может выполняться параллельно с традиционными скриптами и демонами настройки сети. Настройка systemd-networkd производится через создание файлов конфигурации /etc/systemd/network/*.network.<br /><br />Из поддерживаемых в настоящее время возможностей отмечаются средства для настройки VLAN, агрегирования интерфейсов (bonding) и сетевых мостов. Поддерживается настройка параметров локальных сетевых интерфейсов как через статические правила, так и через DHCP. Средства для интеграции с интерактивными конфигураторами сети относятся к планам на будущее, поэтому область использования &quot;systemd-networkd&quot; пока ограничена настройкой сети для initrd, контейнеров, встраиваемых систем и серверов.<br /><br />При выборе файла конфигурации для текущего устройства используется логика сходная с выбором &quot;.link&quot;-файлов, при которой осуществляется линейный разбор файлов в алфавитном порядке и применение первого подходящего условиям файла конфигурации. В отличие от файлов &quot;.link&quot;, для категории &quot;.network&quot; доступна возможность сопоставления по именам сетевых интерфейсов, учёта состояния линка и привязки обработчиков горячего подключения интерфейсов по маске. Например, можно обойтись одним конфигурационным блоком для автоматического добавления в сетевой мост всех имеющихся Ethernet-интерфейсов.<br /><br />Пример файла конфигурации:<br /><br />   [Match]<br />      MACAddress=<br />      Path=<br />      Driver=<br />      Type=<br />      Name=<br /><br />   [Network]<br />      Description=<br /><br />   [IP]<br />      Gateway=192.168.1.1<br />      Address=label at 192.168.1.23/24<br />      Address=fe80::9aee:94ff:fe3f:c618/64</blockquote>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132098"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/lollik_O_o/index.html">
+                <span class="post-username">lollik_O_o</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132098/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/lollik_O_o/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/lollik_O_o/posts/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Обновилась у меня systemd, имя файла изменилось и нет сети. Подскажите пожалуйста, что нужно сделать? Я вообще новичок в таких делах...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132100"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/arcanis/index.html">
+                <span class="post-username">arcanis</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132100/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8e/cd/8ecde9b9bf77f0b2a47300c7eb3d904f.png" alt="arcanis avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/arcanis/topics/index.html">
+                    31
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/arcanis/posts/index.html">
+                    1496
+                </a>
+            </div>
+            <div>
+                Участник с: 09 сентября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            для начала показать <strong>80-net-setup-link.rules</strong>. Потом, что у вас есть в <strong>/sys/class/net</strong>, потом объяснить, как запускаете
+            
+                
+                    <div class="post-signature">
+                        PGP <a href="http://pgp.mit.edu:11371/pks/lookup?op=vindex&amp;fingerprint=on&amp;exact=on&amp;search=0x779CD2942629B7FA04AB8F172E89012331361F01">0x31361F01</a><br /><a href="https://repo.arcanis.me/">arcanisrepo</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132106"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/maisvendoo/index.html">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132106/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/maisvendoo/topics/index.html">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/maisvendoo/posts/index.html">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Обновился. Интерфейсы остались на месте. Всё Ок.<br /><br />По экрану при загрузке бегут зеленые &quot;Океи&quot;. Сразу после перехода на системд этих океев не было, выключены они по умолчанию. Теперь по умолчанию включили?
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org/">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132122"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/elsonador/index.html">
+                <span class="post-username">elsonador</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132122/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/c4/74/c4744210be47d6c1692ba03d7d1a5b83.png" alt="elsonador avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/elsonador/topics/index.html">
+                    63
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/elsonador/posts/index.html">
+                    996
+                </a>
+            </div>
+            <div>
+                Участник с: 09 апреля 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>quiet</strong> в параметры ядра.<br /><br />Сетью рулит и будет рулить <strong>NetworkManager</strong>.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132131"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Kycok/index.html">
+                <span class="post-username">Kycok</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132131/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/b7/3e/b73e340446ad65d73a75ebec48fc70c8.png" alt="Kycok avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Kycok/topics/index.html">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Kycok/posts/index.html">
+                    1585
+                </a>
+            </div>
+            <div>
+                Участник с: 09 января 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>elsonador</em><br>Сетью рулит и будет рулить NetworkManager</blockquote>Далеко не у всех
+            
+                
+                    <div class="post-signature">
+                        <a href="https://github.com/Kycko">GitHub</a>, <a href="https://wiki.archlinux.org/index.php/User:Kycok">ArchWiki</a>, <a href="https://aur.archlinux.org/account/Kycok">AUR</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132132"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/tchgefest/index.html">
+                <span class="post-username">tchgefest</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132132/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/tchgefest/topics/index.html">
+                    51
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/tchgefest/posts/index.html">
+                    1505
+                </a>
+            </div>
+            <div>
+                Участник с: 20 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            После обновления не могу понять,что за ошибка выскакивает.<br /><pre><code>journalctl -b | grep Failed                                                                                [17:23~]
+мар 06 17:16:17 arch_lin systemd-backlight[257]: Failed to get backlight or LED device &#39;backlight:eeepc/wmi&#39;: No such file or directory
+мар 06 17:16:17 arch_lin systemd-modules-load[130]: Failed to find module &#39;zcache&#39;</code></pre>Вот этот решил <strong>Failed to find module zcache</strong>,а вот первый так и не нашел как решить.:-(<br />Только не могу понять,почему на <u>210</u>,не понравился параметр <strong>zcache</strong>,до обновления все нормально было.<br />Наверное плохо искал.
+            
+                
+                    <div class="post-signature">
+                        Последний крик моды - эхо 30-летней давности.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132135"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132135/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>tchgefest</em><br>systemd-backlight[257]: Failed to get backlight or LED device &#39;backlight:eeepc/wmi&#39;: No such file or directory</blockquote>да, есть такое. на англоязычном форуме уже маякнули. а мне она не мешает, не критическая ошибка...
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-132137"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/akorop/index.html">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/132137/index.html">#</a>
+            8 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/akorop/topics/index.html">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/akorop/posts/index.html">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Kycok</em><br><blockquote><em>elsonador</em><br>Сетью рулит и будет рулить NetworkManager</blockquote>Далеко не у всех</blockquote>Угу. Очередной раз убеждаюсь, что если надо что-то простое, то надо делать просто, и самому. На фига мне все эти *manager и *ctl, если мой скрипт из нескольких строчек делает понятно что и не зависит от капризов серножопых линукосписателей?<br />Я вот как-то пропустил netctl, и, похоже, ничего не потерял :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index6ca8.html?next=/forum/topic/13200/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/13200/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:10:41 GMT -->
+</html>

@@ -1,0 +1,314 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19783/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:08:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Способы нестандартной отладки/трассировки Х-ов, unit-ов systemd, udev, модулей
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/8/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/25/index.html">Блоги</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Способы нестандартной отладки/трассировки Х-ов, unit-ов systemd, udev, модулей</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Способы нестандартной отладки/трассировки Х-ов, unit-ов systemd, udev, модулей</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-227217"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/227217/index.html">#</a>
+            2 года, 6 месяцев назад
+            
+                (отредактировано
+                
+                    2 года, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Иногда возникают ситуации, в которых при решении проблем не хватает информации, точнее логов journal и Xorg не достаточно, а как получить дополнительно не понятно. Отдельной подборки материалов на данную тематику, где бы все это было в одном месте, нет … да, в принципе, и нагулить это не просто. Вот и решил описать некоторые способы добычи этой информации.<br />1. Начнем с самого простого <strong>udev</strong>, который имеет конфигурационный файл <strong>/etc/udev/udev.conf</strong>, в котором есть одна строчка<br /><pre><code>#udev_log=info</code></pre>которая и определяет уровень логирования udev - по дефолту стоит уровень info. Если мы хотим больше информации, то следует изменить эту строчку на следующую<br /><pre><code>udev_log=debug</code></pre>В результате этого уровень логирования journal возрастет, чтобы не утонуть в логах их можно фильтровать, например, так <strong>journalctl -b | grep -i udev</strong> или по другому.<br />Не забываем после отладки вернуть все на место.<br /><br /><strong>2. Отладка unit systemd</strong><br />2.1 Имеется стандартный простой способ для увеличения логирования отдельного системного unit, находящегося в директории  /usr/lib/systemd/system/  - необходимо добавить опцию <strong>-d</strong> (от слова debug) в строке запуска юнита.<br />Например, для /usr/lib/systemd/system/bluetooth.service имеем<br /><strong>cat /usr/lib/systemd/system/bluetooth.service | grep ExecStart</strong><br /><pre><code>ExecStart=/usr/lib/bluetooth/bluetoothd</code></pre>а чтобы увеличить логирование добавим опцию <strong>-d</strong> и строка примет вид<br /><pre><code>ExecStart=/usr/lib/bluetooth/bluetoothd -d</code></pre>и не забываем systemctl daemon-reload (при необходимости и restart сервиса)<br />Отмечу, что иногда это не срабатывает, да и порой не дает нужной информации. В этом случае лучше использовать более тяжелый инструмент, который описан далее.<br /><br />2.2. Применение strace<br />Для этого способа используем следующий запуск unit, например, имеем<br /><strong>cat /usr/lib/systemd/system/systemd-vconsole-setup.service | grep ExecStart</strong><br /><pre><code>ExecStart=/usr/lib/systemd/systemd-vconsole-setup</code></pre>и после изменения строка примет вид<br /><pre><code>ExecStart=/usr/bin/strace -f -tt -o /run/%N.strace /lib/systemd/systemd-vconsole-setup</code></pre>используемые опции strace в зависимости от ситуации, а имя лога на Ваш вкус.<br />И не забываем systemctl daemon-reload (при необходимости и restart сервиса)<br /><br /><strong>PS</strong> - Разумеется можно редактировать тот же сервис в другой стандартной директории /etc/systemd/system/ и не забываем потом вернуть все обратно ...<br /><br /><strong>3. Xorg</strong> - здесь имеется несколько способов - и простые и сложные. Простые приводят к простому увеличению логирования от которого мало толку, а потому их не описываю. Приведу не стандартный способ трассировки с использованием strace.<br />Если используется DM, то лучше его временно отключить и использовать .xinitrc (то есть startx).<br />Загружаемся в текстовую консоль (Х-ы не запускаем), меняем файл <strong>/etc/X11/xinit/xserverrc</strong>, например, приводим к виду (изменив на нужное)<br /><strong>cat /etc/X11/xinit/xserverrc</strong><br /><pre><code>#!/bin/sh
+#exec /usr/bin/X -nolisten tcp &quot;$@&quot;
+exec /usr/bin/strace -f -T -o /home/vasek/strace_X.log /usr/bin/X -nolisten tcp &quot;$@&quot;</code></pre><br /><strong>PS</strong> - делаем отладку по усмотрению, в зависимости от ситуации … например, в данном случае  используется опция <strong>-T</strong>, которая позволяет посмотреть как долго выполняется каждый системный вызов. Название лога на Ваше усмотрение.<br /><br />Сохраняем и стартуем Х-ы - не пугаемся,  время загрузки увеличится, <u>НО сразу после загрузки убиваем (выходим) Х-ы</u> и приводим файл  /etc/X11/xinit/xserverrc к нормальному виду, точнее возвращаем все на место (Х-ы нужно убить, так как они запущены через strace, убить которй не получится - вообщем проще убить Х-ы и вернуться в текстовую консоль)<br /><strong>cat /etc/X11/xinit/xserverrc</strong><br /><pre><code>#!/bin/sh
+exec /usr/bin/X -nolisten tcp &quot;$@&quot;</code></pre>Можно просто не нужную строку закоментировать, а нужную раскоментировать.<br />Снова загружаем Х-ы и анализируем файл  <strong>strace_X.log</strong>, в котором в конце каждой строки будет указано время выполнения системного вызова, типа такого<br /><pre><code>9218  openat(AT_FDCWD, &quot;/proc/9232/cmdline&quot;, O_RDONLY) = 27 &lt;0.000027&gt;
+9218  read(27, &quot;tilix\0&quot;, 4097)         = 6 &lt;0.000019&gt;
+9218  close(27)                         = 0 &lt;0.000015&gt;</code></pre>… ну и ищем строки с большим временем … (здесь же будут и проги автозапуска, например, здесь показан tilix)<br />Повторюсь, использование опций strace зависит от обстоятельств расследования.<br /><br />При желании вместо strace можно использовать более мощный комбайн - sysdig, но работать с ним сложнее.<br /><br /><strong>4. Драйвера/модули</strong><br />И в конце привожу, как можно получить информацию в случае проблем с драйверами/модулями - обычно возникает при выходе из suspend/hibernate … иногда и при загрузке.<br />Способ заключается в передаче параметра ядра <strong>initcall_debug</strong> при загрузке, в результате чего в dmesg будет сохранена информация каждого initcall, который  используется для инициализации статически связанных драйверов ядра и подсистем, и будет возможность получить информацию о времени загрузки этих драйверов/модулей.<br />Вообщем, прописываем параметр initcall_debug, <u>лучше прямо при загрузке</u>, перейдя в консоль Grub (нажимаем <strong>e</strong> в меню Grub) и загружаемся.<br />В логах будут строки о загрузке модулей, они разбросаны, искать их тяжело, но для одного модуля, например, ath3k можно посмотреть так<br /><strong>dmesg | grep ath3k</strong><br /><pre><code>[   12.594842] calling  ath3k_driver_init+0x0/0x1000 [ath3k] @ 326
+[   13.101284] usbcore: registered new interface driver ath3k
+[   13.101298] initcall ath3k_driver_init+0x0/0x1000 [ath3k] returned 0 after 23011 usecs</code></pre>В последней строчке видим <strong>returned 0</strong> (то есть успешно) и затрачено времени <strong>23011</strong> микросекунд.<br />Но в одной статье приведена интересная команда для вытаскивания этой информации из dmesg<br /><pre><code>dmesg -s 128000 | grep &quot;initcall&quot; | sed &quot;s/\(.*\)after\(.*\)/\2 \1/g&quot; | sort -n</code></pre>и получим отсортированный вывод  с одной строчкой для каждого модуля, типа такого<br /><pre><code>0 usecs [    0.971675] initcall vga_arb_device_init+0x0/0x25e returned 0
+ 0 usecs [    0.971686] initcall cn_init+0x0/0xe0 returned 0
+ 0 usecs [    0.971697] initcall pm860x_i2c_init+0x0/0x30 returned 0
+ ………….
+ 13 usecs [   11.832572] initcall init_soundcore+0x0/0x1000 [soundcore] returned 0
+ 14 usecs [    1.175133] initcall pid_namespaces_init+0x0/0x40 returned 0
+ 14 usecs [    1.289965] initcall dw_pci_driver_init+0x0/0x1a returned 0
+ 14 usecs [    1.344490] initcall clk_debug_init+0x0/0x116 returned 0
+ 14 usecs [    1.509541] initcall serio_init+0x0/0x1000 [serio] returned 0
+ 15 usecs [    1.177037] initcall zs_init+0x0/0x77 returned 0
+ …….. и так далее …  </code></pre><br />Один нюанс - использование initcall_debug увеличивает количество сообщений, генерируемых ядром во время загрузки системы. Рекомендуют увеличить размер буфера журнала printk, чтобы избежать переполнения буфера журнала.<br />Правда я с таким не сталкивался.<br /><br /><strong>ДОПОЛНЕНИЕ</strong> - Уточнение в части информативности  Xorg - конечно, не совсем удобно редактировать файл /etc/X11/xinit/xserverrc, чтобы прописать запуск strace, а затем убивать Х-ы …. намного удобнее ничего этого не делать, а просто из текстовой консоли запустить <strong>sysdig</strong>, а затем startx …, то есть загружаемся в текстовую консоль и далее ...<br /><strong>sudo sysdig -w ~/sysdig.log</strong><br />стартуем Х-ы, после загрузки убиваем sysdig, для чего сначала узнаем PID sysdig, а потом к этому PID применяем kill ...<br /><strong>pidof sysdig</strong><br />28360<br /><strong>sudo kill 28360</strong><br />Проверяем<br /><strong>pidof sysdig</strong><br />… пусто …<br />Для чего убивать sysdig - утилита запущена и собирает информацию - если процесс не убить, то лог sysdig будет постоянно увеличиваться в размерах и может забить весь диск.<br /><br />Посмотрим на созданный лог и его объем<br /><strong>du -m ~/sysdig.log</strong><br /><strong>18</strong>	/home/vasek/sysdig.log<br />И видим, что файл довольно большой, 18 М (это всего то за несколько секунд), но <strong>в нем записаны все процессы/события за данный промежуток времени</strong>. Анализируя данный файл <u>можно получить любую информацию</u>, но для этого нужно знать как это делать, то есть нужно изучать sysdig.<br />В принципе sysdig можно успешно использовать и в работающй системе, чтобы найти возможные проблемы. ... <a href="https://habr.com/ru/company/selectel/blog/222839/">Сылка для начального ознакомления с sysdig</a> ...
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index9e89.html?next=/forum/topic/19783/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19783/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:08:53 GMT -->
+</html>

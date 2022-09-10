@@ -1,0 +1,1093 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/11807/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:52:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        pppoe и nvidia: очерёдность запуска и другие тонкие моменты
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/9/index.html">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>pppoe и nvidia: очерёдность запуска и другие тонкие моменты</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>pppoe и nvidia: очерёдность запуска и другие тонкие моменты</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-112491"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/lampslave/index.html">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/112491/index.html">#</a>
+            9 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/lampslave/topics/index.html">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/lampslave/posts/index.html">
+                    4796
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Ситуация "до" (всё работает)</strong>:<br/><ol><li> Имею pppoe подключение, которым занимается следующий юнит (запускается при старте системы):<br/><div class="code"><pre>[Unit]
+Description=PPP link to %I
+Before=network.target
+[Service]
+ExecStartPre=/usr/sbin/ip link set dev enp3s0 up
+ExecStart=/usr/sbin/pppd call %I nodetach
+[Install]
+WantedBy=multi-user.target</pre></div></li></ol><br/><strong>Ситуация "во время" (все сломалось)</strong>:<br/><ol><li> Втыкаю видюху nvidia, интерфейс локалки меняется с enp2s0 на enp3s0<br/></li><li> Правлю юнит и конфиг подключения (peers/provider)<br/></li><li> <strong>Во время перезагрузки ppp не поднимается</strong><br/></li><li> Через systemctl status выясняю, что система спотыкается на ExecStartPre, и по заставке nvidia, которая появляется уже после провала ppp, понимаю, что интерфейс ещё не успел создаться, а юнит его уже пытается поднять<br/></li><li> Через systemd-analyze plot выясняю, что существует некий sys-devices-pci0000:00-0000:00:1c.4-0000:03:00.0-net-enp3s0.device, который, видимо, сигнализирует о том, что systemd таки увидел сетевуху<br/></li></ol><br/><strong>Ситуация "после" (подставил костыль)</strong>:<br/><ol><li> Меняю заголовок юнита на:<br/><div class="code"><pre>[Unit]
+Description=PPP link to %I
+Requires=sys-devices-pci0000:00-0000:00:1c.4-0000:03:00.0-net-enp3s0.device
+After=sys-devices-pci0000:00-0000:00:1c.4-0000:03:00.0-net-enp3s0.device
+Before=network.target</pre></div></li><li>Всё работает.<br/></li></ol><br/><strong>Теперь вопрос.</strong> Нет ли более простого пути? Может быть есть возможность хотя бы название юнита-девайса выяснить иначе?<br/>И бонусный вопрос: почему в журнале выхлоп ppp пишется 2 раза?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-112496"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/112496/index.html">#</a>
+            9 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Простой путь, конечно есть :)<br/>Посылаем в баню такие "постоянные" имена интерфейсов, которые, как выяснилось, не совсем постоянные, и либо переходим на "ядерные" дефолтные, либо назначаем свои по MAC-адресу, к примеру.<br/>Что касается очерёдности создания устройств и подъёма сети, то я и безо всяких такого рода глюков давно понял, что лучше не заставлять их конкурировать между собой, всё равно диск один, и модули <em>(устройств и сети)</em> от этого быстрее не загрузятся. Так что <strong>systemd-udev-settle.service</strong> я прописал в <strong>basic.target.wants/</strong><br/><br/>Насчёт двух раз – как это выглядит? Каждое сообщение удваивается? Или...?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-112499"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/lampslave/index.html">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/112499/index.html">#</a>
+            9 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/lampslave/topics/index.html">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/lampslave/posts/index.html">
+                    4796
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>Посылаем в баню такие "постоянные" имена интерфейсов, которые, как выяснилось, не совсем постоянные, и либо переходим на "ядерные" дефолтные, либо назначаем свои по MAC-адресу, к примеру.</blockquote>Думал об этом, но это как-то слишком уж просто :) Кстати, может быть я глупость скажу, но не из-за того ли меняется номер, что управление берёт на себя видюха? Вот звук там точно есть (хотя нет аудио-выходов), может и с сетью так? Не запутается ли systemd или ядро, или кто-то ещё в интерфейсах?<br/><br/><blockquote>Так что systemd-udev-settle.service я прописал в basic.target.wants/</blockquote>"Всё найти, потом думать дальше"... Спасибо, интересный момент, надо будет об этом почитать.<br/><br/><blockquote>Насчёт двух раз – как это выглядит?</blockquote>Обратите внимание на время:<br/><div class="code"><pre>июн 11 02:35:02 arch pppd[241]: Plugin rp-pppoe.so loaded.
+июн 11 02:35:02 arch pppd[241]: RP-PPPoE plugin version 3.8p compiled against pppd 2.4.5
+июн 11 02:35:02 arch pppd[241]: pppd 2.4.5 started by root, uid 0
+июн 11 02:35:07 arch pppd[241]: PPP session is 60097
+июн 11 02:35:08 arch pppd[241]: Connected to _____ via interface enp3s0
+июн 11 02:35:08 arch pppd[241]: Using interface ppp0
+июн 11 02:35:11 arch pppd[241]: Connect: ppp0 &lt;--&gt; enp3s0
+июн 11 02:35:12 arch pppd[241]: CHAP authentication succeeded
+июн 11 02:35:12 arch pppd[241]: peer from calling number _____ authorized
+июн 11 02:35:12 arch pppd[241]: Cannot determine ethernet address for proxy ARP
+июн 11 02:35:12 arch pppd[241]: local  IP address _____
+июн 11 02:35:12 arch pppd[241]: remote IP address _____
+июн 11 02:35:12 arch pppd[241]: Plugin rp-pppoe.so loaded.
+июн 11 02:35:12 arch pppd[241]: RP-PPPoE plugin version 3.8p compiled against pppd 2.4.5
+июн 11 02:35:12 arch pppd[241]: PPP session is 60097
+июн 11 02:35:12 arch pppd[241]: Connected to _____ via interface enp3s0
+июн 11 02:35:12 arch pppd[241]: Using interface ppp0
+июн 11 02:35:12 arch pppd[241]: Connect: ppp0 &lt;--&gt; enp3s0
+июн 11 02:35:12 arch pppd[241]: CHAP authentication succeeded
+июн 11 02:35:12 arch pppd[241]: peer from calling number _____ authorized
+июн 11 02:35:12 arch pppd[241]: Cannot determine ethernet address for proxy ARP
+июн 11 02:35:12 arch pppd[241]: local  IP address _____
+июн 11 02:35:12 arch pppd[241]: remote IP address _____</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-112502"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/112502/index.html">#</a>
+            9 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Видюха это железка, она не может "брать на себя управление". Номер это адрес на шине, к которой, очевидно, подключается и видюха. Номер меняется либо из-за совпадения, либо просто из-за изменения очерёдности.<br/>Чтобы имя интерфейса не менялось – просто привяжите его к какому-нибудь другому параметру, независимому от шины.<br/><br/>Что касается времени, вы пробовали <div class="code"><pre>journalctl -b -o short-monotonic</pre></div>?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-112507"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/lampslave/index.html">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/112507/index.html">#</a>
+            9 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/lampslave/topics/index.html">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/lampslave/posts/index.html">
+                    4796
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Может я не так выразился, но ведь звуком-то она может управлять? Почему бы не управлять и сетью?<br/><br/><div class="code"><pre>
+# journalctl -o short-monotonic -u ppp@provider
+-- Reboot --
+[   18.674226] arch pppd[245]: Plugin rp-pppoe.so loaded.
+[   18.722926] arch pppd[245]: RP-PPPoE plugin version 3.8p compiled against pppd 2.4.5
+[   18.723032] arch pppd[245]: pppd 2.4.5 started by root, uid 0
+[   18.723194] arch pppd[245]: PPP session is 4820
+[   18.723291] arch pppd[245]: Connected to _____ via interface enp3s0
+[   18.723400] arch pppd[245]: Using interface ppp0
+[   18.723497] arch pppd[245]: Connect: ppp0 &lt;--&gt; enp3s0
+[   18.723593] arch pppd[245]: CHAP authentication succeeded
+[   18.723686] arch pppd[245]: peer from calling number _____ authorized
+[   18.846929] arch pppd[245]: Cannot determine ethernet address for proxy ARP
+[   18.847223] arch pppd[245]: local  IP address _____
+[   18.847366] arch pppd[245]: remote IP address _____
+[   18.921884] arch pppd[245]: Plugin rp-pppoe.so loaded.
+[   18.935575] arch pppd[245]: RP-PPPoE plugin version 3.8p compiled against pppd 2.4.5
+[   18.935776] arch pppd[245]: PPP session is 4820
+[   18.935905] arch pppd[245]: Connected to _____ via interface enp3s0
+[   18.936028] arch pppd[245]: Using interface ppp0
+[   18.936149] arch pppd[245]: Connect: ppp0 &lt;--&gt; enp3s0
+[   18.936270] arch pppd[245]: CHAP authentication succeeded
+[   18.936392] arch pppd[245]: peer from calling number _____ authorized
+[   18.936513] arch pppd[245]: Cannot determine ethernet address for proxy ARP
+[   18.936634] arch pppd[245]: local  IP address _____
+[   18.936778] arch pppd[245]: remote IP address _____</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-112509"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/112509/index.html">#</a>
+            9 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ну вот, теперь видно, что время разное.<br/><br/><blockquote>но ведь звуком-то она может управлять</blockquote>Что вы называете "управлять звуком"? У видеокарты есть своё аудиоустройство? При втыкании видеокарты оно грузится первым и становится дефолтным?<br/>Так это не видеокарта "управляет", это модули в таком порядке грузятся. И вы наверняка знаете, как настраивается порядок аудиоустройств через конфиги modprobe.<br/>Разумеется, видеокарта ничем не управляет – управляют только программы – ядро, modprobe, udev, systemd и т.д.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-112513"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/lampslave/index.html">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/112513/index.html">#</a>
+            9 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/lampslave/topics/index.html">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/lampslave/posts/index.html">
+                    4796
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>Ну вот, теперь видно, что время разное.</blockquote>Есть предположения, почему так? И только ли у меня одного это появляется?<br/><br/><blockquote>Что вы называете "управлять звуком"?</blockquote>"Управлять" на моём кривом диалекте = обрабатывать, выводить, предоставлять железные мощности под обработку. Т.е. не на программном уровне, а на железном. До втыкания видюхи изображением "управляло" графическое ядро в процессоре, после - видюха.<br/><br/>Касательно звука, я имею в виду, что после подключения видюхи в alsamixer появляется ещё одна звуковая карта, хотя на самой видюхе нет аудиовыхода. Это, и смена номера сетевого интерфейса позволяют (мне) предположить, что видюха предоставляет не только звуковую, но ещё и сетевую карту. С другой стороны, новый сетевой интерфейс не появляется, так что скорее всего я не прав.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-112517"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Natrio/index.html">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/112517/index.html">#</a>
+            9 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Natrio/topics/index.html">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Natrio/posts/index.html">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Если аудиоустройство появляется, значит оно есть на видеокарте. Выход может быть не припаян, или даже не разведён на плате, он устройство есть. Кроме того, это может быть цифровой выход, через какой-нибудь HDMI.<br/><br/>Имя сетевого интерфейса присваивается правилом udev, которое сочиняет его, в вашем случае, из адреса устройства на шине. На этой же шине есть и другие устройства, не имеющие никакого отношения к сети, и некоторые из них находятся на видеокарте.<br/><br/><em>P.S.</em><br/>Посмотрел доки:<br/><a href="http://cgit.freedesktop.org/systemd/systemd/tree/src/udev/udev-builtin-net_id.c#n20">http://cgit.freedesktop.org/systemd/systemd/tree/src/udev/udev-builtin-net_id.c#n20</a><br/>Ваше именование сетевых устройств действительно берётся из адреса на шине PCI(e) , в чём вы можете убедиться через <strong>lspci</strong><br/><div class="code"><pre>$ udevadm test-builtin net_id /sys/class/net/eth0 2&gt;&amp;1 |grep PATH
+ID_NET_NAME_PATH=enp2s0
+$ lspci|grep -i ethernet
+02:00.0 Ethernet controller: Qualcomm Atheros AR8151 v2.0 Gigabit Ethernet (rev c0)</pre></div><div class="code"><pre>$ udevadm test-builtin net_id /sys/class/net/eth0 2&gt;&amp;1 |grep PATH
+ID_NET_NAME_PATH=enp0s7
+$ lspci|grep -i ethernet
+00:07.0 Bridge: NVIDIA Corporation MCP61 Ethernet (rev a2)</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-112522"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/lampslave/index.html">
+                <span class="post-username">lampslave</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/112522/index.html">#</a>
+            9 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/lampslave/topics/index.html">
+                    32
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/lampslave/posts/index.html">
+                    4796
+                </a>
+            </div>
+            <div>
+                Участник с: 05 июля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Хм. Значит сетевухи на видеокарте у меня таки нет, но есть звук, ибо:<br/><div class="code"><pre>[ls@arch ~]$ lspci | grep -i qualcomm
+03:00.0 Ethernet controller: Qualcomm Atheros AR8151 v2.0 Gigabit Ethernet (rev c0)
+[ls@arch ~]$ lspci | grep -i nvidia
+01:00.0 VGA compatible controller: NVIDIA Corporation GK107 [GeForce GTX 650] (rev a1)
+01:00.1 Audio device: NVIDIA Corporation GK107 HDMI Audio Controller (rev a1)</pre></div><br/>А у вас откуда сетевуха nvidia появилась? Или это с другой машины (они ведь вроде не только графику, но и другую начинку когда-то делали)?<br/><br/>И ещё про basic.target я что-то не нагуглю ничего вразумительного. Вы каким-то образом юнит systemd-udev-settle.service поменяли или как?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-112532"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/ivand/index.html">
+                <span class="post-username">ivand</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/112532/index.html">#</a>
+            9 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/ivand/topics/index.html">
+                    9
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/ivand/posts/index.html">
+                    477
+                </a>
+            </div>
+            <div>
+                Участник с: 04 января 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>Хм. Значит сетевухи на видеокарте у меня таки нет</blockquote>Судя по именованию- удев(системд) считает -- есть<br/><blockquote>Ситуация "до" (всё работает):</blockquote>Ну было - 3г модемы ромом определяло. Правилось соответствующим вендоридом для соответсвующего контроллера модема. И то- это из-за сохраняющегося параметра в свистке<br/><br/>Они заполонили
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index4d62.html?next=/forum/topic/11807/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/11807/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 05:52:17 GMT -->
+</html>

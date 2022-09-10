@@ -1,0 +1,1117 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [Решено] Аналог демона ntpdate для systemd
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/9/">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[Решено] Аналог демона ntpdate для systemd</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[Решено] Аналог демона ntpdate для systemd</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-15799"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/leonardo19/">
+                <span class="post-username">leonardo19</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/15799/">#</a>
+            10 лет, 2 месяца назад
+            
+                (отредактировано
+                
+                    10 лет, 2 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a9/6a/a96a10f640be017dcd017364aa690659.png" alt="leonardo19 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/leonardo19/topics/">
+                    40
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/leonardo19/posts/">
+                    848
+                </a>
+            </div>
+            <div>
+                Участник с: 25 ноября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Доброго времени суток!<br/>Впервые сегодня загрузил систему с использованием systemd. Все заработало. Но есть одно &ldquo;но&rdquo;.<br/>Для синхронизации часов использую демоны ntpdate и hwclock. Аналогичных служб для  systemd пока нет. Решил написать сам. Начал с ntpdate. На том и застрял.<br/><div class="code"><pre>[Unit]
+Description=NTP client
+After=network.target
+Requires=network.target
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/ntpd -qg &gt;/dev/null
+[Install]
+WantedBy=multi-user.target</pre></div>Поместил в /etc/systemd/system/<br/><div class="code"><pre>sudo systemctl start ntp-client.service
+Job failed. See system journal and 'systemctl status' for details.
+systemctl status ntp-client.service
+ntp-client.service - NTP client
+	  Loaded: loaded (/etc/systemd/system/ntp-client.service; disabled)
+	  Active: failed (Result: exit-code) since Sat, 30 Jun 2012 14:29:43 +0400; 27s ago
+	 Process: 1935 ExecStart=/usr/bin/ntpd -qg &gt;/dev/null (code=exited, status=1/FAILURE)
+	  CGroup: name=systemd:/system/ntp-client.service</pre></div>Заранее благодарю.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-15800"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/leonardo19/">
+                <span class="post-username">leonardo19</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/15800/">#</a>
+            10 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a9/6a/a96a10f640be017dcd017364aa690659.png" alt="leonardo19 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/leonardo19/topics/">
+                    40
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/leonardo19/posts/">
+                    848
+                </a>
+            </div>
+            <div>
+                Участник с: 25 ноября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Отработало без ошибок в таком виде:<br/><div class="code"><pre>[Unit]
+Description=NTP client
+After=network.target
+Requires=network.target
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/ntpd -qg
+[Install]
+WantedBy=multi-user.target</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-15801"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/15801/">#</a>
+            10 лет, 2 месяца назад
+            
+                (отредактировано
+                
+                    10 лет, 2 месяца назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            Дам маленький совет&#8230;<br/>Если юнитов нет в Арче, то их можно найти в других дистрах последних версий, например тут <a href="https://pkgs.org/">http://pkgs.org/</a> <br/>Я делаю так:<br/>Ищу нужный юнит, открываю все найденные и скрипт инициализации демона из /etc/rc.d/, дальше соединяю их воедино, если нужно корректирую&#8230; Ну ленивый я что поделаешь&#8230;<br/><br/>Вот мое <br/><div class="code"><pre>[Unit]
+Description=Set time via NTP
+After=syslog.target network.target
+Before=time-sync.target
+Wants=time-sync.target
+BindTo=ntpd.service
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/conf.d/ntpd.conf
+ExecStart=/usr/bin/ntpd -q $NTP_CLIENT_OPTION
+RemainAfterExit=yes
+[Install]
+WantedBy=multi-user.target</pre></div>
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-15802"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/leonardo19/">
+                <span class="post-username">leonardo19</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/15802/">#</a>
+            10 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a9/6a/a96a10f640be017dcd017364aa690659.png" alt="leonardo19 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/leonardo19/topics/">
+                    40
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/leonardo19/posts/">
+                    848
+                </a>
+            </div>
+            <div>
+                Участник с: 25 ноября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>nafanja</strong>, спасибо!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-15803"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/15803/">#</a>
+            10 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            И вот для hwclock, использовать не рекомендую, так как тенденция идет на отказ от localtime<br/><strong>/etc/systemd/system/hwclock.service</strong><br/><div class="code"><pre>[Unit]
+Description=hwclock
+DefaultDependencies=no
+[Service]
+Type=oneshot
+ExecStart=/sbin/hwclock --hctosys --localtime
+ExecStop=/sbin/hwclock --systohc --localtime
+[Install]
+WantedBy=multi-user.target</pre></div>
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-15804"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/leonardo19/">
+                <span class="post-username">leonardo19</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/15804/">#</a>
+            10 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a9/6a/a96a10f640be017dcd017364aa690659.png" alt="leonardo19 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/leonardo19/topics/">
+                    40
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/leonardo19/posts/">
+                    848
+                </a>
+            </div>
+            <div>
+                Участник с: 25 ноября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br/>И вот для hwclock, использовать не рекомендую, так как тенденция идет на отказ от localtime</blockquote>Время у меня давно UTC, так что по-любому придется править.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-15805"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/15805/">#</a>
+            10 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Leonardo19</em><br/>Время у меня давно UTC, так что по-любому придется править.</blockquote>Зачем UTC править???<br/>тайм зону нужно тут прописать<strong> /etc/timezone</strong> <br/><div class="code"><pre>Europe/Simferopol</pre></div>
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-15806"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/leonardo19/">
+                <span class="post-username">leonardo19</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/15806/">#</a>
+            10 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a9/6a/a96a10f640be017dcd017364aa690659.png" alt="leonardo19 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/leonardo19/topics/">
+                    40
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/leonardo19/posts/">
+                    848
+                </a>
+            </div>
+            <div>
+                Участник с: 25 ноября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br/>Зачем UTC править???</blockquote>Я имел в виду - править файл юнита. Конфиги я все выправил. Сейчас практически чистый systemd, хотя initscripts не удалил пока.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-15807"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/nafanja/">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/15807/">#</a>
+            10 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/nafanja/topics/">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/nafanja/posts/">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            Да файл юнита для hwclock даже создавать не нужно!<br/>Или ты хочешь сказать что в отчете <strong>systemctl &ndash;all</strong> оно помечено красным как ошибка?<br/>Ну тогда нужно сделать пустой файл или ссылку на /dev/null<br/><strong>ln -s /dev/null /etc/systemd/system/hwclock.service</strong><br/>и вообще если нужно какой нибудь стандартный юнит отключить из загрузки, то нужно просто делать ссылки на /dev/null с тем именем которое нужно отключить&#8230;
+            
+                
+                    <div class="post-signature">
+                        <a href="https://archlinux.org.ru/forum/topic/10992/">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-15808"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/leonardo19/">
+                <span class="post-username">leonardo19</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/15808/">#</a>
+            10 лет, 2 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/a9/6a/a96a10f640be017dcd017364aa690659.png" alt="leonardo19 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/leonardo19/topics/">
+                    40
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/leonardo19/posts/">
+                    848
+                </a>
+            </div>
+            <div>
+                Участник с: 25 ноября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня четыре ошибки: auditd.service, rc-local.service, plymouth-quit-wait.service, plymouth-start.service.<br/>Этих юнитов у меня вообще нет.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/1508/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747adbb1b9599d9c',m:'WgGAE_391sAxJ9Obr7kJblF4C1UEX2ZwA5.JaKC4N3E-1662673400-0-AR6xe8g7byzd+BrPNF99h8VYcfZAdWepV8UEDsMD8eGfRAWYdBJFJds5OnUFjdcO1PpfYZBZHo44g4Sb7C75EMxV58Mlj2hsRK8jYpqzvGkqChyq/v7etUSYGFJ2Cp57Bx3baI9Diu7zv7ad7OOWiEw=',s:[0x21da6b431f,0x771dae9892],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

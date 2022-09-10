@@ -1,0 +1,1017 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        [РЕШЕНО] Перенаправление консольного вывода в буфер в памяти: реализация на Lua
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/6/">Разработка</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/19/">Уголок разработчика</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>[РЕШЕНО] Перенаправление консольного вывода в буфер в памяти: реализация на Lua</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>[РЕШЕНО] Перенаправление консольного вывода в буфер в памяти: реализация на Lua</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-109630"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/maisvendoo/">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/109630/">#</a>
+            9 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/maisvendoo/topics/">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/maisvendoo/posts/">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Задача следующая - перенаправить вывод команды pacman -Qu в таблицу строк Lua.<br/><br/>Делаю виджет, отображающий список доступных обновлений, и пока эта задача реализована так<br/><br/>1. Каждые 5 минут cron синхронизирует базу<br/><br/>pacman -Syy<br/><br/>а так же выводит список доступных обновлений в текстовый файл<br/><br/>pacman -Qu &gt; updates.lst<br/><br/>2. Далее lua-скрипт в conky читает этот файл в таблицу строк и парсит полученную структуру<br/><br/>Вопрос - как можно обойтись без промежуточного вывода в файл<br/><br/>Текст скрипта<br/><br/><div class="code"><pre>require	'cairo'
+----------------------------------------------------------------------------------
+--	Функция отрисовки, вызываемая из conky
+----------------------------------------------------------------------------------
+function conky_startlua()
+if conky_window == nil then return end
+-- Создаем поверхность для рисования
+local cs = cairo_xlib_surface_create (conky_window.display, conky_window.drawable, conky_window.visual, conky_window.width, conky_window.height)
+-- Создаем ресурс для рисования
+cr = cairo_create (cs)
+-- Открываем для чтения файл со списком пакетов
+f = io.open("/home/maisvendoo/.conky/updates.lst", "r")
+-- Создаем пустую таблицу пакетов
+local pkg = {}
+-- Читаем список обновлений в таблицу
+-- одновременно читая их количество
+local num_pkg = 0
+for line in f:lines() do
+  pkg[num_pkg] = line
+  num_pkg = num_pkg + 1
+end
+-- Вывод на экран
+-- Заголовок
+local title = "Доступные обновления ("..num_pkg..")"
+cairo_select_font_face(cr, 'Arial', 0, 0)
+cairo_set_font_size(cr, 18)
+cairo_set_source_rgba(cr, 1, 1, 1, 1)
+cairo_move_to(cr, 10, 50)
+cairo_show_text(cr, title)
+-- Список
+local extents = cairo_text_extents_t:create()
+local tx = 10
+local ty0 = 100
+local ty = ty0
+local max_tw = 0
+cairo_select_font_face(cr, 'Terminus', 0, 0)
+cairo_set_font_size(cr, 15)
+cairo_set_source_rgba(cr, 1, 1, 1, 1)
+for j = 0, num_pkg - 1 do
+  -- Цвет по умолчанию
+  cairo_set_source_rgba(cr, 0.7, 0.7, 0.7, 1)
+  -- Выбираем цвет в зависимости от типа обновления
+  -- Ядро
+  if string.find(pkg[j], "linux") ~= nil then
+    cairo_set_source_rgba(cr, 1, 0, 0, 1)
+  end
+  -- Система инициализации
+  if string.find(pkg[j], "systemd") ~= nil then
+    cairo_set_source_rgba(cr, 1, 0.5, 0, 1)
+  end
+  -- Офисный пакет
+  if string.find(pkg[j], "libre") ~= nil then
+    cairo_set_source_rgba(cr, 0, 0.5, 0, 1)
+  end
+  -- Разработка на java
+  if (string.find(pkg[j], "java") ~= nil) or (string.find(pkg[j], "jre") ~= nil) then
+    cairo_set_source_rgba(cr, 0, 1, 1, 1)
+  end
+  -- Разработка на C/C++
+  if (string.find(pkg[j], "gcc") ~= nil) or (string.find(pkg[j], "glibc") ~= nil) then
+    cairo_set_source_rgba(cr, 0.35, 0.0, 0.62, 1)
+  end
+  -- Драйвера NVidia
+  if string.find(pkg[j], "nvidia") ~= nil then
+    cairo_set_source_rgba(cr, 0, 1.0, 0, 1)
+  end
+  cairo_text_extents (cr, pkg[j], extents)
+  cairo_move_to(cr, tx, ty)
+  cairo_show_text(cr, pkg[j])
+  if extents.width &gt; max_tw then max_tw = extents.width end
+  ty = ty + extents.height + 2
+  if ty &gt; conky_window.height - ty0 then
+    ty = ty0
+    tx = tx + max_tw + 5
+  end
+end
+io.close(f)
+end</pre></div>
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-109656"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/serkhay/">
+                <span class="post-username">serkhay</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/109656/">#</a>
+            9 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/serkhay/topics/">
+                    24
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/serkhay/posts/">
+                    304
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Ну, как мне кажется, нужно просто использовать в вашем случае<br/><div class="code"><pre>os.execute ("pacman -Qu")</pre></div>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-109667"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/maisvendoo/">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/109667/">#</a>
+            9 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/maisvendoo/topics/">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/maisvendoo/posts/">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>serkhay</em><br/>Ну, как мне кажется, нужно просто использовать в вашем случае<br/><div class="code"><pre>os.execute ("pacman -Qu")</pre></div></blockquote><br/>Вывод выполняется в консоль, а возвращаемое этой функцией значение носит характер статусного. Интересует возможность возвратить в какую-либо переменную результат выполнения консольной команды
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-109679"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/serkhay/">
+                <span class="post-username">serkhay</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/109679/">#</a>
+            9 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/serkhay/topics/">
+                    24
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/serkhay/posts/">
+                    304
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Тогда присмотритесь к функции io.popen
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-109687"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/maisvendoo/">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/109687/">#</a>
+            9 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/maisvendoo/topics/">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/maisvendoo/posts/">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>serkhay</em><br/>Тогда присмотритесь к функции io.popen</blockquote><br/>Йеее-ссс! Спасибо огромное!<br/><br/>Получилось, кусок кода реализующий это, работать оказывается так же как и с файлом :)<br/><div class="code"><pre>f_pipe = io.popen("pacman -Qu")
+-- Создаем пустую таблицу пакетов
+local pkg = {}
+-- Читаем список обновлений в таблицу
+-- одновременно читая их количество
+local num_pkg = 0
+for line in f_pipe:lines() do
+  pkg[num_pkg] = (num_pkg+1)..". "..line
+  num_pkg = num_pkg + 1
+end
+io.close(f_pipe)</pre></div><br/>А вот результат<br/><a href="http://topimages.ru/images/view/16512/d6a00336"><img src="http://topimages.ru/storage/simple/35e/37/thumb_1_372454e5aeb1df41.jpg"></img></a>
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-109688"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/serkhay/">
+                <span class="post-username">serkhay</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/109688/">#</a>
+            9 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/serkhay/topics/">
+                    24
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/serkhay/posts/">
+                    304
+                </a>
+            </div>
+            <div>
+                Участник с: 06 июня 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Кстати, если вы любите lua, попробуйте awesome wm. У него из коробки, помимо прочего, есть вся функциональность conky и даже больше. Хотя conky я и не понимаю, рабочий стол у меня всегда перекрыт окнами
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-109689"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/maisvendoo/">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/109689/">#</a>
+            9 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/maisvendoo/topics/">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/maisvendoo/posts/">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>serkhay</em><br/>Кстати, если вы любите lua, попробуйте awesome wm. У него из коробки, помимо прочего, есть вся функциональность conky и даже больше. Хотя conky я и не понимаю, рабочий стол у меня всегда перекрыт окнами</blockquote><br/>C Lua я играюсь дня три :) Но мне понравилось :)
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-109697"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/tchgefest/">
+                <span class="post-username">tchgefest</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/109697/">#</a>
+            9 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/tchgefest/topics/">
+                    51
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/tchgefest/posts/">
+                    1505
+                </a>
+            </div>
+            <div>
+                Участник с: 20 октября 2008
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>maisvendoo</em><br/><blockquote><em>serkhay</em><br/>Кстати, если вы любите lua, попробуйте awesome wm. У него из коробки, помимо прочего, есть вся функциональность conky и даже больше. Хотя conky я и не понимаю, рабочий стол у меня всегда перекрыт окнами</blockquote><br/>C Lua я играюсь дня три :) Но мне понравилось :)</blockquote>А как в conky прописываешь lua?
+            
+                
+                    <div class="post-signature">
+                        Последний крик моды - эхо 30-летней давности.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-109701"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/maisvendoo/">
+                <span class="post-username">maisvendoo</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/109701/">#</a>
+            9 лет, 3 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f4/dc/f4dc0d9e80c61dbb447753a201a2676d.png" alt="maisvendoo avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/maisvendoo/topics/">
+                    68
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/maisvendoo/posts/">
+                    1142
+                </a>
+            </div>
+            <div>
+                Участник с: 10 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>tchgefest</em><br/>А как в conky прописываешь lua?</blockquote><br/>Вот конфиг<br/><div class="code"><pre>#background no
+own_window yes
+own_window_type normal
+own_window_transparent yes
+#own_window_color 000000
+own_window_argb_visual yes
+own_window_argb_value 128
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+# Шрифт
+use_xft yes
+#xftfont Terminus:size=10
+# Включаем двойную буфферизацию
+double_buffer yes
+# Включаем тени
+#draw_shades yes
+# Задаем дефоолтные цвета
+#default_color white
+#default_shade_color black
+#default_outline_color blue
+# Положение на экране
+alignment top_left
+gap_x 20
+gap_y 400
+# Минимальный размер окна
+minimum_size 1560 630
+# Период обновления
+update_interval 0.5
+lua_load ~/.conky/lua_updates.lua
+lua_draw_hook_pre startlua
+TEXT</pre></div><br/>Собственно<br/><br/><strong>lua_load</strong> - грузит скрипт расположенный по указанному пути<br/><br/><strong>lua_draw_hook_pre</strong> - задает имя функции, вызываемой при перерисовке окна conky<br/><br/>Сам conky должен быть собран с поддержкой Lua, для этого надо установить из AUR пакеты <a href="https://aur.archlinux.org/packages/toluapp/?setlang=ru">toluapp</a> и <a href="https://aur.archlinux.org/packages/conky-lua/">conky-lua</a>. Conky из репозитория собрана без поддержки Lua<br/><br/>Вообще же есть хороший мануал, лежащий <a href="https://ramzport.blogspot.ru/search/label/conky">здесь</a>, в формате PDF, я пользовался именно им
+            
+                
+                    <div class="post-signature">
+                        Да пребудет с нами Сила...!<br />CPU Intel Core i9 10900-KF/RAM DDR4 128 Gb/NVidia GForce GTX 1080 Ti Turbo 11Gb/SSD M2 512 Gb/HDD Seagate SATA3 2 Tb/HDD Toshiba 3Tb/HDD Toshiba 6Tb<br /><a href="http://rusrailsim.org">http://rusrailsim.org</a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/11625/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747a3ac408af9d34',m:'DPixc.aj7.NW.I1ieCnoTHMMWsyjm7B1teOg.wYkvUA-1662666800-0-AS2a2dTpxPf/hQmEnAwKgaW5CuCvVh4vpmwgRPDiV7b7AM2RTZnn/47Zjin8o7U0BvFAhc4ysk+odF0HPIBPOhu8lem7Qtp+aSe93vVeIfEu4xT5HhxA6rAsK+yYflya1LFdVl823/ocYzMywxOJkoE=',s:[0xb6c707d4e6,0x1e83194584],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

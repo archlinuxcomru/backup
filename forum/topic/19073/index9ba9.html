@@ -1,0 +1,1120 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19073/?page=3 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:32:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        PRA - модульная squashfs сборка с использованием AUFS
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/6/index.html">Разработка</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/21/index.html">Разработки арчеводов</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>PRA - модульная squashfs сборка с использованием AUFS</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>PRA - модульная squashfs сборка с использованием AUFS</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index4658.html?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index9ba9.html?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexaf4d.html?page=5">5</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="indexfdb0.html?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214371"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/kostyalamer/index.html">
+                <span class="post-username">kostyalamer</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214371/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/kostyalamer/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/kostyalamer/posts/index.html">
+                    229
+                </a>
+            </div>
+            <div>
+                Участник с: 26 января 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>А вообще заметил тенденцию к уменьшению интереса к подобным сборкам. И предположу, что с увеличением миди- и мини- компьютеров эта тенденция будет только нарастать.<br />Вот зачем держать/носить собой флешку с установленной системой, когда намного интереснее иметь маленький компьютер, например, размером как обычная мобила, но с возможностями как нетбук/ноутбук.</blockquote>Очень может быть, хотя подобная теория была в свое время про планшеты . Но как показало время , планшеты не заменили ноутбуки и стационарники.
+            
+                
+                    <div class="post-signature">
+                        Spectrum forever
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214373"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214373/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>kostyalamer</em><br>Но как показало время , планшеты не заменили ноутбуки и стационарники.</blockquote>Мне как то встретился интересный вариант - вроде бы японец, точно не помню, высказал предположение миникомпьютер, но с возможностью использования внешнего монитора. Идея мне довольно понравилась ... но, имхо, сложно будет решить проблему с подключением и питанием.
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214375"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/jim945/index.html">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214375/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/jim945/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/jim945/posts/index.html">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>миникомпьютер</blockquote>Тебя постоянно уносит слишком далеко вперёд.<br />Думай о сегодняшнем дне.
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214377"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/kostyalamer/index.html">
+                <span class="post-username">kostyalamer</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214377/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/kostyalamer/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/kostyalamer/posts/index.html">
+                    229
+                </a>
+            </div>
+            <div>
+                Участник с: 26 января 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vasek</em><br>Мне как то встретился интересный вариант - вроде бы японец, точно не помню, высказал предположение миникомпьютер, но с возможностью использования внешнего монитора. Идея мне довольно понравилась &#8230; но, имхо, сложно будет решить проблему с подключением и питанием.</blockquote>Подожди, такой радости уже навалом на Android ( размером чуть больше флешки ) они делают из глупых телевизоров умные , или ты про что-то другое ?<br />В принципе малина, оранжевый , бананы  ,  кубитрики и тому подобные давно это реализовали причем на Linux но у них формфактор побольше . Да вот тут у товарищей целый раздел про АРМ запилен : <a href="http://forum.puppyrus.org/index.php?board=149.0">http://forum.puppyrus.org/index.php?board=149.0</a>
+            
+                
+                    <div class="post-signature">
+                        Spectrum forever
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214402"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sfs/index.html">
+                <span class="post-username">sfs</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214402/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sfs/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sfs/posts/index.html">
+                    116
+                </a>
+            </div>
+            <div>
+                Участник с: 07 февраля 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>akorop</em><br>А нафига поднимать sshd?! А нафига поднимать ftpd, особенно с rw доступом?!</blockquote>Для использования по прямому назначению. Например, по мне самый простой способ передать на винду или андроид - ftp<br />О чем мы спорим...? Надо - юзайте. Не надо - не юзайте. Много места не занимает. По делолту не стартует. В дистре - перочинном ножике уместны<br />Так же и с рутом. Не боитесь - работайте. У меня все мануалы под виндовых мышевозил. Я предупредил - решать юзеру<br /><br /><blockquote><em>jim945</em><br>можно всё в 000 запихнуть</blockquote>Можно. Вот хуки под<a href="http://wiki.puppyrus.org/soft/arch-initrd#mkinitcpio-overlayfs_mkinitcpio-lf-overlayfs_mkinitcpio-lf-aufs"> aufs и overlayfs</a><br /><br /><blockquote><em>vasek</em><br>заметил тенденцию к уменьшению интереса к подобным сборкам</blockquote>А я - к линуксу вцелом. Дектоп умирает. Народ валит на телефоны ,планшеты, тв<br /><blockquote><em>vasek</em><br>интереснее иметь маленький компьютер</blockquote>У меня и то и другое. Про тв-боксы выше дали правильную ссылку - народу пока мало. Подключайтесь уже многое отработано<br /><br />Не с того ракурса смотрите на ПРА.<br />Есть виндоюзер. Достали тормоза, вирусняки , переустановки ОС, воровство<br />Узнал что можно поставить что-то другое на флэшку. На винт он побоится. При слове инсталлятор в обморок упадет<br />Залил дамп на флэшку - работает.<br />Понравилось - на винт , на нтфс поставил<br />Дорос до раздела ext4. Разобрался с ПМ<br />Написал свой первый скрипт. Обсудил его на форуме.<br />Скомпилил первую прогу... может даже свою<br />Поставил сам другой линукс<br />В перспективе можем получить если не программера, то продвинутого, разностороннего юзера :)<br />Игрушка, песочница, &quot;сделай сам&quot;, путевка в линукс и т.п. :)
+            
+                
+                    <div class="post-signature">
+                        <a href="https://sourceforge.net/projects/puppyrusa/"><strong>PuppyRusArch (PRA)</strong></a>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214404"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vasek/index.html">
+                <span class="post-username">vasek</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214404/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+                (отредактировано
+                
+                    3 года, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vasek/topics/index.html">
+                    48
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vasek/posts/index.html">
+                    11320
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>sfs</strong>, <u>не обращай внимание на стариковское ворчание</u>, ну что это за старик, который не поговорит о том о сем.<br />Насчет андроид - у меня обычный очень и очень старый телефон, с которого можно только звонить и ничего больше (на это есть определенные причины).<br />В части сборок - ничего не имею против - у каждого свое хобби, в принципе так и должно быть.<br />А вывод по тенденции уменьшения интереса к таким сборкам возможно сделал и ошибочно, ориентируясь только на ту молодеж, которая приходит ко мне с вопросами - сборки они делают совсем другие  и  их больше интересует не установка или использование операционной системы, а совсем другое, например, как скрыть следы изменения файлов (в части даты изменения), или зная хэш подменить пароль и др., вообщем интересы на грани фола, НО это тоже хобби.<br /><br /><strong>EDIT 1</strong> - только сейчас заметил, что написал не в том топике - в части сборок нужно было в этом - <strong>IceArch - сборка на icewm с zif - ом внутри</strong>
+            
+                
+                    <div class="post-signature">
+                        Ошибки не исчезают с опытом - они просто умнеют
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214410"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/jim945/index.html">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214410/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/jim945/topics/index.html">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/jim945/posts/index.html">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Где можно найти исходники сборочницы iso?<br />Изменения куда предлагать?
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214417"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/akorop/index.html">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214417/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/akorop/topics/index.html">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/akorop/posts/index.html">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sfs</em><br><blockquote><em>akorop</em><br>А нафига поднимать sshd?! А нафига поднимать ftpd, особенно с rw доступом?!</blockquote>Для использования по прямому назначению. Например, по мне самый простой способ передать на винду или андроид - ftp</blockquote>Не понял, как прямое назначение sshd можно увязать с флэшко-попробовательной сборкой.<br />А насчёт ftp, то всё правильно, но зачем давать rw?!<br />Это было 100 лет назад просто и логично  решено в оригинальном puppy:<br /><ul><li>sshd не нужен;</li><li>чтобы забрать файлы с винды - smb-клиент (gvfs);</li><li>чтобы отдать файлы на винду - ftp сервер read-only.</li></ul>С тех пор задачи ничем не изменились.<br />Кстати, на android тоже легко поднимается ftp-сервер, так что теперь есть ещё один способ обмена файлов: ftp-клиент на линуксе (что без проблем делается хоть в mc, хоть в любом гуёвом файлмененджере).<br /><br /><blockquote><em>sfs</em><br>Узнал что можно поставить что-то другое на флэшку. На винт он побоится. При слове инсталлятор в обморок упадет</blockquote>И это он будет огорчён отсутствием sshd? :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214419"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/akorop/index.html">
+                <span class="post-username">akorop</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214419/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/akorop/topics/index.html">
+                    111
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/akorop/posts/index.html">
+                    1755
+                </a>
+            </div>
+            <div>
+                Участник с: 29 февраля 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sfs</em><br>Не с того ракурса смотрите на ПРА.<br />Есть виндоюзер.</blockquote>А вот я - не виндоюзер, а pra использую. Использую для работы, как нетребовательную &quot;траспортабельную&quot; систему на флэшке, которую можно запустить даже на весьма слабом (по нынешним понятиям) компе, и на которой можно и доустанавливать что-то, если надо (а мне надо), и сохранять результат работы (а мне и это надо).<br />Спасибо.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-214438"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/igor1961/index.html">
+                <span class="post-username">igor1961</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/214438/index.html">#</a>
+            3 года, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/igor1961/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/igor1961/posts/index.html">
+                    1
+                </a>
+            </div>
+            <div>
+                Участник с: 22 февраля 2019
+            </div>
+            
+        </td>
+        <td class="post-content">
+            sfs спасибо.PRA действительно помогает безбоязненно знакомиться с линуксом.Пробовал все сборки pra03-pra64  Пользуюсь последней pra 6407light только убрал несправедливую кладбищенскую тему.Спасибо.К сожалению не умею правильно  задавать вопросы и грамотно подавать информацию.Всех причастных с Днем СОВЕТСКОЙ АРМИИ.и ФЛОТА.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="index4658.html?page=2" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="index2679.html?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="index9ba9.html?page=3">3 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexaf4d.html?page=5">5</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="indexfdb0.html?page=4" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexec14.html?next=/forum/topic/19073/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/19073/?page=3 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:32:49 GMT -->
+</html>

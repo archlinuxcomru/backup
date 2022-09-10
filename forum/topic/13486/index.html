@@ -1,0 +1,831 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Как чистить базу MySql
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/13/">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Как чистить базу MySql</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Как чистить базу MySql</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-135725"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/palpalych/">
+                <span class="post-username">palpalych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/135725/">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/47/d0/47d0dfe31100e02907f5e9bb71c76f86.png" alt="palpalych avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/palpalych/topics/">
+                    89
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/palpalych/posts/">
+                    1126
+                </a>
+            </div>
+            <div>
+                Участник с: 09 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>502 Bad gateway</strong><br />Очень часто выскакивает такая ошибка, после обновления страницы ошибка пропадает, но может неожиданно опять появится, в чем может быть причина?<br /><br />Часто бывает так что в cms новые данные не хотят сохраняться, меняешь в редакторе html код а он не сохраняется - остается старый, через импорт все меняется, думаю это взаимосвязанные вещи.<br /><br />Еще странности:<br />Когда делаю импорт то нагрузка на vds CPU php-fpm:100% (с ОЗУ обратная картина, почти не расходуется), не знаю насколько это нормально?<br /><br />Заметил что если в /etc/php/php.ini  <strong>memory_limit</strong> меньше <strong>128M</strong> сервак вообще падает во время импорта, поэтому тупо поставил с запасом <strong>256М</strong>, может можно еще больше поставить? ибо я не понимаю от чего эта цифра зависит?<br /><br />Еще может кто знает как правильно настроить /etc/php/conf.d/05-opcache.ini<br />опять тупо кинул что нашел в интернете, а правильно ли это?<br /><pre><code>zend_extension = opcache.so
+opcache.memory_consumption = 512
+opcache.max_accelerated_files = 50000
+
+; following can be commented for production server
+opcache.revalidate_freq = 0
+opcache.consistency_checks = 1</code></pre><br />п.с. vds(KVM+2048MB ОЗУ+40GB SSD+2 ядра CPU) +Archlinux64+nginx_1.6+php-fpm+cms prestashop
+            
+                
+                    <div class="post-signature">
+                        Арчи ~]$ ...as always want ready-made solutions that would make even tastier
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-135850"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/palpalych/">
+                <span class="post-username">palpalych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/135850/">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/47/d0/47d0dfe31100e02907f5e9bb71c76f86.png" alt="palpalych avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/palpalych/topics/">
+                    89
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/palpalych/posts/">
+                    1126
+                </a>
+            </div>
+            <div>
+                Участник с: 09 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            поискал в нете <a href="http://www.prestashop.com/forums/topic/7995-bug-502-bad-gateway/?p=150372">пишут</a> что<br /><blockquote><br>к серверу посылались заголовки http-запросов гораздо больших по длине, чем установлено в конфигурации nginx</blockquote>собственно как их увеличить, а как вообще узнать какие нужны по длине?<br /><br />есть куча <a href="http://www.xakep.ru/post/54168/">статей</a> с громкими названиями, но актуальность не внушает доверия.<br /><br />п.с. у меня стоит<br />php.ini<br />memory_limit = 256M<br />upload_max_filesize = 32M<br />max_input_vars = 3000<br /><br />nginx.conf<br />client_max_body_size 32m;
+            
+                
+                    <div class="post-signature">
+                        Арчи ~]$ ...as always want ready-made solutions that would make even tastier
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-135927"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/135927/">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Есть опция <a href="https://nginx.org/ru/docs/http/ngx_http_core_module.html#client_header_buffer_size"><strong><u>client_header_buffer_size</u></strong></a><br />У себя на сервере я никогда её не задавал, стоит по-умолчанию.<br /><br />А вообще все эти Bad gateway, это как правило отказы бэкэнда, то бишь PHP. Если бэкэнд настроен правильно, у него достаточно рабочих процессов, они вовремя перезапускаются, и им хватает ресурсов, таких ошибок быть не должно.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-135970"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/palpalych/">
+                <span class="post-username">palpalych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/135970/">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/47/d0/47d0dfe31100e02907f5e9bb71c76f86.png" alt="palpalych avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/palpalych/topics/">
+                    89
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/palpalych/posts/">
+                    1126
+                </a>
+            </div>
+            <div>
+                Участник с: 09 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br>Есть опция <a href="https://nginx.org/ru/docs/http/ngx_http_core_module.html#client_header_buffer_size"><strong><u>client_header_buffer_size</u></strong></a><br />У себя на сервере я никогда её не задавал, стоит по-умолчанию.<br /><br />А вообще все эти Bad gateway, это как правило отказы бэкэнда, то бишь PHP. Если бэкэнд настроен правильно, у него достаточно рабочих процессов, они вовремя перезапускаются, и им хватает ресурсов, таких ошибок быть не должно.</blockquote>странно, искал по интернету, <a href="http://my.fairyhosting.com/knowledgebase.php?action=displaycat&amp;catid=5">все</a> в один голос почему-то советует другие опции<br /><pre><code>proxy_buffer_size 16k;
+proxy_buffers 16 16k;</code></pre>
+            
+                
+                    <div class="post-signature">
+                        Арчи ~]$ ...as always want ready-made solutions that would make even tastier
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-136007"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Natrio/">
+                <span class="post-username">Natrio</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/136007/">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Natrio/topics/">
+                    47
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Natrio/posts/">
+                    4763
+                </a>
+            </div>
+            <div>
+                Участник с: 08 января 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>palpalych</em><br>странно, искал по интернету, все в один голос почему-то советует другие опции<pre><code>proxy_buffer_size 16k;<br />proxy_buffers 16 16k;</code></pre></blockquote>Это опции модуля <strong><u><a href="https://nginx.org/ru/docs/http/ngx_http_proxy_module.html#proxy_buffer_size">ngx_http_proxy_module</a></u></strong>, который отвечает за проксирование запросов другому серверу. У вас есть другой сервер?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-136020"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/palpalych/">
+                <span class="post-username">palpalych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/136020/">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/47/d0/47d0dfe31100e02907f5e9bb71c76f86.png" alt="palpalych avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/palpalych/topics/">
+                    89
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/palpalych/posts/">
+                    1126
+                </a>
+            </div>
+            <div>
+                Участник с: 09 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Natrio</em><br>Это опции модуля ngx_http_proxy_module, который отвечает за проксирование запросов другому серверу. У вас есть другой сервер?</blockquote>нет, только nginx+php-fpm.<br />Сделал следующим образом - все поставил начисто с полным удалением cms и базы и ошибка пропала, может ли причиной являться тот факт что я многократно, в экспериментальных целях, перезаписывал базу, т.е. делал импорт поверх существующих данных с опцией удалить предыдущие?
+            
+                
+                    <div class="post-signature">
+                        Арчи ~]$ ...as always want ready-made solutions that would make even tastier
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-136033"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/palpalych/">
+                <span class="post-username">palpalych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/136033/">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/47/d0/47d0dfe31100e02907f5e9bb71c76f86.png" alt="palpalych avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/palpalych/topics/">
+                    89
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/palpalych/posts/">
+                    1126
+                </a>
+            </div>
+            <div>
+                Участник с: 09 августа 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            В связи с так сказать с произошедшим возникло два вопроса, правильно ли я понимаю:<br />1. Для избежания подобного нужно научиться самостоятельно &quot;чистить&quot; базу, т.к. в рабочих условиях все снести уже не предоставляется возможным<br />под &quot;чистить&quot; базу я понимаю находить и править/удалять лишнюю информацию в виде полей, таблиц и т.п.<br /><br />2. Мониторить логи, и делать это достаточно активно, а не только когда приспичит и не в nano.<br /><br />И наверное для выше перечисленных задач существуют удобные инструменты?!
+            
+                
+                    <div class="post-signature">
+                        Арчи ~]$ ...as always want ready-made solutions that would make even tastier
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-136047"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/kirpichpda/">
+                <span class="post-username">kirpichpda</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/136047/">#</a>
+            8 лет, 4 месяца назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/kirpichpda/topics/">
+                    17
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/kirpichpda/posts/">
+                    165
+                </a>
+            </div>
+            <div>
+                Участник с: 21 июля 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            502 ошибка вылазит когда бэкенд не успевает или не может обрабатывать запросы.  &quot;Чистка базы&quot; тут не поможет.<br />Чтобы разобраться почему конкретно не успевает - смотреть логи.<br />upload_max_filesize = 32M  влияет только на размер загружаемого файла по http<br /> max_input_vars - Всяческие интернет магазины и сайты на битриксе обожают. Если не хватает как правило не работают некоторые jacascript и ajax скрипты. 502 не вызывает.<br />Если вдруг &quot;заголовки http-запросов гораздо больших по длине&quot; в логах видно что это они. Подбирать экспериментальным путем =)<br />Конкретно в моем случае<br />                client_body_buffer_size 128k;<br />                fastcgi_buffer_size     4M;<br />                fastcgi_buffers         4 4M;<br />                fastcgi_busy_buffers_size  8M;<br /><br />Но у меня самописано на зенде. Надо много.<br />Если &quot;только nginx+php-fpm.&quot;, то никаких proxy_buffers, а   fastcgi_buffers.  Иначе что мертвому припарка.<br /><br />Какой кэшер рекомендуют для prestashop ? Если рекомендаций нет - посоветовал бы xcache  у него замечательная админка, по данным из неё можно крутить настройки.<br />Помониторить работу сервера в реальном времени можно apachetop, натравив на access лог nginx.<br /><br />Можно погадать на кофейной гуще, и предположить что включен suhosin в php и либо выключить его, либо настроить под текущие реалии.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/13486/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747b541f5d424991',m:'B7EVs.UDbDOPIWwmWFellfjMLB5YYzEvLQZ4EpZoIrg-1662678326-0-AbX6MEbj7f58Tei/T/CcHSFpBqIx3KcKWlLnkyMZJUy6Qn9dYcQbzL6WeBiXhYKgqaOy32jC2voiFSrEw4PmIMiR9HJUvu9KX7tEOE10cl8pSfHjvDFEyDuwcv10Ml0dw5COroSGoG5vUPJCkiXrxvA=',s:[0x366abed016,0xee502695fa],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

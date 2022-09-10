@@ -1,0 +1,455 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20353/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 07:51:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        dnsproxy + dnsmasq на 53 порту
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/9/index.html">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>dnsproxy + dnsmasq на 53 порту</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>dnsproxy + dnsmasq на 53 порту</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237437"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/UserName91238/index.html">
+                <span class="post-username">UserName91238</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237437/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/UserName91238/topics/index.html">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/UserName91238/posts/index.html">
+                    9
+                </a>
+            </div>
+            <div>
+                Участник с: 22 ноября 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            копия(<a href="../20348/index.html">https://archlinux.org.ru/forum/topic/20348/</a>)<br />вопрос там помер, а проблема насущна.<br /><br />Есть виртуальные машины на qemu, с граф.интерфеисом KVM.(Сеть работает на libvrt запуск сети virsh net-start)<br />Дело в том что сеть виртуалок запускается на 53 порту, но он занят dnsproxy который отказывается работать на других портах(не выполняет основную функцию днс).<br />Как можно указать libvrt что запускать все нужно на другом порту?<br /><br /><pre><code>$ sudo ss -lntup
+Netid State Recv-Q Send-Q Local Address:Port Peer Address:Port Process
+udp UNCONN 0 0      192.168.100.1:53   0.0.0.0:*        users:((&quot;dnsmasq&quot;,pid=39811,fd=5))
+udp UNCONN 0 0      0.0.0.0:54         0.0.0.0:*        users:((&quot;dnsmasq&quot;,pid=39880,fd=4))
+udp UNCONN 0 0      0.0.0.0%virbr0:67  0.0.0.0:*        users:((&quot;dnsmasq&quot;,pid=39811,fd=3))
+udp UNCONN 0 0      0.0.0.0:58262      0.0.0.0:*        users:((&quot;avahi-daemon&quot;,pid=398,fd=14))
+udp UNCONN 0 0      0.0.0.0:5353       0.0.0.0:*        users:((&quot;avahi-daemon&quot;,pid=398,fd=12))
+udp UNCONN 0 0      [::]:54            [::]:*           users:((&quot;dnsmasq&quot;,pid=39880,fd=6))
+udp UNCONN 0 0      *:55               *:*              users:((&quot;dnsproxy&quot;,pid=39841,fd=3))
+udp UNCONN 0 0      [::]:58015         [::]:*           users:((&quot;avahi-daemon&quot;,pid=398,fd=15))
+udp UNCONN 0 0      [::]:5353          [::]:*           users:((&quot;avahi-daemon&quot;,pid=398,fd=13))
+tcp LISTEN 0 32     0.0.0.0:54         0.0.0.0:*        users:((&quot;dnsmasq&quot;,pid=39880,fd=5))
+tcp LISTEN 0 4096   127.0.0.1:9050     0.0.0.0:*        users:((&quot;tor&quot;,pid=503,fd=6))
+tcp LISTEN 0 4096   0.0.0.0:5900       0.0.0.0:*        users:((&quot;qemu-system-x86&quot;,pid=4372,fd=12))
+tcp LISTEN 0 32     192.168.100.1:53   0.0.0.0:*        users:((&quot;dnsmasq&quot;,pid=39811,fd=6))
+tcp LISTEN 0 32     [::]:54            [::]:*           users:((&quot;dnsmasq&quot;,pid=39880,fd=7))
+tcp LISTEN 0 4096   *:55               *:*              users:((&quot;dnsproxy&quot;,pid=39841,fd=7))
+tcp LISTEN 0 32     *:21               *:*              users:((&quot;ftpd&quot;,pid=500,fd=4))</code></pre><br />Здесь поднял dnsmasq на 54(но он не работает обычно и не вижу в нем смысла, он только зависимость для виртуалки).<br />dnsproxy на 55 порту при этом функцию днс он не выполняет и безполезен.<br />А на 53 порту подняты злополучные интерфеисы dnsmasq для я так понимаю обеспечения интернета на виртуалках, но без dnsproxy он не работает т.к указал в NetworkManager что берем от сети только dhcp, и получилось что интернет на виртуалках не работает так как я не поднял днс на 53 порту.<br /><br />измененый конфиг dnsmasq(остальное все по дефолту):<br /><pre><code>
+# Listen on this specific port instead of the standard DNS port
+# (53). Setting this to zero completely disables DNS function,
+# leaving only DHCP and/or TFTP.
+port=54</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237470"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/kurych/index.html">
+                <span class="post-username">kurych</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237470/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/kurych/topics/index.html">
+                    0
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/kurych/posts/index.html">
+                    1394
+                </a>
+            </div>
+            <div>
+                Участник с: 06 ноября 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Чтобы все заработало, вам надо почитать базовые основы работы сетей как минимум до тех пор, пока выражения &quot;Сеть работает на libvrt&quot; и &quot;сеть виртуалок запускается на 53 порту&quot; вам самим не покажется бессмысленными.<br />Затем почитать документацию по libvrt до просветления (рекомендовано), или воспользоваться чем-нибудь графическим и более интуитивным.<br />А такие бессмысленные вопросы, как этот, будут умирать без малейшей перспективы решения &quot;насущной проблемы&quot;. Ибо экстрасенсы или в отпуске, или умерли от короновируса.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-237473"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vadik/index.html">
+                <span class="post-username">vadik</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/237473/index.html">#</a>
+            1 год, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vadik/topics/index.html">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vadik/posts/index.html">
+                    5395
+                </a>
+            </div>
+            <div>
+                Участник с: 17 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>UserName91238</strong>, не дублируйте темы. Закрываю.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexc748.html?next=/forum/topic/20353/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20353/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 07:51:19 GMT -->
+</html>

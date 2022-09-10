@@ -1,0 +1,1042 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20966/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:11:56 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Проблема с написанием хука для апдейта ядра линукс и драйвера нвидиа
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/9/index.html">Новичкам в Arch Linux</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Проблема с написанием хука для апдейта ядра линукс и драйвера нвидиа</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Проблема с написанием хука для апдейта ядра линукс и драйвера нвидиа</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-249909"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/simvolist777/index.html">
+                <span class="post-username">simvolist777</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/249909/index.html">#</a>
+            11 месяцев, 1 неделя назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/simvolist777/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/simvolist777/posts/index.html">
+                    13
+                </a>
+            </div>
+            <div>
+                Участник с: 16 сентября 2021
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Суть такая: я знаю про то, что написано на Вики <a href="https://wiki.archlinux.org/title/NVIDIA_(Русский)#Pacman_hook">https://wiki.archlinux.org/title/NVIDIA_(Русский)#Pacman_hook</a>  И я пытаюсь сделать так: в терминал пишу sudo nano /etc/pacman.d/hooks/nvidia.hook и получаю сразу что нет такого файла или каталога. После вставки текста хук не могу сохранить, опять ошибка что нет файла/каталога. Вопрос в том, как же создать этот каталог? Ведь нвидиа дрова у меня есть, линукс хидерс и всё прочее есть. Но проблема такая, что после каждого апдейта ядра линукс и дров нвидиа, после перезагрузки, у меня чёрный экран. Приходится выходить из графики и писать sudo mkinitcpio -p linux  Тогда всё приходит в норму.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-249910"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/249910/index.html">#</a>
+            11 месяцев, 1 неделя назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>simvolist777</em><br>Но проблема такая, что после каждого апдейта ядра линукс и дров нвидиа, после перезагрузки, у меня чёрный экран. Приходится выходить из графики и писать sudo mkinitcpio -p linux Тогда всё приходит в норму.</blockquote>Инит автоматом должен пересобираться, смотрите ошибки при обновлении.<br />Не обновляйтесь всякой графической гадостью, а в терминале и смотрите вывод.<br />И покажите вывод<pre><code>cat /proc/cmdline
+pacman -Os nvidia</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-249911"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/249911/index.html">#</a>
+            11 месяцев, 1 неделя назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vs220</em><br>Инит автоматом должен пересобираться, смотрите ошибки при обновлении.</blockquote>Только при обновление пакета ядра.<br />При обновление пакета nvidia, без пакета ядра, инитрамфс не пересобирается автоматом.<br />Для этого в вики и написан хук, для nvidia.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-249913"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/249913/index.html">#</a>
+            11 месяцев, 1 неделя назад
+            
+                (отредактировано
+                
+                    11 месяцев, 1 неделя назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>RusWolf</em><br>Только при обновление пакета ядра</blockquote>Ну так утверждает<br /><blockquote><em>simvolist777</em><br>после каждого апдейта ядра линукс</blockquote><br />хотя<br /><blockquote><em>simvolist777</em><br>sudo nano /etc/pacman.d/hooks/nvidia.hook и получаю сразу что нет такого файла или каталога</blockquote><br />может действительно тупо не создал каталог hooks и утверждение может тогда и не совсем...
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-249918"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/simvolist777/index.html">
+                <span class="post-username">simvolist777</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/249918/index.html">#</a>
+            11 месяцев, 1 неделя назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/simvolist777/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/simvolist777/posts/index.html">
+                    13
+                </a>
+            </div>
+            <div>
+                Участник с: 16 сентября 2021
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>vs220</em><br><blockquote><em>simvolist777</em><br>Но проблема такая, что после каждого апдейта ядра линукс и дров нвидиа, после перезагрузки, у меня чёрный экран. Приходится выходить из графики и писать sudo mkinitcpio -p linux Тогда всё приходит в норму.</blockquote>Инит автоматом должен пересобираться, смотрите ошибки при обновлении.<br />Не обновляйтесь всякой графической гадостью, а в терминале и смотрите вывод.<br />И покажите вывод<pre><code>cat /proc/cmdline
+pacman -Os nvidia</code></pre></blockquote>[dmitriy@Professional ~]$ cat /proc/cmdline<br />BOOT_IMAGE=/boot/vmlinuz-linux root=UUID=00d8d174-65f5-42ae-8fb8-c67bfb03ebdd rw loglevel=3 quiet<br />[dmitriy@Professional ~]$ pacman -Qs nvidia<br />local/egl-wayland 1.1.7-1<br />    EGLStream-based Wayland external platform<br />local/lib32-nvidia-utils 470.74-1<br />    NVIDIA drivers utilities (32-bit)<br />local/libvdpau 1.4-1<br />    Nvidia VDPAU library<br />local/libxnvctrl 470.74-1<br />    NVIDIA NV-CONTROL X extension<br />local/nvidia 470.74-2<br />    NVIDIA drivers for linux<br />local/nvidia-settings 470.74-1<br />    Tool for configuring the NVIDIA graphics driver<br />local/nvidia-utils 470.74-1<br />    NVIDIA drivers utilities
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-249919"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/zotkindm/index.html">
+                <span class="post-username">zotkindm</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/249919/index.html">#</a>
+            11 месяцев, 1 неделя назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/zotkindm/topics/index.html">
+                    70
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/zotkindm/posts/index.html">
+                    567
+                </a>
+            </div>
+            <div>
+                Участник с: 21 мая 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>simvolist777</em><br>&#8230;После вставки текста хук не могу сохранить, опять ошибка что нет файла/каталога. Вопрос в том, как же создать этот каталог? Ведь нвидиа дрова у меня есть, линукс хидерс и всё прочее есть. Но проблема такая, что после каждого апдейта ядра линукс и дров нвидиа,&#8230;</blockquote>У тебя отсутствует папка &#39;hooks&#39;.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-249921"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/simvolist777/index.html">
+                <span class="post-username">simvolist777</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/249921/index.html">#</a>
+            11 месяцев, 1 неделя назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/simvolist777/topics/index.html">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/simvolist777/posts/index.html">
+                    13
+                </a>
+            </div>
+            <div>
+                Участник с: 16 сентября 2021
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>zotkindm</em><br><blockquote><em>simvolist777</em><br>&#8230;После вставки текста хук не могу сохранить, опять ошибка что нет файла/каталога. Вопрос в том, как же создать этот каталог? Ведь нвидиа дрова у меня есть, линукс хидерс и всё прочее есть. Но проблема такая, что после каждого апдейта ядра линукс и дров нвидиа,&#8230;</blockquote>У тебя отсутствует папка &#39;hooks&#39;.</blockquote> Мне подсказали уже написать в терминале<br />echo &quot;mkdir /etc/pacman.d/; mkdir /etc/pacman.d/hooks/; touch /etc/pacman.d/hooks/nvidia.hook&quot; | sudo su<br /> Прописал, и таки да, всё нужное создалось, я в хук этот написал то, что на арчвики рекомендуют и сохранил. Теперь он есть. Посмотрим теперь, что будет после апдейта ядра и нвидиа.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-249922"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/249922/index.html">#</a>
+            11 месяцев, 1 неделя назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>simvolist777</em><br>Посмотрим теперь, что будет после апдейта ядра и нвидиа.</blockquote>Смотреть нечего, при обновление пакета ядра, всегда автоматом обновляется initramfs.<br />Если у тебя этого нет, чини систему.<br />Или просто у тебя не Arch Linux дистрибутив.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-249923"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/acid_raccoon/index.html">
+                <span class="post-username">acid_raccoon</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/249923/index.html">#</a>
+            11 месяцев, 1 неделя назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/2b/76/2b768ffe5d05d904bfb3fab5fc2d5221.png" alt="acid_raccoon avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/acid_raccoon/topics/index.html">
+                    9
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/acid_raccoon/posts/index.html">
+                    102
+                </a>
+            </div>
+            <div>
+                Участник с: 08 мая 2020
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Строчку: #HookDir = /etc/pacman.d/hooks/ в /etc/pacman.conf раскомментировать не надо?
+            
+                
+                    <div class="post-signature">
+                        «Load universe into cannon. Aim at brain. Fire.» ©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-249924"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/249924/index.html">#</a>
+            11 месяцев, 1 неделя назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>acid_raccoon</em><br>Строчку: #HookDir = /etc/pacman.d/hooks/ в /etc/pacman.conf раскомментировать не надо?</blockquote>В арче не надо, раскомментировать только если меняете дефолтный путь  /etc/pacman.d/hooks<br />Что за система у TC вопрос
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexf6ef.html?next=/forum/topic/20966/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/20966/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:11:56 GMT -->
+</html>

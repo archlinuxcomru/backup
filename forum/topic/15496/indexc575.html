@@ -1,0 +1,954 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Баг 12309 на ядрах 4.X
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/12/">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Баг 12309 на ядрах 4.X</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Баг 12309 на ядрах 4.X</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=5" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=6">6 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160328"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Xts/">
+                <span class="post-username">Xts</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160328/">#</a>
+            6 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/3f/87/3f87893d757d80855bcd79de6d5c0854.png" alt="Xts avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Xts/topics/">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Xts/posts/">
+                    973
+                </a>
+            </div>
+            <div>
+                Участник с: 13 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>Aivar</strong>,<br /><blockquote><em>Aivar</em><br>f2fs</blockquote>она же в винде не работает?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160330"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Aivar/">
+                <span class="post-username">Aivar</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160330/">#</a>
+            6 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Aivar/topics/">
+                    4
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Aivar/posts/">
+                    6897
+                </a>
+            </div>
+            <div>
+                Участник с: 17 февраля 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Xts</em><br>она же в винде не работает?</blockquote>Нет, конечно. И не надо. У мну нет винды. )
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160349"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Perfect_Gentleman/">
+                <span class="post-username">Perfect_Gentleman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160349/">#</a>
+            6 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Perfect_Gentleman/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Perfect_Gentleman/posts/">
+                    1039
+                </a>
+            </div>
+            <div>
+                Участник с: 29 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sharddin</em><br>Описанные опции выставлять в Grub-e?</blockquote>да.<br /><br /><blockquote><em>sharddin</em><br>&quot;только для чтения&quot;</blockquote>ядро к этому никакого отношения не имеет.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160431"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/billygates/">
+                <span class="post-username">billygates</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160431/">#</a>
+            6 лет, 8 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 8 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/billygates/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/billygates/posts/">
+                    30
+                </a>
+            </div>
+            <div>
+                Участник с: 04 марта 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>billygates</em><br><blockquote><em>Perfect_Gentleman</em><br>попробуй сделать data_journal_writeback</blockquote>Здравствуйте. Не помогло, но стало лучше - меньше тормозит.</blockquote>Здравствуйте.<br />Беру свои слова обратно, т.к. г.н. Perfect_Gentleman прав. Господа, описанная мною проблема в действительности проявляется на трех разных компьютерах, но я не испытывал такого дискомфорта в работе ранее и с внешними носителями, т.е. локализация проблемы - это жесткий диск, на котором стоит система. Именно от этой части и во многом от предположения г.н. Perfect_Gentleman начал погружаться в тему журналирования файловой системы. На самом деле я длительное время использовал reiserfs, т.к. она явно выигрывала в скорости с ext3(это как бы мое мнение, прошу не поднимать споры), но поняв, что из перспективной и быстро развивающейся файловой системы данный проект перешел в разряд угасающих, то естественно взор пал на ext4 - да, это уже не тугая ext3.<br />Вообщем проблема полностью ушла после отключения журналирования (хотя вроде как мета данные все же журналируются - и это правильно) и небольшой настройки fstab.<br />Так вот<br />1. грузимся с LIVE или запускаем свою систему, но рут раздел в ro<br />2. отключаем журнал<br /><pre><code>tune2fs -O ^has_journal /dev/sdX</code></pre>3. отключаем журналирование<br /><pre><code>tune2fs -o journal_data_writeback /dev/sdX</code></pre>4. проверяем раздел<br /><pre><code>e2fsck -f /dev/sdX</code></pre>5. ребут системы<br /><br />Изменения до и после описанных выше операций смотреть так:<br /><pre><code>dumpe2fs /dev/sdX |grep journal
+dumpe2fs /dev/sdX |grep features</code></pre><br />6. Я еще поправил fstab дописав опции<br /><pre><code>data=writeback,noatime,nodiratime</code></pre><br />Плюсы:<br />1. с учетом, что стационарные компы это что-то большое и архаичное для современных людей, поэтому почти у всех уже ноуты. Как бы боятся, что отключат электричество и комп вырубиться, для ноутбуков с батарейкой это не так страшно, поэтому вероятность потери данных крайне мола. тем более восстановление по образам сигнатур с такой фс можно, а это главное.<br />2. прирост в скорости ощутимый <a href="http://xandroskin.ru/it/otklyuchenie-zhurnalirovaniya-ext4/364">подробно это описано</a>.<br />От себя добавлю: во-первых лагов нет, прирост в скорости по лучше чем от замены стандартного ядра (а если это совместить...), и во-вторых лампочка обращений к жесткому диску почти не мигает, а это означает, что обращений стало меньше, следовательно так можно продлить жизнь жесткому, а для SSD, сами понимаете, это актуально.<br /><br />Спасибо. Тему можно закрыть, т.к. видимо 12309 это всё же уже миф. А проблема с внешними носителями, это проблема с внешними носителями ;)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160432"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Xts/">
+                <span class="post-username">Xts</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160432/">#</a>
+            6 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/3f/87/3f87893d757d80855bcd79de6d5c0854.png" alt="Xts avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Xts/topics/">
+                    33
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Xts/posts/">
+                    973
+                </a>
+            </div>
+            <div>
+                Участник с: 13 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>billygates</em><br>с учетом, что стационарные компы это что-то большое и архаичное для современных людей, поэтому почти у всех уже ноуты.</blockquote>очень ошибочное мнение
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160435"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/jim945/">
+                <span class="post-username">jim945</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160435/">#</a>
+            6 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/f7/09/f709d8f74afad03709f159a1e12444ef.png" alt="jim945 avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/jim945/topics/">
+                    8
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/jim945/posts/">
+                    3066
+                </a>
+            </div>
+            <div>
+                Участник с: 25 января 2010
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Xts</em><br><blockquote><em>billygates</em><br>с учетом, что стационарные компы это что-то большое и архаичное для современных людей, поэтому почти у всех уже ноуты.</blockquote>очень ошибочное мнение</blockquote>Судя по моему окружению, тенденция в сторону мобильности есть.
+            
+                
+                    <div class="post-signature">
+                        Lupus pilum mutat, non mentem.
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160462"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Perfect_Gentleman/">
+                <span class="post-username">Perfect_Gentleman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160462/">#</a>
+            6 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Perfect_Gentleman/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Perfect_Gentleman/posts/">
+                    1039
+                </a>
+            </div>
+            <div>
+                Участник с: 29 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>billygates</em><br>3. отключаем журналирование</blockquote>это лучше не делать даже на ноутах<br /><br />если журнулирование отключил, то дальнейшие действия не нужны.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160463"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Perfect_Gentleman/">
+                <span class="post-username">Perfect_Gentleman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160463/">#</a>
+            6 лет, 8 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Perfect_Gentleman/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Perfect_Gentleman/posts/">
+                    1039
+                </a>
+            </div>
+            <div>
+                Участник с: 29 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>billygates</em><br>noatime</blockquote>уже подразумевает<br /><blockquote><em>billygates</em><br>nodiratime</blockquote>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=5" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=6">6 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next disabled">
+                    <span>
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/15496/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script>(function(){var js = "window['__CF$cv$params']={r:'747c4acabf9e9da8',m:'3ZZmiA2DgPSWharRfOFnL30vKRq.dIFOfgFugWEtkYU-1662688428-0-AUVxxbNceh9COqXoOiMpuqkntIoEqPrsL3hNHwH45D/XVYioG1BPq92Qiy1hOLsWBmzaNXa55kInI7qjBZ4tF29H2HHmuK5JFBec4fstuDIakm+XLA5kpR9gkqemc8hfCZxCPkBjmz9DIV/NatBEy34=',s:[0x366abed016,0xeefaa8b21f],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>

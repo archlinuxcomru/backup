@@ -1,0 +1,3234 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17211/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:50:45 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        настройка postfix+dovecot
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/13/index.html">Сети, Серверы, Защита</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>настройка postfix+dovecot</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>настройка postfix+dovecot</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183916"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/bondeet/index.html">
+                <span class="post-username">bondeet</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/183916/index.html">#</a>
+            5 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/bondeet/topics/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/bondeet/posts/index.html">
+                    21
+                </a>
+            </div>
+            <div>
+                Участник с: 10 марта 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Помогите пожалуйста с настройкой postfix.<br />main.cf<br /><pre><code># Global Postfix configuration file. This file lists only a subset
+# of all parameters. For the syntax, and for a complete parameter
+# list, see the postconf(5) manual page (command: &quot;man 5 postconf&quot;).
+#
+# For common configuration examples, see BASIC_CONFIGURATION_README
+# and STANDARD_CONFIGURATION_README. To find these documents, use
+# the command &quot;postconf html_directory readme_directory&quot;, or go to
+# <a href="http://www.postfix.org/BASIC_CONFIGURATION_README.html">http://www.postfix.org/BASIC_CONFIGURATION_README.html</a> etc.
+#
+# For best results, change no more than 2-3 parameters at a time,
+# and test if Postfix still works after every change.
+
+# COMPATIBILITY
+#
+# The compatibility_level determines what default settings Postfix
+# will use for main.cf and master.cf settings. These defaults will
+# change over time.
+#
+# To avoid breaking things, Postfix will use backwards-compatible
+# default settings and log where it uses those old backwards-compatible
+# default settings, until the system administrator has determined
+# if any backwards-compatible default settings need to be made
+# permanent in main.cf or master.cf.
+#
+# When this review is complete, update the compatibility_level setting
+# below as recommended in the RELEASE_NOTES file.
+#
+# The level below is what should be used with new (not upgrade) installs.
+#
+compatibility_level = 2
+
+# SOFT BOUNCE
+#
+# The soft_bounce parameter provides a limited safety net for
+# testing.  When soft_bounce is enabled, mail will remain queued that
+# would otherwise bounce. This parameter disables locally-generated
+# bounces, and prevents the SMTP server from rejecting mail permanently
+# (by changing 5xx replies into 4xx replies). However, soft_bounce
+# is no cure for address rewriting mistakes or mail routing mistakes.
+#
+#soft_bounce = no
+
+# LOCAL PATHNAME INFORMATION
+#
+# The queue_directory specifies the location of the Postfix queue.
+# This is also the root directory of Postfix daemons that run chrooted.
+# See the files in examples/chroot-setup for setting up Postfix chroot
+# environments on different UNIX systems.
+#
+queue_directory = /var/spool/postfix
+
+# The command_directory parameter specifies the location of all
+# postXXX commands.
+#
+command_directory = /usr/bin
+
+# The daemon_directory parameter specifies the location of all Postfix
+# daemon programs (i.e. programs listed in the master.cf file). This
+# directory must be owned by root.
+#
+daemon_directory = /usr/lib/postfix/bin
+
+# The data_directory parameter specifies the location of Postfix-writable
+# data files (caches, random numbers). This directory must be owned
+# by the mail_owner account (see below).
+#
+data_directory = /var/lib/postfix
+
+# QUEUE AND PROCESS OWNERSHIP
+#
+# The mail_owner parameter specifies the owner of the Postfix queue
+# and of most Postfix daemon processes.  Specify the name of a user
+# account THAT DOES NOT SHARE ITS USER OR GROUP ID WITH OTHER ACCOUNTS
+# AND THAT OWNS NO OTHER FILES OR PROCESSES ON THE SYSTEM.  In
+# particular, don&#39;t specify nobody or daemon. PLEASE USE A DEDICATED
+# USER.
+#
+mail_owner = postfix
+
+# The default_privs parameter specifies the default rights used by
+# the local delivery agent for delivery to external file or command.
+# These rights are used in the absence of a recipient user context.
+# DO NOT SPECIFY A PRIVILEGED USER OR THE POSTFIX OWNER.
+#
+#default_privs = nobody
+
+# INTERNET HOST AND DOMAIN NAMES
+#
+# The myhostname parameter specifies the internet hostname of this
+# mail system. The default is to use the fully-qualified domain name
+# from gethostname(). $myhostname is used as a default value for many
+# other configuration parameters.
+#
+#myhostname = host.domain.tld
+#myhostname = virtual.domain.tld
+
+# The mydomain parameter specifies the local internet domain name.
+# The default is to use $myhostname minus the first component.
+# $mydomain is used as a default value for many other configuration
+# parameters.
+#
+#mydomain = domain.tld
+
+# SENDING MAIL
+#
+# The myorigin parameter specifies the domain that locally-posted
+# mail appears to come from. The default is to append $myhostname,
+# which is fine for small sites.  If you run a domain with multiple
+# machines, you should (1) change this to $mydomain and (2) set up
+# a domain-wide alias database that aliases each user to
+# <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="621711071022160a03164c17110710114c0f030b0e0a0d11164c">[email&#160;protected]</a>
+#
+# For the sake of consistency between sender and recipient addresses,
+# myorigin also specifies the default domain name that is appended
+# to recipient addresses that have no @domain part.
+#
+#myorigin = $myhostname
+#myorigin = $mydomain
+
+# RECEIVING MAIL
+
+# The inet_interfaces parameter specifies the network interface
+# addresses that this mail system receives mail on.  By default,
+# the software claims all active interfaces on the machine. The
+# parameter also controls delivery of mail to <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="87f2f4e2f5c7">[email&#160;protected]</a>[ip.address].
+#
+# See also the proxy_interfaces parameter, for network addresses that
+# are forwarded to us via a proxy or network address translator.
+#
+# Note: you need to stop/start Postfix when this parameter changes.
+#
+#inet_interfaces = all
+#inet_interfaces = $myhostname
+#inet_interfaces = $myhostname, localhost
+
+# The proxy_interfaces parameter specifies the network interface
+# addresses that this mail system receives mail on by way of a
+# proxy or network address translation unit. This setting extends
+# the address list specified with the inet_interfaces parameter.
+#
+# You must specify your proxy/NAT addresses when your system is a
+# backup MX host for other domains, otherwise mail delivery loops
+# will happen when the primary MX host is down.
+#
+#proxy_interfaces =
+#proxy_interfaces = 1.2.3.4
+
+# The mydestination parameter specifies the list of domains that this
+# machine considers itself the final destination for.
+#
+# These domains are routed to the delivery agent specified with the
+# local_transport parameter setting. By default, that is the UNIX
+# compatible delivery agent that lookups all recipients in /etc/passwd
+# and /etc/aliases or their equivalent.
+#
+# The default is $myhostname + localhost.$mydomain + localhost.  On
+# a mail domain gateway, you should also include $mydomain.
+#
+# Do not specify the names of virtual domains - those domains are
+# specified elsewhere (see VIRTUAL_README).
+#
+# Do not specify the names of domains that this machine is backup MX
+# host for. Specify those names via the relay_domains settings for
+# the SMTP server, or use permit_mx_backup if you are lazy (see
+# STANDARD_CONFIGURATION_README).
+#
+# The local machine is always the final destination for mail addressed
+# to <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="0c797f697e4c">[email&#160;protected]</a>[the.net.work.address] of an interface that the mail system
+# receives mail on (see the inet_interfaces parameter).
+#
+# Specify a list of host or domain names, /file/name or type:table
+# patterns, separated by commas and/or whitespace. A /file/name
+# pattern is replaced by its contents; a type:table is matched when
+# a name matches a lookup key (the right-hand side is ignored).
+# Continue long lines by starting the next line with whitespace.
+#
+# See also below, section &quot;REJECTING MAIL FOR UNKNOWN LOCAL USERS&quot;.
+#
+#mydestination = $myhostname, localhost.$mydomain, localhost
+#mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
+#mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain,
+#	mail.$mydomain, <a href="http://www.$mydomain/">www.$mydomain</a>, ftp.$mydomain
+
+# REJECTING MAIL FOR UNKNOWN LOCAL USERS
+#
+# The local_recipient_maps parameter specifies optional lookup tables
+# with all names or addresses of users that are local with respect
+# to $mydestination, $inet_interfaces or $proxy_interfaces.
+#
+# If this parameter is defined, then the SMTP server will reject
+# mail for unknown local users. This parameter is defined by default.
+#
+# To turn off local recipient checking in the SMTP server, specify
+# local_recipient_maps = (i.e. empty).
+#
+# The default setting assumes that you use the default Postfix local
+# delivery agent for local delivery. You need to update the
+# local_recipient_maps setting if:
+#
+# - You define $mydestination domain recipients in files other than
+#   /etc/passwd, /etc/aliases, or the $virtual_walias_maps files.
+#   For example, you define $mydestination domain recipients in
+#   the $virtual_mailbox_maps files.
+#
+# - You redefine the local delivery agent in master.cf.
+#
+# - You redefine the &quot;local_transport&quot; setting in main.cf.
+#
+# - You use the &quot;luser_relay&quot;, &quot;mailbox_transport&quot;, or &quot;fallback_transport&quot;
+#   feature of the Postfix local delivery agent (see local(8)).
+#
+# Details are described in the LOCAL_RECIPIENT_README file.
+#
+# Beware: if the Postfix SMTP server runs chrooted, you probably have
+# to access the passwd file via the proxymap service, in order to
+# overcome chroot restrictions. The alternative, having a copy of
+# the system passwd file in the chroot jail is just not practical.
+#
+# The right-hand side of the lookup tables is conveniently ignored.
+# In the left-hand side, specify a bare username, an @domain.tld
+# wild-card, or specify a <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="5b2e283e291b3f34363a3235752f373f">[email&#160;protected]</a> address.
+#
+#local_recipient_maps = unix:passwd.byname $alias_maps
+#local_recipient_maps = proxy:unix:passwd.byname $alias_maps
+#local_recipient_maps =
+
+# The unknown_local_recipient_reject_code specifies the SMTP server
+# response code when a recipient domain matches $mydestination or
+# ${proxy,inet}_interfaces, while $local_recipient_maps is non-empty
+# and the recipient address or address local-part is not found.
+#
+# The default setting is 550 (reject mail) but it is safer to start
+# with 450 (try again later) until you are certain that your
+# local_recipient_maps settings are OK.
+#
+#unknown_local_recipient_reject_code = 550
+
+# TRUST AND RELAY CONTROL
+
+# The mynetworks parameter specifies the list of &quot;trusted&quot; SMTP
+# clients that have more privileges than &quot;strangers&quot;.
+#
+# In particular, &quot;trusted&quot; SMTP clients are allowed to relay mail
+# through Postfix.  See the smtpd_recipient_restrictions parameter
+# in postconf(5).
+#
+# You can specify the list of &quot;trusted&quot; network addresses by hand
+# or you can let Postfix do it for you (which is the default).
+#
+# By default (mynetworks_style = subnet), Postfix &quot;trusts&quot; SMTP
+# clients in the same IP subnetworks as the local machine.
+# On Linux, this does works correctly only with interfaces specified
+# with the &quot;ifconfig&quot; command.
+#
+
+# Specify &quot;mynetworks_style = class&quot; when Postfix should &quot;trust&quot; SMTP
+# clients in the same IP class A/B/C networks as the local machine.
+# Don&#39;t do this with a dialup site - it would cause Postfix to &quot;trust&quot;
+# your entire provider&#39;s network.  Instead, specify an explicit
+# mynetworks list by hand, as described below.
+#
+# Specify &quot;mynetworks_style = host&quot; when Postfix should &quot;trust&quot;
+# only the local machine.
+#
+#mynetworks_style = class
+#mynetworks_style = subnet
+mynetworks_style = host
+
+# Alternatively, you can specify the mynetworks list by hand, in
+# which case Postfix ignores the mynetworks_style setting.
+#
+# Specify an explicit list of network/netmask patterns, where the
+# mask specifies the number of bits in the network part of a host
+# address.
+#
+# You can also specify the absolute pathname of a pattern file instead
+# of listing the patterns here. Specify type:table for table-based lookups
+# (the value on the table right-hand side is not used).
+#
+mynetworks = 127.0.0.0/8
+#mynetworks = $config_directory/mynetworks
+#mynetworks = hash:/etc/postfix/network_table
+
+# The relay_domains parameter restricts what destinations this system will
+# relay mail to.  See the smtpd_recipient_restrictions description in
+# postconf(5) for detailed information.
+#
+# By default, Postfix relays mail
+# - from &quot;trusted&quot; clients (IP address matches $mynetworks) to any destination,
+# - from &quot;untrusted&quot; clients to destinations that match $relay_domains or
+#   subdomains thereof, except addresses with sender-specified routing.
+# The default relay_domains value is $mydestination.
+#
+# In addition to the above, the Postfix SMTP server by default accepts mail
+# that Postfix is final destination for:
+# - destinations that match $inet_interfaces or $proxy_interfaces,
+# - destinations that match $mydestination
+# - destinations that match $virtual_alias_domains,
+# - destinations that match $virtual_mailbox_domains.
+# These destinations do not need to be listed in $relay_domains.
+#
+# Specify a list of hosts or domains, /file/name patterns or type:name
+# lookup tables, separated by commas and/or whitespace.  Continue
+# long lines by starting the next line with whitespace. A file name
+# is replaced by its contents; a type:name table is matched when a
+# (parent) domain appears as lookup key.
+#
+# NOTE: Postfix will not automatically forward mail for domains that
+# list this system as their primary or backup MX host. See the
+# permit_mx_backup restriction description in postconf(5).
+#
+#relay_domains = $mydestination
+
+# INTERNET OR INTRANET
+
+# The relayhost parameter specifies the default host to send mail to
+# when no entry is matched in the optional transport(5) table. When
+# no relayhost is given, mail is routed directly to the destination.
+#
+# On an intranet, specify the organizational domain name. If your
+# internal DNS uses no MX records, specify the name of the intranet
+# gateway host instead.
+#
+# In the case of SMTP, specify a domain, host, host:port, [host]:port,
+# [address] or [address]:port; the form [host] turns off MX lookups.
+#
+# If you&#39;re connected via UUCP, see also the default_transport parameter.
+#
+#relayhost = $mydomain
+#relayhost = [gateway.my.domain]
+#relayhost = [mailserver.isp.tld]
+#relayhost = uucphost
+#relayhost = [an.ip.add.ress]
+
+# REJECTING UNKNOWN RELAY USERS
+#
+# The relay_recipient_maps parameter specifies optional lookup tables
+# with all addresses in the domains that match $relay_domains.
+#
+# If this parameter is defined, then the SMTP server will reject
+# mail for unknown relay users. This feature is off by default.
+#
+# The right-hand side of the lookup tables is conveniently ignored.
+# In the left-hand side, specify an @domain.tld wild-card, or specify
+# a <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="651016001725010a08040c0b4b110901">[email&#160;protected]</a> address.
+#
+#relay_recipient_maps = hash:/etc/postfix/relay_recipients
+
+# INPUT RATE CONTROL
+#
+# The in_flow_delay configuration parameter implements mail input
+# flow control. This feature is turned on by default, although it
+# still needs further development (it&#39;s disabled on SCO UNIX due
+# to an SCO bug).
+#
+# A Postfix process will pause for $in_flow_delay seconds before
+# accepting a new message, when the message arrival rate exceeds the
+# message delivery rate. With the default 100 SMTP server process
+# limit, this limits the mail inflow to 100 messages a second more
+# than the number of messages delivered per second.
+#
+# Specify 0 to disable the feature. Valid delays are 0..10.
+#
+#in_flow_delay = 1s
+
+# ADDRESS REWRITING
+#
+# The ADDRESS_REWRITING_README document gives information about
+# address masquerading or other forms of address rewriting including
+# username-&gt;Firstname.Lastname mapping.
+
+# ADDRESS REDIRECTION (VIRTUAL DOMAIN)
+#
+# The VIRTUAL_README document gives information about the many forms
+# of domain hosting that Postfix supports.
+
+# &quot;USER HAS MOVED&quot; BOUNCE MESSAGES
+#
+# See the discussion in the ADDRESS_REWRITING_README document.
+
+# TRANSPORT MAP
+#
+# See the discussion in the ADDRESS_REWRITING_README document.
+
+# ALIAS DATABASE
+#
+# The alias_maps parameter specifies the list of alias databases used
+# by the local delivery agent. The default list is system dependent.
+#
+# On systems with NIS, the default is to search the local alias
+# database, then the NIS alias database. See aliases(5) for syntax
+# details.
+#
+# If you change the alias database, run &quot;postalias /etc/aliases&quot; (or
+# wherever your system stores the mail alias file), or simply run
+# &quot;newaliases&quot; to build the necessary DBM or DB file.
+#
+# It will take a minute or so before changes become visible.  Use
+# &quot;postfix reload&quot; to eliminate the delay.
+#
+#alias_maps = dbm:/etc/aliases
+alias_maps = hash:/etc/aliases
+#alias_maps = hash:/etc/aliases, nis:mail.aliases
+#alias_maps = netinfo:/aliases
+
+# The alias_database parameter specifies the alias database(s) that
+# are built with &quot;newaliases&quot; or &quot;sendmail -bi&quot;.  This is a separate
+# configuration parameter, because alias_maps (see above) may specify
+# tables that are not necessarily all under control by Postfix.
+#
+#alias_database = dbm:/etc/aliases
+#alias_database = dbm:/etc/mail/aliases
+#alias_database = hash:/etc/aliases
+#alias_database = hash:/etc/aliases, hash:/opt/majordomo/aliases
+
+# ADDRESS EXTENSIONS (e.g., user+foo)
+#
+# The recipient_delimiter parameter specifies the separator between
+# user names and address extensions (user+foo). See canonical(5),
+# local(8), relocated(5) and virtual(5) for the effects this has on
+# aliases, canonical, virtual, relocated and .forward file lookups.
+# Basically, the software tries user+foo and .forward+foo before
+# trying user and .forward.
+#
+#recipient_delimiter = +
+
+# DELIVERY TO MAILBOX
+#
+# The home_mailbox parameter specifies the optional pathname of a
+# mailbox file relative to a user&#39;s home directory. The default
+# mailbox file is /var/spool/mail/user or /var/mail/user.  Specify
+# &quot;Maildir/&quot; for qmail-style delivery (the / is required).
+#
+#home_mailbox = Mailbox
+#home_mailbox = Maildir/
+
+# The mail_spool_directory parameter specifies the directory where
+# UNIX-style mailboxes are kept. The default setting depends on the
+# system type.
+#
+#mail_spool_directory = /var/mail
+#mail_spool_directory = /var/spool/mail
+
+# The mailbox_command parameter specifies the optional external
+# command to use instead of mailbox delivery. The command is run as
+# the recipient with proper HOME, SHELL and LOGNAME environment settings.
+# Exception:  delivery for root is done as $default_user.
+#
+# Other environment variables of interest: USER (recipient username),
+# EXTENSION (address extension), DOMAIN (domain part of address),
+# and LOCAL (the address localpart).
+#
+# Unlike other Postfix configuration parameters, the mailbox_command
+# parameter is not subjected to $parameter substitutions. This is to
+# make it easier to specify shell syntax (see example below).
+#
+# Avoid shell meta characters because they will force Postfix to run
+# an expensive shell process. Procmail alone is expensive enough.
+#
+# IF YOU USE THIS TO DELIVER MAIL SYSTEM-WIDE, YOU MUST SET UP AN
+# ALIAS THAT FORWARDS MAIL FOR ROOT TO A REAL USER.
+#
+#mailbox_command = /some/where/procmail
+#mailbox_command = /some/where/procmail -a &quot;$EXTENSION&quot;
+
+# The mailbox_transport specifies the optional transport in master.cf
+# to use after processing aliases and .forward files. This parameter
+# has precedence over the mailbox_command, fallback_transport and
+# luser_relay parameters.
+#
+# Specify a string of the form transport:nexthop, where transport is
+# the name of a mail delivery transport defined in master.cf.  The
+# :nexthop part is optional. For more details see the sample transport
+# configuration file.
+#
+# NOTE: if you use this feature for accounts not in the UNIX password
+# file, then you must update the &quot;local_recipient_maps&quot; setting in
+# the main.cf file, otherwise the SMTP server will reject mail for
+# non-UNIX accounts with &quot;User unknown in local recipient table&quot;.
+#
+# Cyrus IMAP over LMTP. Specify ``lmtpunix      cmd=&quot;lmtpd&quot;
+# listen=&quot;/var/imap/socket/lmtp&quot; prefork=0&#39;&#39; in cyrus.conf.
+#mailbox_transport = lmtp:unix:/var/imap/socket/lmtp
+#
+# Cyrus IMAP via command line. Uncomment the &quot;cyrus...pipe&quot; and
+# subsequent line in master.cf.
+#mailbox_transport = cyrus
+
+# The fallback_transport specifies the optional transport in master.cf
+# to use for recipients that are not found in the UNIX passwd database.
+# This parameter has precedence over the luser_relay parameter.
+#
+# Specify a string of the form transport:nexthop, where transport is
+# the name of a mail delivery transport defined in master.cf.  The
+# :nexthop part is optional. For more details see the sample transport
+# configuration file.
+#
+# NOTE: if you use this feature for accounts not in the UNIX password
+# file, then you must update the &quot;local_recipient_maps&quot; setting in
+# the main.cf file, otherwise the SMTP server will reject mail for
+# non-UNIX accounts with &quot;User unknown in local recipient table&quot;.
+#
+#fallback_transport = lmtp:unix:/file/name
+#fallback_transport = cyrus
+#fallback_transport =
+
+# The luser_relay parameter specifies an optional destination address
+# for unknown recipients.  By default, mail for <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="0c79626762637b624c">[email&#160;protected]</a>$mydestination,
+# <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="a3d6cdc8cdccd4cde3">[email&#160;protected]</a>[$inet_interfaces] or <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="f88d969396978f96b8">[email&#160;protected]</a>[$proxy_interfaces] is returned
+# as undeliverable.
+#
+# The following expansions are done on luser_relay: $user (recipient
+# username), $shell (recipient shell), $home (recipient home directory),
+# $recipient (full recipient address), $extension (recipient address
+# extension), $domain (recipient domain), $local (entire recipient
+# localpart), $recipient_delimiter. Specify ${name?value} or
+# ${name:value} to expand value only when $name does (does not) exist.
+#
+# luser_relay works only for the default Postfix local delivery agent.
+#
+# NOTE: if you use this feature for accounts not in the UNIX password
+# file, then you must specify &quot;local_recipient_maps =&quot; (i.e. empty) in
+# the main.cf file, otherwise the SMTP server will reject mail for
+# non-UNIX accounts with &quot;User unknown in local recipient table&quot;.
+#
+#luser_relay = <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="6b4f1e180e192b041f030e19450304181f">[email&#160;protected]</a>
+#luser_relay = <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="8aaee6e5e9ebe6cae5fee2eff8a4e2e5f9fe">[email&#160;protected]</a>
+#luser_relay = admin+$local
+
+# JUNK MAIL CONTROLS
+#
+# The controls listed here are only a very small subset. The file
+# SMTPD_ACCESS_README provides an overview.
+
+# The header_checks parameter specifies an optional table with patterns
+# that each logical message header is matched against, including
+# headers that span multiple physical lines.
+#
+# By default, these patterns also apply to MIME headers and to the
+# headers of attached messages. With older Postfix versions, MIME and
+# attached message headers were treated as body text.
+#
+# For details, see &quot;man header_checks&quot;.
+#
+#header_checks = regexp:/etc/postfix/header_checks
+
+# FAST ETRN SERVICE
+#
+# Postfix maintains per-destination logfiles with information about
+# deferred mail, so that mail can be flushed quickly with the SMTP
+# &quot;ETRN domain.tld&quot; command, or by executing &quot;sendmail -qRdomain.tld&quot;.
+# See the ETRN_README document for a detailed description.
+#
+# The fast_flush_domains parameter controls what destinations are
+# eligible for this service. By default, they are all domains that
+# this server is willing to relay mail to.
+#
+#fast_flush_domains = $relay_domains
+
+# SHOW SOFTWARE VERSION OR NOT
+#
+# The smtpd_banner parameter specifies the text that follows the 220
+# code in the SMTP server&#39;s greeting banner. Some people like to see
+# the mail version advertised. By default, Postfix shows no version.
+#
+# You MUST specify $myhostname at the start of the text. That is an
+# RFC requirement. Postfix itself does not care.
+#
+smtpd_banner = $myhostname ESMTP $mail_name
+#smtpd_banner = $myhostname ESMTP $mail_name ($mail_version)
+
+# PARALLEL DELIVERY TO THE SAME DESTINATION
+#
+# How many parallel deliveries to the same user or domain? With local
+# delivery, it does not make sense to do massively parallel delivery
+# to the same user, because mailbox updates must happen sequentially,
+# and expensive pipelines in .forward files can cause disasters when
+# too many are run at the same time. With SMTP deliveries, 10
+# simultaneous connections to the same domain could be sufficient to
+# raise eyebrows.
+#
+# Each message delivery transport has its XXX_destination_concurrency_limit
+# parameter.  The default is $default_destination_concurrency_limit for
+# most delivery transports. For the local delivery agent the default is 2.
+
+#local_destination_concurrency_limit = 2
+#default_destination_concurrency_limit = 20
+
+# DEBUGGING CONTROL
+#
+# The debug_peer_level parameter specifies the increment in verbose
+# logging level when an SMTP client or server host name or address
+# matches a pattern in the debug_peer_list parameter.
+#
+debug_peer_level = 2
+
+# The debug_peer_list parameter specifies an optional list of domain
+# or network patterns, /file/name patterns or type:name tables. When
+# an SMTP client or server host name or address matches a pattern,
+# increase the verbose logging level by the amount specified in the
+# debug_peer_level parameter.
+#
+#debug_peer_list = 127.0.0.1
+#debug_peer_list = some.domain
+
+# The debugger_command specifies the external command that is executed
+# when a Postfix daemon program is run with the -D option.
+#
+# Use &quot;command .. &amp; sleep 5&quot; so that the debugger can attach before
+# the process marches on. If you use an X-based debugger, be sure to
+# set up your XAUTHORITY environment variable before starting Postfix.
+#
+debugger_command =
+	 PATH=/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin
+	 ddd $daemon_directory/$process_name $process_id &amp; sleep 5
+
+# If you can&#39;t use X, use this to capture the call stack when a
+# daemon crashes. The result is in a file in the configuration
+# directory, and is named after the process name and the process ID.
+#
+# debugger_command =
+#	PATH=/bin:/usr/bin:/usr/local/bin; export PATH; (echo cont;
+#	echo where) | gdb $daemon_directory/$process_name $process_id 2&gt;&amp;1
+#	&gt;$config_directory/$process_name.$process_id.log &amp; sleep 5
+#
+# Another possibility is to run gdb under a detached screen session.
+# To attach to the screen sesssion, su root and run &quot;screen -r
+# &lt;id_string&gt;&quot; where &lt;id_string&gt; uniquely matches one of the detached
+# sessions (from &quot;screen -list&quot;).
+#
+# debugger_command =
+#	PATH=/bin:/usr/bin:/sbin:/usr/sbin; export PATH; screen
+#	-dmS $process_name gdb $daemon_directory/$process_name
+#	$process_id &amp; sleep 1
+
+# INSTALL-TIME CONFIGURATION INFORMATION
+#
+# The following parameters are used when installing a new Postfix version.
+#
+# sendmail_path: The full pathname of the Postfix sendmail command.
+# This is the Sendmail-compatible mail posting interface.
+#
+sendmail_path = /usr/bin/sendmail
+
+# newaliases_path: The full pathname of the Postfix newaliases command.
+# This is the Sendmail-compatible command to build alias databases.
+#
+newaliases_path = /usr/bin/newaliases
+
+# mailq_path: The full pathname of the Postfix mailq command.  This
+# is the Sendmail-compatible mail queue listing command.
+#
+mailq_path = /usr/bin/mailq
+
+# setgid_group: The group for mail submission and queue management
+# commands.  This must be a group name with a numerical group ID that
+# is not shared with other accounts, not even with the Postfix account.
+#
+setgid_group = postdrop
+
+# html_directory: The location of the Postfix HTML documentation.
+#
+html_directory = no
+
+# manpage_directory: The location of the Postfix on-line manual pages.
+#
+manpage_directory = /usr/share/man
+
+# sample_directory: The location of the Postfix sample configuration files.
+# This parameter is obsolete as of Postfix 2.1.
+#
+sample_directory = /etc/postfix
+
+# readme_directory: The location of the Postfix README files.
+#
+readme_directory = no
+inet_protocols = ipv4
+meta_directory = /etc/postfix
+shlib_directory = /usr/lib/postfix
+
+biff = no
+append_dot_mydomain = no
+
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+broken_sasl_auth_clients = yes
+smtpd_sasl_security_options = noanonymous
+smtpd_sasl_local_domain =
+smtpd_sasl_authenticated_header = yes
+
+smtpd_tls_cert_file=/etc/ssl/certs/mail.crt
+smtpd_tls_key_file=/etc/ssl/private/mail.key
+smtpd_tls_mandatory_protocols=!SSLv2,!SSLv3
+smtp_tls_note_starttls_offer = yes
+smtpd_tls_loglevel = 1
+smtpd_tls_received_header = yes
+smtpd_tls_session_cache_timeout = 3600s
+tls_random_source = dev:/dev/urandom
+smtpd_tls_security_level = may
+smtp_tls_security_level = may
+smtpd_tls_exclude_ciphers = aNULL, eNULL, EXPORT, DES, RC4, MD5, PSK, aECDH, EDH-DSS-DES-CBC3-SHA, EDH-RSA-DES-CDC3-SHA, KRB5-DE5, CBC3-SHA
+smtpd_tls_dh1024_param_file = /etc/ssl/private/dhparams.pem
+unknown_local_recipient_reject_code = 450
+delay_warning_time = 4h
+maximal_queue_lifetime = 7d
+minimal_backoff_time = 1000s
+maximal_backoff_time = 8000s
+smtp_helo_timeout = 60s
+smtpd_recipient_limit = 16
+smtpd_soft_error_limit = 3
+smtpd_hard_error_limit = 12
+smtpd_helo_restrictions = warn_if_reject reject_non_fqdn_hostname, reject_invalid_hostname, permit,
+smtpd_sender_restrictions = permit_mynetworks, reject_authenticated_sender_login_mismatch, permit_sasl_authenticated, warn_if_reject reject_non_fqdn_sender, reject_unknown_sender_domain, reject_unauth_pipelining, permit,
+#smtpd_client_restrictions = reject_rbl_client sbl.spamhaus.org, reject_rbl_client blackholes.easynet.nl,
+smtpd_recipient_restrictions = reject_unauth_pipelining, permit_mynetworks, permit_sasl_authenticated, reject_non_fqdn_recipient, reject_unknown_recipient_domain, reject_unauth_destination, permit,
+smtpd_data_restrictions = reject_unauth_pipelining,
+smtpd_relay_restrictions = reject_unauth_pipelining, permit_mynetworks, permit_sasl_authenticated, reject_non_fqdn_recipient, reject_unknown_recipient_domain, reject_unauth_destination,permit,
+smtpd_helo_required = yes
+smtpd_delay_reject = yes
+disable_vrfy_command = yes
+myhostname = aaa.ddns.net
+mydomain = aaa.ddns.net
+myorigin = aaa.ddns.net
+mydestination = localhost.localdomain, localhost
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_interfaces = all
+mynetworks_style = host
+virtual_mailbox_base = /var/vmail
+virtual_mailbox_maps = mysql:/etc/postfix/mysql_virtual_mailbox_maps.cf, mysql:/etc/postfix/mysql_virtual_mailbox_domainaliases_maps.cf
+virtual_uid_maps = static:150
+virtual_gid_maps = static:12
+virtual_alias_maps = mysql:/etc/postfix/mysql_virtual_alias_maps.cf, mysql:/etc/postfix/mysql_virtual_alias_domainaliases_maps.cf
+virtual_mailbox_domains = mysql:/etc/postfix/mysql_virtual_domains_maps.cf
+smtpd_sender_login_maps = mysql:/etc/postfix/mysql_virtual_sender_login_maps.cf
+virtual_transport = lmtp:unix:private/dovecot-lmtp
+
+dovecot_destination_recipient_limit = 1
+#content_filter = amavis:[127.0.0.1]:10024
+#policy-spf_time_limit = 3600s
+header_checks = regexp:/etc/postfix/header_checks
+enable_original_recipient = no
+</code></pre><br />master.cf<br /><pre><code>#
+# Postfix master process configuration file.  For details on the format
+# of the file, see the master(5) manual page (command: &quot;man 5 master&quot; or
+# on-line: <a href="http://www.postfix.org/master.5.html">http://www.postfix.org/master.5.html</a>).
+#
+# Do not forget to execute &quot;postfix reload&quot; after editing this file.
+#
+# ==========================================================================
+# service type  private unpriv  chroot  wakeup  maxproc command + args
+#               (yes)   (yes)   (no)    (never) (100)
+# ==========================================================================
+smtp      inet  n       -       n       -       -       smtpd
+#smtp      inet  n       -       n       -       1       postscreen
+#smtpd     pass  -       -       n       -       -       smtpd
+#dnsblog   unix  -       -       n       -       0       dnsblog
+#tlsproxy  unix  -       -       n       -       0       tlsproxy
+#submission inet n       -       n       -       -       smtpd
+#  -o syslog_name=postfix/submission
+#  -o smtpd_tls_security_level=encrypt
+#  -o smtpd_sasl_auth_enable=yes
+#  -o smtpd_reject_unlisted_recipient=no
+#  -o smtpd_client_restrictions=$mua_client_restrictions
+#  -o smtpd_helo_restrictions=$mua_helo_restrictions
+#  -o smtpd_sender_restrictions=$mua_sender_restrictions
+#  -o smtpd_recipient_restrictions=
+#  -o smtpd_relay_restrictions=permit_sasl_authenticated,reject
+#  -o milter_macro_daemon_name=ORIGINATING
+#smtps     inet  n       -       n       -       -       smtpd
+#  -o syslog_name=postfix/smtps
+#  -o smtpd_tls_wrappermode=yes
+#  -o smtpd_sasl_auth_enable=yes
+#  -o smtpd_reject_unlisted_recipient=no
+#  -o smtpd_client_restrictions=$mua_client_restrictions
+#  -o smtpd_helo_restrictions=$mua_helo_restrictions
+#  -o smtpd_sender_restrictions=$mua_sender_restrictions
+#  -o smtpd_recipient_restrictions=
+#  -o smtpd_relay_restrictions=permit_sasl_authenticated,reject
+#  -o milter_macro_daemon_name=ORIGINATING
+#628       inet  n       -       n       -       -       qmqpd
+pickup    unix  n       -       n       60      1       pickup
+cleanup   unix  n       -       n       -       0       cleanup
+qmgr      unix  n       -       n       300     1       qmgr
+#qmgr     unix  n       -       n       300     1       oqmgr
+tlsmgr    unix  -       -       n       1000?   1       tlsmgr
+rewrite   unix  -       -       n       -       -       trivial-rewrite
+bounce    unix  -       -       n       -       0       bounce
+defer     unix  -       -       n       -       0       bounce
+trace     unix  -       -       n       -       0       bounce
+verify    unix  -       -       n       -       1       verify
+flush     unix  n       -       n       1000?   0       flush
+proxymap  unix  -       -       n       -       -       proxymap
+proxywrite unix -       -       n       -       1       proxymap
+smtp      unix  -       -       n       -       -       smtp
+relay     unix  -       -       n       -       -       smtp
+#       -o smtp_helo_timeout=5 -o smtp_connect_timeout=5
+showq     unix  n       -       n       -       -       showq
+error     unix  -       -       n       -       -       error
+retry     unix  -       -       n       -       -       error
+discard   unix  -       -       n       -       -       discard
+local     unix  -       n       n       -       -       local
+virtual   unix  -       n       n       -       -       virtual
+lmtp      unix  -       -       n       -       -       lmtp
+anvil     unix  -       -       n       -       1       anvil
+scache    unix  -       -       n       -       1       scache
+#
+# ====================================================================
+# Interfaces to non-Postfix software. Be sure to examine the manual
+# pages of the non-Postfix software to find out what options it wants.
+#
+# Many of the following services use the Postfix pipe(8) delivery
+# agent.  See the pipe(8) man page for information about ${recipient}
+# and other message envelope options.
+# ====================================================================
+#
+# maildrop. See the Postfix MAILDROP_README file for details.
+# Also specify in main.cf: maildrop_destination_recipient_limit=1
+#
+#maildrop  unix  -       n       n       -       -       pipe
+#  flags=DRhu user=vmail argv=/usr/local/bin/maildrop -d ${recipient}
+#
+# ====================================================================
+#
+# Recent Cyrus versions can use the existing &quot;lmtp&quot; master.cf entry.
+#
+# Specify in cyrus.conf:
+#   lmtp    cmd=&quot;lmtpd -a&quot; listen=&quot;localhost:lmtp&quot; proto=tcp4
+#
+# Specify in main.cf one or more of the following:
+#  mailbox_transport = lmtp:inet:localhost
+#  virtual_transport = lmtp:inet:localhost
+#
+# ====================================================================
+#
+# Cyrus 2.1.5 (Amos Gouaux)
+# Also specify in main.cf: cyrus_destination_recipient_limit=1
+#
+#cyrus     unix  -       n       n       -       -       pipe
+#  user=cyrus argv=/cyrus/bin/deliver -e -r ${sender} -m ${extension} ${user}
+#
+# ====================================================================
+#
+# Old example of delivery via Cyrus.
+#
+#old-cyrus unix  -       n       n       -       -       pipe
+#  flags=R user=cyrus argv=/cyrus/bin/deliver -e -m ${extension} ${user}
+#
+# ====================================================================
+#
+# See the Postfix UUCP_README file for configuration details.
+#
+#uucp      unix  -       n       n       -       -       pipe
+#  flags=Fqhu user=uucp argv=uux -r -n -z -a$sender - $nexthop!rmail ($recipient)
+#
+# ====================================================================
+#
+# Other external delivery methods.
+#
+#ifmail    unix  -       n       n       -       -       pipe
+#  flags=F user=ftn argv=/usr/lib/ifmail/ifmail -r $nexthop ($recipient)
+#
+#bsmtp     unix  -       n       n       -       -       pipe
+#  flags=Fq. user=bsmtp argv=/usr/local/sbin/bsmtp -f $sender $nexthop $recipient
+#
+#scalemail-backend unix -       n       n       -       2       pipe
+#  flags=R user=scalemail argv=/usr/lib/scalemail/bin/scalemail-store
+#  ${nexthop} ${user} ${extension}
+#
+#mailman   unix  -       n       n       -       -       pipe
+#  flags=FR user=list argv=/usr/lib/mailman/bin/postfix-to-mailman.py
+#  ${nexthop} ${user}
+dovecot      unix   -        n      n       -       -   pipe
+  flags=DRhu user=vmail:vmail argv=/usr/lib/dovecot/dovecot-lda -d $(recipient)
+</code></pre><br />dovecot.conf<br /><pre><code>## Dovecot configuration file
+
+# If you&#39;re in a hurry, see <a href="https://wiki.dovecot.org/QuickConfiguration">http://wiki.dovecot.org/QuickConfiguration</a>
+
+# &quot;dovecot -n&quot; command gives a clean output of the changed settings. Use it
+# instead of copy&amp;pasting this file when posting to the Dovecot mailing list.
+
+# &#39;#&#39; character and everything after it is treated as comments. Extra spaces
+# and tabs are ignored. If you want to use either of these explicitly, put the
+# value inside quotes, eg.: key = &quot;# char and trailing whitespace  &quot;
+
+# Default values are shown for each setting, it&#39;s not required to uncomment
+# those. These are exceptions to this though: No sections (e.g. namespace {})
+# or plugin settings are added by default, they&#39;re listed only as examples.
+# Paths are also just examples with the real defaults being based on configure
+# options. The paths listed here are for configure --prefix=/usr
+# --sysconfdir=/etc --localstatedir=/var --with-ssldir=/etc/ssl
+
+# Base directory where to store runtime data.
+#base_dir = /var/run/dovecot/
+
+# Protocols we want to be serving: imap imaps pop3 pop3s
+# If you only want to use dovecot-auth, you can set this to &quot;none&quot;.
+protocols = imap pop3 lmtp
+
+# A space separated list of IP or host addresses where to listen in for
+# connections. &quot;*&quot; listens in all IPv4 interfaces. &quot;[::]&quot; listens in all IPv6
+# interfaces. Use &quot;*, [::]&quot; for listening both IPv4 and IPv6.
+#
+# If you want to specify ports for each service, you will need to configure
+# these settings inside the protocol imap/pop3 { ... } section, so you can
+# specify different ports for IMAP/POP3. For example:
+#   protocol imap {
+#     listen = *:10143
+#     ssl_listen = *:10943
+#     ..
+#   }
+#   protocol pop3 {
+#     listen = *:10100
+#     ..
+#   }
+#listen = *
+
+# Disable LOGIN command and all other plaintext authentications unless
+# SSL/TLS is used (LOGINDISABLED capability). Note that if the remote IP
+# matches the local IP (ie. you&#39;re connecting from the same computer), the
+# connection is considered secure and plaintext authentication is allowed.
+#disable_plaintext_auth = yes
+
+# Should all IMAP and POP3 processes be killed when Dovecot master process
+# shuts down. Setting this to &quot;no&quot; means that Dovecot can be upgraded without
+# forcing existing client connections to close (although that could also be
+# a problem if the upgrade is eg. because of a security fix). This however
+# means that after master process has died, the client processes can&#39;t write
+# to log files anymore.
+#shutdown_clients = yes
+
+##
+## Logging
+##
+
+# Log file to use for error messages, instead of sending them to syslog.
+# /dev/stderr can be used to log into stderr.
+#log_path =
+
+# Log file to use for informational and debug messages.
+# Default is the same as log_path.
+#info_log_path =
+
+# Prefix for each line written to log file. % codes are in strftime(3)
+# format.
+#log_timestamp = &quot;%b %d %H:%M:%S &quot;
+
+# Syslog facility to use if you&#39;re logging to syslog. Usually if you don&#39;t
+# want to use &quot;mail&quot;, you&#39;ll use local0..local7. Also other standard
+# facilities are supported.
+#syslog_facility = mail
+
+##
+## SSL settings
+##
+
+# IP or host address where to listen in for SSL connections. Remember to also
+# add imaps and/or pop3s to protocols setting. Defaults to same as &quot;listen&quot;
+# setting if not specified.
+#ssl_listen =
+
+# SSL/TLS support: yes, no, required. &lt;doc/wiki/SSL.txt&gt;
+ssl = yes
+
+# PEM encoded X.509 SSL/TLS certificate and private key. They&#39;re opened before
+# dropping root privileges, so keep the key file unreadable by anyone but
+# root. Included doc/mkcert.sh can be used to easily generate self-signed
+# certificate, just make sure to update the domains in dovecot-openssl.cnf
+ssl_cert_file = /etc/ssl/certs/dovecot.pem
+ssl_key_file = /etc/ssl/private/dovecot.pem
+
+# If key file is password protected, give the password here. Alternatively
+# give it when starting dovecot with -p parameter. Since this file is often
+# world-readable, you may want to place this setting instead to a different
+# root owned 0600 file by using !include_try &lt;path&gt;.
+#ssl_key_password =
+
+# File containing trusted SSL certificate authorities. Set this only if you
+# intend to use ssl_verify_client_cert=yes. The CAfile should contain the
+# CA-certificate(s) followed by the matching CRL(s).
+#ssl_ca_file =
+
+# Request client to send a certificate. If you also want to require it, set
+# ssl_require_client_cert=yes in auth section.
+#ssl_verify_client_cert = no
+
+# Which field from certificate to use for username. commonName and
+# x500UniqueIdentifier are the usual choices. You&#39;ll also need to set
+# ssl_username_from_cert=yes.
+#ssl_cert_username_field = commonName
+
+# How often to regenerate the SSL parameters file. Generation is quite CPU
+# intensive operation. The value is in hours, 0 disables regeneration
+# entirely.
+#ssl_parameters_regenerate = 168
+
+# SSL ciphers to use
+#ssl_cipher_list = ALL:!LOW:!SSLv2
+
+# Show protocol level SSL errors.
+#verbose_ssl = no
+
+##
+## Login processes
+##
+
+# &lt;doc/wiki/LoginProcess.txt&gt;
+
+# Directory where authentication process places authentication UNIX sockets
+# which login needs to be able to connect to. The sockets are created when
+# running as root, so you don&#39;t have to worry about permissions. Note that
+# everything in this directory is deleted when Dovecot is started.
+#login_dir = /var/run/dovecot/login
+
+# chroot login process to the login_dir. Only reason not to do this is if you
+# wish to run the whole Dovecot without roots. &lt;doc/wiki/Rootless.txt&gt;
+#login_chroot = yes
+
+# User to use for the login process. Create a completely new user for this,
+# and don&#39;t use it anywhere else. The user must also belong to a group where
+# only it has access, it&#39;s used to control access for authentication process.
+# Note that this user is NOT used to access mails. &lt;doc/wiki/UserIds.txt&gt;
+#login_user = dovecot
+
+# Set max. process size in megabytes. If you don&#39;t use
+# login_process_per_connection you might need to grow this.
+#login_process_size = 64
+
+# Should each login be processed in it&#39;s own process (yes), or should one
+# login process be allowed to process multiple connections (no)? Yes is more
+# secure, espcially with SSL/TLS enabled. No is faster since there&#39;s no need
+# to create processes all the time.
+#login_process_per_connection = yes
+
+# Number of login processes to keep for listening new connections.
+#login_processes_count = 3
+
+# Maximum number of login processes to create. The listening process count
+# usually stays at login_processes_count, but when multiple users start logging
+# in at the same time more extra processes are created. To prevent fork-bombing
+# we check only once in a second if new processes should be created - if all
+# of them are used at the time, we double their amount until the limit set by
+# this setting is reached.
+#login_max_processes_count = 128
+
+# Maximum number of connections allowed per each login process. This setting
+# is used only if login_process_per_connection=no. Once the limit is reached,
+# the process notifies master so that it can create a new login process.
+#login_max_connections = 256
+
+# Greeting message for clients.
+#login_greeting = Dovecot ready.
+
+# Space separated list of trusted network ranges. Connections from these
+# IPs are allowed to override their IP addresses and ports (for logging and
+# for authentication checks). disable_plaintext_auth is also ignored for
+# these networks. Typically you&#39;d specify your IMAP proxy servers here.
+#login_trusted_networks =
+
+# Space-separated list of elements we want to log. The elements which have
+# a non-empty variable value are joined together to form a comma-separated
+# string.
+#login_log_format_elements = user=&lt;%u&gt; method=%m rip=%r lip=%l %c
+
+# Login log format. %$ contains login_log_format_elements string, %s contains
+# the data we want to log.
+#login_log_format = %$: %s
+
+##
+## Mailbox locations and namespaces
+##
+
+# Location for users&#39; mailboxes. This is the same as the old default_mail_env
+# setting. The default is empty, which means that Dovecot tries to find the
+# mailboxes automatically. This won&#39;t work if the user doesn&#39;t have any mail
+# yet, so you should explicitly tell Dovecot the full location.
+#
+# If you&#39;re using mbox, giving a path to the INBOX file (eg. /var/mail/%u)
+# isn&#39;t enough. You&#39;ll also need to tell Dovecot where the other mailboxes are
+# kept. This is called the &quot;root mail directory&quot;, and it must be the first
+# path given in the mail_location setting.
+#
+# There are a few special variables you can use, eg.:
+#
+#   %u - username
+#   %n - user part in <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="91e4e2f4e3d1f5fefcf0f8ff">[email&#160;protected]</a>, same as %u if there&#39;s no domain
+#   %d - domain part in <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="344147514674505b59555d5a">[email&#160;protected]</a>, empty if there&#39;s no domain
+#   %h - home directory
+#
+# See &lt;doc/wiki/Variables.txt&gt; for full list. Some examples:
+#
+    mail_home = /var/vmail/%d/%n
+    mail_location = maildir:~/Maildir
+#   mail_location = mbox:~/mail:INBOX=/var/mail/%u
+#   mail_location = mbox:/var/mail/%d/%1n/%n:INDEX=/var/indexes/%d/%1n/%n
+#
+# &lt;doc/wiki/MailLocation.txt&gt;
+#
+#mail_location =
+
+# If you need to set multiple mailbox locations or want to change default
+# namespace settings, you can do it by defining namespace sections.
+#
+# You can have private, shared and public namespaces. Private namespaces
+# are for user&#39;s personal mails. Shared namespaces are for accessing other
+# users&#39; mailboxes that have been shared. Public namespaces are for shared
+# mailboxes that are managed by sysadmin. If you create any shared or public
+# namespaces you&#39;ll typically want to enable ACL plugin also, otherwise all
+# users can access all the shared mailboxes, assuming they have permissions
+# on filesystem level to do so.
+#
+# REMEMBER: If you add any namespaces, the default namespace must be added
+# explicitly, ie. mail_location does nothing unless you have a namespace
+# without a location setting. Default namespace is simply done by having a
+# namespace with empty prefix.
+#namespace private {
+   # Hierarchy separator to use. You should use the same separator for all
+   # namespaces or some clients get confused. &#39;/&#39; is usually a good one.
+   # The default however depends on the underlying mail storage format.
+   #separator =
+
+   # Prefix required to access this namespace. This needs to be different for
+   # all namespaces. For example &quot;Public/&quot;.
+   #prefix =
+
+   # Physical location of the mailbox. This is in same format as
+   # mail_location, which is also the default for it.
+   #location =
+
+   # There can be only one INBOX, and this setting defines which namespace
+   # has it.
+   #inbox = no
+
+   # If namespace is hidden, it&#39;s not advertised to clients via NAMESPACE
+   # extension. You&#39;ll most likely also want to set list=no. This is mostly
+   # useful when converting from another server with different namespaces which
+   # you want to deprecate but still keep working. For example you can create
+   # hidden namespaces with prefixes &quot;~/mail/&quot;, &quot;~%u/mail/&quot; and &quot;mail/&quot;.
+   #hidden = yes
+
+   # Show the mailboxes under this namespace with LIST command. This makes the
+   # namespace visible for clients that don&#39;t support NAMESPACE extension.
+   # &quot;children&quot; value lists child mailboxes, but hides the namespace prefix.
+   #list = yes
+
+   # Namespace handles its own subscriptions. If set to &quot;no&quot;, the parent
+   # namespace handles them (empty prefix should always have this as &quot;yes&quot;)
+   #subscriptions = yes
+#}
+
+# Example shared namespace configuration
+#namespace shared {
+   #separator = /
+
+   # Mailboxes are visible under &quot;shared/<a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="3e4b4d5b4c7e5a51535f5750">[email&#160;protected]</a>/&quot;
+   # %%n, %%d and %%u are expanded to the destination user.
+   #prefix = shared/%%u/
+
+   # Mail location for other users&#39; mailboxes. Note that %variables and ~/
+   # expands to the logged in user&#39;s data. %%n, %%d, %%u and %%h expand to the
+   # destination user&#39;s data.
+   #location = maildir:%%h/Maildir:INDEX=~/Maildir/shared/%%u
+
+   # Use the default namespace for saving subscriptions.
+   #subscriptions = no
+
+   # List the shared/ namespace only if there are visible shared mailboxes.
+   #list = children
+#}
+
+# System user and group used to access mails. If you use multiple, wuserdb
+# can override these by returning uid or gid fields. You can use either numbers
+# or names. &lt;doc/wiki/UserIds.txt&gt;
+mail_uid = vmail
+mail_gid = vmail
+
+# Group to enable temporarily for privileged operations. Currently this is
+# used only with INBOX when either its initial creation or dotlocking fails.
+# Typically this is set to &quot;mail&quot; to give access to /var/mail.
+#mail_privileged_group =
+
+# Grant access to these supplementary groups for mail processes. Typically
+# these are used to set up access to shared mailboxes. Note that it may be
+# dangerous to set these if users can create symlinks (e.g. if &quot;mail&quot; group is
+# set here, ln -s /var/mail ~/mail/var could allow a user to delete others&#39;
+# mailboxes, or ln -s /secret/shared/box ~/mail/mybox would allow reading it).
+#mail_access_groups =
+
+# Allow full filesystem access to clients. There&#39;s no access checks other than
+# what the operating system does for the active UID/GID. It works with both
+# maildir and mboxes, allowing you to prefix mailboxes names with eg. /path/
+# or ~user/.
+#mail_full_filesystem_access = no
+
+##
+## Mail processes
+##
+
+# Enable mail process debugging. This can help you figure out why Dovecot
+# isn&#39;t finding your mails.
+#mail_debug = no
+
+# Log prefix for mail processes. See &lt;doc/wiki/Variables.txt&gt; for list of
+# possible variables you can use.
+#mail_log_prefix = &quot;%Us(%u): &quot;
+
+# Max. number of lines a mail process is allowed to log per second before it&#39;s
+# throttled. 0 means unlimited. Typically there&#39;s no need to change this
+# unless you&#39;re using mail_log plugin, which may log a lot. This setting is
+# ignored while mail_debug=yes to avoid pointless throttling.
+#mail_log_max_lines_per_sec = 10
+
+# Don&#39;t use mmap() at all. This is required if you store indexes to shared
+# filesystems (NFS or clustered filesystem).
+#mmap_disable = no
+
+# Rely on O_EXCL to work when creating dotlock files. NFS supports O_EXCL
+# since version 3, so this should be safe to use nowadays by default.
+#dotlock_use_excl = yes
+
+# Don&#39;t use fsync() or fdatasync() calls. This makes the performance better
+# at the cost of potential data loss if the server (or the file server)
+# goes down.
+#fsync_disable = no
+
+# Mail storage exists in NFS. Set this to yes to make Dovecot flush NFS caches
+# whenever needed. If you&#39;re using only a single mail server this isn&#39;t needed.
+#mail_nfs_storage = no
+# Mail index files also exist in NFS. Setting this to yes requires
+# mmap_disable=yes and fsync_disable=no.
+#mail_nfs_index = no
+
+# Locking method for index files. Alternatives are fcntl, flock and dotlock.
+# Dotlocking uses some tricks which may create more disk I/O than other locking
+# methods. NFS users: flock doesn&#39;t work, remember to change mmap_disable.
+#lock_method = fcntl
+
+# Drop all privileges before exec()ing the mail process. This is mostly
+# meant for debugging, otherwise you don&#39;t get core dumps. It could be a small
+# security risk if you use single UID for multiple users, as the users could
+# ptrace() each others processes then.
+#mail_drop_priv_before_exec = no
+
+# Show more verbose process titles (in ps). Currently shows user name and
+# IP address. Useful for seeing who are actually using the IMAP processes
+# (eg. shared mailboxes or if same uid is used for multiple accounts).
+#verbose_proctitle = no
+
+# Valid UID range for users, defaults to 500 and above. This is mostly
+# to make sure that users can&#39;t log in as daemons or other system users.
+# Note that denying root logins is hardcoded to dovecot binary and can&#39;t
+# be done even if first_valid_uid is set to 0.
+#first_valid_uid = 500
+#last_valid_uid = 0
+
+# Valid GID range for users, defaults to non-root/wheel. Users having
+# non-valid GID as primary group ID aren&#39;t allowed to log in. If user
+# belongs to supplementary groups with non-valid GIDs, those groups are
+# not set.
+#first_valid_gid = 1
+#last_valid_gid = 0
+
+# Maximum number of running mail processes. When this limit is reached,
+# new users aren&#39;t allowed to log in.
+#max_mail_processes = 512
+
+# Set max. process size in megabytes. Most of the memory goes to mmap()ing
+# files, so it shouldn&#39;t harm much even if this limit is set pretty high.
+#mail_process_size = 256
+
+# Maximum allowed length for mail keyword name. It&#39;s only forced when trying
+# to create new keywords.
+#mail_max_keyword_length = 50
+
+# &#39;:&#39; separated list of directories under which chrooting is allowed for mail
+# processes (ie. /var/mail will allow chrooting to /var/mail/foo/bar too).
+# This setting doesn&#39;t affect login_chroot, mail_chroot or auth chroot
+# settings. If this setting is empty, &quot;/./&quot; in home dirs are ignored.
+# WARNING: Never add directories here which local users can modify, that
+# may lead to root exploit. Usually this should be done only if you don&#39;t
+# allow shell access for users. &lt;doc/wiki/Chrooting.txt&gt;
+#valid_chroot_dirs =
+
+# Default chroot directory for mail processes. This can be overridden for
+# specific users in user database by giving /./ in user&#39;s home directory
+# (eg. /home/./user chroots into /home). Note that usually there is no real
+# need to do chrooting, Dovecot doesn&#39;t allow users to access files outside
+# their mail directory anyway. If your home directories are prefixed with
+# the chroot directory, append &quot;/.&quot; to mail_chroot. &lt;doc/wiki/Chrooting.txt&gt;
+#mail_chroot =
+
+##
+## Mailbox handling optimizations
+##
+
+# The minimum number of mails in a mailbox before updates are done to cache
+# file. This allows optimizing Dovecot&#39;s behavior to do less disk writes at
+# the cost of more disk reads.
+#mail_cache_min_mail_count = 0
+
+# When IDLE command is running, mailbox is checked once in a while to see if
+# there are any new mails or other changes. This setting defines the minimum
+# time in seconds to wait between those checks. Dovecot can also use dnotify,
+# inotify and kqueue to find out immediately when changes occur.
+#mailbox_idle_check_interval = 30
+
+# Save mails with CR+LF instead of plain LF. This makes sending those mails
+# take less CPU, especially with sendfile() syscall with Linux and FreeBSD.
+# But it also creates a bit more disk I/O which may just make it slower.
+# Also note that if other software reads the mboxes/maildirs, they may handle
+# the extra CRs wrong and cause problems.
+#mail_save_crlf = no
+
+##
+## Maildir-specific settings
+##
+
+# By default LIST command returns all entries in maildir beginning with a dot.
+# Enabling this option makes Dovecot return only entries which are directories.
+# This is done by stat()ing each entry, so it causes more disk I/O.
+# (For systems setting struct dirent-&gt;d_type, this check is free and it&#39;s
+# done always regardless of this setting)
+#maildir_stat_dirs = no
+
+# When copying a message, do it with hard links whenever possible. This makes
+# the performance much better, and it&#39;s unlikely to have any side effects.
+#maildir_copy_with_hardlinks = yes
+
+# When copying a message, try to preserve the base filename. Only if the
+# destination mailbox already contains the same name (ie. the mail is being
+# copied there twice), a new name is given. The destination filename check is
+# done only by looking at dovecot-uidlist file, so if something outside
+# Dovecot does similar filename preserving copies, you may run into problems.
+# NOTE: This setting requires maildir_copy_with_hardlinks = yes to work.
+#maildir_copy_preserve_filename = no
+
+# Assume Dovecot is the only MUA accessing Maildir: Scan cur/ directory only
+# when its mtime changes unexpectedly or when we can&#39;t find the mail otherwise.
+#maildir_very_dirty_syncs = no
+
+##
+## mbox-specific settings
+##
+
+# Which locking methods to use for locking mbox. There are four available:
+#  dotlock: Create &lt;mailbox&gt;.lock file. This is the oldest and most NFS-safe
+#           solution. If you want to use /var/mail/ like directory, the users
+#           will need write access to that directory.
+#  dotlock_try: Same as dotlock, but if it fails because of permissions or
+#               because there isn&#39;t enough disk space, just skip it.
+#  fcntl  : Use this if possible. Works with NFS too if lockd is used.
+#  flock  : May not exist in all systems. Doesn&#39;t work with NFS.
+#  lockf  : May not exist in all systems. Doesn&#39;t work with NFS.
+#
+# You can use multiple locking methods; if you do the order they&#39;re declared
+# in is important to avoid deadlocks if other MTAs/MUAs are using multiple
+# locking methods as well. Some operating systems don&#39;t allow using some of
+# them simultaneously.
+#mbox_read_locks = fcntl
+#mbox_write_locks = dotlock fcntl
+
+# Maximum time in seconds to wait for lock (all of them) before aborting.
+#mbox_lock_timeout = 300
+
+# If dotlock exists but the mailbox isn&#39;t modified in any way, override the
+# lock file after this many seconds.
+#mbox_dotlock_change_timeout = 120
+
+# When mbox changes unexpectedly we have to fully read it to find out what
+# changed. If the mbox is large this can take a long time. Since the change
+# is usually just a newly appended mail, it&#39;d be faster to simply read the
+# new mails. If this setting is enabled, Dovecot does this but still safely
+# fallbacks to re-reading the whole mbox file whenever something in mbox isn&#39;t
+# how it&#39;s expected to be. The only real downside to this setting is that if
+# some other MUA changes message flags, Dovecot doesn&#39;t notice it immediately.
+# Note that a full sync is done with SELECT, EXAMINE, EXPUNGE and CHECK
+# commands.
+#mbox_dirty_syncs = yes
+
+# Like mbox_dirty_syncs, but don&#39;t do full syncs even with SELECT, EXAMINE,
+# EXPUNGE or CHECK commands. If this is set, mbox_dirty_syncs is ignored.
+#mbox_very_dirty_syncs = no
+
+# Delay writing mbox headers until doing a full write sync (EXPUNGE and CHECK
+# commands and when closing the mailbox). This is especially useful for POP3
+# where clients often delete all mails. The downside is that our changes
+# aren&#39;t immediately visible to other MUAs.
+#mbox_lazy_writes = yes
+
+# If mbox size is smaller than this (in kilobytes), don&#39;t write index files.
+# If an index file already exists it&#39;s still read, just not updated.
+#mbox_min_index_size = 0
+
+##
+## dbox-specific settings
+##
+
+# Maximum dbox file size in kilobytes until it&#39;s rotated.
+#dbox_rotate_size = 2048
+
+# Minimum dbox file size in kilobytes before it&#39;s rotated
+# (overrides dbox_rotate_days)
+#dbox_rotate_min_size = 16
+
+# Maximum dbox file age in days until it&#39;s rotated. Day always begins from
+# midnight, so 1 = today, 2 = yesterday, etc. 0 = check disabled.
+#dbox_rotate_days = 0
+
+##
+## IMAP specific settings
+##
+
+protocol imap {
+  # Login executable location.
+  #login_executable = /usr/libexec/dovecot/imap-login
+
+  # IMAP executable location. Changing this allows you to execute other
+  # binaries before the imap process is executed.
+  #
+  # This would write rawlogs into user&#39;s ~/dovecot.rawlog/, if it exists:
+  #   mail_executable = /usr/libexec/dovecot/rawlog /usr/libexec/dovecot/imap
+  # &lt;doc/wiki/Debugging/Rawlog.txt&gt;
+  #
+  # This would attach gdb into the imap process and write backtraces into
+  # /tmp/gdbhelper.* files:
+  #   mail_executable = /usr/libexec/dovecot/gdbhelper /usr/libexec/dovecot/imap
+  #
+  #mail_executable = /usr/libexec/dovecot/imap
+
+  # Maximum IMAP command line length in bytes. Some clients generate very long
+  # command lines with huge mailboxes, so you may need to raise this if you get
+  # &quot;Too long argument&quot; or &quot;IMAP command line too large&quot; errors often.
+  #imap_max_line_length = 65536
+
+  # Maximum number of IMAP connections allowed for a user from each IP address.
+  # NOTE: The username is compared case-sensitively.
+  #mail_max_userip_connections = 10
+
+  # Support for dynamically loadable plugins. mail_plugins is a space separated
+  # list of plugins to load.
+  #mail_plugins =
+  #mail_plugin_dir = /usr/lib/dovecot/imap
+
+  # IMAP logout format string:
+  #  %i - total number of bytes read from client
+  #  %o - total number of bytes sent to client
+  #imap_logout_format = bytes=%i/%o
+
+  # Override the IMAP CAPABILITY response.
+  #imap_capability =
+
+  # How many seconds to wait between &quot;OK Still here&quot; notifications when
+  # client is IDLEing.
+  #imap_idle_notify_interval = 120
+
+  # ID field names and values to send to clients. Using * as the value makes
+  # Dovecot use the default value. The following fields have default values
+  # currently: name, version, os, os-version, support-url, support-email.
+  #imap_id_send =
+
+  # ID fields sent by client to log. * means everything.
+  #imap_id_log =
+
+  # Workarounds for various client bugs:
+  #   delay-newmail:
+  #     Send EXISTS/RECENT new mail notifications only when replying to NOOP
+  #     and CHECK commands. Some clients ignore them otherwise, for example OSX
+  #     Mail (&lt;v2.1). Outlook Express breaks more badly though, without this it
+  #     may show user &quot;Message no longer in server&quot; errors. Note that OE6 still
+  #     breaks even with this workaround if synchronization is set to
+  #     &quot;Headers Only&quot;.
+  #   netscape-eoh:
+  #     Netscape 4.x breaks if message headers don&#39;t end with the empty &quot;end of
+  #     headers&quot; line. Normally all messages have this, but setting this
+  #     workaround makes sure that Netscape never breaks by adding the line if
+  #     it doesn&#39;t exist. This is done only for FETCH BODY[HEADER.FIELDS..]
+  #     commands. Note that RFC says this shouldn&#39;t be done.
+  #   tb-extra-mailbox-sep:
+  #     With mbox storage a mailbox can contain either mails or submailboxes,
+  #     but not both. Thunderbird separates these two by forcing server to
+  #     accept &#39;/&#39; suffix in mailbox names in subscriptions list.
+  # The list is space-separated.
+  #imap_client_workarounds =
+}
+
+##
+## POP3 specific settings
+##
+
+protocol pop3 {
+  # Login executable location.
+  #login_executable = /usr/libexec/dovecot/pop3-login
+
+  # POP3 executable location. See IMAP&#39;s mail_executable above for examples
+  # how this could be changed.
+  #mail_executable = /usr/libexec/dovecot/pop3
+
+  # Don&#39;t try to set mails non-recent or seen with POP3 sessions. This is
+  # mostly intended to reduce disk I/O. With maildir it doesn&#39;t move files
+  # from new/ to cur/, with mbox it doesn&#39;t write Status-header.
+  #pop3_no_flag_updates = no
+
+  # Support LAST command which exists in old POP3 specs, but has been removed
+  # from new ones. Some clients still wish to use this though. Enabling this
+  # makes RSET command clear all \Seen flags from messages.
+  #pop3_enable_last = no
+
+  # If mail has X-UIDL header, use it as the mail&#39;s UIDL.
+  #pop3_reuse_xuidl = no
+
+  # Keep the mailbox locked for the entire POP3 session.
+  #pop3_lock_session = no
+
+  # POP3 UIDL (unique mail identifier) format to use. You can use following
+  # variables, along with the variable modifiers described in
+  # &lt;doc/wiki/Variables.txt&gt; (e.g. %Uf for the filename in uppercase)
+  #
+  #  %v - Mailbox&#39;s IMAP UIDVALIDITY
+  #  %u - Mail&#39;s IMAP UID
+  #  %m - MD5 sum of the mailbox headers in hex (mbox only)
+  #  %f - filename (maildir only)
+  #
+  # If you want UIDL compatibility with other POP3 servers, use:
+  #  UW&#39;s ipop3d         : %08Xv%08Xu
+  #  Courier             : %f or %v-%u (both might be used simultaneosly)
+  #  Cyrus (&lt;= 2.1.3)    : %u
+  #  Cyrus (&gt;= 2.1.4)    : %v.%u
+  #  Dovecot v0.99.x     : %v.%u
+  #  tpop3d              : %Mf
+  #
+  # Note that Outlook 2003 seems to have problems with %v.%u format which was
+  # Dovecot&#39;s default, so if you&#39;re building a new server it would be a good
+  # idea to change this. %08Xu%08Xv should be pretty fail-safe.
+  #
+  #pop3_uidl_format = %08Xu%08Xv
+
+  # Permanently save UIDLs sent to POP3 clients, so pop3_uidl_format changes
+  # won&#39;t change those UIDLs. Currently this works only with Maildir.
+  #pop3_save_uidl = no
+
+  # POP3 logout format string:
+  #  %i - total number of bytes read from client
+  #  %o - total number of bytes sent to client
+  #  %t - number of TOP commands
+  #  %p - number of bytes sent to client as a result of TOP command
+  #  %r - number of RETR commands
+  #  %b - number of bytes sent to client as a result of RETR command
+  #  %d - number of deleted messages
+  #  %m - number of messages (before deletion)
+  #  %s - mailbox size in bytes (before deletion)
+  #pop3_logout_format = top=%t/%p, retr=%r/%b, del=%d/%m, size=%s
+
+  # Maximum number of POP3 connections allowed for a user from each IP address.
+  # NOTE: The username is compared case-sensitively.
+  #mail_max_userip_connections = 3
+
+  # Support for dynamically loadable plugins. mail_plugins is a space separated
+  # list of plugins to load.
+  #mail_plugins =
+  #mail_plugin_dir = /usr/lib/dovecot/pop3
+
+  # Workarounds for various client bugs:
+  #   outlook-no-nuls:
+  #     Outlook and Outlook Express hang if mails contain NUL characters.
+  #     This setting replaces them with 0x80 character.
+  #   oe-ns-eoh:
+  #     Outlook Express and Netscape Mail breaks if end of headers-line is
+  #     missing. This option simply sends it if it&#39;s missing.
+  # The list is space-separated.
+  #pop3_client_workarounds =
+}
+
+##
+## LDA specific settings
+##
+
+protocol lda {
+  # Address to use when sending rejection mails (e.g. <a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="5a2a35292e373b292e3f281a3f223b372a363f74393537">[email&#160;protected]</a>).
+  #postmaster_address =
+
+  # Hostname to use in various parts of sent mails, eg. in Message-Id.
+  # Default is the system&#39;s real hostname.
+  #hostname =
+
+  # Support for dynamically loadable plugins. mail_plugins is a space separated
+  # list of plugins to load.
+  #mail_plugins =
+  #mail_plugin_dir = /usr/lib/dovecot/lda
+
+  # If user is over quota, return with temporary failure instead of
+  # bouncing the mail.
+  #quota_full_tempfail = no
+
+  # Format to use for logging mail deliveries. You can use variables:
+  #  %$ - Delivery status message (e.g. &quot;saved to INBOX&quot;)
+  #  %m - Message-ID
+  #  %s - Subject
+  #  %f - From address
+  #deliver_log_format = msgid=%m: %$
+
+  # Binary to use for sending mails.
+  #sendmail_path = /usr/lib/sendmail
+
+  # Subject: header to use for rejection mails. You can use the same variables
+  # as for rejection_reason below.
+  #rejection_subject = Rejected: %s
+
+  # Human readable error message for rejection mails. You can use variables:
+  #  %n = CRLF, %r = reason, %s = original subject, %t = recipient
+  #rejection_reason = Your message to &lt;%t&gt; was automatically rejected:%n%r
+
+  # UNIX socket path to master authentication server to find users.
+  #auth_socket_path = /var/run/dovecot/auth-master
+}
+
+##
+## Authentication processes
+##
+
+# Executable location
+#auth_executable = /usr/libexec/dovecot/dovecot-auth
+
+# Set max. process size in megabytes.
+#auth_process_size = 256
+
+# Authentication cache size in kilobytes. 0 means it&#39;s disabled.
+# Note that bsdauth, PAM and vpopmail require cache_key to be set for caching
+# to be used.
+#auth_cache_size = 0
+# Time to live in seconds for cached data. After this many seconds the cached
+# record is no longer used, *except* if the main database lookup returns
+# internal failure. We also try to handle password changes automatically: If
+# user&#39;s previous authentication was successful, but this one wasn&#39;t, the
+# cache isn&#39;t used. For now this works only with plaintext authentication.
+#auth_cache_ttl = 3600
+# TTL for negative hits (user not found, password mismatch).
+# 0 disables caching them completely.
+#auth_cache_negative_ttl = 3600
+
+# Space separated list of realms for SASL authentication mechanisms that need
+# them. You can leave it empty if you don&#39;t want to support multiple realms.
+# Many clients simply use the first one listed here, so keep the default realm
+# first.
+#auth_realms =
+
+# Default realm/domain to use if none was specified. This is used for both
+# SASL realms and appending @domain to username in plaintext logins.
+#auth_default_realm =
+
+# List of allowed characters in username. If the user-given username contains
+# a character not listed in here, the login automatically fails. This is just
+# an extra check to make sure user can&#39;t exploit any potential quote escaping
+# vulnerabilities with SQL/LDAP databases. If you want to allow all characters,
+# set this value to empty.
+#auth_username_chars = abc<a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="1f7b7a797877767574737271706f6e6d6c6b6a69686766655e5d5c5b5a595857565554535251504f4e4d4c4b4a49484746452f2e2d2c2b2a292827262f3132405f">[email&#160;protected]</a>
+
+# Username character translations before it&#39;s looked up from databases. The
+# value contains series of from -&gt; to characters. For example &quot;#@/@&quot; means
+# that &#39;#&#39; and &#39;/&#39; characters are translated to &#39;@&#39;.
+#auth_username_translation =
+
+# Username formatting before it&#39;s looked up from databases. You can use
+# the standard variables here, eg. %Lu would lowercase the username, %n would
+# drop away the domain if it was given, or &quot;%n-AT-%d&quot; would change the &#39;@&#39; into
+# &quot;-AT-&quot;. This translation is done after auth_username_translation changes.
+#auth_username_format =
+
+# If you want to allow master users to log in by specifying the master
+# username within the normal username string (ie. not using SASL mechanism&#39;s
+# support for it), you can specify the separator character here. The format
+# is then &lt;username&gt;&lt;separator&gt;&lt;master username&gt;. UW-IMAP uses &quot;*&quot; as the
+# separator, so that could be a good choice.
+#auth_master_user_separator =
+
+# Username to use for users logging in with ANONYMOUS SASL mechanism
+#auth_anonymous_username = anonymous
+
+# Log unsuccessful authentication attempts and the reasons why they failed.
+#auth_verbose = no
+
+# Even more verbose logging for debugging purposes. Shows for example SQL
+# queries.
+#auth_debug = no
+
+# In case of password mismatches, log the passwords and used scheme so the
+# problem can be debugged. Enabling this also enables auth_debug.
+#auth_debug_passwords = no
+
+# Maximum number of dovecot-auth worker processes. They&#39;re used to execute
+# blocking passdb and userdb queries (eg. MySQL and PAM). They&#39;re
+# automatically created and destroyed as needed.
+#auth_worker_max_count = 30
+
+# Host name to use in GSSAPI principal names. The default is to use the
+# name returned by gethostname(). Use &quot;$ALL&quot; to allow all keytab entries.
+#auth_gssapi_hostname =
+
+# Kerberos keytab to use for the GSSAPI mechanism. Will use the system
+# default (usually /etc/krb5.keytab) if not specified.
+#auth_krb5_keytab =
+
+# Do NTLM and GSS-SPNEGO authentication using Samba&#39;s winbind daemon and
+# ntlm_auth helper. &lt;doc/wiki/Authentication/Mechanisms/Winbind.txt&gt;
+#auth_use_winbind = no
+
+# Path for Samba&#39;s ntlm_auth helper binary.
+#auth_winbind_helper_path = /usr/bin/ntlm_auth
+
+# Number of seconds to delay before replying to failed authentications.
+#auth_failure_delay = 2
+
+auth default {
+  # Space separated list of wanted authentication mechanisms:
+  #   plain login digest-md5 cram-md5 ntlm rpa apop anonymous gssapi otp skey
+  #   gss-spnego
+  # NOTE: See also disable_plaintext_auth setting.
+  mechanisms = plain
+
+  #
+  # Password database is used to verify user&#39;s password (and nothing more).
+  # You can have multiple passdbs and userdbs. This is useful if you want to
+  # allow both system users (/etc/passwd) and virtual users to login without
+  # duplicating the system users into virtual database.
+  #
+  # &lt;doc/wiki/PasswordDatabase.txt&gt;
+  #
+  # By adding master=yes setting inside a passdb you make the passdb a list
+  # of &quot;master users&quot;, who can log in as anyone else. Unless you&#39;re using PAM,
+  # you probably still want the destination user to be looked up from passdb
+  # that it really exists. This can be done by adding pass=yes setting to the
+  # master passdb. &lt;doc/wiki/Authentication.MasterUsers.txt&gt;
+
+  # Users can be temporarily disabled by adding a passdb with deny=yes.
+  # If the user is found from that database, authentication will fail.
+  # The deny passdb should always be specified before others, so it gets
+  # checked first. Here&#39;s an example:
+
+  #passdb passwd-file {
+    # File contains a list of usernames, one per line
+    #args = /etc/dovecot.deny
+    #deny = yes
+  #}
+
+  # PAM authentication. Preferred nowadays by most systems.
+  # Note that PAM can only be used to verify if user&#39;s password is correct,
+  # so it can&#39;t be used as userdb. If you don&#39;t want to use a separate user
+  # database (passwd usually), you can use static userdb.
+  # REMEMBER: You&#39;ll need /etc/pam.d/dovecot file created for PAM
+  # authentication to actually work. &lt;doc/wiki/PasswordDatabase.PAM.txt&gt;
+  #passdb pam {
+    # [session=yes] [setcred=yes] [failure_show_msg=yes] [max_requests=&lt;n&gt;]
+    # [cache_key=&lt;key&gt;] [&lt;service name&gt;]
+    #
+    # session=yes makes Dovecot open and immediately close PAM session. Some
+    # PAM plugins need this to work, such as pam_mkhomedir.
+    #
+    # setcred=yes makes Dovecot establish PAM credentials if some PAM plugins
+    # need that. They aren&#39;t ever deleted though, so this isn&#39;t enabled by
+    # default.
+    #
+    # max_requests specifies how many PAM lookups to do in one process before
+    # recreating the process. The default is 100, because many PAM plugins
+    # leak memory.
+    #
+    # cache_key can be used to enable authentication caching for PAM
+    # (auth_cache_size also needs to be set). It isn&#39;t enabled by default
+    # because PAM modules can do all kinds of checks besides checking password,
+    # such as checking IP address. Dovecot can&#39;t know about these checks
+    # without some help. cache_key is simply a list of variables (see
+    # doc/wiki/Variables.txt) which must match for the cached data to be used.
+    # Here are some examples:
+    #   %u - Username must match. Probably sufficient for most uses.
+    #   %u%r - Username and remote IP address must match.
+    #   %u%s - Username and service (ie. IMAP, POP3) must match.
+    #
+    # The service name can contain variables, for example %Ls expands to
+    # pop3 or imap.
+    #
+    # Some examples:
+    #   args = session=yes %Ls
+    #   args = cache_key=%u dovecot
+    #args = dovecot
+  #}
+
+  # System users (NSS, /etc/passwd, or similiar)
+  # In many systems nowadays this uses Name Service Switch, which is
+  # configured in /etc/nsswitch.conf. &lt;doc/wiki/AuthDatabase.Passwd.txt&gt;
+  #passdb passwd {
+    # [blocking=yes] - See userdb passwd for explanation
+    #args =
+  #}
+
+  # Shadow passwords for system users (NSS, /etc/shadow or similiar).
+  # Deprecated by PAM nowadays.
+  # &lt;doc/wiki/PasswordDatabase.Shadow.txt&gt;
+  #passdb shadow {
+    # [blocking=yes] - See userdb passwd for explanation
+    #args =
+  #}
+
+  # PAM-like authentication for OpenBSD.
+  # &lt;doc/wiki/PasswordDatabase.BSDAuth.txt&gt;
+  #passdb bsdauth {
+    # [cache_key=&lt;key&gt;] - See cache_key in PAM for explanation.
+    #args =
+  #}
+
+  # passwd-like file with specified location
+  # &lt;doc/wiki/AuthDatabase.PasswdFile.txt&gt;
+  #passdb passwd-file {
+    # [scheme=&lt;default password scheme&gt;] [username_format=&lt;format&gt;]
+    # &lt;Path for passwd-file&gt;
+    #args =
+  #}
+
+  # checkpassword executable authentication
+  # NOTE: You will probably want to use &quot;userdb prefetch&quot; with this.
+  # &lt;doc/wiki/AuthDatabase.CheckPassword.txt&gt;
+  #passdb checkpassword {
+    # Path for checkpassword binary
+    #args =
+  #}
+
+  # SQL database &lt;doc/wiki/AuthDatabase.SQL.txt&gt;
+  #passdb sql {
+    # Path for SQL configuration file, see doc/dovecot-sql-example.conf
+    #args =
+  #}
+
+  # LDAP database &lt;doc/wiki/AuthDatabase.LDAP.txt&gt;
+  #passdb ldap {
+    # Path for LDAP configuration file, see doc/dovecot-ldap-example.conf
+    #args =
+  #}
+
+  # vpopmail authentication &lt;doc/wiki/AuthDatabase.VPopMail.txt&gt;
+  #passdb vpopmail {
+    # [cache_key=&lt;key&gt;] - See cache_key in PAM for explanation.
+    # [quota_template=&lt;template&gt;] - %q expands to Maildir++ quota
+    #   (eg. quota_template=quota_rule=*:backend=%q)
+    #args =
+  #}
+
+  #
+  # User database specifies where mails are located and what user/group IDs
+  # own them. For single-UID configuration use &quot;static&quot;.
+  #
+  # &lt;doc/wiki/UserDatabase.txt&gt;
+  #
+
+  # &quot;prefetch&quot; user database means that the passdb already provided the
+  # needed information and there&#39;s no need to do a separate userdb lookup.
+  # This can be made to work with SQL and LDAP databases, see their example
+  # configuration files for more information how to do it.
+  # &lt;doc/wiki/UserDatabase.Prefetch.txt&gt;
+  #userdb prefetch {
+  #}
+
+  # System users (NSS, /etc/passwd, or similiar). In many systems nowadays this
+  # uses Name Service Switch, which is configured in /etc/nsswitch.conf.
+  # &lt;doc/wiki/AuthDatabase.Passwd.txt&gt;
+  userdb passwd {
+    # [blocking=yes] - By default the lookups are done in the main dovecot-auth
+    # process. This setting causes the lookups to be done in auth worker
+    # proceses. Useful with remote NSS lookups that may block.
+    # NOTE: Be sure to use this setting with nss_ldap or users might get
+    # logged in as each others!
+    #args =
+  }
+
+  # passwd-like file with specified location
+  # &lt;doc/wiki/AuthDatabase.PasswdFile.txt&gt;
+  #userdb passwd-file {
+    # [username_format=&lt;format&gt;] &lt;Path for passwd-file&gt;
+    #args =
+  #}
+
+  # checkpassword executable user database lookup
+  # &lt;doc/wiki/AuthDatabase.CheckPassword.txt&gt;
+  #userdb checkpassword {
+    # Path for checkpassword binary
+    #args =
+  #}
+
+  # static settings generated from template &lt;doc/wiki/UserDatabase.Static.txt&gt;
+  #userdb static {
+    # Template for the fields. Can return anything a userdb could normally
+    # return. For example:
+    #
+    #  args = uid=500 gid=500 home=/var/mail/%u
+    #
+    # If you use deliver, it needs to look up users only from the userdb. This
+    # of course doesn&#39;t work with static because there is no list of users.
+    # Normally static userdb handles this by doing a passdb lookup. This works
+    # with most passdbs, with PAM being the most notable exception. If you do
+    # the user verification another way, you can add allow_all_users=yes to
+    # the args in which case the passdb lookup is skipped.
+    #
+    #args =
+  #}
+
+  # SQL database &lt;doc/wiki/AuthDatabase.SQL.txt&gt;
+  #userdb sql {
+    # Path for SQL configuration file, see doc/dovecot-sql-example.conf
+    #args =
+  #}
+
+  # LDAP database &lt;doc/wiki/AuthDatabase.LDAP.txt&gt;
+  #userdb ldap {
+    # Path for LDAP configuration file, see doc/dovecot-ldap-example.conf
+    #args =
+  #}
+
+  # vpopmail &lt;doc/wiki/AuthDatabase.VPopMail.txt&gt;
+  #userdb vpopmail {
+  #}
+
+  # User to use for the process. This user needs access to only user and
+  # password databases, nothing else. Only shadow and pam authentication
+  # requires roots, so use something else if possible. Note that passwd
+  # authentication with BSDs internally accesses shadow files, which also
+  # requires roots. Note that this user is NOT used to access mails.
+  # That user is specified by userdb above.
+  user = root
+
+  # Directory where to chroot the process. Most authentication backends don&#39;t
+  # work if this is set, and there&#39;s no point chrooting if auth_user is root.
+  # Note that valid_chroot_dirs isn&#39;t needed to use this setting.
+  #chroot =
+
+  # Number of authentication processes to create
+  #count = 1
+
+  # Require a valid SSL client certificate or the authentication fails.
+  #ssl_require_client_cert = no
+
+  # Take the username from client&#39;s SSL certificate, using
+  # X509_NAME_get_text_by_NID() which returns the subject&#39;s DN&#39;s
+  # CommonName.
+  #ssl_username_from_cert = no
+
+  # It&#39;s possible to export the authentication interface to other programs:
+  socket listen {
+    master {
+      # Master socket provides access to userdb information. It&#39;s typically
+      # used to give Dovecot&#39;s local delivery agent access to userdb so it
+      # can find mailbox locations.
+      path = /var/run/dovecot/auth-master
+      mode = 0600
+      # Default user/group is the one who started dovecot-auth (root)
+      user = postfix
+      group = postfix
+    }
+    client {
+      # The client socket is generally safe to export to everyone. Typical use
+      # is to export it to your SMTP server so it can do SMTP AUTH lookups
+      # using it.
+     # path = /var/run/dovecot/auth-client
+      path = /var/spool/postfix/private/auth
+      mode = 0660
+      user = postfix
+      group = postfix
+    }
+  }
+}
+
+# If you wish to use another authentication server than dovecot-auth, you can
+# use connect sockets. They are assumed to be already running, Dovecot&#39;s master
+# process only tries to connect to them. They don&#39;t need any other settings
+# than the path for the master socket, as the configuration is done elsewhere.
+# Note that the client sockets must exist in the login_dir.
+#auth external {
+#  socket connect {
+#    master {
+#      path = /var/run/dovecot/auth-master
+#    }
+#  }
+#}
+
+##
+## Dictionary server settings
+##
+
+# Dictionary can be used by some plugins to store key=value lists, such as
+# quota, expire and acl plugins. The dictionary can be used either directly or
+# though a dictionary server. The following dict block maps dictionary names to
+# URIs when the server is used. These can then be referenced using URIs in
+# format &quot;proxy::&lt;name&gt;&quot;.
+
+dict {
+  #quota = mysql:/etc/dovecot-dict-quota.conf
+  #expire = db:/var/lib/dovecot/expire.db
+}
+
+# Path to Berkeley DB&#39;s configuration file. See doc/dovecot-db-example.conf
+#dict_db_config =
+
+##
+## Plugin settings
+##
+
+plugin {
+  # Here you can give some extra environment variables to mail processes.
+  # This is mostly meant for passing parameters to plugins. %variable
+  # expansion is done for all values.
+
+  # Quota plugin. Multiple backends are supported:
+  #   dirsize: Find and sum all the files found from mail directory.
+  #            Extremely SLOW with Maildir. It&#39;ll eat your CPU and disk I/O.
+  #   dict: Keep quota stored in dictionary (eg. SQL)
+  #   maildir: Maildir++ quota
+  #   fs: Read-only support for filesystem quota
+  #
+  # Quota limits are set using &quot;quota_rule&quot; parameters, either in here or in
+  # userdb. It&#39;s also possible to give mailbox-specific limits, for example:
+  #   quota_rule = *:storage=1048576
+  #   quota_rule2 = Trash:storage=102400
+  # User has now 1GB quota, but when saving to Trash mailbox the user gets
+  # additional 100MB.
+  #
+  # Multiple quota roots are also possible, for example:
+  #   quota = dict:user::proxy::quota
+  #   quota2 = dict:domain:%d:proxy::quota_domain
+  #   quota_rule = *:storage=102400
+  #   quota2_rule = *:storage=1048576
+  # Gives each user their own 100MB quota and one shared 1GB quota within
+  # the domain.
+  #
+  # You can execute a given command when user exceeds a specified quota limit.
+  # Each quota root has separate limits. Only the command for the first
+  # exceeded limit is excecuted, so put the highest limit first.
+  # Note that % needs to be escaped as %%, otherwise &quot;% &quot; expands to empty.
+  #   quota_warning = storage=95%% /usr/local/bin/quota-warning.sh 95
+  #   quota_warning2 = storage=80%% /usr/local/bin/quota-warning.sh 80
+  #quota = maildir
+
+  # ACL plugin. vfile backend reads ACLs from &quot;dovecot-acl&quot; file from maildir
+  # directory. You can also optionally give a global ACL directory path where
+  # ACLs are applied to all users&#39; mailboxes. The global ACL directory contains
+  # one file for each mailbox, eg. INBOX or sub.mailbox. cache_secs parameter
+  # specifies how many seconds to wait between stat()ing dovecot-acl file
+  # to see if it changed.
+  #acl = vfile:/etc/dovecot-acls:cache_secs=300
+
+  # To let users LIST mailboxes shared by other users, Dovecot needs a
+  # shared mailbox dictionary. For example:
+  #acl_shared_dict = file:/var/lib/dovecot/shared-mailboxes
+
+  # Convert plugin. If set, specifies the source storage path which is
+  # converted to destination storage (mail_location) when the user logs in.
+  # The existing mail directory is renamed to &lt;dir&gt;-converted.
+  #convert_mail = mbox:%h/mail
+  # Skip mailboxes which we can&#39;t open successfully instead of aborting.
+  #convert_skip_broken_mailboxes = no
+  # Skip directories beginning with &#39;.&#39;
+  #convert_skip_dotdirs = no
+  # If source storage has mailbox names with destination storage&#39;s hierarchy
+  # separators, replace them with this character.
+  #convert_alt_hierarchy_char = _
+
+  # Trash plugin. When saving a message would make user go over quota, this
+  # plugin automatically deletes the oldest mails from configured mailboxes
+  # until the message can be saved within quota limits. The configuration file
+  # is a text file where each line is in format: &lt;priority&gt; &lt;mailbox name&gt;
+  # Mails are first deleted in lowest -&gt; highest priority number order
+  #trash = /etc/dovecot-trash.conf
+
+  # Expire plugin. Mails are expunged from mailboxes after being there the
+  # configurable time. The first expiration date for each mailbox is stored in
+  # a dictionary so it can be quickly determined which mailboxes contain
+  # expired mails. The actual expunging is done in a nightly cronjob, which
+  # you must set up:
+  #   dovecot --exec-mail ext /usr/libexec/dovecot/expire-tool
+  #expire = Trash 7 Spam 30
+  #expire_dict = proxy::expire
+
+  # Lazy expunge plugin. Currently works only with maildirs. When a user
+  # expunges mails, the mails are moved to a mailbox in another namespace
+  # (1st). When a mailbox is deleted, the mailbox is moved to another namespace
+  # (2nd) as well. Also if the deleted mailbox had any expunged messages,
+  # they&#39;re moved to a 3rd namespace. The mails won&#39;t be counted in quota,
+  # and they&#39;re not deleted automatically (use a cronjob or something).
+  #lazy_expunge = .EXPUNGED/ .DELETED/ .DELETED/.EXPUNGED/
+
+  # Events to log. Also available: flag_change append
+  #mail_log_events = delete undelete expunge copy mailbox_delete mailbox_rename
+  # Group events within a transaction to one line.
+  #mail_log_group_events = no
+  # Available fields: uid, box, msgid, from, subject, size, vsize, flags
+  # size and vsize are available only for expunge and copy events.
+  #mail_log_fields = uid box msgid size
+}
+
+# Config files can also be included. deliver doesn&#39;t support them currently.
+#!include /etc/dovecot/conf.d/*.conf
+# Optional configurations, don&#39;t give an error if it&#39;s not found:
+#!include_try /etc/dovecot/extra.conf
+userdb {
+    driver = sql
+    args = /etc/dovecot/dovecot-sql.conf
+  }
+passdb {
+    driver = sql
+    args = /etc/dovecot/dovecot-sql.conf
+  }
+</code></pre><br />ошибка<br /><pre><code>
+systemd[1]: Started Postfix Mail Transport Agent.
+&lt;--------- отсылаю входящее письмо
+postfix/smtpd[23920]: connect from smtp38.i.mail.ru[94.100.177.98]
+postfix/smtpd[23920]: Anonymous TLS connection established from smtp38.i.mail.ru[94.100.177.98]: TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits)
+postfix/smtpd[23920]: AF69F42A3C: client=smtp38.i.mail.ru[94.100.177.98]
+postfix/cleanup[23929]: AF69F42A3C: message-id=&lt;<a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="9af8f8ada3afffa3fbb7aea2fcadb7aaafaeafb7fff8aff9b7feafaea9fcfcabfff9aaa9acdaf7fbf3f6b4e8ef">[email&#160;protected]</a>&gt;
+postfix/qmgr[23917]: AF69F42A3C: from=&lt;****@mail.ru&gt;, size=1296, nrcpt=1 (queue active)
+postfix/lmtp[23931]: AF69F42A3C: to=&lt;<a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="dbacbeb9b6baa8afbea99bbababaf5bfbfb5a8f5b5beaf">[email&#160;protected]</a>&gt;, relay=none, delay=0.17, delays=0.13/0.04/0/0, dsn=4.4.1, status=deferred (connect to aaa.ddns.net[private/dovecot-lmtp]: Connection refused)
+postfix/smtpd[23920]: disconnect from smtp38.i.mail.ru[94.100.177.98] ehlo=2 starttls=1 mail=1 rcpt=1 data=1 quit=1 commands=7
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183918"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/183918/index.html">#</a>
+            5 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3167
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>protocols = imap pop3 lmtp</blockquote>а вы уверены что вам нужен lmtp?
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183920"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/bondeet/index.html">
+                <span class="post-username">bondeet</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/183920/index.html">#</a>
+            5 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/bondeet/topics/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/bondeet/posts/index.html">
+                    21
+                </a>
+            </div>
+            <div>
+                Участник с: 10 марта 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            не уверен. настраивал по манам а не из собственных скудных познаний) отключение ничего не решает.<br />-------------<br />убрал lmtp<br /><br />поменял virtual_transport  = dovecot<br /><br /><pre><code> Started Postfix Mail Transport Agent.
+postfix/smtpd[25162]: connect from smtp60.i.mail.ru[217.69.128.40]
+postfix/smtpd[25162]: Anonymous TLS connection established from smtp60.i.mail.ru[217.69.128.40]: TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits)
+postfix/smtpd[25162]: 7D45942A45: client=smtp60.i.mail.ru[217.69.128.40]
+postfix/cleanup[25167]: 7D45942A45: message-id=&lt;<a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="ddebb9e4bbbeeae5bbf0e8e8eab8f0e4eeeabbf0bbe9e8e5f0efbfeaefe4ebeeefbce9eeec9db0bcb4b1f3afa8">[email&#160;protected]</a>&gt;
+postfix/qmgr[25147]: 7D45942A45: from=&lt;***@mail.ru&gt;, size=1296, nrcpt=1 (queue active)
+postfix/pipe[25151]: 7D45942A45: to=&lt;<a href="../../../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="fe899b9c939f8d8a9b8cbe9f9f9fd09a9a908dd0909b8a">[email&#160;protected]</a>&gt;, relay=dovecot, delay=0.18, delays=0.12/0/0/0.06, dsn=4.3.0, status=deferred (temporary failure. Command output: doveconf: Warning: NOTE: You can get a new clean config file with: doveconf -n &gt; dovecot-new.conf doveconf: Warning: Obsolete setting in /etc/dovecot/dovecot.conf:95: ssl_cert_file has been replaced by ssl_cert = &lt;file doveconf: Warning: Obsolete setting in /etc/dovecot/dovecot.conf:96: ssl_key_file has been replaced by ssl_key = &lt;file doveconf: Warning: Obsolete setting in /etc/dovecot/dovecot.conf:838: add auth_ prefix to all settings inside auth {} and remove the auth {} section completely doveconf: Warning: Obsolete setting in /etc/dovecot/dovecot.conf:988: userdb passwd {} has been replaced by userdb { driver=passwd } doveconf: Warning: Obsolete setting in /etc/dovecot/dovecot.conf:1050: auth_user has been replaced by service auth { user } )
+postfix/smtpd[25162]: disconnect from smtp60.i.mail.ru[217.69.128.40] ehlo=2 starttls=1 mail=1 rcpt=1 data=1 quit=1 commands=7</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183934"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/183934/index.html">#</a>
+            5 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3167
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>bondeet</em><br>настраивал по манам</blockquote>люди которые настраивают по манам таких ошибок не выкладывают))<br />у вас же написано что делать, что вам ещё подсказать?)
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183943"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/bondeet/index.html">
+                <span class="post-username">bondeet</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/183943/index.html">#</a>
+            5 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/bondeet/topics/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/bondeet/posts/index.html">
+                    21
+                </a>
+            </div>
+            <div>
+                Участник с: 10 марта 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            ткните носом. будьте так добры. третий день не могу разобраться почему dovecot-lmtp сбрасывает соединение
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183948"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/183948/index.html">#</a>
+            5 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3167
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>bondeet</em><br>ssl_cert_file has been replaced by ssl_cert</blockquote>и т.д. после того как исправите все ошибки в конфигурации посмотримчто будет дальше.
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183960"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/bondeet/index.html">
+                <span class="post-username">bondeet</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/183960/index.html">#</a>
+            5 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/bondeet/topics/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/bondeet/posts/index.html">
+                    21
+                </a>
+            </div>
+            <div>
+                Участник с: 10 марта 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            исправил<br /><pre><code>
+postfix.service - Postfix Mail Transport Agent
+   Loaded: loaded (/usr/lib/systemd/system/postfix.service; disabled; vendor preset: disabled)
+   Active: active (running) since Sat 2017-03-04 21:51:43 MSK; 9s ago
+  Process: 7824 ExecStop=/usr/bin/postfix stop (code=exited, status=0/SUCCESS)
+  Process: 7836 ExecStart=/usr/bin/postfix start (code=exited, status=0/SUCCESS)
+ Main PID: 7916 (master)
+    Tasks: 3 (limit: 4915)
+   CGroup: /system.slice/postfix.service
+                 /usr/lib/postfix/bin/master -w
+                 pickup -l -t unix -u
+                 qmgr -l -t unix -u
+
+ systemd[1]: Starting Postfix Mail Transport Agent...
+ postfix/master[7916]: daemon started -- version 3.1.4, configuration /etc/postfix
+ systemd[1]: Started Postfix Mail Transport Agent.
+
+\u25cf dovecot.service - Dovecot IMAP/POP3 email server
+   Loaded: loaded (/usr/lib/systemd/system/dovecot.service; disabled; vendor preset: disabled)
+   Active: active (running) since Sat 2017-03-04 21:51:41 MSK; 10s ago
+     Docs: man:dovecot(1)
+           <a href="https://wiki2.dovecot.org/">http://wiki2.dovecot.org/</a>
+  Process: 7825 ExecStop=/usr/bin/doveadm stop (code=exited, status=0/SUCCESS)
+  Process: 7848 ExecStart=/usr/bin/dovecot (code=exited, status=0/SUCCESS)
+ Main PID: 7851 (dovecot)
+    Tasks: 4 (limit: 4915)
+   CGroup: /system.slice/dovecot.service
+           /usr/bin/dovecot
+           dovecot/anvil
+           dovecot/log
+           dovecot/config
+
+systemd[1]: Starting Dovecot IMAP/POP3 email server...
+dovecot[7851]: master: Dovecot v2.2.27 (c0f36b0) starting up for imap, pop3, lmtp
+systemd[1]: Started Dovecot IMAP/POP3 email server.
+</code></pre><br />ошибка таже самая
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183964"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/183964/index.html">#</a>
+            5 лет, 6 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3167
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>bondeet</em><br>убрал lmtp</blockquote><pre><code># journalctl -u postfix -f
+# journalctl -u dovecot -f</code></pre>
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183965"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/bondeet/index.html">
+                <span class="post-username">bondeet</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/183965/index.html">#</a>
+            5 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/bondeet/topics/index.html">
+                    5
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/bondeet/posts/index.html">
+                    21
+                </a>
+            </div>
+            <div>
+                Участник с: 10 марта 2014
+            </div>
+            
+        </td>
+        <td class="post-content">
+            а почему рекомендуете lmtp убрать?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-183966"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/183966/index.html">#</a>
+            5 лет, 6 месяцев назад
+            
+                (отредактировано
+                
+                    5 лет, 6 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3167
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote>virtual_transport = dovecot</blockquote><br />да разницы я особой между lda и lmtp невижу, просто у вас в конфигурации то lda то lmtp)
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/indexc5d5.html?next=/forum/topic/17211/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'745e4f660d05161c',m:'g_JsN9xQN1K7HIt4ZckK0QSWGyMy_mxnt.ujOPk7yyU-1662374042-0-AR1rlhRKIK8P/c0BUGITcbFAy9q1Lp3UupAmUCnXSYIuT/awOicATIMkiacC8HbTVEoivDYOJKpSCGb9FEUGyrb7jHCz+pbxzgKUJH3C11AG/U04bSm4BVkE8J3B2V0HI+RtY5dF+Y5TrcGazSWvKJU=',s:[0x176a60c15a,0x764174435e],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible5615.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/17211/?page=1 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 08:50:45 GMT -->
+</html>

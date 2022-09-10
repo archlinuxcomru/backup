@@ -1,0 +1,833 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/21413/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:08:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        systemd узнать все запущеные сервисы.
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/2/index.html">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/23/index.html">Демоны и загрузка системы</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>systemd узнать все запущеные сервисы.</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>systemd узнать все запущеные сервисы.</h1>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-256582"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Vadim/index.html">
+                <span class="post-username">Vadim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/256582/index.html">#</a>
+            3 месяца, 3 недели назад
+            
+                (отредактировано
+                
+                    3 месяца, 3 недели назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/72/22/7222132327ed41066e6514a2df7291c9.png" alt="Vadim avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Vadim/topics/index.html">
+                    280
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Vadim/posts/index.html">
+                    1909
+                </a>
+            </div>
+            <div>
+                Участник с: 20 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <a href="https://wiki.artixlinux.org/Main/Migration">вот тут нашел команду</a><pre><code>systemctl list-units --state=running | grep -v systemd | awk &#39;{print $1}&#39; | grep service &gt; daemon.list</code></pre>работает,но выдает <pre><code>
+acpid.service
+dbus.service
+iwd.service
+NetworkManager.service
+polkit.service
+rtkit-daemon.service
+sddm.service
+sshd.service
+udisks2.service
+upower.service
+user@1000.service
+</code></pre>и все,где звук,alsa,pipewire?<br />по вики состояние системы<br /><pre><code>State: running
+     Jobs: 0 queued
+   Failed: 0 units
+    Since: Tue 2022-05-10 01:02:54 MSK; 2h 49min left
+   CGroup: /
+           ├─init.scope
+           │ └─ 1 /sbin/init
+           ├─system.slice
+           │ ├─NetworkManager.service
+           │ │ └─ 400 /usr/bin/NetworkManager --no-daemon
+           │ ├─dbus.service
+           │ │ └─ 385 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-o&gt;
+           │ ├─iwd.service
+           │ │ └─ 386 /usr/lib/iwd/iwd
+           │ ├─pacman-init.service
+           │ │ └─ 419 gpg-agent --homedir /etc/pacman.d/gnupg --use-standard-socket --daemon
+           │ ├─polkit.service
+           │ │ └─ 809 /usr/lib/polkit-1/polkitd --no-debug
+           │ ├─rtkit-daemon.service
+           │ │ └─ 1083 /usr/lib/rtkit-daemon
+lines 1-21
+</code></pre>Список запущенных юнитов systemctl list-units<br /><pre><code>UNIT                                                                                                  LOAD   ACTIVE SUB  &gt;
+  proc-sys-fs-binfmt_misc.automount                                                                     loaded active waiti&gt;
+  sys-devices-pci0000:00-0000:00:02.1-0000:01:00.1-ata6-host5-target5:0:0-5:0:0:0-block-sda-sda1.device loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:02.1-0000:01:00.1-ata6-host5-target5:0:0-5:0:0:0-block-sda-sda2.device loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:02.1-0000:01:00.1-ata6-host5-target5:0:0-5:0:0:0-block-sda-sda3.device loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:02.1-0000:01:00.1-ata6-host5-target5:0:0-5:0:0:0-block-sda-sda5.device loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:02.1-0000:01:00.1-ata6-host5-target5:0:0-5:0:0:0-block-sda-sda6.device loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:02.1-0000:01:00.1-ata6-host5-target5:0:0-5:0:0:0-block-sda-sda7.device loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:02.1-0000:01:00.1-ata6-host5-target5:0:0-5:0:0:0-block-sda-sda8.device loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:02.1-0000:01:00.1-ata6-host5-target5:0:0-5:0:0:0-block-sda.device      loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:02.1-0000:01:00.2-0000:02:07.0-0000:08:00.0-net-enp8s0.device          loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:02.2-0000:09:00.0-nvme-nvme0-nvme0n1-nvme0n1p1.device                  loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:02.2-0000:09:00.0-nvme-nvme0-nvme0n1-nvme0n1p2.device                  loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:02.2-0000:09:00.0-nvme-nvme0-nvme0n1-nvme0n1p3.device                  loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:02.2-0000:09:00.0-nvme-nvme0-nvme0n1-nvme0n1p4.device                  loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:02.2-0000:09:00.0-nvme-nvme0-nvme0n1.device                            loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:08.1-0000:0a:00.0-backlight-acpi_video0.device                         loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:08.1-0000:0a:00.1-sound-card0-controlC0.device                         loaded active plugg&gt;
+  sys-devices-pci0000:00-0000:00:08.1-0000:0a:00.6-sound-card1-controlC1.device                         loaded active plugg&gt;
+  sys-devices-platform-serial8250-tty-ttyS0.device                                                      loaded active plugg&gt;
+  sys-devices-platform-serial8250-tty-ttyS1.device                                                      loaded active plugg&gt;
+lines 1-21
+</code></pre>вообще ничего не понятно.<br /><br />вот в другой системе,openrc<br /><pre><code>rc-status --all
+Runlevel: default
+ devfs                                                             [  started  ]
+ keymaps                                                           [  started  ]
+ dmesg                                                             [  started  ]
+ fsck                                                              [  started  ]
+ root                                                              [  started  ]
+ localmount                                                        [  started  ]
+ bootmisc                                                          [  started  ]
+ dbus                                                 [  started -2:-58:-8 (0) ]
+ elogind                                               [  started 00:01:49 (0) ]
+ acpid                                                 [  started 00:01:49 (0) ]
+ consolefont                                                       [  started  ]
+ netmount                                                          [  started  ]
+ lightdm                                               [  started 00:01:49 (0) ]
+ alsasound                                                         [  started  ]
+ backlight                                                         [  started  ]
+ binfmt                                                            [  started  ]
+ cgroups                                                           [  started  ]
+ fuse                                                              [  started  ]
+ hostname                                                          [  started  ]
+ ntp-client                                                        [  stopped  ]
+ ntpd                                                  [  started 00:01:49 (0) ]
+ local                                                             [  started  ]
+ agetty.tty4                                           [  started 00:01:49 (0) ]
+ agetty.tty2                                           [  started 00:01:49 (0) ]
+ agetty.tty1                                           [  started 00:01:49 (0) ]
+ agetty.tty6                                           [  started 00:01:49 (0) ]
+ agetty.tty3                                           [  started 00:01:49 (0) ]
+ agetty                                                [  started 00:00:09 (2) ]
+ agetty.tty5                                           [  started 00:01:49 (0) ]
+Runlevel: sysinit
+ sysfs                                                             [  started  ]
+ cgroups                                                           [  started  ]
+ devfs                                                             [  started  ]
+ kmod-static-nodes                                                 [  started  ]
+ opentmpfiles-dev                                                  [  started  ]
+ udev                                                              [  started  ]
+ dmesg                                                             [  started  ]
+ udev-trigger                                                      [  started  ]
+ dbus                                                 [  started -2:-58:-8 (0) ]
+ NetworkManager                                                    [  started  ]
+Runlevel: boot
+ termencoding                                                      [  started  ]
+ keymaps                                                           [  started  ]
+ hwclock                                                           [  started  ]
+ modules                                                           [  started  ]
+ fsck                                                              [  started  ]
+ root                                                              [  started  ]
+ mtab                                                              [  started  ]
+ swap                                                              [  started  ]
+ localmount                                                        [  started  ]
+ sysctl                                                            [  started  ]
+ bootmisc                                                          [  started  ]
+ net.lo                                                            [  started  ]
+ opentmpfiles-setup                                                [  started  ]
+ opensysusers                                                      [  started  ]
+ loopback                                                          [  started  ]
+ save-keymaps                                                      [  started  ]
+ procfs                                                            [  started  ]
+ binfmt                                                            [  started  ]
+ elogind                                               [  started 00:01:49 (0) ]
+ save-termencoding                                                 [  started  ]
+ urandom                                                           [  started  ]
+ hostname                                                          [  started  ]
+Runlevel: nonetwork
+ local                                                             [  started  ]
+Runlevel: shutdown
+</code></pre>все четко и понятно.<br />runlevel default<br />runlevel boot<br />runlevel sysinit<br />есть такая команда в systemd чтобы все сразу увидеть?
+            
+                
+                    <div class="post-signature">
+                        Linux Forever!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-256583"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/256583/index.html">#</a>
+            3 месяца, 3 недели назад
+            
+                (отредактировано
+                
+                    3 месяца, 3 недели назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Vadim</em><br>pipewire</blockquote>Его дёргает пользовательский юнит.<br /><br /><blockquote>есть такая команда в systemd чтобы все сразу увидеть?</blockquote>Смотря, что вы имеете ввиду под &quot;командой&quot;, если винегрет в одну линию то можно что-нибудь придумать.<br />Но вообще нет, systemctl по умолчанию подключается к системной сессии, а вы хотите данные из пользовательской.
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-256584"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/vs220/index.html">
+                <span class="post-username">vs220</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/256584/index.html">#</a>
+            3 месяца, 3 недели назад
+            
+                (отредактировано
+                
+                    3 месяца, 3 недели назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/vs220/topics/index.html">
+                    22
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/vs220/posts/index.html">
+                    8070
+                </a>
+            </div>
+            <div>
+                Участник с: 16 августа 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Vadim</em><br>такая команда в systemd чтобы все сразу увидеть?</blockquote>если сервисы глянуть то<br /><br />для системных<br /><pre><code>systemctl --type=service</code></pre><br />для пользовательских ( запускаемых от юзера)<br /><pre><code>systemctl --user --type=service</code></pre>ключик all можно добавить если все надо<br /><pre><code>systemctl --type=service -a</code></pre>смотрите справку по systemctl<br /><pre><code>systemctl -h</code></pre><br />статус сервиса видно в колонке &quot;SUB&quot;
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-256585"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/indeviral/index.html">
+                <span class="post-username">indeviral</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/256585/index.html">#</a>
+            3 месяца, 3 недели назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/indeviral/topics/index.html">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/indeviral/posts/index.html">
+                    3165
+                </a>
+            </div>
+            <div>
+                Участник с: 10 августа 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <pre><code>for i in {system,user}; do systemctl list-units --state=running -q --$i; done | grep service |awk &#39;{print $1}&#39;
+</code></pre>
+            
+                
+                    <div class="post-signature">
+                        Ошибки в тексте-неповторимый стиль автора©
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-256586"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Vadim/index.html">
+                <span class="post-username">Vadim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/256586/index.html">#</a>
+            3 месяца, 3 недели назад
+            
+                (отредактировано
+                
+                    3 месяца, 3 недели назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/72/22/7222132327ed41066e6514a2df7291c9.png" alt="Vadim avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Vadim/topics/index.html">
+                    280
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Vadim/posts/index.html">
+                    1909
+                </a>
+            </div>
+            <div>
+                Участник с: 20 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            спасибо,буду дальше читать.вот для user немного уже понятно<pre><code>systemctl --user --type=service
+  UNIT                             LOAD   ACTIVE SUB     DESCRIPTION   &gt;
+  at-spi-dbus-bus.service          loaded active running Accessibility &gt;
+  dbus.service                     loaded active running D-Bus User Mes&gt;
+  dconf.service                    loaded active running User preferenc&gt;
+  obex.service                     loaded active running Bluetooth OBEX&gt;
+  pipewire-pulse.service           loaded active running PipeWire Pulse&gt;
+  pipewire.service                 loaded active running PipeWire Multi&gt;
+  plasma-kactivitymanagerd.service loaded active running KActivityManag&gt;
+  wireplumber.service              loaded active running Multimedia Ser&gt;
+
+LOAD   = Reflects whether the unit definition was properly loaded.
+ACTIVE = The high-level unit activation state, i.e. generalization of S&gt;
+SUB    = The low-level unit activation state, values depend on unit typ&gt;
+8 loaded units listed. Pass --all to see loaded but inactive units, too.
+To show all installed unit files use &#39;systemctl list-unit-files&#39;.
+</code></pre>мало работал с systemd,надо хоть что-то изучить.<br />хотя-бы чтобы правильно systemd выпиливать.или использовать.
+            
+                
+                    <div class="post-signature">
+                        Linux Forever!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-256592"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/sooNei9E/index.html">
+                <span class="post-username">sooNei9E</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/256592/index.html">#</a>
+            3 месяца, 3 недели назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/sooNei9E/topics/index.html">
+                    13
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/sooNei9E/posts/index.html">
+                    42
+                </a>
+            </div>
+            <div>
+                Участник с: 08 февраля 2022
+            </div>
+            
+        </td>
+        <td class="post-content">
+            просто вводишь команду systemctl и она показывает все загруженные модули, можно пролистать и посмотреть нет ли ошибок
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index368a.html?next=/forum/topic/21413/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/21413/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:08:53 GMT -->
+</html>

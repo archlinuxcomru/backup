@@ -1,0 +1,1168 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/21053/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:09:48 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Archlinux BTRFS, снапшоты в GRUB
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/posts/index.html" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="../../feeds/topics/index.html" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="../../../news/index.html">Новости</a></li>
+    <li class="active"><a href="../../index.html">Форум</a></li>
+    <li class=""><a href="../../../blogs/index.html">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_(Русский)">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="../../../irc/index.html#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="../../../accounts/login/index.html" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="../../../accounts/login/index.html">Вход</a></li>
+          <li><a href="../../../accounts/register/index.html">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="../../../messages/inbox/index.html" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="../../../index.html">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="../../index.html">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="../../category/6/index.html">Разработка</a> <span class="divider">/</span></li>
+            
+                <li><a href="../../forum/21/index.html">Разработки арчеводов</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Archlinux BTRFS, снапшоты в GRUB</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Archlinux BTRFS, снапшоты в GRUB</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexaf4d.html?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexc575.html?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index235c.html?page=7">7</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252070"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Nebulosa/index.html">
+                <span class="post-username">Nebulosa</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252070/index.html">#</a>
+            9 месяцев, 2 недели назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4a/9b/4a9bd66c7a2a170b1585f3b56cdb48de.png" alt="Nebulosa avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Nebulosa/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Nebulosa/posts/index.html">
+                    830
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Начнём!<br />Поводом для написании темы послужила очередная установка Убунты (здесь я рассматриваю дистрибутив, только как готовое решение, попробовать и сделать выводы), на посмотреть, куда движется Линукс для массового десктопа.<br />Кроме браузера в снап-пакете и кислотных обоев, установщик также предлагает установить систему на ZFS, что я и сделал. Во время выпиливания snap пакетов, заметил, что при удалении и установке запускается какой-то скрипт и создаются снапшоты. Почитал обзоры и особо не придал внимания, однако в очередной раз, удаляя снап-ядро, забыл какую-то команду - то ли, нужно было демонтировать loop0..loop7, толи удалить папки - система была повреждена и переустановка снап-пакета ничего не дала, стало только хуже. Тут я и вспомнил про механизм отката, который предоставляет набор скриптов + снапшоты на ZFS. Загрузившись, через выбор в груб, на нужном срезе системы, понял насколько удобное техническое решение получилось. <a href="https://arstechnica.com/gadgets/2020/03/ubuntu-20-04s-zsys-adds-zfs-snapshots-to-package-management/">Погрузившись в тему</a>, также понял, что удобства предоставлялись самой файловой системой ZFS + обвязка скриптов.<br />Конечно, же захотел это повторить на другом своём неттопе с Арчлинукс, что очень кстати, т.к. использую связку старых драйверов nvidia+ядро и при его обновлении - всегда лотерея - загрузится ли графическая оболочка?..  Маскирование обновлений пакета, downgrade из aur -  всё это пройденный этап, периодически пользуюсь или просто жду, когда придут обновления. Признаться, я прочно застрял в теме разметок файловой системы и копий образов систем на уровне разбивки / и /home на ext4 и rsync архивов, которые можно было копировать на какие-то внешние носители. В общих чертах я понимал как и что, но городить и делать из этого системное решение смысла было мало. Здесь же никаких дополнительных движений не требуется, + всё замкнуто в одном диске, просто и удобно, этим и привлекло.<br /><br /> Итак, <a href="https://cdn.arstechnica.net/wp-content/uploads/2020/03/grub-zsys-boot-history-2.png">финальный результат определён</a>, осталось дело за малым!<br /><br />За пару вечеров провёл основательный ликбез в теме современной организации файловых систем Линукс дистрибутивов, выводы сделал такие:<br />1.  LVM - мощная вещь, но немного не про то - как мне кажется.. Это скорее про организацию отказоустойчивых систем (серверов), подключения/удаления жестких дисков и опять же, для того, чтобы пользоваться во всю мощь - нужны несколько жестких дисков, что для домашнего использования является избыточным.<br />2. ZFS для линукса - продвигает для повседневного использования в основном компания Каноникал и в других популярных массовых дистрибутивах (например, Fedora) не представлена. Среди обзорщиков дистрибутивов считается пока что технологией, которая &quot;залочена&quot; за одной компанией (как и технология snap пакетов) и решения малопереносимы. Плюс есть нарекания по расходу оперативной памяти.<br />3. BTRFS - ровно то, что советуют именно для линукс дистрибутивов, не хуже по показателям и сочетает преимущества первых двух пунктов. Единственный минус - находится в активной разработке, поэтому необходимо отслеживать изменения и обновлять методики её использования.<br />Стало быть, нужно сделать решение на основе BTRFS с учётом стремительности её разработки. Погрузился в чтение объёмных wiki, инструкций, также обратил внимание, что да, инструкции могут сильно отличаться друга от друга, в зависимости от того, когда они написаны, одна история со swap чего стоит - я думал, выделение раздела под свап давно в прошлом, однако почти все, делают это поголовно, причём кто выделяет 1гб, кто 2, почему и зачем такие размеры - особо не рассказывают. Поэтому я стал пристально обращать внимание на дату обзоров и инструкции. Поискал также видеоинструкции на ютубе. На русском языке есть несколько монотонных обзоров установки в лучшем случае статье с сайта или по устаревшему вики. Другое дело англоязычные видеообзорщики! Нашёл несколько крупных каналов, авторы которых практикуют ежемесячные установки Арча, для обзора новых программ. Сравнив нескольких, нашёл одного, который делает это регулярно, устанавливает новинки и прочее, но  и самое главное: объясняет каждый свой шаг, при этом придерживается основного вики Арча.<br /><br />И наконец, предлагаю вашему вниманию два command-list, один <a href="https://github.com/nebulosa2007/archinstallbtfrs/blob/master/script-list-btrfs-snapper.sh">на основе snapper</a> (более универсальный), второй - <a href="https://github.com/nebulosa2007/archinstallbtfrs/blob/master/script-list-btrfs-timeshift.sh">на основе timeshift</a> (больше зависит от Gnome).<br /><br />Оба скрипт-листа покомандно прогнал несколько раз на виртуальных машинах, вроде работают как ожидаются. Длинное предисловие написал, для того, чтобы объяснить логику разбития файловой системы и применяемых технологий. Старался делать каждую команду максимально необходимой, атомарной, минимально зависимой от других компонентов и моих пристрастий в софте. Хоть они выглядят как bash скрипты, не рекомендую их делать исполняемыми и запускать, без внимательной вычитки. Лучше покомандно воспроизводить на интересуемой машине, и лучше через SSH, для удобства копирования и переноса команд. Как это сделать через SSH - оставил комментарии.<br /><br />Максимально приближенным к результату получается вариант с timeshift, для варианта со snapper - нужно будет предварительно сделать желаемый снапшот доступным для записи. Команды приведены в комментарии. Из пункта меню GRUB система грузится в режиме только для чтения, поэтому нужно будет проводить дополнительные манипуляции.<br /><br />Пока всё. Призываю всех, кто уже работает с BTRFS, поделитесь опытом, как можно улучшить результат, как, например, сразу сделать снапшоты доступными для записи, или какими инструментами пользуетесь для похожего результата или какие опции монтирования нужно использовать и прочее.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252075"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252075/index.html">#</a>
+            9 месяцев, 2 недели назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Nebulosa</em><br>например, сразу сделать снапшоты доступными для записи,</blockquote>Как обычно, командой <strong>btrfs subvolume snapshot</strong>.<br />Лично я, snapper и timeshift не использую, так как глюки мне не нужны, поэтому предпочитаю, своим скриптом.<br />Никогда не понимал, зачем для снапшотов делать отдельный subvolume, как и @var.<br />Но как говорится, кому как удобно, так и лепит.<br /><br /><blockquote><em>Nebulosa</em><br>одна история со swap чего стоит - я думал, выделение раздела под свап давно в прошлом, однако почти все, делают это поголовно,</blockquote>Со свопом тоже всё просто, раздел или отдельный subvolume для своп.<br />С разделом проще настраивать гибернацию и полное шифрование диска.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252093"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252093/index.html">#</a>
+            9 месяцев, 2 недели назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Использую в гноме <a href="https://aur.archlinux.org/packages/timeshift-autosnap">timeshift-autosnap</a>. Никаких глюков, во время любого обновления через хук пакмана делается снимок и в грабе создаётся соответсвующий пункт для загрузки. Количество снимков по умолчанию 3, но можно настроить сколько нужно. Единственное неудобство - timeshift требует меток @ для корня и @home для хомяка (необязательно) - пришлось поменять.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252095"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252095/index.html">#</a>
+            9 месяцев, 2 недели назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>RusWolf</em><br>ZFS для линукса - продвигает для повседневного использования в основном компания Каноникал и в других популярных массовых дистрибутивах (например, Fedora) не представлена. Среди обзорщиков дистрибутивов считается пока что технологией, которая &quot;залочена&quot; за одной компанией (как и технология snap пакетов) и решения малопереносимы. Плюс есть нарекания по расходу оперативной памяти.</blockquote>Сидел какое-то время на ZFS. Возможности у неё интересные, например, можно RAID&#39;ы собирать... даже блог по установке здесь написал, но... Через несколько месяцев начались жуткие тормоза файловой подсистемы. Не стал дальше разбираться, ушёл на btrfs.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252099"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/Nebulosa/index.html">
+                <span class="post-username">Nebulosa</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252099/index.html">#</a>
+            9 месяцев, 2 недели назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/4a/9b/4a9bd66c7a2a170b1585f3b56cdb48de.png" alt="Nebulosa avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/Nebulosa/topics/index.html">
+                    10
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/Nebulosa/posts/index.html">
+                    830
+                </a>
+            </div>
+            <div>
+                Участник с: 05 марта 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>RusWolf</em><br>Лично я, snapper и timeshift не использую, так как глюки мне не нужны, поэтому предпочитаю, своим скриптом.<br />Никогда не понимал, зачем для снапшотов делать отдельный subvolume, как и @var.<br />Но как говорится, кому как удобно, так и лепит.</blockquote>Пришлось разбраться в том числе и с этими программами, как с конечными решениями для работы со снапшотами. Конечно же работать напрямую также можно, продолжу разбор полётов, пропишу команды, т.к. текущие решения работы со снапшотами предполагают загрузку в снапшот в режиме чтения и нужно делать дополнительные движения. Простота улетучивается).<br /><br />По моим исследованиям инструкций и вики - вынесение в отдельный subvolume требует snapper, а необходимость вынесения var вытекает опять же из механики загрузки снапшота через пункт grub - система грузится в режиме readonly и программы перестают работать нормально, кому нужно писать какие-то логи и прочее. На своей виртуальной машине я также сталкивался с данным эффектом, когда ненужные снапшоты перестают удаляться, т.к. <a href="https://bbs.archlinux.org/viewtopic.php?id=211161">остаются cмонтированные подпапки.</a><br /><br /><blockquote><em>RusWolf</em><br>Со свопом тоже всё просто, раздел или отдельный subvolume для своп.<br />С разделом проще настраивать гибернацию и полное шифрование диска.</blockquote><br />Верно, но непонятно тогда зачем делать его 1 или 2Гб, а не размером с RAM. С версии ядра 5.0 и в btrfs также <a href="https://wiki.archlinux.org/title/btrfs#Swap_file">можно делать это через файл</a> но тогда данный раздел нельзя снапшотить. Видимо напрашивается вывод, что swap файл нужно сделать на том разделе, который мы не снапшотим - например в @var.<br /><br />Про шифрование диска - для отдельного раздела swap вроде бы требуется <a href="https://www.youtube.com/watch?v=co5V2YmFVEE">совершать дополнительные действия для btrfs</a>?<br /><blockquote><em>s-ugra@ya.ru</em><br>Использую в гноме <a href="https://aur.archlinux.org/packages/timeshift-autosnap">timeshift-autosnap</a>. Никаких глюков, во время любого обновления через хук пакмана делается снимок и в грабе создаётся соответсвующий пункт для загрузки. Количество снимков по умолчанию 3, но можно настроить сколько нужно. Единственное неудобство - timeshift требует меток @ для корня и @home для хомяка (необязательно) - пришлось поменять.</blockquote><br />Именно это и прописано в <a href="https://github.com/nebulosa2007/archinstallbtfrs/blob/master/script-list-btrfs-timeshift.sh">инструкции с timeshift</a> :)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252100"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252100/index.html">#</a>
+            9 месяцев, 2 недели назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Nebulosa</em><br>но непонятно тогда зачем делать его 1 или 2Гб</blockquote>Это, кому не нужна гибернация, но своп делает, что бы было :)<br /><br /><blockquote><em>Nebulosa</em><br>По моим исследованиям инструкций и вики - вынесение в отдельный subvolume требует snapper, а необходимость вынесения var вытекает опять же из механики загрузки снапшота через пункт grub - система грузится в режиме readonly и программы перестают работать нормально, кому нужно писать какие-то логи и прочее.</blockquote>Вот поэтому я и не пользуюсь grub-btrfs, предпочитаю ручками переименовать нужный снапшот, в нужный subvolume, так как лишние и бесполезные для меня subvolume не нужны.<br /><br /><blockquote><em>Nebulosa</em><br>Про шифрование диска - для отдельного раздела swap вроде бы требуется совершать дополнительные действия для btrfs</blockquote>Не понял сути вопроса.<br />Каким боком отдельный раздел своп к btrfs?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252101"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252101/index.html">#</a>
+            9 месяцев, 2 недели назад
+            
+                (отредактировано
+                
+                    9 месяцев, 2 недели назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>RusWolf</em><br>Никогда не понимал, зачем для снапшотов делать отдельный subvolume,</blockquote>1. субволуме со вложенными субволумами невозможно удалить.<br /><pre><code>btrfs subvolume list /
+...
+ID 48155 gen 3602303 top level 5 path @1111111111111
+ID 48156 gen 3602303 top level 48155 path @1111111111111/222222222222222
+...
+
+btrfs subvolume delete /mnt/@1111111111111
+Delete subvolume (no-commit): &#39;/mnt/@1111111111111&#39;
+ERROR: Could not destroy subvolume/snapshot: Directory not empty
+</code></pre>2. При бэкапе на другой носитель вложенные субволумы не переносятся, а соответственно при восстановлении с другого носителя даже нет пустых папок от них, а на них могут быть завязаны какие нибудь скрипты/настройки. (после восстановления при серьезном СБОЕ фиг вспомнишь что, как и зачем было)
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252102"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/RusWolf/index.html">
+                <span class="post-username">RusWolf</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252102/index.html">#</a>
+            9 месяцев, 2 недели назад
+            
+                (отредактировано
+                
+                    9 месяцев, 2 недели назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8a/00/8a00073bdfb852ab8504f1e6d4c044f4.png" alt="RusWolf avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/RusWolf/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/RusWolf/posts/index.html">
+                    2394
+                </a>
+            </div>
+            <div>
+                Участник с: 16 июля 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>nafanja</em><br>субволуме со вложенными субволумами невозможно удалить.</blockquote>переведи.<br />у меня только @ и @home, причём тут вложенные?<br /><pre><code>[sudo] пароль для wolf:
+ID 256 gen 55215 top level 5 path @
+ID 257 gen 55217 top level 5 path @home
+ID 988 gen 54480 top level 5 path root_BACKUP.2021-11-22_08:09:25
+ID 989 gen 54482 top level 5 path home_BACKUP.2021-11-22_08:09:25
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252103"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/nafanja/index.html">
+                <span class="post-username">nafanja</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252103/index.html">#</a>
+            9 месяцев, 2 недели назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/8b/bf/8bbfdb897f0c37710a7d8b4dc072bea1.png" alt="nafanja avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/nafanja/topics/index.html">
+                    94
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/nafanja/posts/index.html">
+                    9252
+                </a>
+            </div>
+            <div>
+                Участник с: 02 июня 2012
+            </div>
+            
+                <div class="label label-warning">заблокирован</div>
+            
+        </td>
+        <td class="post-content">
+            <strong>RusWolf</strong>, у тя так, у других может быть по другому (речь не о тебе), людям дали возможности, а они на радостях ими злоупотребляют не прощупав подводные грабли, а потом катят бочку на btrfs.
+            
+                
+                    <div class="post-signature">
+                        <a href="../10992/index.html">Псевдографический инсталлятор Arch Linux ver. 3.8.2</a><br />Благодарности принимаются на ЯД <strong>410012815723874</strong>
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-252104"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="../../users/s-ugra%40ya.ru/index.html">
+                <span class="post-username">s-ugra@ya.ru</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="../../post/252104/index.html">#</a>
+            9 месяцев, 2 недели назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/93/a4/93a46d9eac5ebd0cca83f310f72f0f10.png" alt="s-ugra@ya.ru avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="../../users/s-ugra%40ya.ru/topics/index.html">
+                    11
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="../../users/s-ugra%40ya.ru/posts/index.html">
+                    763
+                </a>
+            </div>
+            <div>
+                Участник с: 15 ноября 2016
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Посмотрел у себя и не пойму - что это за приколы в var/lib, откуда взялись??<br /><pre><code>sudo btrfs subvolume list /
+ID 256 gen 77561 top level 5 path @
+ID 258 gen 77561 top level 5 path @home
+ID 261 gen 32 top level 256 path var/lib/portables
+ID 262 gen 33 top level 256 path var/lib/machines
+ID 353 gen 76905 top level 5 path timeshift-btrfs/snapshots/2021-11-19_13-59-42/@
+ID 354 gen 76905 top level 5 path timeshift-btrfs/snapshots/2021-11-21_10-01-47/@
+ID 355 gen 76905 top level 5 path timeshift-btrfs/snapshots/2021-11-22_10-57-54/@</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous disabled">
+                    <span>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </span>
+                </li>
+            
+
+            
+                
+                    
+                        <li class="active">
+                            <a href="index2679.html?page=1">1 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index4658.html?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index9ba9.html?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexfdb0.html?page=4">4</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexaf4d.html?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="indexc575.html?page=6">6</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="index235c.html?page=7">7</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="index4658.html?page=2" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="../../../accounts/register/index.html">Зарегистрироваться</a> или <a href="../../../accounts/login/index5a5c.html?next=/forum/topic/21053/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Mirrored from archlinux.org.ru/forum/topic/21053/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Sep 2022 04:09:48 GMT -->
+</html>

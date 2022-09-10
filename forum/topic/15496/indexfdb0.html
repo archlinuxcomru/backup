@@ -1,0 +1,1120 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Баг 12309 на ядрах 4.X
+    </title>
+    <link rel="shortcut icon" href="https://storage.yandexcloud.net/aor-static/static/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="https://storage.yandexcloud.net/aor-static/static/css/default.css">
+    
+    
+    
+
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/pybbjs.js"></script>
+    
+    
+    
+    <!-- Feeds -->
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/posts/" title="Последние сообщения на форуме" >
+    <link rel="alternate" type="application/atom+xml" href="/forum/feeds/topics/" title="Последние темы на форуме" >
+
+    
+    
+    
+    <script type="text/javascript" src="https://storage.yandexcloud.net/aor-static/static/pybb/js/jquery.formset.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid wrapper">
+        
+    
+<ul class="nav navbar-nav">
+    <li>
+      <a class="navbar-brand" href="/">
+        <img src="https://storage.yandexcloud.net/aor-static/static/logo.png" alt="" style="opacity: .7; vertical-align: top">
+      </a>
+    </li>
+    <li class=""><a href="/news/">Новости</a></li>
+    <li class="active"><a href="/forum/">Форум</a></li>
+    <li class=""><a href="/blogs/">Блоги</a></li>
+    <li><a href="https://archlinux.org/">Eng</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/Main_page_%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29">Wiki</a></li>
+    <li class="dropdown">
+      <a href="https://www.archlinux.org/packages/" class="dropdown-toggle" data-toggle="dropdown">
+        Пакеты
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="https://www.archlinux.org/packages/">Официальные репозитории</a></li></li>
+        <li><a href="https://aur.archlinux.org/?setlang=ru">AUR</a></li>
+      </ul>
+    <li><a href="https://archlinux.org/download/">Скачать</a></li>
+</ul>
+
+<form class="navbar-form navbar-left" role="search" action="https://www.google.ru/cse">
+    <input type="hidden" name="cx" value="018428664132160064944:ntsma9ch2ug"/>
+    <input type="hidden" name="ie" value="UTF-8"/>
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Что ищем?">
+      <span class="input-group-btn">
+        <button type="submit" name="sa" class="btn btn-default">Найти</button>
+      </span>
+    </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right">
+
+
+    
+      <li><a href="/irc/#chat">IRC</a></li>
+      <li class="dropdown">
+        <a href="/accounts/login/" class="dropdown-toggle" data-toggle="dropdown">
+          Профиль
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/accounts/login/">Вход</a></li>
+          <li><a href="/accounts/register/">Регистрация</a></li>
+        </ul>
+      </li>
+    
+</ul>
+
+
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id='new_pm_notify' role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content navbar-default">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Новые личные сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/messages/inbox/" class="center-block btn btn-primary">Перейти в папку Входящие <span class="badge"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+        
+<ul class="breadcrumb">
+    
+
+    <li><a href="/">ArchLinux.org.ru</a></li>
+
+
+    <li><a href="/forum/">Начало</a> <span class="divider">/</span></li>
+    
+        
+            
+                <li><a href="/forum/category/2/">Поддержка пользователей</a> <span class="divider">/</span></li>
+            
+                <li><a href="/forum/forum/12/">Ядро и Железо</a> <span class="divider">/</span></li>
+            
+        
+        
+            <li>Баг 12309 на ядрах 4.X</li>
+        
+    
+    
+</ul>
+
+    
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            
+    <div class="row">
+        <div class="col-md-12 forum">
+            
+    
+    <div class="topic">
+        <h1>Баг 12309 на ядрах 4.X</h1>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=3" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=4">4 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=5" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        <div class="posts">
+            
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160286"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/chronos/">
+                <span class="post-username">chronos</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160286/">#</a>
+            6 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/e5/b3/e5b356d224cbeef88b07e8fced8d6ae9.png" alt="chronos avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/chronos/topics/">
+                    3
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/chronos/posts/">
+                    518
+                </a>
+            </div>
+            <div>
+                Участник с: 15 марта 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            А  можно dmesg на пасту вывод сделать и сюда выложить? Может для кого нибудь ситуация прояснится!
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160305"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/32reg/">
+                <span class="post-username">32reg</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160305/">#</a>
+            6 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/32reg/topics/">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/32reg/posts/">
+                    526
+                </a>
+            </div>
+            <div>
+                Участник с: 17 мая 2011
+            </div>
+            
+        </td>
+        <td class="post-content">
+            У меня при копировании на флешку все зависает напрочь. Пока не скопируется. Это 12309?<br />Система актуальная, x86-64, KDE, AMD Phenom II X4 955, 4Gb Ram
+            
+                
+                    <div class="post-signature">
+                        <a href="http://linux32.ru">www.linux32.ru</a> - новости и статьи о Linux
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160306"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/bobart/">
+                <span class="post-username">bobart</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160306/">#</a>
+            6 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/bobart/topics/">
+                    38
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/bobart/posts/">
+                    2537
+                </a>
+            </div>
+            <div>
+                Участник с: 28 ноября 2009
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Почему никто ни слова о HDD? Тормоза не в последнюю очередь могут быть связаны со скоростью чтения/записи жёсткого. По transmission из личного опыта (4-5-летней давности, давно отказался от него): этот клиент вообще весьма агрессивно дёргает (дёргал) жёсткий в отличие от напр. vuze (им я тоже не пользуюсь, но по памяти того-же периода времени). Короче, тут могут вмешиваться и описанные мною факторы помимо ядра, рамы и пр. Плюс, конечно, скорость скачивания/раздачи. И автору топика: на какой скорости обычно качаешь? (провайдер в течении восьми лет не меняет скорость - у вас один провайдер на деревню? Если да - верю)
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160307"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Vadim/">
+                <span class="post-username">Vadim</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160307/">#</a>
+            6 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/72/22/7222132327ed41066e6514a2df7291c9.png" alt="Vadim avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Vadim/topics/">
+                    280
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Vadim/posts/">
+                    1912
+                </a>
+            </div>
+            <div>
+                Участник с: 20 ноября 2013
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <strong>bobart</strong><br />у меня две системы Arch,одна на SATA HDD,другая на USB HDD.Ни на той ни на другой тормозов при копировании и на торентах нет,хотя USB HDD подключен с интерфейсом USB2.0,который в несколько раз медленнее чем SATA или IDE.<br />Может надо размер блока поменять ?У меня <pre><code> sudo tune2fs -l /dev/sda2 | grep &quot;Block size&quot;
+[sudo] password for vadim:
+Block size:               4096</code></pre>
+            
+                
+                    <div class="post-signature">
+                        Linux Forever!
+                    </div>
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160308"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/billygates/">
+                <span class="post-username">billygates</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160308/">#</a>
+            6 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/billygates/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/billygates/posts/">
+                    30
+                </a>
+            </div>
+            <div>
+                Участник с: 04 марта 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>marlock</em><br>Pentium 3550M (haswell), 4 Gb, ноутбук Thinkpad E440 -- фантастические провисания во время интенсивной скачки через transmission, а также при копировании файлов на флешку. Ядро дефолтное, но ставил ck и включал bfq в надежде избавиться от этого -- никаких улучшений не увидел.</blockquote>welcome! Мы с Вами похоже наблюдаем одно и тоже, хотя с внешними флеш-накопителями у меня обстоят дела лучше, проявляется только если напрягать жесткий диск (повторюсь наблюдаю на трех разных компьютерах).<br /><br /><blockquote><em>chronos</em><br>можно dmesg на пасту вывод сделать и сюда выложить? Может для кого нибудь ситуация прояснится!</blockquote>Пожалуйста, сегодня дома снял вывод с DELL E6500 и сейчас на работе с E5420.<br /><a href="https://drive.google.com/file/d/0BzwB3YdeoQzxWTl5T0VvOWZjSEU/view?usp=sharing">E6500</a><br /><a href="https://drive.google.com/file/d/0BzwB3YdeoQzxV2QyTDNqNTNPMk0/view?usp=sharing">E5420</a><br /><blockquote><em>32reg</em><br>У меня при копировании на флешку все зависает напрочь. Пока не скопируется. Это 12309?<br />Система актуальная, x86-64, KDE, AMD Phenom II X4 955, 4Gb Ram</blockquote>По симптомом - &quot;да&quot;, но чтобы поставить диагноз нужны анализы. ;)<br /><blockquote><em>bobart</em><br>Почему никто ни слова о HDD? Тормоза не в последнюю очередь могут быть связаны со скоростью чтения/записи жёсткого. По transmission из личного опыта (4-5-летней давности, давно отказался от него): этот клиент вообще весьма агрессивно дёргает (дёргал) жёсткий в отличие от напр. vuze (им я тоже не пользуюсь, но по памяти того-же периода времени). Короче, тут могут вмешиваться и описанные мною факторы помимо ядра, рамы и пр. Плюс, конечно, скорость скачивания/раздачи. И автору топика: на какой скорости обычно качаешь? (провайдер в течении восьми лет не меняет скорость - у вас один провайдер на деревню? Если да - верю)</blockquote>При одном потоке или нескольких (копирование больших объемов одним файлом или мелкими) скорость чтения и записи нормальная, но как только потоки увеличиваешь до 5 - начинаются фризы. Я еще раз повторюсь, для тех кто не читает с самого начала тему: закачка торентов через трекер transmission это лишь пример, при котором сидишь и смотришь, как тормозит система. Эти зависания можно вызвать одновременным копированием (более 5 процессов) файлов, запуском с нескольких устройств стрима PLEX, копирование с SAMBA и FTP, т.е. как угодно, достаточно для жеского запустить 5 задач и становится все наглядно.<br />Насчет интернета, с 2008 года я обитаю в деревне Мытищи, что в Московской областной губернии, жил в трех разных частях данного города(снимал квартиру), везде был один провайдер Инфолайн, тарифный план Smile 650, т.е. обещают 70Мбит/с.<br />Сейчас наблюдаю фризы на квартире на ноуте DELL E6500, на работе в Москве, разные провайдеры (у нас куча точек доступа), на ноуте DELL E5420, в вот у родителей в Тверской губернии, старенький системник с Pentium D 2.3GHz и 2RAM и жеским IDE на гигов 80, который подключен к Ростелекому по ADSL.<br />Т.е. как бы проблема не в интернете, т.к. банальным копированием файлов с могу вызвать фризы и зависания.<br /><blockquote><em>Vadim</em><br>bobart<br />у меня две системы Arch,одна на SATA HDD,другая на USB HDD.Ни на той ни на другой тормозов при копировании и на торентах нет,хотя USB HDD подключен с интерфейсом USB2.0,который в несколько раз медленнее чем SATA или IDE.<br />Может надо размер блока поменять ?У меня<br /> sudo tune2fs -l /dev/sda2 | grep &quot;Block size&quot;<br />[sudo] password for vadim:<br />Block size:               4096</blockquote>Аналогичный размер блока<br /><pre><code>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1173787d7d687670657462515424252321">[email&#160;protected]</a> ~]$ sudo tune2fs -l /dev/sda2 | grep &quot;Block size&quot;
+Block size:               4096
+</code></pre>
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160311"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/Perfect_Gentleman/">
+                <span class="post-username">Perfect_Gentleman</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160311/">#</a>
+            6 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/Perfect_Gentleman/topics/">
+                    55
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/Perfect_Gentleman/posts/">
+                    1039
+                </a>
+            </div>
+            <div>
+                Участник с: 29 октября 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            попробуй сделать data_journal_writeback
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160312"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/sirocco/">
+                <span class="post-username">sirocco</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160312/">#</a>
+            6 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/sirocco/topics/">
+                    29
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/sirocco/posts/">
+                    2501
+                </a>
+            </div>
+            <div>
+                Участник с: 25 июля 2007
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>billygates</em><br>Пожалуйста, сегодня дома снял вывод с DELL E6500 и сейчас на работе с E5420.</blockquote><br />Немного посмотрел. Показалось странным<br /><pre><code>ata1.00: ATA-8: Hitachi HTS723216L9A362, FC2OC30F, max UDMA/133
+[    1.245404] ata1.00: 312581808 sectors, multi 0: LBA48 NCQ (depth 31/32), AA
+[    1.247123] ata1.00: configured for UDMA/133
+[    1.247231] scsi 0:0:0:0: Direct-Access     ATA      Hitachi HTS72321 C30F PQ: 0 ANSI: 5</code></pre>max UDMA/133, хотя для Hitachi HTS723216L9A362 пишут - SATA 300.<br />В BIOS как контроллер дисков сконфигурирован?
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160313"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/toZen/">
+                <span class="post-username">toZen</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160313/">#</a>
+            6 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+        <img src="https://storage.yandexcloud.net/aor-static/media/cache/5c/29/5c298500db1cf711d02c5fc8f9faec39.png" alt="toZen avatar" />
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/toZen/topics/">
+                    19
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/toZen/posts/">
+                    544
+                </a>
+            </div>
+            <div>
+                Участник с: 06 февраля 2015
+            </div>
+            
+        </td>
+        <td class="post-content">
+            Intel(R) Pentium(R) CPU B940 @ 2.00GHz, 4GB - DDR2,<br />/ - ext4,<br />/home - ext4,<br />Linux 4.2.5-1-ARCH x86_64.<br />Openbox FM.<br />Transmission - всё гладко на скачивании/раздаче.<br />Thunar - копирование на любые внешние носители без тормозов.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160314"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/billygates/">
+                <span class="post-username">billygates</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160314/">#</a>
+            6 лет, 9 месяцев назад
+            
+                (отредактировано
+                
+                    6 лет, 9 месяцев назад)
+                
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/billygates/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/billygates/posts/">
+                    30
+                </a>
+            </div>
+            <div>
+                Участник с: 04 марта 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>sirocco</em><br>В BIOS как контроллер дисков сконфигурирован?</blockquote>режим AHCI
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+                
+                
+
+
+
+
+<table class="table table-bordered post post-row
+       "
+       id="post-160316"
+       >
+    <thead>
+    <tr>
+        <td class="post-author">
+            <a href="/forum/users/billygates/">
+                <span class="post-username">billygates</span>
+            </a>
+        </td>
+        <td class="post-date">
+            <div class="post-control">
+                
+                    
+                
+            </div>
+            <a class="permalink" href="/forum/post/160316/">#</a>
+            6 лет, 9 месяцев назад
+            
+            
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="post-info">
+            
+
+<div class="avatar">
+    
+</div>
+
+            <div>
+                Темы:
+                <a href="/forum/users/billygates/topics/">
+                    2
+                </a>
+            </div>
+            <div>
+                Сообщения:
+                <a href="/forum/users/billygates/posts/">
+                    30
+                </a>
+            </div>
+            <div>
+                Участник с: 04 марта 2012
+            </div>
+            
+        </td>
+        <td class="post-content">
+            <blockquote><em>Perfect_Gentleman</em><br>попробуй сделать data_journal_writeback</blockquote>Здравствуйте. Не помогло, но стало лучше - меньше тормозит.
+            
+                
+            
+
+            <div class="post-related">
+                <div class='attachments'>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+            
+        </div>
+        <div>&nbsp;</div>
+        
+            <div class="text-center">
+    
+
+
+    <nav>
+        <ul class="pagination">
+            
+                <li class="previous">
+                    <a href="?page=3" aria-label="предыдущая страница">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="hidden-xs">предыдущая страница</span>
+                    </a>
+                </li>
+            
+
+            
+                
+                    
+                        <li>
+                            <a href="?page=1">1</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=2">2</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=3">3</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li class="active">
+                            <a href="?page=4">4 <span class="sr-only">(текущая страница)</span></a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=5">5</a>
+                        </li>
+                    
+                
+            
+                
+                    
+                        <li>
+                            <a href="?page=6">6</a>
+                        </li>
+                    
+                
+            
+
+            
+                <li class="next">
+                    <a href="?page=5" aria-label="следующая страница">
+                        <span class="hidden-xs">следующая страница</span>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+
+
+</div>
+
+        
+
+        
+
+        
+            
+<a href="/accounts/register/">Зарегистрироваться</a> или <a href="/accounts/login/?next=/forum/topic/15496/">войдите</a> чтобы оставить сообщение.
+
+        
+
+        
+    </div>
+
+        </div>
+    </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 footer">
+            
+                <p class="copyright">&copy; 2006-2022, Русскоязычное сообщество
+                    Arch Linux.<br>Название и логотип Arch Linux &trade;
+                    являются признанными торговыми
+                    марками.<br>Linux &reg; &mdash; зарегистрированная торговая
+                    марка Linus Torvalds и LMI.</p>
+            
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){var js = "window['__CF$cv$params']={r:'747c4acab9b79dab',m:'Viev_5ZlMwy7m2Xu_Coyf7R41lUcMMfym9jN9wbpaX8-1662688428-0-AXe5lKrMnffDFneII+GPJCkdnhfZJS8HMzl7r3zgVYnSv+pMGA84fVMo6ldmnHoqZryrGtDycJnmO9U42WdTV5wK6W3w/7bSiv+h9E7rjRhWwmcXwgbH5dd7tmyCpnXBvNVg+/YFESO0KB5OAcnROLs=',s:[0x643daacc44,0xef5ec90530],u:'/cdn-cgi/challenge-platform/h/g'};var now=Date.now()/1000,offset=14400,ts=''+(Math.floor(now)-Math.floor(now%offset)),_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/h/g/scripts/alpha/invisible.js?ts='+ts,document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+</html>
